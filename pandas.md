@@ -1,7 +1,7 @@
 PANDAS
 ---
   - [Data Aggregation](#data-aggregation)
-      - [Groupby Aggregation](#1.-groupby-aggregation)
+      - [Groupby Aggregation](#groupby-aggregation)
 
 ### Data Aggregation
 Data aggregation in Pandas is used to summarize data. The most common aggregation techniques are:
