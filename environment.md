@@ -22,8 +22,9 @@ Using virtual environments is important because:
 
 ### Commands
 
-Before installing virtual environment verify that python interpretator exits by 
-Check Python Version
+**Verify Python Installation**
+Before creating a virtual environment, verify that Python is installed:
+
 ```
 python --version
 ```
@@ -79,9 +80,13 @@ pip install -r requirements.txt
 
 **7.  Delete Virtual Environment**
 
+Simply delete the folder:
 ```
 rmdir /s myenv      # Windows
 ```
 **8.  Upgrade pip**
-9.  python -m pip install --upgrade pip
+
+```
+python -m pip install --upgrade pip
+```
 
