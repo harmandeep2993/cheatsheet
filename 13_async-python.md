@@ -1,5 +1,9 @@
 # 13 - Async Python
 
+<!-- nav:start -->
+**Previous:** [12 - Pydantic](12_pydantic.md) | **Index:** [All guides](README.md) | **Next:** [14 - pytest](14_pytest.md)
+<!-- nav:end -->
+
 Quick reference for asynchronous programming in Python with `async` / `await` and `asyncio`: running many slow I/O tasks (API calls, LLM requests, database queries) at the same time.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -92,9 +96,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. async def and await
 
-> - **What:** The two keywords that define and use asynchronous functions.
-> - **How:** `async def` creates a coroutine function; inside it, `await` another coroutine to wait for its result without blocking others.
-> - **When to use:** Any function that does I/O through an async library.
+> The two keywords that define and use asynchronous functions. `async def` creates a coroutine function; inside it, `await` another coroutine to wait for its result without blocking others. Use it in any function that does I/O through an async library.
 
 ```python
 import asyncio
@@ -116,9 +118,7 @@ async def main():
 
 ## 2. Running Async Code
 
-> - **What:** Starting the event loop from normal code.
-> - **How:** `asyncio.run(main())` creates a loop, runs `main` to completion, and closes the loop.
-> - **When to use:** The single entry point of an async script.
+> Starting the event loop from normal code. `asyncio.run(main())` creates a loop, runs `main` to completion, and closes the loop. Use it for the single entry point of an async script.
 
 ```python
 if __name__ == "__main__":
@@ -129,9 +129,7 @@ Call `asyncio.run` once at the top level, not inside other async functions.
 
 ## 3. Running Tasks Concurrently (gather)
 
-> - **What:** Starting several coroutines at once and waiting for all of them.
-> - **How:** `asyncio.gather(*coroutines)` runs them concurrently and returns results in the same order.
-> - **When to use:** Many independent API / LLM calls.
+> Starting several coroutines at once and waiting for all of them. `asyncio.gather(*coroutines)` runs them concurrently and returns results in the same order. Use this when many independent API / LLM calls.
 
 ```python
 import time
@@ -152,9 +150,7 @@ async def main():
 
 ## 4. Tasks and TaskGroup
 
-> - **What:** Scheduling coroutines to run in the background while you do other things.
-> - **How:** `asyncio.create_task` starts a coroutine now; `TaskGroup` (Python 3.11+) starts several and waits for all, cancelling the rest if one fails.
-> - **When to use:** Background work, or structured concurrency with safe error handling.
+> Scheduling coroutines to run in the background while you do other things. `asyncio.create_task` starts a coroutine now; `TaskGroup` (Python 3.11+) starts several and waits for all, cancelling the rest if one fails. Use it for background work, or structured concurrency with safe error handling.
 
 ```python
 async def main():
@@ -172,9 +168,7 @@ Keep a reference to tasks you create; unreferenced tasks can be garbage-collecte
 
 ## 5. Limiting Concurrency (Semaphore)
 
-> - **What:** Allowing at most N tasks to run a section at the same time.
-> - **How:** `async with semaphore:` waits for a free slot before entering.
-> - **When to use:** Respecting API rate limits when launching hundreds of calls.
+> Allowing at most N tasks to run a section at the same time. `async with semaphore:` waits for a free slot before entering. Use it for respecting API rate limits when launching hundreds of calls.
 
 ```python
 MAX_CONCURRENT = 5
@@ -193,9 +187,7 @@ async def summarize_all(docs: list[str]) -> list[str]:
 
 ## 6. Timeouts
 
-> - **What:** Giving up on something that takes too long.
-> - **How:** `asyncio.timeout(seconds)` (3.11+) or `asyncio.wait_for(coro, timeout)` raises `TimeoutError`.
-> - **When to use:** Any external call that might hang.
+> Giving up on something that takes too long. `asyncio.timeout(seconds)` (3.11+) or `asyncio.wait_for(coro, timeout)` raises `TimeoutError`. Use it in any external call that might hang.
 
 ```python
 async def main():
@@ -210,9 +202,7 @@ async def main():
 
 ## 7. Error Handling
 
-> - **What:** What happens when one of many concurrent tasks fails.
-> - **How:** `gather` raises the first error by default; `return_exceptions=True` returns errors as values instead; `TaskGroup` raises an `ExceptionGroup`.
-> - **When to use:** Batch jobs where one failure should not lose all other results.
+> What happens when one of many concurrent tasks fails. `gather` raises the first error by default; `return_exceptions=True` returns errors as values instead; `TaskGroup` raises an `ExceptionGroup`. Use it for batch jobs where one failure should not lose all other results.
 
 ```python
 results = await asyncio.gather(*coros, return_exceptions=True)
@@ -232,9 +222,7 @@ except* ValueError as eg:                 # handle a group of ValueErrors (3.11+
 
 ## 8. Processing Results as They Finish
 
-> - **What:** Handling each result as soon as it is ready, instead of waiting for the slowest.
-> - **How:** `asyncio.as_completed` yields awaitables in completion order.
-> - **When to use:** Progress bars, streaming results to a UI, saving results early.
+> Handling each result as soon as it is ready, instead of waiting for the slowest. `asyncio.as_completed` yields awaitables in completion order. Use it for progress bars, streaming results to a UI, saving results early.
 
 ```python
 for next_done in asyncio.as_completed([fetch_price(i) for i in items]):
@@ -244,9 +232,7 @@ for next_done in asyncio.as_completed([fetch_price(i) for i in items]):
 
 ## 9. Async HTTP with httpx
 
-> - **What:** Making many HTTP requests concurrently.
-> - **How:** One shared `httpx.AsyncClient` (reuses connections) + `gather`.
-> - **When to use:** Scraping, calling several APIs, webhooks. Sync `requests` would block the loop.
+> Making many HTTP requests concurrently. One shared `httpx.AsyncClient` (reuses connections) + `gather`. Use it for scraping, calling several APIs, webhooks. Sync `requests` would block the loop.
 
 ```python
 import httpx
@@ -260,9 +246,7 @@ async def fetch_all(urls: list[str]) -> list[int]:
 
 ## 10. Async LLM Calls
 
-> - **What:** Calling an LLM for many inputs concurrently.
-> - **How:** Use the SDK's async client with `await`, plus a semaphore for rate limits.
-> - **When to use:** Classifying / summarising / extracting over many documents.
+> Calling an LLM for many inputs concurrently. Use the SDK's async client with `await`, plus a semaphore for rate limits. Use it for classifying / summarising / extracting over many documents.
 
 ```python
 import anthropic
@@ -289,9 +273,7 @@ For very large offline jobs, the provider's **batch API** is cheaper than many p
 
 ## 11. Async Iterators and Streaming
 
-> - **What:** Looping over values that arrive over time.
-> - **How:** `async for` over an async iterator; write your own with `async def` + `yield` (async generator).
-> - **When to use:** LLM token streams, reading a stream of events, paginated APIs.
+> Looping over values that arrive over time. `async for` over an async iterator; write your own with `async def` + `yield` (async generator). Use it for LLM token streams, reading a stream of events, paginated APIs.
 
 ```python
 async def stream_answer(question: str):
@@ -315,9 +297,7 @@ async for x in numbers(3):
 
 ## 12. Async Context Managers
 
-> - **What:** Setup / cleanup that itself needs `await` (open connections, sessions).
-> - **How:** `async with` calls `__aenter__` / `__aexit__`; build your own with `@asynccontextmanager`.
-> - **When to use:** HTTP clients, DB connections, FastAPI lifespan.
+> Setup / cleanup that itself needs `await` (open connections, sessions). `async with` calls `__aenter__` / `__aexit__`; build your own with `@asynccontextmanager`. Use it for HTTP clients, DB connections, FastAPI lifespan.
 
 ```python
 from contextlib import asynccontextmanager
@@ -338,9 +318,7 @@ async with db_connection() as conn:
 
 ## 13. Calling Blocking Code from Async
 
-> - **What:** Using normal (sync) functions without freezing the event loop.
-> - **How:** `asyncio.to_thread(func, *args)` runs it in a thread; CPU-heavy work goes to a process pool.
-> - **When to use:** A library has no async version (pandas, some SDKs, file parsing).
+> Using normal (sync) functions without freezing the event loop. `asyncio.to_thread(func, *args)` runs it in a thread; CPU-heavy work goes to a process pool. Use this when a library has no async version (pandas, some SDKs, file parsing).
 
 ```python
 import asyncio
@@ -355,9 +333,7 @@ with ProcessPoolExecutor() as pool:
 
 ## 14. Queues: Producer / Consumer
 
-> - **What:** Tasks passing work to each other through a queue.
-> - **How:** Producers `put` items; a fixed number of workers `get` and process them.
-> - **When to use:** Pipelines (download -> parse -> embed), controlled worker pools.
+> Tasks passing work to each other through a queue. Producers `put` items; a fixed number of workers `get` and process them. Use it for pipelines (download -> parse -> embed), controlled worker pools.
 
 ```python
 async def worker(name: str, queue: asyncio.Queue):
@@ -381,9 +357,7 @@ async def main(items):
 
 ## 15. Async in Jupyter and FastAPI
 
-> - **What:** Environments that already run an event loop.
-> - **How:** Jupyter and FastAPI own the loop; you just `await` directly.
-> - **When to use:** Notebooks and web endpoints.
+> Environments that already run an event loop. Jupyter and FastAPI own the loop; you just `await` directly. Use it for notebooks and web endpoints.
 
 ```python
 # Jupyter: top-level await works directly (no asyncio.run)
@@ -401,9 +375,7 @@ In FastAPI use plain `def` for blocking code (FastAPI runs it in a thread for yo
 
 ## 16. Threads vs Processes vs Async
 
-> - **What:** The three ways to do several things at once in Python.
-> - **How:** They differ in what they share and what they speed up.
-> - **When to use:** Pick by the type of work.
+> The three ways to do several things at once in Python. They differ in what they share and what they speed up. Use it for pick by the type of work.
 
 | | Async (`asyncio`) | Threads (`threading`, `ThreadPoolExecutor`) | Processes (`multiprocessing`, `ProcessPoolExecutor`) |
 |---|---|---|---|
@@ -429,9 +401,7 @@ In FastAPI use plain `def` for blocking code (FastAPI runs it in a thread for yo
 
 ## 18. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Concurrency proof
 
@@ -495,3 +465,9 @@ except TimeoutError:
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [12 - Pydantic](12_pydantic.md) | **Index:** [All guides](README.md) | **Next:** [14 - pytest](14_pytest.md)
+<!-- nav:end -->

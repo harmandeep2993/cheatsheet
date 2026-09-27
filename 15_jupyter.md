@@ -1,5 +1,9 @@
 # 15 - Jupyter
 
+<!-- nav:start -->
+**Previous:** [14 - pytest](14_pytest.md) | **Index:** [All guides](README.md) | **Next:** [16 - NumPy](16_numpy.md)
+<!-- nav:end -->
+
 Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebooks in VS Code).
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -71,9 +75,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The meaning of every flag in the Jupyter commands and magics below.
-> - **How:** Tables list each command-line flag and magic option.
-> - **When to use:** You see `python -m ipykernel install --user --name myproject` and want to know what each part does.
+> The meaning of every flag in the Jupyter commands and magics below. Tables list each command-line flag and magic option. Use this when you see `python -m ipykernel install --user --name myproject` and want to know what each part does.
 
 ### How a command is built
 
@@ -118,9 +120,7 @@ python -m ipykernel  install  --user  --name myproject  --display-name "Python (
 
 ## 1. Install and Start
 
-> - **What:** Installing and starting Jupyter in the browser.
-> - **How:** `pip install jupyterlab`, then `jupyter lab` starts a local server on port 8888.
-> - **When to use:** Exploratory data analysis, teaching, or step-by-step experiments with visible output.
+> Installing and starting Jupyter in the browser. `pip install jupyterlab`, then `jupyter lab` starts a local server on port 8888. Use it for exploratory data analysis, teaching, or step-by-step experiments with visible output.
 
 ```powershell
 pip install jupyterlab              # JupyterLab (recommended)
@@ -136,9 +136,7 @@ Stop the server: `Ctrl+C` twice in the terminal.
 
 ## 2. Use a Virtual Environment as Kernel
 
-> - **What:** Letting notebooks use your project's venv.
-> - **How:** Install `ipykernel` in the venv and register it as a named kernel.
-> - **When to use:** Notebook imports fail even though the package is installed in your venv.
+> Letting notebooks use your project's venv. Install `ipykernel` in the venv and register it as a named kernel. Use it for notebook imports fail even though the package is installed in your venv.
 
 A **kernel** is the Python process that runs your code. Register each venv once:
 
@@ -155,9 +153,7 @@ Then pick **Python (myproject)** in Kernel -> Change Kernel.
 
 ## 3. Notebooks in VS Code
 
-> - **What:** Running notebooks inside VS Code instead of the browser.
-> - **How:** The Jupyter extension opens `.ipynb` files; choose the venv as kernel.
-> - **When to use:** You want notebooks plus VS Code features (Git, debugging, variable viewer).
+> Running notebooks inside VS Code instead of the browser. The Jupyter extension opens `.ipynb` files; choose the venv as kernel. Use this when you want notebooks plus VS Code features (Git, debugging, variable viewer).
 
 1. Install the **Jupyter** and **Python** extensions.
 2. Create `analysis.ipynb` (or `Ctrl+Shift+P` -> **Create: New Jupyter Notebook**).
@@ -168,9 +164,7 @@ Interactive window alternative: put `# %%` in a normal `.py` file to create runn
 
 ## 4. Cells and Modes
 
-> - **What:** Cell types and the two keyboard modes.
-> - **How:** Code cells run Python, Markdown cells show text; `Esc` / `Enter` switch mode.
-> - **When to use:** Mixing code with explanations to make a readable analysis.
+> Cell types and the two keyboard modes. Code cells run Python, Markdown cells show text; `Esc` / `Enter` switch mode. Use it for mixing code with explanations to make a readable analysis.
 
 | Cell type | Content |
 |---|---|
@@ -185,9 +179,7 @@ Interactive window alternative: put `# %%` in a normal `.py` file to create runn
 
 ## 5. Keyboard Shortcuts
 
-> - **What:** Shortcuts for running and editing cells quickly.
-> - **How:** Command mode for cell actions, edit mode for typing.
-> - **When to use:** All the time; `Shift+Enter`, `A`, `B`, `D D` save a lot of clicking.
+> Shortcuts for running and editing cells quickly. Command mode for cell actions, edit mode for typing. Use it for all the time; `Shift+Enter`, `A`, `B`, `D D` save a lot of clicking.
 
 ### Both modes
 
@@ -226,9 +218,7 @@ Interactive window alternative: put `# %%` in a normal `.py` file to create runn
 
 ## 6. Shell Commands (!)
 
-> - **What:** Running terminal commands from a cell.
-> - **How:** `!` sends the line to the shell; `%pip` installs into the current kernel.
-> - **When to use:** Installing a missing package or listing files without leaving the notebook.
+> Running terminal commands from a cell. `!` sends the line to the shell; `%pip` installs into the current kernel. Use it for installing a missing package or listing files without leaving the notebook.
 
 ```python
 !pip install pandas                 # runs in a shell (may use the wrong Python)
@@ -241,9 +231,7 @@ files = !ls *.csv                   # capture output into a variable
 
 ## 7. Line Magics (%)
 
-> - **What:** Jupyter helper commands for one line.
-> - **How:** Lines starting with `%` are handled by Jupyter (IPython), not Python.
-> - **When to use:** Timing code (`%timeit`), listing variables, changing folder, loading scripts.
+> Jupyter helper commands for one line. Lines starting with `%` are handled by Jupyter (IPython), not Python. Use it for timing code (`%timeit`), listing variables, changing folder, loading scripts.
 
 Apply to one line.
 
@@ -271,9 +259,7 @@ Apply to one line.
 
 ## 8. Cell Magics (%%)
 
-> - **What:** Jupyter helper commands for a whole cell.
-> - **How:** `%%` on the first line applies to the entire cell.
-> - **When to use:** Timing a whole cell, writing a cell to a `.py` file, running bash.
+> Jupyter helper commands for a whole cell. `%%` on the first line applies to the entire cell. Use it for timing a whole cell, writing a cell to a `.py` file, running bash.
 
 Must be the **first line** of the cell; apply to the whole cell.
 
@@ -289,9 +275,7 @@ Must be the **first line** of the cell; apply to the whole cell.
 
 ## 9. Display Output
 
-> - **What:** Controlling what a cell shows.
-> - **How:** The last expression is shown automatically; `display()` shows several; `;` hides.
-> - **When to use:** Showing two DataFrames in one cell, or hiding noisy return values.
+> Controlling what a cell shows. The last expression is shown automatically; `display()` shows several; `;` hides. Use it for showing two DataFrames in one cell, or hiding noisy return values.
 
 ```python
 df                                  # last expression in a cell is displayed
@@ -307,9 +291,7 @@ display(Image("chart.png"))
 
 ## 10. Pandas Display Options
 
-> - **What:** Showing more or nicer pandas output.
-> - **How:** `pd.set_option` changes limits and formats; `df.style` adds colours.
-> - **When to use:** Columns are hidden as `...`, or you want a readable table for a report.
+> Showing more or nicer pandas output. `pd.set_option` changes limits and formats; `df.style` adds colours. Use this when columns are hidden as `...`, or you want a readable table for a report.
 
 ```python
 import pandas as pd
@@ -328,9 +310,7 @@ df.style.format({"price": "{:.2f} EUR"})
 
 ## 11. Plots in Notebooks
 
-> - **What:** How plots appear in notebooks.
-> - **How:** `%matplotlib inline` embeds static images; `widget` makes them interactive.
-> - **When to use:** Plots are not showing, or you want to zoom / pan.
+> How plots appear in notebooks. `%matplotlib inline` embeds static images; `widget` makes them interactive. Use this when plots are not showing, or you want to zoom / pan.
 
 ```python
 import matplotlib.pyplot as plt
@@ -344,9 +324,7 @@ See [20 - Matplotlib](20_matplotlib.md) and [21 - Seaborn](21_seaborn.md).
 
 ## 12. Auto-reload Your Own Modules
 
-> - **What:** Picking up changes in your own `.py` files automatically.
-> - **How:** The autoreload extension re-imports modules before each cell.
-> - **When to use:** You keep helper functions in a module and edit them while using the notebook.
+> Picking up changes in your own `.py` files automatically. The autoreload extension re-imports modules before each cell. Use this when you keep helper functions in a module and edit them while using the notebook.
 
 Without this, edits to your `.py` files are ignored until you restart the kernel.
 
@@ -359,9 +337,7 @@ from utils.cleaning import clean_data
 
 ## 13. Kernel Management
 
-> - **What:** Stopping, restarting and switching the Python process behind the notebook.
-> - **How:** Interrupt stops a cell; restart clears all variables.
-> - **When to use:** A cell hangs, memory is full, or state is confusing after running cells out of order.
+> Stopping, restarting and switching the Python process behind the notebook. Interrupt stops a cell; restart clears all variables. Use this when a cell hangs, memory is full, or state is confusing after running cells out of order.
 
 | Action | JupyterLab menu | Shortcut |
 |---|---|---|
@@ -380,9 +356,7 @@ sys.executable                      # should point inside your .venv
 
 ## 14. Export and Convert
 
-> - **What:** Turning a notebook into HTML, PDF, a script or Markdown.
-> - **How:** `jupyter nbconvert --to <format>`.
-> - **When to use:** Sharing results with people who do not use Jupyter, or moving code into a `.py` file.
+> Turning a notebook into HTML, PDF, a script or Markdown. `jupyter nbconvert --to <format>`. Use it for sharing results with people who do not use Jupyter, or moving code into a `.py` file.
 
 ```powershell
 jupyter nbconvert --to html analysis.ipynb           # HTML report
@@ -395,9 +369,7 @@ jupyter nbconvert --to notebook --execute analysis.ipynb   # run all, save outpu
 
 ## 15. Notebooks and Git
 
-> - **What:** Keeping notebooks clean in version control.
-> - **How:** Strip outputs before committing (`nbstripout`) or pair with a `.py` file (`jupytext`).
-> - **When to use:** Notebooks in a Git repo where diffs are unreadable or outputs contain data.
+> Keeping notebooks clean in version control. Strip outputs before committing (`nbstripout`) or pair with a `.py` file (`jupytext`). Use it for notebooks in a Git repo where diffs are unreadable or outputs contain data.
 
 Outputs make diffs noisy and can leak data. Options:
 
@@ -415,9 +387,7 @@ Add `.ipynb_checkpoints/` to `.gitignore`.
 
 ## 16. Good Practices
 
-> - **What:** Habits that keep notebooks reliable.
-> - **How:** Imports first, restart-and-run-all before sharing, reusable code in modules.
-> - **When to use:** Any notebook someone else (or future you) will run.
+> Habits that keep notebooks reliable. Imports first, restart-and-run-all before sharing, reusable code in modules. Use it in any notebook someone else (or future you) will run.
 
 - Put all imports in the first cell.
 - Run **Restart and Run All** before sharing: it proves the notebook runs top to bottom.
@@ -442,9 +412,7 @@ Add `.ipynb_checkpoints/` to `.gitignore`.
 
 ## 18. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Venv as kernel
 
@@ -494,3 +462,9 @@ from utils import clean_data
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [14 - pytest](14_pytest.md) | **Index:** [All guides](README.md) | **Next:** [16 - NumPy](16_numpy.md)
+<!-- nav:end -->

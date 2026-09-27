@@ -1,5 +1,9 @@
 # 28 - Tool Use (Function Calling)
 
+<!-- nav:start -->
+**Previous:** [27 - Prompt Engineering](27_prompt-engineering.md) | **Index:** [All guides](README.md) | **Next:** [29 - Embeddings and Vector Databases](29_embeddings-vector-db.md)
+<!-- nav:end -->
+
 Quick reference for letting LLMs call your functions: defining tools, the tool-call loop, the SDK tool runner, parallel calls, errors, server-side tools, and designing good tools.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -93,9 +97,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Defining a Tool
 
-> - **What:** Describing a function so the model knows when and how to call it.
-> - **How:** A dict with `name`, `description` and `input_schema` (JSON Schema of the arguments).
-> - **When to use:** Every tool you expose.
+> Describing a function so the model knows when and how to call it. A dict with `name`, `description` and `input_schema` (JSON Schema of the arguments). Use it in every tool you expose.
 
 ```python
 get_order_status_tool = {
@@ -117,9 +119,7 @@ get_order_status_tool = {
 
 ## 2. The Manual Tool Loop
 
-> - **What:** Running tools yourself and feeding results back until the model is done.
-> - **How:** Call the API with `tools`; while `stop_reason == "tool_use"`, run each requested tool, append the assistant message and a user message with all `tool_result`s, and call again.
-> - **When to use:** When you want full control (custom logging, approvals, non-standard flows). Otherwise use the tool runner (section 3).
+> Running tools yourself and feeding results back until the model is done. Call the API with `tools`; while `stop_reason == "tool_use"`, run each requested tool, append the assistant message and a user message with all `tool_result`s, and call again. Use it when you want full control (custom logging, approvals, non-standard flows). Otherwise use the tool runner (section 3).
 
 ```python
 import json
@@ -164,9 +164,7 @@ answer = "".join(b.text for b in response.content if b.type == "text")
 
 ## 3. Tool Runner (SDK Helper)
 
-> - **What:** The SDK runs the tool loop for you.
-> - **How:** Decorate plain Python functions with `@beta_tool`; the schema is generated from type hints and the docstring; iterate the runner until done.
-> - **When to use:** Most tool-using apps; less code and fewer loop bugs.
+> The SDK runs the tool loop for you. Decorate plain Python functions with `@beta_tool`; the schema is generated from type hints and the docstring; iterate the runner until done. Use it in most tool-using apps; less code and fewer loop bugs.
 
 ```python
 import anthropic
@@ -212,9 +210,7 @@ Async version: `@beta_async_tool` with `async def`. Note the tool runner is a be
 
 ## 4. Tools from Pydantic Models
 
-> - **What:** Generating the input schema from a Pydantic model.
-> - **How:** `Model.model_json_schema()` gives the schema; validate the model's input with the same model before running.
-> - **When to use:** Tools with many or complex arguments; shared validation.
+> Generating the input schema from a Pydantic model. `Model.model_json_schema()` gives the schema; validate the model's input with the same model before running. Use it for tools with many or complex arguments; shared validation.
 
 ```python
 from pydantic import BaseModel, Field
@@ -239,9 +235,7 @@ args = SearchOrders.model_validate(tool_use_block.input)     # validate before r
 
 ## 5. Parallel Tool Calls
 
-> - **What:** The model requesting several tools in one response.
-> - **How:** The response contains multiple `tool_use` blocks; run them (concurrently if possible) and return all results together.
-> - **When to use:** Independent lookups ("weather in Paris and Berlin").
+> The model requesting several tools in one response. The response contains multiple `tool_use` blocks; run them (concurrently if possible) and return all results together. Use it for independent lookups ("weather in Paris and Berlin").
 
 - Return **all** `tool_result` blocks in **one** user message, each with its matching `tool_use_id`.
 - Splitting results across several messages teaches the model to stop making parallel calls.
@@ -249,9 +243,7 @@ args = SearchOrders.model_validate(tool_use_block.input)     # validate before r
 
 ## 6. Returning Errors
 
-> - **What:** Telling the model that a tool failed, so it can recover.
-> - **How:** Return a `tool_result` with `is_error: True` and a helpful message; never drop the result.
-> - **When to use:** Invalid input, not found, timeouts, permission denied.
+> Telling the model that a tool failed, so it can recover. Return a `tool_result` with `is_error: True` and a helpful message; never drop the result. Use it for invalid input, not found, timeouts, permission denied.
 
 ```python
 try:
@@ -269,17 +261,13 @@ Good error messages say what went wrong **and what to do next**; the model will 
 
 ## 7. tool_choice
 
-> - **What:** Controlling whether the model must use tools.
-> - **How:** `tool_choice={"type": "auto"}` (default: model decides), `{"type": "none"}` (no tools), and on some models `{"type": "any"}` / `{"type": "tool", "name": ...}` to force a call.
-> - **When to use:** Usually leave `auto`; steer with the prompt ("Always check the order status before answering").
+> Controlling whether the model must use tools. `tool_choice={"type": "auto"}` (default: model decides), `{"type": "none"}` (no tools), and on some models `{"type": "any"}` / `{"type": "tool", "name": ...}` to force a call. Usually leave `auto`; steer with the prompt ("Always check the order status before answering").
 
 Some of the newest models do not support forced tool use; for guaranteed structured output use structured outputs instead ([26](26_llm-apis.md) section 8). `disable_parallel_tool_use: true` limits the model to one call at a time.
 
 ## 8. Strict Tool Use
 
-> - **What:** Guaranteeing the tool arguments match your schema exactly.
-> - **How:** Add `"strict": True` to the tool definition; the schema needs `additionalProperties: false` and a `required` list.
-> - **When to use:** Tools where invalid arguments would break things (bookings, payments, DB writes).
+> Guaranteeing the tool arguments match your schema exactly. Add `"strict": True` to the tool definition; the schema needs `additionalProperties: false` and a `required` list. Use it for tools where invalid arguments would break things (bookings, payments, DB writes).
 
 ```python
 book_flight_tool = {
@@ -301,9 +289,7 @@ book_flight_tool = {
 
 ## 9. Server-Side Tools (Web Search, Code Execution)
 
-> - **What:** Tools that the provider runs on its own servers.
-> - **How:** Declare them in `tools` with their special `type`; results come back inside the same response, no loop code needed.
-> - **When to use:** Current information from the web, running Python for data analysis, fetching a URL.
+> Tools that the provider runs on its own servers. Declare them in `tools` with their special `type`; results come back inside the same response, no loop code needed. Use it for current information from the web, running Python for data analysis, fetching a URL.
 
 ```python
 response = client.messages.create(
@@ -325,9 +311,7 @@ Tool type strings are versioned (date suffix) and change over time; copy them fr
 
 ## 10. Designing Good Tools
 
-> - **What:** Principles for tools the model uses correctly.
-> - **How:** Few, clear, well-described tools that return concise, useful results.
-> - **When to use:** Designing any tool set, especially for agents.
+> Principles for tools the model uses correctly. Few, clear, well-described tools that return concise, useful results. Use it for designing any tool set, especially for agents.
 
 | Principle | Why |
 |---|---|
@@ -344,9 +328,7 @@ Tool type strings are versioned (date suffix) and change over time; copy them fr
 
 ## 11. Tool Descriptions That Work
 
-> - **What:** Writing the text the model reads to decide on a tool.
-> - **How:** 3 to 5 sentences: purpose, when to use (and when not), argument meanings, return format, caveats.
-> - **When to use:** Every tool; this matters more than the code.
+> Writing the text the model reads to decide on a tool. 3 to 5 sentences: purpose, when to use (and when not), argument meanings, return format, caveats. Use it in every tool; this matters more than the code.
 
 ```text
 Weak:    "Gets customer data."
@@ -359,9 +341,7 @@ Strong:  "Retrieve a customer's profile (name, email, plan, signup date, open ti
 
 ## 12. Common Tool Types
 
-> - **What:** Tools most AI apps end up with.
-> - **How:** Pick the ones your use case needs.
-> - **When to use:** Planning an assistant or agent.
+> Tools most AI apps end up with. Pick the ones your use case needs. Use it for planning an assistant or agent.
 
 | Tool | Example | Notes |
 |---|---|---|
@@ -377,9 +357,7 @@ Strong:  "Retrieve a customer's profile (name, email, plan, signup date, open ti
 
 ## 13. Safety: Confirmations and Limits
 
-> - **What:** Preventing tools from doing damage.
-> - **How:** Least privilege, human approval for risky actions, input validation, rate and loop limits.
-> - **When to use:** Any tool that writes, deletes, pays, sends or runs code.
+> Preventing tools from doing damage. Least privilege, human approval for risky actions, input validation, rate and loop limits. Use it in any tool that writes, deletes, pays, sends or runs code.
 
 - **Validate** every argument in your code (the model can be wrong or manipulated).
 - **Human-in-the-loop**: for write actions, return "needs confirmation" and ask the user before executing.
@@ -390,9 +368,7 @@ Strong:  "Retrieve a customer's profile (name, email, plan, signup date, open ti
 
 ## 14. Tool Use in OpenAI (Comparison)
 
-> - **What:** The same concept in the OpenAI API.
-> - **How:** Tools are passed as `tools=[{"type": "function", ...}]`; calls come back as `tool_calls` (Chat Completions) or `function_call` items (Responses API).
-> - **When to use:** Porting code between providers.
+> The same concept in the OpenAI API. Tools are passed as `tools=[{"type": "function", ...}]`; calls come back as `tool_calls` (Chat Completions) or `function_call` items (Responses API). Use it for porting code between providers.
 
 | Concept | Anthropic | OpenAI Chat Completions |
 |---|---|---|
@@ -403,9 +379,7 @@ Strong:  "Retrieve a customer's profile (name, email, plan, signup date, open ti
 
 ## 15. Debugging Tool Calls
 
-> - **What:** Finding out why the model called the wrong tool, wrong arguments, or no tool.
-> - **How:** Log the full request (tools + messages) and every `tool_use` / `tool_result`; replay failing cases.
-> - **When to use:** Any unexpected behaviour.
+> Finding out why the model called the wrong tool, wrong arguments, or no tool. Log the full request (tools + messages) and every `tool_use` / `tool_result`; replay failing cases. Use it in any unexpected behaviour.
 
 - Print each `tool_use` block: name, input, id.
 - Check the description: would a new colleague know when to use this tool?
@@ -429,9 +403,7 @@ Strong:  "Retrieve a customer's profile (name, email, plan, signup date, open ti
 
 ## 17. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Define a tool
 
@@ -485,3 +457,9 @@ def test_delivery_cost():
 Run `uv run pytest tool_agent`.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [27 - Prompt Engineering](27_prompt-engineering.md) | **Index:** [All guides](README.md) | **Next:** [29 - Embeddings and Vector Databases](29_embeddings-vector-db.md)
+<!-- nav:end -->

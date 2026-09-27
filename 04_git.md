@@ -1,5 +1,9 @@
 # 04 - Git and GitHub
 
+<!-- nav:start -->
+**Previous:** [03 - Linux](03_linux.md) | **Index:** [All guides](README.md) | **Next:** [05 - VS Code](05_vscode.md)
+<!-- nav:end -->
+
 Quick reference for version control with Git and working with GitHub (including the `gh` CLI).
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -79,9 +83,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The meaning of every flag, value and special name used in the Git commands below.
-> - **How:** A command is split into program, sub-command, flags and arguments; tables list every flag.
-> - **When to use:** You see a command like `git push -u origin main` and want to know what each part does.
+> The meaning of every flag, value and special name used in the Git commands below. A command is split into program, sub-command, flags and arguments; tables list every flag. Use this when you see a command like `git push -u origin main` and want to know what each part does.
 
 ### How a command is built
 
@@ -185,9 +187,7 @@ Help for any sub-command: `git commit --help` or `git commit -h` (short).
 
 ## 1. Concepts
 
-> - **What:** The basic ideas: working folder, staging area, commits, branches, remote.
-> - **How:** Git stores snapshots (commits); you pick changes (stage), save them (commit), share them (push).
-> - **When to use:** Read once before starting; it explains why each command exists.
+> The basic ideas: working folder, staging area, commits, branches, remote. Git stores snapshots (commits); you pick changes (stage), save them (commit), share them (push). Read once before starting; it explains why each command exists.
 
 ```text
 Working folder --(git add)--> Staging area --(git commit)--> Local repo --(git push)--> Remote (GitHub)
@@ -208,9 +208,7 @@ Working folder --(git add)--> Staging area --(git commit)--> Local repo --(git p
 
 ## 2. Install and Configure
 
-> - **What:** One-time setup of Git on a machine.
-> - **How:** `git config --global` stores your name, email and preferences for all repos.
-> - **When to use:** New laptop or new VM, before your first commit.
+> One-time setup of Git on a machine. `git config --global` stores your name, email and preferences for all repos. Use it for new laptop or new VM, before your first commit.
 
 ```bash
 winget install -e --id Git.Git              # Windows
@@ -228,9 +226,7 @@ git config --list                               # show all settings
 
 ## 3. Start a Repository
 
-> - **What:** Starting version control for a project.
-> - **How:** `git init` in an existing folder, or `git clone` to download an existing repo.
-> - **When to use:** New project (init) or working on something already on GitHub (clone).
+> Starting version control for a project. `git init` in an existing folder, or `git clone` to download an existing repo. Use it for new project (init) or working on something already on GitHub (clone).
 
 ```bash
 git init                                    # new repo in current folder
@@ -241,9 +237,7 @@ git clone git@github.com:user/repo.git      # via SSH
 
 ## 4. Daily Workflow
 
-> - **What:** The loop you repeat all day: change, stage, commit, push.
-> - **How:** `git add` selects changes, `git commit` saves them locally, `git push` uploads them.
-> - **When to use:** Every time you finish a small, meaningful piece of work.
+> The loop you repeat all day: change, stage, commit, push. `git add` selects changes, `git commit` saves them locally, `git push` uploads them. Use it every time you finish a small, meaningful piece of work.
 
 ```bash
 git status                                  # what changed?
@@ -258,9 +252,7 @@ git pull                                    # download + merge remote changes
 
 ## 5. Status and Differences
 
-> - **What:** Seeing what changed before you commit.
-> - **How:** `git status` lists changed files; `git diff` shows the exact lines.
-> - **When to use:** Before every commit, to avoid committing debug code or secrets.
+> Seeing what changed before you commit. `git status` lists changed files; `git diff` shows the exact lines. Use it before every commit, to avoid committing debug code or secrets.
 
 ```bash
 git status                                  # overview
@@ -276,9 +268,7 @@ Short status codes: `M` modified, `A` added, `D` deleted, `R` renamed, `??` untr
 
 ## 6. Commit History
 
-> - **What:** Looking at past commits.
-> - **How:** `git log` lists commits; `git show` / `git blame` show details for a commit or line.
-> - **When to use:** "When did this break?", "who changed this line and why?", finding a commit hash.
+> Looking at past commits. `git log` lists commits; `git show` / `git blame` show details for a commit or line. Use it to answer questions like "When did this break?", "who changed this line and why?", finding a commit hash.
 
 ```bash
 git log                                     # full history (q to quit)
@@ -295,9 +285,7 @@ git blame file.py                           # who changed each line
 
 ## 7. Branches
 
-> - **What:** Separate lines of work that do not affect main until merged.
-> - **How:** `git switch -c name` creates a branch; commits go to the current branch.
-> - **When to use:** Any new feature or fix, so main stays working while you experiment.
+> Separate lines of work that do not affect main until merged. `git switch -c name` creates a branch; commits go to the current branch. Use it in any new feature or fix, so main stays working while you experiment.
 
 ```bash
 git branch                                  # list local branches
@@ -313,9 +301,7 @@ git push origin --delete feature/login      # delete remote branch
 
 ## 8. Merge and Rebase
 
-> - **What:** Bringing changes from one branch into another.
-> - **How:** Merge adds a merge commit; rebase replays your commits on top for a straight history.
-> - **When to use:** Merge a finished feature into main; rebase your branch to catch up with main.
+> Bringing changes from one branch into another. Merge adds a merge commit; rebase replays your commits on top for a straight history. Use it for merge a finished feature into main; rebase your branch to catch up with main.
 
 ```bash
 # Merge feature into main
@@ -335,9 +321,7 @@ Rule: never rebase commits that others have already pulled.
 
 ## 9. Merge Conflicts
 
-> - **What:** What happens when two branches changed the same lines.
-> - **How:** Git marks both versions in the file; you edit, `git add`, then commit.
-> - **When to use:** A merge, rebase or pull stops with "CONFLICT".
+> What happens when two branches changed the same lines. Git marks both versions in the file; you edit, `git add`, then commit. Use it for a merge, rebase or pull stops with "CONFLICT".
 
 A conflict looks like this in the file:
 
@@ -363,9 +347,7 @@ VS Code shows buttons: **Accept Current / Accept Incoming / Accept Both**.
 
 ## 10. Remotes: Push, Pull, Fetch
 
-> - **What:** Syncing your local repo with GitHub.
-> - **How:** `push` uploads commits, `fetch` downloads, `pull` downloads and merges.
-> - **When to use:** Sharing work, getting teammates' changes, working from two computers.
+> Syncing your local repo with GitHub. `push` uploads commits, `fetch` downloads, `pull` downloads and merges. Use it for sharing work, getting teammates' changes, working from two computers.
 
 ```bash
 git remote -v                               # list remotes
@@ -382,9 +364,7 @@ git branch -vv                              # local vs remote tracking
 
 ## 11. Undo Things
 
-> - **What:** Fixing mistakes: unstaging, discarding, amending, reverting.
-> - **How:** `restore` for files, `reset` to move the branch back, `revert` to undo safely with a new commit.
-> - **When to use:** Wrong file committed, bad commit message, or a pushed commit broke something.
+> Fixing mistakes: unstaging, discarding, amending, reverting. `restore` for files, `reset` to move the branch back, `revert` to undo safely with a new commit. Use it for wrong file committed, bad commit message, or a pushed commit broke something.
 
 | Situation | Command |
 |---|---|
@@ -406,9 +386,7 @@ git branch -vv                              # local vs remote tracking
 
 ## 12. Stash (Save Work for Later)
 
-> - **What:** Temporarily shelving uncommitted changes.
-> - **How:** `git stash` saves and cleans the working folder; `git stash pop` brings changes back.
-> - **When to use:** You must switch branch or pull now, but your current work is not ready to commit.
+> Temporarily shelving uncommitted changes. `git stash` saves and cleans the working folder; `git stash pop` brings changes back. Use this when you must switch branch or pull now, but your current work is not ready to commit.
 
 ```bash
 git stash                                   # put changes aside
@@ -423,9 +401,7 @@ git stash clear                             # delete all
 
 ## 13. Tags and Releases
 
-> - **What:** Named markers on specific commits, usually versions.
-> - **How:** `git tag -a v1.0.0`, then push the tag.
-> - **When to use:** Marking a release so you can always return to exactly that version.
+> Named markers on specific commits, usually versions. `git tag -a v1.0.0`, then push the tag. Use it for marking a release so you can always return to exactly that version.
 
 ```bash
 git tag                                     # list
@@ -438,9 +414,7 @@ git tag -d v1.0.0                           # delete local tag
 
 ## 14. .gitignore
 
-> - **What:** A list of files Git should never track.
-> - **How:** Patterns in `.gitignore`; matching untracked files are ignored.
-> - **When to use:** Every project: keep out `.venv`, `.env`, data files, caches and logs.
+> A list of files Git should never track. Patterns in `.gitignore`; matching untracked files are ignored. Use it in every project: keep out `.venv`, `.env`, data files, caches and logs.
 
 ```text
 # Python
@@ -475,9 +449,7 @@ Templates: https://github.com/github/gitignore
 
 ## 15. Rename, Move, Delete Files
 
-> - **What:** Renaming, moving or deleting tracked files the Git way.
-> - **How:** `git mv` / `git rm` change the file and stage the change in one step.
-> - **When to use:** Reorganising a project (like renumbering these guides) while keeping file history.
+> Renaming, moving or deleting tracked files the Git way. `git mv` / `git rm` change the file and stage the change in one step. Use it for reorganising a project (like renumbering these guides) while keeping file history.
 
 ```bash
 git mv old.py new.py                        # rename (keeps history)
@@ -488,9 +460,7 @@ git log --follow new.py                     # history across renames
 
 ## 16. Commit Message Convention
 
-> - **What:** A standard format for commit messages.
-> - **How:** `type(scope): description`, where the type says what kind of change it is.
-> - **When to use:** Every commit; makes history readable and enables automatic changelogs.
+> A standard format for commit messages. `type(scope): description`, where the type says what kind of change it is. Use it in every commit; makes history readable and enables automatic changelogs.
 
 Conventional Commits: `type(scope): description`
 
@@ -514,9 +484,7 @@ git commit -m "fix(pandas): correct read_csv example"
 
 ## 17. GitHub CLI (gh)
 
-> - **What:** GitHub from the terminal: repos, PRs, issues, Actions.
-> - **How:** `gh` talks to the GitHub API after `gh auth login`.
-> - **When to use:** Creating a repo or PR without leaving the terminal, checking CI status.
+> GitHub from the terminal: repos, PRs, issues, Actions. `gh` talks to the GitHub API after `gh auth login`. Use it for creating a repo or PR without leaving the terminal, checking CI status.
 
 ```bash
 winget install -e --id GitHub.cli
@@ -539,9 +507,7 @@ gh run watch                                # follow current run
 
 ## 18. Pull Request Workflow
 
-> - **What:** The standard team flow: branch, commit, push, pull request, review, merge.
-> - **How:** Work on a branch, open a PR on GitHub, merge after review / checks.
-> - **When to use:** Any shared repo, or solo when you want CI checks and a record of changes.
+> The standard team flow: branch, commit, push, pull request, review, merge. Work on a branch, open a PR on GitHub, merge after review / checks. Use it in any shared repo, or solo when you want CI checks and a record of changes.
 
 ```bash
 git switch main && git pull                 # 1. start from latest main
@@ -560,9 +526,7 @@ Fork workflow: fork on GitHub, clone your fork, `git remote add upstream <origin
 
 ## 19. SSH Key for GitHub
 
-> - **What:** Password-less, secure authentication with GitHub.
-> - **How:** Generate a key pair; add the public key to GitHub; Git uses the private key.
-> - **When to use:** Tired of entering credentials, or HTTPS auth is blocked.
+> Password-less, secure authentication with GitHub. Generate a key pair; add the public key to GitHub; Git uses the private key. Use it for tired of entering credentials, or HTTPS auth is blocked.
 
 ```bash
 ssh-keygen -t ed25519 -C "you@example.com"  # create key (Enter for defaults)
@@ -573,9 +537,7 @@ ssh -T git@github.com                       # test: "Hi <user>! You've successfu
 
 ## 20. Useful Extras
 
-> - **What:** Less common but powerful commands.
-> - **How:** Aliases, cherry-pick, bisect, worktree and more.
-> - **When to use:** Copy one fix to another branch (cherry-pick), find the commit that broke something (bisect).
+> Less common but powerful commands. Aliases, cherry-pick, bisect, worktree and more. Use it for copy one fix to another branch (cherry-pick), find the commit that broke something (bisect).
 
 ```bash
 git config --global alias.lg "log --oneline --graph --all"   # then: git lg
@@ -606,9 +568,7 @@ git archive -o release.zip HEAD             # export without .git
 
 ## 22. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Feature branch to PR
 
@@ -662,3 +622,9 @@ git push
 Use `revert` for pushed history; `reset` rewrites history others may already have.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [03 - Linux](03_linux.md) | **Index:** [All guides](README.md) | **Next:** [05 - VS Code](05_vscode.md)
+<!-- nav:end -->

@@ -1,5 +1,9 @@
 # 27 - Prompt Engineering
 
+<!-- nav:start -->
+**Previous:** [26 - LLM APIs](26_llm-apis.md) | **Index:** [All guides](README.md) | **Next:** [28 - Tool Use (Function Calling)](28_tool-use.md)
+<!-- nav:end -->
+
 Quick reference for writing prompts that get reliable, high-quality results from LLMs: structure, examples, context, output formats, reasoning, templates, chaining and iteration.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -92,9 +96,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. The Anatomy of a Good Prompt
 
-> - **What:** The building blocks most strong prompts contain.
-> - **How:** Not every prompt needs all parts; include what the task needs, in a clear order.
-> - **When to use:** Designing any non-trivial prompt.
+> The building blocks most strong prompts contain. Not every prompt needs all parts; include what the task needs, in a clear order. Use it for designing any non-trivial prompt.
 
 | Part | Purpose | Example |
 |---|---|---|
@@ -110,9 +112,7 @@ Order that works well: context -> data -> task / rules -> output format. For lon
 
 ## 2. Be Clear, Specific and Direct
 
-> - **What:** Saying exactly what you want, in plain words.
-> - **How:** Use imperative instructions, concrete criteria and numbers instead of vague adjectives.
-> - **When to use:** Always; vague prompts are the #1 cause of disappointing output.
+> Saying exactly what you want, in plain words. Use imperative instructions, concrete criteria and numbers instead of vague adjectives. Use this when always; vague prompts are the #1 cause of disappointing output.
 
 | Vague | Specific |
 |---|---|
@@ -125,9 +125,7 @@ Tell the model what TO do, not only what not to do: "Write in flowing paragraphs
 
 ## 3. Give Context and the Why
 
-> - **What:** Explaining the purpose and audience behind an instruction.
-> - **How:** Add one sentence of reason; the model generalises better when it understands the goal.
-> - **When to use:** Rules that could be misapplied, or tasks where judgement matters.
+> Explaining the purpose and audience behind an instruction. Add one sentence of reason; the model generalises better when it understands the goal. Use it for rules that could be misapplied, or tasks where judgement matters.
 
 ```text
 Weak:   NEVER use abbreviations.
@@ -140,9 +138,7 @@ Useful context to include: the audience, how the output will be used, what a gre
 
 ## 4. Separate Instructions from Data (XML Tags)
 
-> - **What:** Clearly marking which parts are your instructions and which parts are material to process.
-> - **How:** Wrap inputs in descriptive tags like `<document>`, `<email>`, `<examples>`; refer to them by name.
-> - **When to use:** Any prompt that contains user content, documents or examples. Also reduces prompt-injection risk.
+> Clearly marking which parts are your instructions and which parts are material to process. Wrap inputs in descriptive tags like `<document>`, `<email>`, `<examples>`; refer to them by name. Use it in any prompt that contains user content, documents or examples. Also reduces prompt-injection risk.
 
 ```text
 Analyze the customer email in <email> using the refund policy in <policy>.
@@ -164,9 +160,7 @@ Tags can be anything meaningful; be consistent. Asking for tagged output makes p
 
 ## 5. Examples (Few-Shot)
 
-> - **What:** Showing the model a few input -> ideal output pairs.
-> - **How:** Put 2 to 5 examples in `<example>` tags; make them diverse and representative, including tricky cases.
-> - **When to use:** Specific formats, labels, tone or edge-case handling that is hard to describe in words.
+> Showing the model a few input -> ideal output pairs. Put 2 to 5 examples in `<example>` tags; make them diverse and representative, including tricky cases. Use it for specific formats, labels, tone or edge-case handling that is hard to describe in words.
 
 ```text
 Classify each support message as billing, technical or shipping.
@@ -195,9 +189,7 @@ Answer with the label only.
 
 ## 6. Role and Audience
 
-> - **What:** Giving the model a perspective and telling it who the answer is for.
-> - **How:** One line in the system prompt: role + audience + goal.
-> - **When to use:** Domain-specific tasks, tone control.
+> Giving the model a perspective and telling it who the answer is for. One line in the system prompt: role + audience + goal. Use it for domain-specific tasks, tone control.
 
 ```text
 You are a senior data engineer reviewing pull requests for a team of junior analysts.
@@ -208,9 +200,7 @@ A role alone is weak; combine it with concrete instructions and context.
 
 ## 7. Output Format
 
-> - **What:** Controlling the shape of the answer.
-> - **How:** State the format explicitly; show a template; for code-consumed output use structured outputs (schema-enforced JSON).
-> - **When to use:** Every prompt whose output is parsed or displayed in a fixed layout.
+> Controlling the shape of the answer. State the format explicitly; show a template; for code-consumed output use structured outputs (schema-enforced JSON). Use this when every prompt whose output is parsed or displayed in a fixed layout.
 
 | Need | Technique |
 |---|---|
@@ -225,9 +215,7 @@ The style of your prompt influences the output: a prompt full of bullet points a
 
 ## 8. Reasoning Before Answering
 
-> - **What:** Letting the model think through a problem before committing to an answer.
-> - **How:** Use a reasoning model / thinking setting, or ask it to reason in `<thinking>` tags and put the final answer in `<answer>` tags.
-> - **When to use:** Maths, multi-step logic, analysis, decisions with several factors. Skip for simple lookups.
+> Letting the model think through a problem before committing to an answer. Use a reasoning model / thinking setting, or ask it to reason in `<thinking>` tags and put the final answer in `<answer>` tags. Use it for maths, multi-step logic, analysis, decisions with several factors. Skip for simple lookups.
 
 ```text
 Decide whether this expense claim follows the policy.
@@ -239,9 +227,7 @@ With models that have built-in thinking (adaptive thinking / effort settings), p
 
 ## 9. Long Documents
 
-> - **What:** Getting accurate answers from long inputs (reports, contracts, transcripts).
-> - **How:** Put documents at the top, the question at the end; tag each document with metadata; ask for quotes first.
-> - **When to use:** Document Q&A, summarising multiple files, RAG answers.
+> Getting accurate answers from long inputs (reports, contracts, transcripts). Put documents at the top, the question at the end; tag each document with metadata; ask for quotes first. Use it for document Q&A, summarising multiple files, RAG answers.
 
 ```text
 <documents>
@@ -263,9 +249,7 @@ Question: How did revenue guidance change between the report and the Q1 update?
 
 ## 10. Allowing "I Don't Know"
 
-> - **What:** Giving the model permission to say it does not have the answer.
-> - **How:** Explicitly allow and define the fallback response.
-> - **When to use:** Q&A over documents, support bots, anything where a made-up answer is worse than none.
+> Giving the model permission to say it does not have the answer. Explicitly allow and define the fallback response. Use it for q&A over documents, support bots, anything where a made-up answer is worse than none.
 
 ```text
 Answer only using the information in <context>. If the answer is not in the context,
@@ -275,9 +259,7 @@ Do not guess.
 
 ## 11. System Prompt Template
 
-> - **What:** A reusable structure for production system prompts.
-> - **How:** Fill in each section; delete what does not apply.
-> - **When to use:** Chatbots, assistants, agents.
+> A reusable structure for production system prompts. Fill in each section; delete what does not apply. Use it for chatbots, assistants, agents.
 
 ```text
 You are {role} for {company / product}. {one sentence on the goal and who the users are}.
@@ -308,9 +290,7 @@ Keep it as short as it can be while complete; long rule lists written for older 
 
 ## 12. Prompt Templates in Code
 
-> - **What:** Building prompts from variables safely and reproducibly.
-> - **How:** Keep templates as constants or files; fill them with f-strings or `str.format`; version them with your code.
-> - **When to use:** Every app; never build prompts by scattered string concatenation.
+> Building prompts from variables safely and reproducibly. Keep templates as constants or files; fill them with f-strings or `str.format`; version them with your code. Use it in every app; never build prompts by scattered string concatenation.
 
 ```python
 from pathlib import Path
@@ -335,9 +315,7 @@ Libraries: Jinja2 for complex templates with loops / conditions. Keep templates 
 
 ## 13. Prompt Chaining
 
-> - **What:** Splitting a complex task into several simpler LLM calls.
-> - **How:** Each step has one job; code passes the output of one step to the next and can validate in between.
-> - **When to use:** Long or multi-stage tasks (research -> outline -> draft -> edit), when one prompt gets inconsistent.
+> Splitting a complex task into several simpler LLM calls. Each step has one job; code passes the output of one step to the next and can validate in between. Use it for long or multi-stage tasks (research -> outline -> draft -> edit), when one prompt gets inconsistent.
 
 ```text
 Step 1: extract facts from each document          (parallel, cheap model)
@@ -353,9 +331,7 @@ Benefits: each prompt is simpler and testable; failures are easy to locate; step
 
 ## 14. Common Task Recipes
 
-> - **What:** Proven prompt shapes for everyday tasks.
-> - **How:** Copy, then adapt the details.
-> - **When to use:** Starting a new feature quickly.
+> Proven prompt shapes for everyday tasks. Copy, then adapt the details. Use it for starting a new feature quickly.
 
 | Task | Prompt pattern |
 |---|---|
@@ -371,9 +347,7 @@ Benefits: each prompt is simpler and testable; failures are easy to locate; step
 
 ## 15. Prompting for Code Generation
 
-> - **What:** Getting correct, usable code from an LLM.
-> - **How:** Give the environment, constraints, interfaces and examples of the surrounding code style.
-> - **When to use:** Generating functions, tests, SQL, refactors.
+> Getting correct, usable code from an LLM. Give the environment, constraints, interfaces and examples of the surrounding code style. Use it for generating functions, tests, SQL, refactors.
 
 ```text
 Write a Python 3.12 function using pandas 2.x.
@@ -393,9 +367,7 @@ Always run and test generated code; ask the model to explain assumptions.
 
 ## 16. Tone, Length and Style Control
 
-> - **What:** Controlling how the answer reads.
-> - **How:** Describe the target reader and give a concrete length / structure; show a sample if style matters.
-> - **When to use:** Customer-facing text, reports, UX copy.
+> Controlling how the answer reads. Describe the target reader and give a concrete length / structure; show a sample if style matters. Use it for customer-facing text, reports, UX copy.
 
 | Want | Say |
 |---|---|
@@ -407,9 +379,7 @@ Always run and test generated code; ask the model to explain assumptions.
 
 ## 17. Anti-Patterns
 
-> - **What:** Common mistakes that hurt results.
-> - **How:** Each has a fix.
-> - **When to use:** Reviewing a prompt that underperforms.
+> Common mistakes that hurt results. Each has a fix. Use it for reviewing a prompt that underperforms.
 
 | Anti-pattern | Fix |
 |---|---|
@@ -427,9 +397,7 @@ Always run and test generated code; ask the model to explain assumptions.
 
 ## 18. Iterating on Prompts
 
-> - **What:** Improving prompts systematically instead of by feel.
-> - **How:** Collect test cases, run, look at failures, change one thing, re-run, compare.
-> - **When to use:** Any prompt that goes to production.
+> Improving prompts systematically instead of by feel. Collect test cases, run, look at failures, change one thing, re-run, compare. Use it in any prompt that goes to production.
 
 ```text
 1. Write 10 to 50 real test inputs (include hard and weird ones)
@@ -444,9 +412,7 @@ Tools and techniques: [34 - Evals and Observability](34_evals-observability.md).
 
 ## 19. Prompt Checklist
 
-> - **What:** A final review before shipping a prompt.
-> - **How:** Tick every line that applies.
-> - **When to use:** Code review of prompts.
+> A final review before shipping a prompt. Tick every line that applies. Use it for code review of prompts.
 
 - [ ] A new colleague could do the task from this prompt alone
 - [ ] Goal, audience and use of the output are stated
@@ -461,9 +427,7 @@ Tools and techniques: [34 - Evals and Observability](34_evals-observability.md).
 
 ## 20. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Rewrite a vague prompt
 
@@ -507,3 +471,9 @@ What is wrong with: `NEVER EVER use bullets!!! Be good. Here is data: ...long em
 All caps without a reason, a negative-only instruction (say what to do instead, e.g. "write flowing paragraphs"), the vague "be good", data not separated by tags, and no audience, length or format.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [26 - LLM APIs](26_llm-apis.md) | **Index:** [All guides](README.md) | **Next:** [28 - Tool Use (Function Calling)](28_tool-use.md)
+<!-- nav:end -->

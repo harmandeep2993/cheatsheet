@@ -1,5 +1,9 @@
 # 45 - Kubernetes
 
+<!-- nav:start -->
+**Previous:** [44 - Nginx, Reverse Proxy and HTTPS](44_nginx-https.md) | **Index:** [All guides](README.md) | **Next:** [46 - Terraform](46_terraform.md)
+<!-- nav:end -->
+
 Quick reference for Kubernetes (K8s): core concepts, kubectl, Pods, Deployments, Services, Ingress, ConfigMaps / Secrets, scaling, GPUs, Helm, local clusters and Azure Kubernetes Service.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -107,9 +111,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** How kubectl commands are built and the most used flags.
-> - **How:** `kubectl <verb> <resource> [name] [flags]`.
-> - **When to use:** You see `kubectl logs -f deploy/api -n prod --tail 100` and want to know what each part does.
+> How kubectl commands are built and the most used flags. `kubectl <verb> <resource> [name] [flags]`. Use this when you see `kubectl logs -f deploy/api -n prod --tail 100` and want to know what each part does.
 
 ```text
 kubectl  logs  -f  deploy/api  -n prod  --tail 100
@@ -139,9 +141,7 @@ kubectl  logs  -f  deploy/api  -n prod  --tail 100
 
 ## 1. Local Cluster Setup
 
-> - **What:** Running a small Kubernetes cluster on your laptop for learning and testing.
-> - **How:** Docker Desktop's built-in Kubernetes, kind (Kubernetes in Docker) or minikube.
-> - **When to use:** Learning, testing manifests before deploying to a real cluster.
+> Running a small Kubernetes cluster on your laptop for learning and testing. Docker Desktop's built-in Kubernetes, kind (Kubernetes in Docker) or minikube. Use it for learning, testing manifests before deploying to a real cluster.
 
 ```powershell
 winget install -e --id Kubernetes.kubectl
@@ -155,9 +155,7 @@ kind delete cluster --name dev
 
 ## 2. kubectl Basics
 
-> - **What:** The everyday commands.
-> - **How:** Get / describe to inspect, apply to create / update from YAML, logs / exec to debug.
-> - **When to use:** All the time.
+> The everyday commands. Get / describe to inspect, apply to create / update from YAML, logs / exec to debug. Use it for all the time.
 
 ```bash
 kubectl get pods                          # also: deploy, svc, ingress, nodes, all
@@ -178,9 +176,7 @@ Tip: `kubectl create deployment api --image=nginx --dry-run=client -o yaml > dep
 
 ## 3. Pods
 
-> - **What:** The smallest deployable unit: one or more containers sharing network and storage.
-> - **How:** Usually created by Deployments / Jobs, not directly; each pod gets its own IP and is replaceable (cattle, not pets).
-> - **When to use:** Understanding what runs; direct pods only for quick tests.
+> The smallest deployable unit: one or more containers sharing network and storage. Usually created by Deployments / Jobs, not directly; each pod gets its own IP and is replaceable (cattle, not pets). Use it for understanding what runs; direct pods only for quick tests.
 
 ```yaml
 apiVersion: v1
@@ -203,9 +199,7 @@ kubectl run tmp --rm -it --image=python:3.12-slim -- bash     # throwaway debug 
 
 ## 4. Deployments
 
-> - **What:** Keeps a desired number of identical pods running and updates them safely.
-> - **How:** A pod template + `replicas`; changing the image triggers a rolling update.
-> - **When to use:** Every stateless app (APIs, UIs, workers).
+> Keeps a desired number of identical pods running and updates them safely. A pod template + `replicas`; changing the image triggers a rolling update. Use it in every stateless app (APIs, UIs, workers).
 
 ```yaml
 apiVersion: apps/v1
@@ -238,9 +232,7 @@ spec:
 
 ## 5. Services
 
-> - **What:** A stable address that load-balances traffic to the pods matching a label.
-> - **How:** Pods come and go (new IPs); the Service keeps one DNS name (`api` / `api.<namespace>.svc.cluster.local`).
-> - **When to use:** Every app that other pods or the Ingress must reach.
+> A stable address that load-balances traffic to the pods matching a label. Pods come and go (new IPs); the Service keeps one DNS name (`api` / `api.<namespace>.svc.cluster.local`). Use it in every app that other pods or the Ingress must reach.
 
 ```yaml
 apiVersion: v1
@@ -266,9 +258,7 @@ Other pods call it as `http://api` (same namespace) or `http://api.prod.svc.clus
 
 ## 6. Ingress (HTTP Routing and HTTPS)
 
-> - **What:** Routing external HTTP(S) traffic to Services by host name and path.
-> - **How:** An Ingress resource + an **ingress controller** (e.g. ingress-nginx, Application Gateway for Containers); TLS certificates often via cert-manager.
-> - **When to use:** Exposing web apps / APIs with domains and HTTPS.
+> Routing external HTTP(S) traffic to Services by host name and path. An Ingress resource + an **ingress controller** (e.g. ingress-nginx, Application Gateway for Containers); TLS certificates often via cert-manager. Use it for exposing web apps / APIs with domains and HTTPS.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -299,9 +289,7 @@ The newer **Gateway API** (Gateway + HTTPRoute resources) is the successor to In
 
 ## 7. ConfigMaps and Secrets
 
-> - **What:** Configuration and sensitive values kept outside the image.
-> - **How:** Create them from literals / files; inject as environment variables or mounted files.
-> - **When to use:** Model names, URLs, feature flags (ConfigMap); API keys, DB passwords (Secret).
+> Configuration and sensitive values kept outside the image. Create them from literals / files; inject as environment variables or mounted files. Use it for model names, URLs, feature flags (ConfigMap); API keys, DB passwords (Secret).
 
 ```bash
 kubectl create configmap api-config --from-literal=LLM_MODEL=claude-opus-5 --from-literal=LOG_LEVEL=info
@@ -314,9 +302,7 @@ Kubernetes Secrets are only base64-encoded: restrict access with RBAC, enable en
 
 ## 8. Health Probes
 
-> - **What:** Checks Kubernetes uses to know whether a container is alive and ready for traffic.
-> - **How:** HTTP / TCP / command probes; failing liveness -> restart; failing readiness -> removed from the Service until ready.
-> - **When to use:** Every production container (especially slow-starting ones that load models).
+> Checks Kubernetes uses to know whether a container is alive and ready for traffic. HTTP / TCP / command probes; failing liveness -> restart; failing readiness -> removed from the Service until ready. Use it in every production container (especially slow-starting ones that load models).
 
 ```yaml
           readinessProbe:
@@ -335,9 +321,7 @@ Kubernetes Secrets are only base64-encoded: restrict access with RBAC, enable en
 
 ## 9. Resources: Requests and Limits
 
-> - **What:** CPU / memory each container reserves and may use at most.
-> - **How:** `requests` are used for scheduling (guaranteed); `limits` cap usage (exceeding memory limit = killed, "OOMKilled").
-> - **When to use:** Always; required for autoscaling and stable clusters.
+> CPU / memory each container reserves and may use at most. `requests` are used for scheduling (guaranteed); `limits` cap usage (exceeding memory limit = killed, "OOMKilled"). Use it always; required for autoscaling and stable clusters.
 
 ```yaml
           resources:
@@ -350,9 +334,7 @@ Kubernetes Secrets are only base64-encoded: restrict access with RBAC, enable en
 
 ## 10. Scaling (Manual and Autoscaling)
 
-> - **What:** Changing the number of pod replicas.
-> - **How:** `kubectl scale` manually; a HorizontalPodAutoscaler adjusts replicas based on CPU / memory / custom metrics; KEDA scales on events (queue length).
-> - **When to use:** Variable traffic; background workers driven by queue depth ([41](41_redis-queues.md)).
+> Changing the number of pod replicas. `kubectl scale` manually; a HorizontalPodAutoscaler adjusts replicas based on CPU / memory / custom metrics; KEDA scales on events (queue length). Use it for variable traffic; background workers driven by queue depth ([41](41_redis-queues.md)).
 
 ```bash
 kubectl scale deploy/api --replicas=5
@@ -364,9 +346,7 @@ Nodes can also autoscale (cluster autoscaler / AKS node autoscaling) so new pods
 
 ## 11. Rolling Updates and Rollbacks
 
-> - **What:** Deploying a new version without downtime, and undoing it.
-> - **How:** Changing the pod template (e.g. image tag) replaces pods gradually; readiness probes gate traffic; history allows rollback.
-> - **When to use:** Every release.
+> Deploying a new version without downtime, and undoing it. Changing the pod template (e.g. image tag) replaces pods gradually; readiness probes gate traffic; history allows rollback. Use it in every release.
 
 ```bash
 kubectl set image deploy/api api=acrsalesdev.azurecr.io/sales-api:1.3
@@ -380,9 +360,7 @@ Use immutable tags (commit SHA) instead of `latest` so you always know what runs
 
 ## 12. Storage (Volumes and PVCs)
 
-> - **What:** Data that must survive pod restarts.
-> - **How:** A PersistentVolumeClaim requests storage from a StorageClass (cloud disk / file share); pods mount it.
-> - **When to use:** Databases, model caches, uploaded files. (Prefer managed databases / blob storage for app data when possible.)
+> Data that must survive pod restarts. A PersistentVolumeClaim requests storage from a StorageClass (cloud disk / file share); pods mount it. Use it for databases, model caches, uploaded files. (Prefer managed databases / blob storage for app data when possible.).
 
 ```yaml
 apiVersion: v1
@@ -408,9 +386,7 @@ Stateful services with stable identities (databases) use **StatefulSets**.
 
 ## 13. Jobs and CronJobs
 
-> - **What:** Run-to-completion work and scheduled work.
-> - **How:** A Job runs pods until they succeed; a CronJob creates Jobs on a cron schedule.
-> - **When to use:** Batch processing, nightly RAG re-indexing, eval runs, database migrations.
+> Run-to-completion work and scheduled work. A Job runs pods until they succeed; a CronJob creates Jobs on a cron schedule. Use it for batch processing, nightly RAG re-indexing, eval runs, database migrations.
 
 ```yaml
 apiVersion: batch/v1
@@ -433,9 +409,7 @@ spec:
 
 ## 14. Namespaces and Contexts
 
-> - **What:** Separating environments / teams inside a cluster, and switching between clusters.
-> - **How:** Namespaces group objects; kubeconfig contexts point kubectl at different clusters.
-> - **When to use:** dev / staging / prod separation, multiple clusters.
+> Separating environments / teams inside a cluster, and switching between clusters. Namespaces group objects; kubeconfig contexts point kubectl at different clusters. Use it for dev / staging / prod separation, multiple clusters.
 
 ```bash
 kubectl create namespace prod
@@ -447,9 +421,7 @@ kubectl config set-context --current --namespace=prod    # default namespace
 
 ## 15. GPUs and Model Serving
 
-> - **What:** Running GPU workloads like vLLM or Ollama on Kubernetes.
-> - **How:** GPU node pools with the NVIDIA device plugin; pods request `nvidia.com/gpu`; taints / tolerations keep other pods off expensive GPU nodes.
-> - **When to use:** Self-hosted LLMs serving many users ([35](35_local-llms.md)).
+> Running GPU workloads like vLLM or Ollama on Kubernetes. GPU node pools with the NVIDIA device plugin; pods request `nvidia.com/gpu`; taints / tolerations keep other pods off expensive GPU nodes. Use it for self-hosted LLMs serving many users ([35](35_local-llms.md)).
 
 ```yaml
       containers:
@@ -470,9 +442,7 @@ Scale GPU node pools to zero when idle to save money; model downloads are large,
 
 ## 16. Helm
 
-> - **What:** The package manager for Kubernetes: installs whole apps (many YAML files) as one "chart" with configurable values.
-> - **How:** Add a repo, install a chart with your values, upgrade / roll back as a release.
-> - **When to use:** Installing third-party software (ingress-nginx, cert-manager, Redis, Qdrant, monitoring), packaging your own app.
+> The package manager for Kubernetes: installs whole apps (many YAML files) as one "chart" with configurable values. Add a repo, install a chart with your values, upgrade / roll back as a release. Use it for installing third-party software (ingress-nginx, cert-manager, Redis, Qdrant, monitoring), packaging your own app.
 
 ```bash
 winget install -e --id Helm.Helm
@@ -488,9 +458,7 @@ helm create my-app                        # scaffold your own chart
 
 ## 17. Azure Kubernetes Service (AKS)
 
-> - **What:** Managed Kubernetes on Azure: Microsoft runs the control plane; you manage node pools and workloads.
-> - **How:** Create a cluster with `az aks`, get credentials for kubectl, attach your container registry.
-> - **When to use:** Production Kubernetes on Azure. Details on the rest of Azure: [47](47_azure.md).
+> Managed Kubernetes on Azure: Microsoft runs the control plane; you manage node pools and workloads. Create a cluster with `az aks`, get credentials for kubectl, attach your container registry. Use it for production Kubernetes on Azure. Details on the rest of Azure: [47](47_azure.md).
 
 ```bash
 az aks create -g rg-demo -n aks-demo --node-count 2 --node-vm-size Standard_D4s_v5 \
@@ -508,9 +476,7 @@ AKS Automatic simplifies operations further; Azure Container Apps is simpler sti
 
 ## 18. Complete Example: FastAPI on Kubernetes
 
-> - **What:** All objects for a small API: config, secret, deployment, service, ingress.
-> - **How:** One folder of YAML files applied with `kubectl apply -f k8s/`.
-> - **When to use:** Template for your first real deployment.
+> All objects for a small API: config, secret, deployment, service, ingress. One folder of YAML files applied with `kubectl apply -f k8s/`. Use it as a template for your first real deployment.
 
 ```yaml
 # k8s/app.yaml
@@ -596,9 +562,7 @@ kubectl get pods,svc,ingress -n prod
 
 ## 20. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Deploy and expose
 
@@ -646,3 +610,9 @@ kubectl logs <pod> --previous           # logs of the crashed container
 Common causes: missing env var / secret, wrong command, app crashes on start, failing liveness probe.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [44 - Nginx, Reverse Proxy and HTTPS](44_nginx-https.md) | **Index:** [All guides](README.md) | **Next:** [46 - Terraform](46_terraform.md)
+<!-- nav:end -->

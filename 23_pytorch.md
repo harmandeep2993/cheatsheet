@@ -1,5 +1,9 @@
 # 23 - PyTorch
 
+<!-- nav:start -->
+**Previous:** [22 - Scikit-learn](22_scikit-learn.md) | **Index:** [All guides](README.md) | **Next:** [24 - Hugging Face](24_hugging-face.md)
+<!-- nav:end -->
+
 Quick reference for PyTorch: tensors, GPUs, automatic gradients, building and training neural networks, and saving models.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -98,9 +102,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Install and GPU Check
 
-> - **What:** Installing PyTorch with the right GPU support.
-> - **How:** Pick your OS / CUDA version on pytorch.org to get the exact install command; check the GPU from Python.
-> - **When to use:** Setting up a machine for deep learning.
+> Installing PyTorch with the right GPU support. Pick your OS / CUDA version on pytorch.org to get the exact install command; check the GPU from Python. Use it for setting up a machine for deep learning.
 
 ```powershell
 pip install torch torchvision                  # CPU (or default CUDA build on Linux)
@@ -121,9 +123,7 @@ torch.backends.mps.is_available()              # Apple Silicon GPU
 
 ## 2. Tensors
 
-> - **What:** The core data structure: an array of numbers with a shape, type and device.
-> - **How:** Created from lists, NumPy arrays or generator functions; very similar to NumPy.
-> - **When to use:** All data and weights in PyTorch are tensors.
+> The core data structure: an array of numbers with a shape, type and device. Created from lists, NumPy arrays or generator functions; very similar to NumPy. Use it for all data and weights in PyTorch are tensors.
 
 ```python
 x = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
@@ -141,9 +141,7 @@ x.item()      # Python number from a 1-element tensor
 
 ## 3. Tensor Operations and Shapes
 
-> - **What:** Maths, indexing and reshaping.
-> - **How:** Same ideas as NumPy: element-wise ops, broadcasting, `@` for matrix multiply.
-> - **When to use:** Preparing data, writing custom layers, debugging shape errors.
+> Maths, indexing and reshaping. Same ideas as NumPy: element-wise ops, broadcasting, `@` for matrix multiply. Use it for preparing data, writing custom layers, debugging shape errors.
 
 ```python
 a + b ; a * b ; a @ b ; a.T                    # element-wise, matrix multiply, transpose
@@ -161,9 +159,7 @@ Typical shapes: tabular `(batch, features)`, images `(batch, channels, height, w
 
 ## 4. Devices (CPU / GPU)
 
-> - **What:** Choosing where tensors and models live and compute.
-> - **How:** `.to(device)` moves a tensor or model; all tensors in one operation must be on the same device.
-> - **When to use:** Every training / inference script; write it device-agnostic.
+> Choosing where tensors and models live and compute. `.to(device)` moves a tensor or model; all tensors in one operation must be on the same device. Use it in every training / inference script; write it device-agnostic.
 
 ```python
 device = (
@@ -178,9 +174,7 @@ preds.cpu().numpy()                    # back to CPU before NumPy / pandas
 
 ## 5. Autograd (Automatic Gradients)
 
-> - **What:** PyTorch's engine that computes gradients automatically.
-> - **How:** Tensors with `requires_grad=True` record operations; `backward()` walks back through them and fills `.grad`.
-> - **When to use:** Behind every training step (you rarely call it directly except `loss.backward()`).
+> PyTorch's engine that computes gradients automatically. Tensors with `requires_grad=True` record operations; `backward()` walks back through them and fills `.grad`. Use it for behind every training step (you rarely call it directly except `loss.backward()`).
 
 ```python
 w = torch.tensor(2.0, requires_grad=True)
@@ -197,9 +191,7 @@ x.detach()                        # same data, cut from the gradient graph
 
 ## 6. Building a Model (nn.Module)
 
-> - **What:** Defining a neural network.
-> - **How:** Subclass `nn.Module`, create layers in `__init__`, describe the data flow in `forward`. Or chain layers with `nn.Sequential`.
-> - **When to use:** Any custom model.
+> Defining a neural network. Subclass `nn.Module`, create layers in `__init__`, describe the data flow in `forward`. Or chain layers with `nn.Sequential`. Use it in any custom model.
 
 ```python
 from torch import nn
@@ -228,9 +220,7 @@ sum(p.numel() for p in model.parameters())   # number of weights
 
 ## 7. Common Layers and Activations
 
-> - **What:** The building blocks of networks.
-> - **How:** Layers transform tensors with learnable weights; activations add non-linearity so networks can learn complex patterns.
-> - **When to use:** Picking layers for your data type.
+> The building blocks of networks. Layers transform tensors with learnable weights; activations add non-linearity so networks can learn complex patterns. Use it for picking layers for your data type.
 
 | Layer | Use for |
 |---|---|
@@ -251,9 +241,7 @@ sum(p.numel() for p in model.parameters())   # number of weights
 
 ## 8. Loss Functions
 
-> - **What:** The number the training tries to minimise.
-> - **How:** Compares predictions with true targets; pick it by task type.
-> - **When to use:** Every training setup.
+> The number the training tries to minimise. Compares predictions with true targets; pick it by task type. Use it in every training setup.
 
 | Task | Output layer | Loss | Target |
 |---|---|---|---|
@@ -265,9 +253,7 @@ sum(p.numel() for p in model.parameters())   # number of weights
 
 ## 9. Optimizers
 
-> - **What:** The algorithm that updates weights using gradients.
-> - **How:** Created with the model's parameters and a learning rate; `step()` applies one update.
-> - **When to use:** Every training loop; AdamW is a safe default.
+> The algorithm that updates weights using gradients. Created with the model's parameters and a learning rate; `step()` applies one update. Use this when every training loop; AdamW is a safe default.
 
 ```python
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
@@ -281,9 +267,7 @@ Learning rate is the most important setting: too high -> loss jumps / NaN; too l
 
 ## 10. Dataset and DataLoader
 
-> - **What:** Feeding data to the model in shuffled batches.
-> - **How:** A `Dataset` returns one sample by index; `DataLoader` groups samples into batches and shuffles.
-> - **When to use:** Any dataset larger than a toy example.
+> Feeding data to the model in shuffled batches. A `Dataset` returns one sample by index; `DataLoader` groups samples into batches and shuffles. Use it in any dataset larger than a toy example.
 
 ```python
 from torch.utils.data import DataLoader, Dataset, TensorDataset
@@ -311,9 +295,7 @@ val_loader = DataLoader(val_ds, batch_size=256, shuffle=False)
 
 ## 11. The Training Loop
 
-> - **What:** The five-step loop from the mental model, in code.
-> - **How:** For each epoch and batch: forward, loss, backward, step, zero grads; then validate.
-> - **When to use:** Training any model from scratch or fine-tuning.
+> The five-step loop from the mental model, in code. For each epoch and batch: forward, loss, backward, step, zero grads; then validate. Use it for training any model from scratch or fine-tuning.
 
 ```python
 EPOCHS = 20
@@ -335,9 +317,7 @@ for epoch in range(EPOCHS):
 
 ## 12. Evaluation and Inference
 
-> - **What:** Measuring performance and making predictions without training.
-> - **How:** `model.eval()` switches layers like dropout to inference mode; `torch.no_grad()` turns off gradient tracking.
-> - **When to use:** Validation every epoch, testing, production predictions.
+> Measuring performance and making predictions without training. `model.eval()` switches layers like dropout to inference mode; `torch.no_grad()` turns off gradient tracking. Use it for validation every epoch, testing, production predictions.
 
 ```python
 def evaluate(model, loader):
@@ -361,9 +341,7 @@ with torch.no_grad():
 
 ## 13. Save and Load
 
-> - **What:** Storing trained weights and loading them later.
-> - **How:** Save the `state_dict` (dict of weight tensors); to load, create the same model class and load the dict into it.
-> - **When to use:** After training; checkpoints during long training runs.
+> Storing trained weights and loading them later. Save the `state_dict` (dict of weight tensors); to load, create the same model class and load the dict into it. Use it after training; checkpoints during long training runs.
 
 ```python
 torch.save(model.state_dict(), "model.pt")
@@ -379,9 +357,7 @@ Only load model files you trust; `weights_only=True` avoids running arbitrary co
 
 ## 14. Full Example: Tabular Classifier
 
-> - **What:** A complete, runnable training script.
-> - **How:** Scale data with scikit-learn, train an MLP, evaluate on held-out data.
-> - **When to use:** Template for a first PyTorch project.
+> A complete, runnable training script. Scale data with scikit-learn, train an MLP, evaluate on held-out data. Use it as a template for a first PyTorch project.
 
 ```python
 import torch
@@ -423,9 +399,7 @@ print(f"test accuracy: {acc:.3f}")
 
 ## 15. Overfitting and Regularisation
 
-> - **What:** Stopping the model from memorising the training data.
-> - **How:** Watch validation loss; when it rises while training loss falls, you are overfitting.
-> - **When to use:** Every training run.
+> Stopping the model from memorising the training data. Watch validation loss; when it rises while training loss falls, you are overfitting. Use it in every training run.
 
 | Technique | How |
 |---|---|
@@ -437,9 +411,7 @@ print(f"test accuracy: {acc:.3f}")
 
 ## 16. Speed and Memory Tips
 
-> - **What:** Making training faster and fit on your GPU.
-> - **How:** Mixed precision, right batch size, efficient data loading.
-> - **When to use:** Slow training or "CUDA out of memory".
+> Making training faster and fit on your GPU. Mixed precision, right batch size, efficient data loading. Use it for slow training or "CUDA out of memory".
 
 ```python
 with torch.autocast(device_type="cuda", dtype=torch.bfloat16):   # mixed precision: faster, less memory
@@ -455,9 +427,7 @@ Out of memory: lower `batch_size`, use mixed precision, gradient accumulation (s
 
 ## 17. PyTorch vs scikit-learn
 
-> - **What:** When deep learning is worth it.
-> - **How:** Compare data type and size.
-> - **When to use:** Choosing the tool for a new ML task.
+> When deep learning is worth it. Compare data type and size. Use it for choosing the tool for a new ML task.
 
 | Situation | Choose |
 |---|---|
@@ -483,9 +453,7 @@ Out of memory: lower `batch_size`, use mixed precision, gradient accumulation (s
 
 ## 19. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Device-agnostic tensor
 
@@ -532,3 +500,9 @@ Why call both `model.eval()` and `torch.no_grad()` before predicting?
 `model.eval()` switches layers like dropout and batch norm to inference behaviour (otherwise predictions are random / wrong). `torch.no_grad()` stops gradient tracking, saving memory and time. They do different jobs, so use both.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [22 - Scikit-learn](22_scikit-learn.md) | **Index:** [All guides](README.md) | **Next:** [24 - Hugging Face](24_hugging-face.md)
+<!-- nav:end -->

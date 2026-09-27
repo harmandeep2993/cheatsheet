@@ -1,5 +1,9 @@
 # 46 - Terraform
 
+<!-- nav:start -->
+**Previous:** [45 - Kubernetes](45_kubernetes.md) | **Index:** [All guides](README.md) | **Next:** [47 - Azure](47_azure.md)
+<!-- nav:end -->
+
 Quick reference for Terraform: infrastructure as code for Azure and other clouds. Providers, resources, variables, state, modules, the plan / apply workflow and CI/CD.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -96,9 +100,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The Terraform commands and flags you use daily.
-> - **How:** `terraform <command> [flags]` in the folder with your `.tf` files.
-> - **When to use:** You see `terraform plan -var-file=prod.tfvars -out=tfplan` and want to know what each part does.
+> The Terraform commands and flags you use daily. `terraform <command> [flags]` in the folder with your `.tf` files. Use this when you see `terraform plan -var-file=prod.tfvars -out=tfplan` and want to know what each part does.
 
 ```text
 terraform  plan  -var-file=prod.tfvars  -out=tfplan
@@ -130,9 +132,7 @@ terraform  plan  -var-file=prod.tfvars  -out=tfplan
 
 ## 1. Install and Authenticate
 
-> - **What:** Installing Terraform and letting it access Azure.
-> - **How:** Install the CLI; for local work, log in with the Azure CLI and Terraform uses that login.
-> - **When to use:** Once per machine; CI uses OIDC (section 16).
+> Installing Terraform and letting it access Azure. Install the CLI; for local work, log in with the Azure CLI and Terraform uses that login. Use it once per machine; CI uses OIDC (section 16).
 
 ```powershell
 winget install -e --id Hashicorp.Terraform        # or OpenTofu: winget install -e --id OpenTofu.Tofu
@@ -143,9 +143,7 @@ az account set --subscription "<subscription-id>"
 
 ## 2. Project Structure
 
-> - **What:** How to organise Terraform files.
-> - **How:** Terraform loads all `*.tf` files in a folder; split them by purpose.
-> - **When to use:** Every project.
+> How to organise Terraform files. Terraform loads all `*.tf` files in a folder; split them by purpose. Use it in every project.
 
 ```text
 infra/
@@ -164,9 +162,7 @@ Add to `.gitignore`: `.terraform/`, `*.tfstate`, `*.tfstate.*`, `*.tfplan`, `cra
 
 ## 3. HCL Basics
 
-> - **What:** The syntax of Terraform files.
-> - **How:** Blocks with a type, labels and a body of `argument = value` pairs.
-> - **When to use:** Reading and writing any `.tf` file.
+> The syntax of Terraform files. Blocks with a type, labels and a body of `argument = value` pairs. Use it for reading and writing any `.tf` file.
 
 ```hcl
 # block_type "label1" "label2" { arguments }
@@ -186,9 +182,7 @@ resource "azurerm_resource_group" "main" {
 
 ## 4. Providers
 
-> - **What:** Plugins that know how to manage a platform's resources.
-> - **How:** Declare required providers with version constraints; configure them.
-> - **When to use:** Top of every configuration.
+> Plugins that know how to manage a platform's resources. Declare required providers with version constraints; configure them. Use it for top of every configuration.
 
 ```hcl
 # versions.tf
@@ -215,9 +209,7 @@ provider "azurerm" {
 
 ## 5. Resources and References
 
-> - **What:** Declaring infrastructure objects and connecting them.
-> - **How:** `resource "<type>" "<local name>"`; refer to attributes with `<type>.<name>.<attribute>`; references create dependencies automatically.
-> - **When to use:** The core of every configuration.
+> Declaring infrastructure objects and connecting them. `resource "<type>" "<local name>"`; refer to attributes with `<type>.<name>.<attribute>`; references create dependencies automatically. Use it for the core of every configuration.
 
 ```hcl
 resource "random_string" "suffix" {
@@ -246,9 +238,7 @@ Resource arguments are documented on the Terraform Registry (registry.terraform.
 
 ## 6. Variables and tfvars
 
-> - **What:** Inputs that make configurations reusable.
-> - **How:** Declare in `variables.tf` with type, description, default and validation; set values in `.tfvars` files, `-var` flags or `TF_VAR_name` env vars.
-> - **When to use:** Anything that differs between environments (names, sizes, regions).
+> Inputs that make configurations reusable. Declare in `variables.tf` with type, description, default and validation; set values in `.tfvars` files, `-var` flags or `TF_VAR_name` env vars. Use it for anything that differs between environments (names, sizes, regions).
 
 ```hcl
 # variables.tf
@@ -289,9 +279,7 @@ terraform plan -var-file=dev.tfvars
 
 ## 7. Outputs and Locals
 
-> - **What:** Values exported after apply, and named helper expressions.
-> - **How:** `output` blocks print / expose values; `locals` compute reusable values.
-> - **When to use:** URLs and names needed by apps or CI; consistent naming and tags.
+> Values exported after apply, and named helper expressions. `output` blocks print / expose values; `locals` compute reusable values. Use it for URLs and names needed by apps or CI; consistent naming and tags.
 
 ```hcl
 locals {
@@ -318,9 +306,7 @@ terraform output -raw app_url
 
 ## 8. Data Sources
 
-> - **What:** Reading information about existing resources or the environment.
-> - **How:** `data "<type>" "<name>" { ... }` then reference `data.<type>.<name>.<attr>`.
-> - **When to use:** Referencing things Terraform does not manage (shared networks, current user, existing Key Vault).
+> Reading information about existing resources or the environment. `data "<type>" "<name>" { ... }` then reference `data.<type>.<name>.<attr>`. Use this when referencing things Terraform does not manage (shared networks, current user, existing Key Vault).
 
 ```hcl
 data "azurerm_client_config" "current" {}          # tenant / object id of whoever runs Terraform
@@ -333,9 +319,7 @@ data "azurerm_key_vault" "shared" {
 
 ## 9. The Workflow: init, plan, apply, destroy
 
-> - **What:** The core loop of using Terraform.
-> - **How:** Initialise once, then edit -> format -> validate -> plan -> review -> apply.
-> - **When to use:** Every change.
+> The core loop of using Terraform. Initialise once, then edit -> format -> validate -> plan -> review -> apply. Use it in every change.
 
 ```powershell
 terraform init                                # once, and after adding providers / modules / backend
@@ -350,9 +334,7 @@ Plan symbols: `+` create, `~` update in place, `-` destroy, `-/+` destroy and re
 
 ## 10. State and Remote Backends
 
-> - **What:** Where Terraform keeps its record of managed resources.
-> - **How:** By default a local `terraform.tfstate` file; teams store it remotely (e.g. an Azure Storage container) with locking so two people cannot apply at once.
-> - **When to use:** As soon as more than one person / CI runs Terraform (or immediately, to be safe).
+> Where Terraform keeps its record of managed resources. By default a local `terraform.tfstate` file; teams store it remotely (e.g. an Azure Storage container) with locking so two people cannot apply at once. Use it as soon as more than one person / CI runs Terraform (or immediately, to be safe).
 
 ```hcl
 # versions.tf
@@ -372,9 +354,7 @@ terraform {
 
 ## 11. Loops and Conditionals
 
-> - **What:** Creating several similar resources or optional ones.
-> - **How:** `count` for N copies or on / off, `for_each` over a map / set, conditional expressions `cond ? a : b`.
-> - **When to use:** Several containers, one resource per environment, optional features.
+> Creating several similar resources or optional ones. `count` for N copies or on / off, `for_each` over a map / set, conditional expressions `cond ? a : b`. Use it for several containers, one resource per environment, optional features.
 
 ```hcl
 variable "containers" {
@@ -399,9 +379,7 @@ resource "azurerm_log_analytics_workspace" "logs" {
 
 ## 12. Modules
 
-> - **What:** Reusable packages of Terraform code.
-> - **How:** A folder with its own variables / resources / outputs; call it with a `module` block; public modules from the Registry (e.g. Azure Verified Modules).
-> - **When to use:** Repeating the same group of resources (e.g. "container app + identity + role assignments") across apps / environments.
+> Reusable packages of Terraform code. A folder with its own variables / resources / outputs; call it with a `module` block; public modules from the Registry (e.g. Azure Verified Modules). Use it for repeating the same group of resources (e.g. "container app + identity + role assignments") across apps / environments.
 
 ```hcl
 module "api_app" {
@@ -420,9 +398,7 @@ output "api_url" {
 
 ## 13. Environments (dev / prod)
 
-> - **What:** Running the same configuration for several environments.
-> - **How:** Separate state per environment (different backend `key` or folders) plus different `.tfvars` files.
-> - **When to use:** Any project with more than one environment.
+> Running the same configuration for several environments. Separate state per environment (different backend `key` or folders) plus different `.tfvars` files. Use it in any project with more than one environment.
 
 | Approach | How | Notes |
 |---|---|---|
@@ -432,9 +408,7 @@ output "api_url" {
 
 ## 14. Example: AI App Infrastructure on Azure
 
-> - **What:** A realistic small stack: resource group, container registry, Log Analytics, Container Apps environment and an API container app.
-> - **How:** Resources referencing each other; image and model name as variables.
-> - **When to use:** Template for deploying a FastAPI / LLM app ([39](39_fastapi.md), [47](47_azure.md)).
+> A realistic small stack: resource group, container registry, Log Analytics, Container Apps environment and an API container app. Resources referencing each other; image and model name as variables. Use it as a template for deploying a FastAPI / LLM app ([39](39_fastapi.md), [47](47_azure.md)).
 
 ```hcl
 resource "azurerm_resource_group" "main" {
@@ -510,9 +484,7 @@ Registry credentials / managed identity for image pulls and Key Vault references
 
 ## 15. Import Existing Resources
 
-> - **What:** Bringing resources created by hand (Portal / CLI) under Terraform management.
-> - **How:** Write the resource block, declare an `import` block with the Azure resource ID, run plan / apply; adjust the code until plan shows no changes.
-> - **When to use:** Adopting Terraform for existing infrastructure.
+> Bringing resources created by hand (Portal / CLI) under Terraform management. Write the resource block, declare an `import` block with the Azure resource ID, run plan / apply; adjust the code until plan shows no changes. Use it for adopting Terraform for existing infrastructure.
 
 ```hcl
 import {
@@ -527,9 +499,7 @@ terraform plan -generate-config-out=generated.tf     # let Terraform draft the r
 
 ## 16. Terraform in CI/CD
 
-> - **What:** Planning on pull requests and applying on merge.
-> - **How:** GitHub Actions with OIDC login to Azure; plan output posted for review; apply on `main` with environment approval.
-> - **When to use:** Team projects ([43 - GitHub Actions](43_github-actions.md)).
+> Planning on pull requests and applying on merge. GitHub Actions with OIDC login to Azure; plan output posted for review; apply on `main` with environment approval. Use it for team projects ([43 - GitHub Actions](43_github-actions.md)).
 
 ```yaml
 name: Terraform
@@ -573,9 +543,7 @@ Protect the apply step with a GitHub environment that requires approval for prod
 
 ## 17. Best Practices
 
-> - **What:** Habits that keep Terraform safe and maintainable.
-> - **How:** Small, reviewed changes; remote state; pinned versions; no secrets in code.
-> - **When to use:** Always.
+> Habits that keep Terraform safe and maintainable. Small, reviewed changes; remote state; pinned versions; no secrets in code. Use it always.
 
 - Always read the **plan** before apply; watch for `-/+` (replace) on stateful resources.
 - **Remote state** with locking; separate state per environment.
@@ -602,9 +570,7 @@ Protect the apply step with a GitHub environment that requires approval for prod
 
 ## 19. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: First apply
 
@@ -660,3 +626,9 @@ The plan shows `-/+ azurerm_storage_account.data (forces replacement)`. What doe
 Terraform will delete and recreate the resource because an argument that cannot change in place (name, location, some SKUs) changed. For storage or databases that can mean data loss: stop and check whether the change is intended.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [45 - Kubernetes](45_kubernetes.md) | **Index:** [All guides](README.md) | **Next:** [47 - Azure](47_azure.md)
+<!-- nav:end -->

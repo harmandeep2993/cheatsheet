@@ -1,5 +1,9 @@
 # 06 - Regex
 
+<!-- nav:start -->
+**Previous:** [05 - VS Code](05_vscode.md) | **Index:** [All guides](README.md) | **Next:** [07 - YAML, JSON, TOML and .env](07_yaml-json.md)
+<!-- nav:end -->
+
 Quick reference for regular expressions (patterns that match text) in Python, pandas, grep, PowerShell, VS Code and SQL.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -71,9 +75,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** Options that change how a pattern matches (ignore case, multi-line, ...).
-> - **How:** Passed as `flags=` in Python, as options in tools, or inline as `(?i)` at the start of a pattern.
-> - **When to use:** Your pattern is right but case, line breaks or whitespace stop it from matching.
+> Options that change how a pattern matches (ignore case, multi-line, ...). Passed as `flags=` in Python, as options in tools, or inline as `(?i)` at the start of a pattern. Use this when your pattern is right but case, line breaks or whitespace stop it from matching.
 
 ```text
 re.findall(r"\d{4}-\d{2}", text, flags=re.I)
@@ -110,9 +112,7 @@ re.findall(r"\d{4}-\d{2}", text, flags=re.I)
 
 ## 1. What Regex Is
 
-> - **What:** A mini-language for describing text patterns.
-> - **How:** A pattern like `\d{3}` is compared against text; the engine reports where it matches.
-> - **When to use:** Validating input (emails, dates), extracting parts of text, find-and-replace with rules.
+> A mini-language for describing text patterns. A pattern like `\d{3}` is compared against text; the engine reports where it matches. Use it for validating input (emails, dates), extracting parts of text, find-and-replace with rules.
 
 ```text
 Pattern:  \d{4}-\d{2}-\d{2}
@@ -124,9 +124,7 @@ Use regex when simple methods (`in`, `startswith`, `split`) are not enough. For 
 
 ## 2. Literal Characters and Escaping
 
-> - **What:** Most characters match themselves; some have special meaning and must be escaped.
-> - **How:** Put `\` before a special character to match it literally.
-> - **When to use:** Matching dots in file names or IPs, brackets, `$` in prices, etc.
+> Most characters match themselves; some have special meaning and must be escaped. Put `\` before a special character to match it literally. Use it for matching dots in file names or IPs, brackets, `$` in prices, etc.
 
 Special characters: `. ^ $ * + ? { } [ ] \ | ( )`
 
@@ -143,9 +141,7 @@ Python: always write patterns as raw strings `r"..."` so `\d` is not changed by 
 
 ## 3. Character Classes
 
-> - **What:** A set of characters, any ONE of which can match at that position.
-> - **How:** List characters in `[ ]`; use `-` for ranges and `^` at the start for "not".
-> - **When to use:** "a vowel", "a digit or dash", "anything except a comma".
+> A set of characters, any ONE of which can match at that position. List characters in `[ ]`; use `-` for ranges and `^` at the start for "not". Use it to answer questions like "a vowel", "a digit or dash", "anything except a comma".
 
 | Pattern | Matches one character that is |
 |---|---|
@@ -160,9 +156,7 @@ Python: always write patterns as raw strings `r"..."` so `\d` is not changed by 
 
 ## 4. Shorthand Classes
 
-> - **What:** Short names for common character classes.
-> - **How:** A backslash plus a letter; uppercase means "not".
-> - **When to use:** Almost every pattern: digits, words and whitespace.
+> Short names for common character classes. A backslash plus a letter; uppercase means "not". Use it in almost every pattern: digits, words and whitespace.
 
 | Pattern | Means | Opposite |
 |---|---|---|
@@ -174,9 +168,7 @@ Python: always write patterns as raw strings `r"..."` so `\d` is not changed by 
 
 ## 5. Anchors and Boundaries
 
-> - **What:** Positions, not characters: start, end, word edges.
-> - **How:** `^` start, `$` end, `\b` edge between a word character and a non-word character.
-> - **When to use:** Validating a whole string (`^...$`) or matching whole words only (`\bcat\b` not "category").
+> Positions, not characters: start, end, word edges. `^` start, `$` end, `\b` edge between a word character and a non-word character. Use it for validating a whole string (`^...$`) or matching whole words only (`\bcat\b` not "category").
 
 | Pattern | Matches |
 |---|---|
@@ -190,9 +182,7 @@ With `re.M`, `^` and `$` work per line.
 
 ## 6. Quantifiers
 
-> - **What:** How many times the previous item may repeat.
-> - **How:** Put the quantifier right after a character, class or group.
-> - **When to use:** "one or more digits", "optional s", "exactly 5 characters".
+> How many times the previous item may repeat. Put the quantifier right after a character, class or group. Use it to answer questions like "one or more digits", "optional s", "exactly 5 characters".
 
 | Pattern | Means | Example | Matches |
 |---|---|---|---|
@@ -205,9 +195,7 @@ With `re.M`, `^` and `$` work per line.
 
 ## 7. Greedy vs Lazy
 
-> - **What:** Whether a quantifier takes as much or as little text as possible.
-> - **How:** Quantifiers are greedy by default; add `?` after them to make them lazy.
-> - **When to use:** Extracting text between delimiters (tags, quotes) where greedy grabs too much.
+> Whether a quantifier takes as much or as little text as possible. Quantifiers are greedy by default; add `?` after them to make them lazy. Use it for extracting text between delimiters (tags, quotes) where greedy grabs too much.
 
 ```text
 Text:     <b>one</b> and <b>two</b>
@@ -219,9 +207,7 @@ Lazy forms: `*?`, `+?`, `??`, `{2,5}?`. Often clearer: use a negated class `<[^>
 
 ## 8. Groups and Alternation
 
-> - **What:** Treat part of a pattern as a unit, capture it, or offer alternatives.
-> - **How:** `( )` groups and captures, `(?: )` groups without capturing, `|` means "or".
-> - **When to use:** Extracting parts (year, month, day), repeating a group, matching one of several words.
+> Treat part of a pattern as a unit, capture it, or offer alternatives. `( )` groups and captures, `(?: )` groups without capturing, `|` means "or". Use it for extracting parts (year, month, day), repeating a group, matching one of several words.
 
 | Pattern | Means |
 |---|---|
@@ -240,9 +226,7 @@ m.groups()      # ('2026', '09', '27')
 
 ## 9. Named Groups and Backreferences
 
-> - **What:** Groups with names, and patterns that refer to an earlier captured group.
-> - **How:** `(?P<name>...)` names a group in Python; `\1` or `(?P=name)` repeats what group 1 matched.
-> - **When to use:** Readable extraction code; finding repeated words; reordering in replacements.
+> Groups with names, and patterns that refer to an earlier captured group. `(?P<name>...)` names a group in Python; `\1` or `(?P=name)` repeats what group 1 matched. Use it for readable extraction code; finding repeated words; reordering in replacements.
 
 ```python
 m = re.search(r"(?P<year>\d{4})-(?P<month>\d{2})", "2026-09")
@@ -256,9 +240,7 @@ In replacements: Python uses `\1` or `\g<name>`; VS Code and JavaScript use `$1`
 
 ## 10. Lookahead and Lookbehind
 
-> - **What:** Conditions on what comes before or after, without including it in the match.
-> - **How:** `(?=...)` followed by, `(?!...)` not followed by, `(?<=...)` preceded by, `(?<!...)` not preceded by.
-> - **When to use:** "Number followed by EUR", "price after $", password rules.
+> Conditions on what comes before or after, without including it in the match. `(?=...)` followed by, `(?!...)` not followed by, `(?<=...)` preceded by, `(?<!...)` not preceded by. Use it to answer questions like "Number followed by EUR", "price after $", password rules.
 
 | Pattern | Matches |
 |---|---|
@@ -272,9 +254,7 @@ Lookbehind in Python must have a fixed length (`(?<=\$)` ok, `(?<=\$+)` not).
 
 ## 11. Common Patterns
 
-> - **What:** Ready-made patterns for everyday data.
-> - **How:** Copy, then test on your own examples; real-world formats vary.
-> - **When to use:** Cleaning and validating data; these are practical, not perfect, validators.
+> Ready-made patterns for everyday data. Copy, then test on your own examples; real-world formats vary. Use this when cleaning and validating data; these are practical, not perfect, validators.
 
 | Data | Pattern |
 |---|---|
@@ -296,9 +276,7 @@ Lookbehind in Python must have a fixed length (`(?<=\$)` ok, `(?<=\$+)` not).
 
 ## 12. Python re Module
 
-> - **What:** Python's built-in regex functions.
-> - **How:** `import re`; choose the function by what you want back (first match, all matches, replaced text).
-> - **When to use:** Any regex work in plain Python scripts.
+> Python's built-in regex functions. `import re`; choose the function by what you want back (first match, all matches, replaced text). Use it in any regex work in plain Python scripts.
 
 ```python
 import re
@@ -335,9 +313,7 @@ if m:                                     # always check for None
 
 ## 13. Regex in Pandas
 
-> - **What:** Regex on a whole text column at once.
-> - **How:** `.str` methods accept regex patterns; `extract` turns groups into new columns.
-> - **When to use:** Cleaning messy text columns, extracting codes / numbers, filtering rows by pattern.
+> Regex on a whole text column at once. `.str` methods accept regex patterns; `extract` turns groups into new columns. Use it for cleaning messy text columns, extracting codes / numbers, filtering rows by pattern.
 
 ```python
 df[df["email"].str.contains(r"@gmail\.com$", regex=True)]           # filter rows
@@ -355,9 +331,7 @@ See [17 - Pandas](17_pandas.md).
 
 ## 14. Regex in grep, sed, PowerShell, VS Code
 
-> - **What:** Using patterns in command-line tools and the editor.
-> - **How:** Each tool has a regex mode; syntax differs slightly (basic vs extended vs Perl style).
-> - **When to use:** Searching logs, bulk renames, find-and-replace across a project.
+> Using patterns in command-line tools and the editor. Each tool has a regex mode; syntax differs slightly (basic vs extended vs Perl style). Use it for searching logs, bulk renames, find-and-replace across a project.
 
 ```bash
 grep -E "ERROR|WARN" app.log                    # lines with ERROR or WARN
@@ -379,9 +353,7 @@ Basic `grep` / `sed` (without `-E`) need `\+`, `\?`, `\|`, `\(\)`; use `-E` to a
 
 ## 15. Regex in SQL
 
-> - **What:** Pattern matching inside database queries.
-> - **How:** Each database has its own operator or function.
-> - **When to use:** When `LIKE` with `%` and `_` is not flexible enough.
+> Pattern matching inside database queries. Each database has its own operator or function. Use it when `LIKE` with `%` and `_` is not flexible enough.
 
 ```sql
 -- PostgreSQL
@@ -402,9 +374,7 @@ See [19 - SQL](19_sql.md).
 
 ## 16. Build and Test a Pattern
 
-> - **What:** A reliable way to write patterns without guessing.
-> - **How:** Start small, test on real examples (matches AND non-matches), add pieces one at a time.
-> - **When to use:** Every non-trivial pattern.
+> A reliable way to write patterns without guessing. Start small, test on real examples (matches AND non-matches), add pieces one at a time. Use it in every non-trivial pattern.
 
 1. Collect 5 to 10 real examples, including ones that should NOT match.
 2. Test at **regex101.com** (choose the Python flavor); it explains every token.
@@ -438,9 +408,7 @@ DATE = re.compile(r"""
 
 ## 18. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Reformat dates
 
@@ -497,3 +465,9 @@ bool(re.fullmatch(r"\d{5}", "10115 X"))   # False  (fullmatch = whole string)
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [05 - VS Code](05_vscode.md) | **Index:** [All guides](README.md) | **Next:** [07 - YAML, JSON, TOML and .env](07_yaml-json.md)
+<!-- nav:end -->

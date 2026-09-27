@@ -1,5 +1,9 @@
 # 31 - AI Agents
 
+<!-- nav:start -->
+**Previous:** [30 - RAG (Retrieval-Augmented Generation)](30_rag.md) | **Index:** [All guides](README.md) | **Next:** [32 - Agent Frameworks](32_agent-frameworks.md)
+<!-- nav:end -->
+
 Quick reference for AI agents: what they are, the agent loop, workflows vs agents, design patterns, memory, planning, multi-agent systems, human oversight, and building a small agent from scratch.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -108,9 +112,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. The Agent Loop in Code
 
-> - **What:** A complete minimal agent: model + tools + loop + limits.
-> - **How:** Call the model with tools; run requested tools; feed results back; stop at the final answer or when a limit is hit.
-> - **When to use:** Understanding every framework (they all do this) and building small agents without dependencies.
+> A complete minimal agent: model + tools + loop + limits. Call the model with tools; run requested tools; feed results back; stop at the final answer or when a limit is hit. Use it for understanding every framework (they all do this) and building small agents without dependencies.
 
 ```python
 import subprocess
@@ -183,9 +185,7 @@ The SDK tool runner can replace the manual loop ([28](28_tool-use.md) section 3)
 
 ## 2. Workflow Patterns (Before Agents)
 
-> - **What:** Code-controlled patterns that solve most problems without full autonomy.
-> - **How:** You define the steps; LLM calls do the language work inside each step.
-> - **When to use:** Try these first; they are cheaper, faster and easier to test than agents.
+> Code-controlled patterns that solve most problems without full autonomy. You define the steps; LLM calls do the language work inside each step. Try these first; they are cheaper, faster and easier to test than agents.
 
 | Pattern | Shape | Example |
 |---|---|---|
@@ -197,9 +197,7 @@ The SDK tool runner can replace the manual loop ([28](28_tool-use.md) section 3)
 
 ## 3. Agent Patterns
 
-> - **What:** Common ways agents are structured.
-> - **How:** Each pattern adds structure to the basic loop.
-> - **When to use:** Choosing an architecture for your agent.
+> Common ways agents are structured. Each pattern adds structure to the basic loop. Use it for choosing an architecture for your agent.
 
 | Pattern | Idea | Good for |
 |---|---|---|
@@ -212,9 +210,7 @@ The SDK tool runner can replace the manual loop ([28](28_tool-use.md) section 3)
 
 ## 4. Designing the Agent's Tools
 
-> - **What:** Choosing the actions the agent can take.
-> - **How:** A small set of clear, well-described, safe tools that return concise results (see [28](28_tool-use.md) section 10).
-> - **When to use:** The tool set largely determines agent quality.
+> Choosing the actions the agent can take. A small set of clear, well-described, safe tools that return concise results (see [28](28_tool-use.md) section 10). Use it for the tool set largely determines agent quality.
 
 - Prefer **general, composable tools** (search, read, write, run code) over dozens of narrow ones.
 - Make results **informative but short**: summaries, IDs, next-step hints; paginate big outputs.
@@ -224,9 +220,7 @@ The SDK tool runner can replace the manual loop ([28](28_tool-use.md) section 3)
 
 ## 5. The Agent System Prompt
 
-> - **What:** The instructions that shape how the agent works.
-> - **How:** State the role, goal, available resources, working style, constraints and what "done" means.
-> - **When to use:** Every agent.
+> The instructions that shape how the agent works. State the role, goal, available resources, working style, constraints and what "done" means. Use it in every agent.
 
 ```text
 You are a data-quality agent for Acme's analytics team.
@@ -249,9 +243,7 @@ Describe **what done looks like**; agents otherwise stop too early or never stop
 
 ## 6. Context Management
 
-> - **What:** Keeping the agent's context window useful as the task grows.
-> - **How:** Everything (goal, tool calls, results) accumulates in the context; big results crowd out the important parts and cost money.
-> - **When to use:** Any agent running more than a few steps.
+> Keeping the agent's context window useful as the task grows. Everything (goal, tool calls, results) accumulates in the context; big results crowd out the important parts and cost money. Use it in any agent running more than a few steps.
 
 | Technique | How |
 |---|---|
@@ -264,9 +256,7 @@ Describe **what done looks like**; agents otherwise stop too early or never stop
 
 ## 7. Memory
 
-> - **What:** Information the agent keeps beyond one step or one session.
-> - **How:** Short-term = the context window; long-term = external storage the agent reads / writes with tools.
-> - **When to use:** Personal assistants, long projects, agents that should learn user preferences.
+> Information the agent keeps beyond one step or one session. Short-term = the context window; long-term = external storage the agent reads / writes with tools. Use it for personal assistants, long projects, agents that should learn user preferences.
 
 | Memory type | Stored as | Example |
 |---|---|---|
@@ -279,9 +269,7 @@ Simple and effective: a `notes.md` file (or memory tool) the agent may read and 
 
 ## 8. Planning and Task Lists
 
-> - **What:** Having the agent write down its plan and track progress.
-> - **How:** A planning step or a to-do tool; the agent checks items off and updates the plan when new facts appear.
-> - **When to use:** Tasks with many steps where agents otherwise lose track.
+> Having the agent write down its plan and track progress. A planning step or a to-do tool; the agent checks items off and updates the plan when new facts appear. Use it for tasks with many steps where agents otherwise lose track.
 
 ```text
 Plan:
@@ -294,18 +282,14 @@ Plan:
 
 ## 9. Reflection and Self-Checking
 
-> - **What:** Making the agent verify its own work before finishing.
-> - **How:** Give it ways to check (tests, validators, a second LLM review with a rubric) and require verification before "done".
-> - **When to use:** Code, data transformations, reports with numbers.
+> Making the agent verify its own work before finishing. Give it ways to check (tests, validators, a second LLM review with a rubric) and require verification before "done". Use it for code, data transformations, reports with numbers.
 
 - Best checks are **objective**: run tests, validate JSON against a schema, re-run the query.
 - LLM self-critique helps, but can miss its own mistakes; a separate reviewer prompt / model is stronger.
 
 ## 10. Multi-Agent Systems
 
-> - **What:** Several agents with different roles working together.
-> - **How:** Usually an **orchestrator** that splits the task and **workers / sub-agents** that each handle a part with their own context and tools; results flow back to the orchestrator.
-> - **When to use:** Broad tasks that parallelise well (research over many sources), or tasks needing separated roles (writer + reviewer). Otherwise one agent is simpler.
+> Several agents with different roles working together. Usually an **orchestrator** that splits the task and **workers / sub-agents** that each handle a part with their own context and tools; results flow back to the orchestrator. Use it for broad tasks that parallelise well (research over many sources), or tasks needing separated roles (writer + reviewer). Otherwise one agent is simpler.
 
 ```text
                       ORCHESTRATOR (plans, delegates, merges)
@@ -322,9 +306,7 @@ Costs grow with the number of agents; coordination adds failure points. Measure 
 
 ## 11. Human-in-the-Loop
 
-> - **What:** People approving, correcting or guiding the agent.
-> - **How:** Pause before risky actions and ask; show plans for approval; allow the user to interrupt.
-> - **When to use:** Any action that is expensive, irreversible or external (payments, emails, deletes, deploys).
+> People approving, correcting or guiding the agent. Pause before risky actions and ask; show plans for approval; allow the user to interrupt. Use it in any action that is expensive, irreversible or external (payments, emails, deletes, deploys).
 
 ```python
 RISKY_TOOLS = {"send_email", "delete_record", "deploy"}
@@ -341,9 +323,7 @@ def execute(block):
 
 ## 12. Stopping Rules and Budgets
 
-> - **What:** Limits that keep agents from running forever or spending too much.
-> - **How:** Hard caps in code, plus clear completion criteria in the prompt.
-> - **When to use:** Every agent, always.
+> Limits that keep agents from running forever or spending too much. Hard caps in code, plus clear completion criteria in the prompt. Use it in every agent, always.
 
 | Limit | Example |
 |---|---|
@@ -355,9 +335,7 @@ def execute(block):
 
 ## 13. Types of Agents You Can Build
 
-> - **What:** Practical agent ideas for data / AI developers.
-> - **How:** Each combines a goal, a tool set and guardrails.
-> - **When to use:** Inspiration for projects and portfolio work.
+> Practical agent ideas for data / AI developers. Each combines a goal, a tool set and guardrails. Use it for inspiration for projects and portfolio work.
 
 | Agent | Tools |
 |---|---|
@@ -371,18 +349,14 @@ def execute(block):
 
 ## 14. Coding Agents and Computer Use
 
-> - **What:** Agents that work in a real environment: codebases, terminals, browsers, desktops.
-> - **How:** Tools for files, shell commands and tests (coding agents), or screenshots + mouse / keyboard actions (computer use), usually in a sandbox.
-> - **When to use:** Automating software tasks; GUI tasks with no API.
+> Agents that work in a real environment: codebases, terminals, browsers, desktops. Tools for files, shell commands and tests (coding agents), or screenshots + mouse / keyboard actions (computer use), usually in a sandbox. Use it for automating software tasks; GUI tasks with no API.
 
 - Coding agents you can use today: Claude Code, and others; their harnesses are also available as libraries (e.g. Claude Agent SDK, [32](32_agent-frameworks.md)).
 - Always sandbox: containers or VMs, limited network, no production credentials, review diffs before merging.
 
 ## 15. Build vs Framework vs Hosted
 
-> - **What:** Ways to get an agent running.
-> - **How:** Trade control against convenience.
-> - **When to use:** Starting an agent project.
+> Ways to get an agent running. Trade control against convenience. Use it for starting an agent project.
 
 | Option | You write | Good when |
 |---|---|---|
@@ -396,9 +370,7 @@ Details and code: [32 - Agent Frameworks](32_agent-frameworks.md).
 
 ## 16. Deploying Agents
 
-> - **What:** Running agents for real users.
-> - **How:** Agents are long-running: run them as background jobs, stream progress, persist state, and isolate their execution environment.
-> - **When to use:** Moving from notebook to product.
+> Running agents for real users. Agents are long-running: run them as background jobs, stream progress, persist state, and isolate their execution environment. Use it for moving from notebook to product.
 
 ```text
 User -> FastAPI endpoint -> enqueue job (Redis) -> worker runs agent loop in a sandbox container
@@ -415,9 +387,7 @@ User -> FastAPI endpoint -> enqueue job (Redis) -> worker runs agent loop in a s
 
 ## 17. Evaluating Agents
 
-> - **What:** Measuring whether the agent reliably achieves goals.
-> - **How:** Task suites with checkable outcomes; track success rate, steps, cost, time, and unsafe actions.
-> - **When to use:** Before trusting an agent, and after every prompt / tool / model change.
+> Measuring whether the agent reliably achieves goals. Task suites with checkable outcomes; track success rate, steps, cost, time, and unsafe actions. Use it before trusting an agent, and after every prompt / tool / model change.
 
 | Metric | Meaning |
 |---|---|
@@ -456,9 +426,7 @@ Run each task several times: agents are non-deterministic. More in [34](34_evals
 
 ## 20. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Workflow or agent?
 
@@ -499,3 +467,9 @@ Make `send_email` require human approval (see section 11) and explain what the m
 Return a `tool_result` with `is_error: true` and a message like "The user declined this action. Propose an alternative or stop." so the model adapts instead of assuming it was sent.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [30 - RAG (Retrieval-Augmented Generation)](30_rag.md) | **Index:** [All guides](README.md) | **Next:** [32 - Agent Frameworks](32_agent-frameworks.md)
+<!-- nav:end -->

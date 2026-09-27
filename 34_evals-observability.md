@@ -1,5 +1,9 @@
 # 34 - Evals and Observability
 
+<!-- nav:start -->
+**Previous:** [33 - MCP (Model Context Protocol)](33_mcp.md) | **Index:** [All guides](README.md) | **Next:** [35 - Local and Self-Hosted LLMs](35_local-llms.md)
+<!-- nav:end -->
+
 Quick reference for measuring and monitoring LLM apps: building eval sets, grading methods (code, LLM-as-judge, human), regression testing, tracing, logging, cost tracking, and the tools that help.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -109,9 +113,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. What to Evaluate
 
-> - **What:** The quality dimensions of an LLM app.
-> - **How:** Pick the few that matter most for your use case and define each precisely.
-> - **When to use:** At the very start of a feature, before writing prompts.
+> The quality dimensions of an LLM app. Pick the few that matter most for your use case and define each precisely. Use it at the very start of a feature, before writing prompts.
 
 | Dimension | Question | Typical grader |
 |---|---|---|
@@ -127,9 +129,7 @@ Where to read the latest, authoritative documentation:
 
 ## 2. Building an Eval Set
 
-> - **What:** The collection of test cases you run every time.
-> - **How:** Start with 20 to 50 cases from real usage; cover typical, edge and adversarial inputs; grow it with every bug.
-> - **When to use:** Before the first prompt iteration; keep it in version control.
+> The collection of test cases you run every time. Start with 20 to 50 cases from real usage; cover typical, edge and adversarial inputs; grow it with every bug. Use it before the first prompt iteration; keep it in version control.
 
 ```text
 # evals/support_cases.jsonl
@@ -143,9 +143,7 @@ Sources of cases: real user questions (anonymised), support tickets, production 
 
 ## 3. Code-Based Graders
 
-> - **What:** Deterministic checks written in Python.
-> - **How:** Functions that return pass / fail or a score.
-> - **When to use:** Whenever possible: fast, free, reliable. Use for format, exact values, tool choice, tests.
+> Deterministic checks written in Python. Functions that return pass / fail or a score. Use it whenever possible: fast, free, reliable. Use for format, exact values, tool choice, tests.
 
 ```python
 import json
@@ -178,9 +176,7 @@ def cites_sources(output: str) -> bool:
 
 ## 4. LLM-as-Judge
 
-> - **What:** Using a strong model to grade outputs against a rubric.
-> - **How:** Give the judge the input, the output (and reference / sources if any) and specific criteria; ask it to reason first, then give a structured score.
-> - **When to use:** Open-ended quality (helpfulness, faithfulness, tone) where code cannot decide.
+> Using a strong model to grade outputs against a rubric. Give the judge the input, the output (and reference / sources if any) and specific criteria; ask it to reason first, then give a structured score. Use it for open-ended quality (helpfulness, faithfulness, tone) where code cannot decide.
 
 ```python
 from typing import Literal
@@ -231,9 +227,7 @@ Tips:
 
 ## 5. Pairwise Comparison
 
-> - **What:** Asking a judge which of two outputs is better.
-> - **How:** Show output A and B for the same input; randomise order (judges have position bias); run both orders if affordable.
-> - **When to use:** Comparing prompt / model versions when absolute scores are hard to define.
+> Asking a judge which of two outputs is better. Show output A and B for the same input; randomise order (judges have position bias); run both orders if affordable. Use it for comparing prompt / model versions when absolute scores are hard to define.
 
 ```text
 Which answer better helps the customer, A or B? Consider accuracy, clarity and politeness.
@@ -245,17 +239,13 @@ Reply with reasoning, then "A", "B" or "tie".
 
 ## 6. Human Evaluation
 
-> - **What:** People reviewing and scoring outputs.
-> - **How:** Clear guidelines, the same rubric as the judge, blind review, several reviewers for important decisions.
-> - **When to use:** Creating reference answers, validating LLM judges, high-stakes domains, subjective quality.
+> People reviewing and scoring outputs. Clear guidelines, the same rubric as the judge, blind review, several reviewers for important decisions. Use it for creating reference answers, validating LLM judges, high-stakes domains, subjective quality.
 
 Cheap version: a spreadsheet with input, output, pass / fail and a comment column, reviewed weekly.
 
 ## 7. A Minimal Eval Harness
 
-> - **What:** A script that runs your app on every case, grades and summarises.
-> - **How:** Load cases, call the system under test, apply graders, write results to CSV, print aggregate scores.
-> - **When to use:** Your first eval; often enough for a long time.
+> A script that runs your app on every case, grades and summarises. Load cases, call the system under test, apply graders, write results to CSV, print aggregate scores. Use this when your first eval; often enough for a long time.
 
 ```python
 import json
@@ -288,9 +278,7 @@ Run cases concurrently ([13 - Async](13_async-python.md)) or via the batch API f
 
 ## 8. Comparing Versions
 
-> - **What:** Deciding whether a change is actually better.
-> - **How:** Run old and new on the same cases; compare aggregate scores AND per-case differences.
-> - **When to use:** Every prompt / model / retrieval change.
+> Deciding whether a change is actually better. Run old and new on the same cases; compare aggregate scores AND per-case differences. Use it in every prompt / model / retrieval change.
 
 ```python
 merged = results_v1.merge(results_v2, on="id", suffixes=("_v1", "_v2"))
@@ -305,9 +293,7 @@ print(len(fixes), "fixed,", len(regressions), "regressed")
 
 ## 9. Evals for RAG and Agents
 
-> - **What:** Extra metrics for retrieval and multi-step systems.
-> - **How:** Score each stage separately so you know where problems come from.
-> - **When to use:** RAG apps and agents.
+> Extra metrics for retrieval and multi-step systems. Score each stage separately so you know where problems come from. Use it for RAG apps and agents.
 
 | System | Stage | Metric |
 |---|---|---|
@@ -322,9 +308,7 @@ Details: [30 - RAG](30_rag.md) section 17, [31 - AI Agents](31_ai-agents.md) sec
 
 ## 10. Evals in CI
 
-> - **What:** Running evals automatically on every pull request.
-> - **How:** A fast, small eval subset in CI with a minimum score threshold; the full set nightly or before release.
-> - **When to use:** Any team project with prompts in the repo.
+> Running evals automatically on every pull request. A fast, small eval subset in CI with a minimum score threshold; the full set nightly or before release. Use it in any team project with prompts in the repo.
 
 ```python
 # tests/test_evals.py
@@ -343,9 +327,7 @@ Store API keys as CI secrets; see [43 - GitHub Actions](43_github-actions.md). W
 
 ## 11. Eval Tools
 
-> - **What:** Libraries and platforms that provide datasets, graders, runners and dashboards.
-> - **How:** They wrap the harness pattern above with nicer UX, caching and reporting.
-> - **When to use:** When your homemade script gets hard to manage.
+> Libraries and platforms that provide datasets, graders, runners and dashboards. They wrap the harness pattern above with nicer UX, caching and reporting. Use it when your homemade script gets hard to manage.
 
 | Tool | Notes |
 |---|---|
@@ -358,9 +340,7 @@ Store API keys as CI secrets; see [43 - GitHub Actions](43_github-actions.md). W
 
 ## 12. Observability: What to Log
 
-> - **What:** The data to record for every LLM request in production.
-> - **How:** Structured logs (JSON) or a tracing platform; one record per model / tool call, linked by a request ID.
-> - **When to use:** From the first deployment.
+> The data to record for every LLM request in production. Structured logs (JSON) or a tracing platform; one record per model / tool call, linked by a request ID. Use it for from the first deployment.
 
 | Field | Why |
 |---|---|
@@ -404,9 +384,7 @@ Never log secrets; redact personal data where required.
 
 ## 13. Tracing
 
-> - **What:** Recording each request as a tree of timed steps (spans).
-> - **How:** A trace starts when the request arrives; each LLM call, retrieval and tool call becomes a child span with inputs, outputs, timing and tokens.
-> - **When to use:** Anything with more than one step (RAG, agents, chains).
+> Recording each request as a tree of timed steps (spans). A trace starts when the request arrives; each LLM call, retrieval and tool call becomes a child span with inputs, outputs, timing and tokens. Use it for anything with more than one step (RAG, agents, chains).
 
 ```text
 trace  POST /ask  (2.8 s, $0.012)
@@ -420,9 +398,7 @@ Standards: **OpenTelemetry** (vendor-neutral traces) with GenAI semantic convent
 
 ## 14. Observability Tools
 
-> - **What:** Platforms that collect, visualise and search LLM traces.
-> - **How:** Add an SDK / decorator / OpenTelemetry exporter to your app; view traces in a web UI.
-> - **When to use:** Production apps and serious development.
+> Platforms that collect, visualise and search LLM traces. Add an SDK / decorator / OpenTelemetry exporter to your app; view traces in a web UI. Use it for production apps and serious development.
 
 | Tool | Notes |
 |---|---|
@@ -445,9 +421,7 @@ def answer(question: str) -> str:
 
 ## 15. Cost and Latency Monitoring
 
-> - **What:** Tracking spend and speed over time.
-> - **How:** Aggregate logged tokens and latency by feature, model, prompt version and user; alert on spikes.
-> - **When to use:** Continuously in production.
+> Tracking spend and speed over time. Aggregate logged tokens and latency by feature, model, prompt version and user; alert on spikes. Use it for continuously in production.
 
 - Dashboards: cost per day, per feature, per user; p50 / p95 latency; error rate; cache hit rate.
 - Alerts: daily cost above budget, error rate above threshold, latency p95 regression.
@@ -456,17 +430,13 @@ def answer(question: str) -> str:
 
 ## 16. User Feedback
 
-> - **What:** Signals from users about answer quality.
-> - **How:** Thumbs up / down, "was this helpful?", corrections, escalations to humans; store with the trace ID.
-> - **When to use:** Every user-facing AI feature.
+> Signals from users about answer quality. Thumbs up / down, "was this helpful?", corrections, escalations to humans; store with the trace ID. Use it in every user-facing AI feature.
 
 Feedback turns production into a source of eval cases: review negative feedback weekly and add representative cases to the eval set.
 
 ## 17. Online Evaluation and A/B Tests
 
-> - **What:** Measuring quality on live traffic.
-> - **How:** Sample production traces for automatic judging; route a share of users to a new version and compare metrics.
-> - **When to use:** After offline evals look good, to confirm with real users.
+> Measuring quality on live traffic. Sample production traces for automatic judging; route a share of users to a new version and compare metrics. Use it after offline evals look good, to confirm with real users.
 
 - Shadow mode: run the new version in parallel without showing it; compare outputs.
 - Canary: 5 to 10% of traffic to the new version, watch metrics, then roll out.
@@ -498,9 +468,7 @@ Feedback turns production into a source of eval cases: review negative feedback 
 
 ## 20. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Build an eval set
 
@@ -545,3 +513,9 @@ List the fields you log for every LLM call in production.
 Trace / request ID, prompt version, model, input / output / cached tokens, cost, latency, stop reason, tool calls, retrieved document IDs, errors and user feedback, with personal data redacted (section 12).
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [33 - MCP (Model Context Protocol)](33_mcp.md) | **Index:** [All guides](README.md) | **Next:** [35 - Local and Self-Hosted LLMs](35_local-llms.md)
+<!-- nav:end -->

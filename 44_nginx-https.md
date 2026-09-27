@@ -1,5 +1,9 @@
 # 44 - Nginx, Reverse Proxy and HTTPS
 
+<!-- nav:start -->
+**Previous:** [43 - GitHub Actions (CI/CD)](43_github-actions.md) | **Index:** [All guides](README.md) | **Next:** [45 - Kubernetes](45_kubernetes.md)
+<!-- nav:end -->
+
 Quick reference for putting apps (FastAPI, Streamlit, Ollama) behind Nginx on a Linux server: reverse proxy, HTTPS with Let's Encrypt, streaming, WebSockets, basic auth, rate limiting and running apps as services.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -91,9 +95,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The nginx / certbot commands and the most common config directives.
-> - **How:** Commands manage the service; directives inside config blocks define behaviour.
-> - **When to use:** You see `proxy_pass http://127.0.0.1:8000;` or `certbot --nginx -d api.example.com` and want to know what each part does.
+> The nginx / certbot commands and the most common config directives. Commands manage the service; directives inside config blocks define behaviour. Use this when you see `proxy_pass http://127.0.0.1:8000;` or `certbot --nginx -d api.example.com` and want to know what each part does.
 
 ```text
 sudo  certbot  --nginx  -d api.example.com  -d www.example.com
@@ -123,9 +125,7 @@ sudo  certbot  --nginx  -d api.example.com  -d www.example.com
 
 ## 1. When You Need This (and When Not)
 
-> - **What:** Deciding between managing Nginx yourself and using a managed platform.
-> - **How:** Managed platforms (Azure Container Apps, App Service, Hugging Face Spaces, Cloud Run) already provide HTTPS, domains and scaling.
-> - **When to use:** Nginx is for your own VM / server; skip it when a platform handles the edge for you.
+> Deciding between managing Nginx yourself and using a managed platform. Managed platforms (Azure Container Apps, App Service, Hugging Face Spaces, Cloud Run) already provide HTTPS, domains and scaling. Nginx is for your own VM / server; skip it when a platform handles the edge for you.
 
 | Situation | Use |
 |---|---|
@@ -136,9 +136,7 @@ sudo  certbot  --nginx  -d api.example.com  -d www.example.com
 
 ## 2. Install Nginx
 
-> - **What:** Installing and starting Nginx on Ubuntu.
-> - **How:** `apt install`, enable the service, check the welcome page.
-> - **When to use:** Fresh server setup.
+> Installing and starting Nginx on Ubuntu. `apt install`, enable the service, check the welcome page. Use it for fresh server setup.
 
 ```bash
 sudo apt update && sudo apt install -y nginx
@@ -148,9 +146,7 @@ curl -I http://localhost                  # HTTP/1.1 200 OK, Server: nginx
 
 ## 3. Config File Layout
 
-> - **What:** Where Nginx configuration lives (Ubuntu / Debian).
-> - **How:** One file per site in `sites-available`, enabled by a symlink in `sites-enabled`.
-> - **When to use:** Adding or editing sites.
+> Where Nginx configuration lives (Ubuntu / Debian). One file per site in `sites-available`, enabled by a symlink in `sites-enabled`. Use it for adding or editing sites.
 
 | Path | Contains |
 |---|---|
@@ -168,9 +164,7 @@ sudo nginx -t && sudo systemctl reload nginx
 
 ## 4. Reverse Proxy for FastAPI
 
-> - **What:** Forwarding requests from port 80 to your app on port 8000.
-> - **How:** A `server` block with `proxy_pass` and forwarding headers.
-> - **When to use:** Serving any web app / API.
+> Forwarding requests from port 80 to your app on port 8000. A `server` block with `proxy_pass` and forwarding headers. Use it for serving any web app / API.
 
 ```nginx
 # /etc/nginx/sites-available/api
@@ -194,9 +188,7 @@ Run uvicorn with `--proxy-headers --forwarded-allow-ips="127.0.0.1"` so FastAPI 
 
 ## 5. Domain and DNS
 
-> - **What:** Pointing a domain name at your server.
-> - **How:** At your DNS provider, create an **A record** `api.example.com -> <server public IP>`; wait for it to propagate.
-> - **When to use:** Before requesting certificates.
+> Pointing a domain name at your server. At your DNS provider, create an **A record** `api.example.com -> <server public IP>`; wait for it to propagate. Use it before requesting certificates.
 
 ```bash
 nslookup api.example.com             # should return your server IP
@@ -206,9 +198,7 @@ Azure VMs: give the public IP a DNS label to get a free name like `myvm.swedence
 
 ## 6. HTTPS with Let's Encrypt (certbot)
 
-> - **What:** Free, auto-renewing TLS certificates.
-> - **How:** certbot proves you control the domain (via port 80), gets a certificate, edits the Nginx config for HTTPS and sets up renewal.
-> - **When to use:** Every public site.
+> Free, auto-renewing TLS certificates. certbot proves you control the domain (via port 80), gets a certificate, edits the Nginx config for HTTPS and sets up renewal. Use it in every public site.
 
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
@@ -221,9 +211,7 @@ After certbot, your server block has `listen 443 ssl;`, `ssl_certificate` lines 
 
 ## 7. Streaming (SSE) and WebSockets
 
-> - **What:** Proxy settings so LLM token streams and live UIs work.
-> - **How:** Disable buffering for SSE; pass `Upgrade` / `Connection` headers for WebSockets; long timeouts.
-> - **When to use:** Streaming chat APIs ([39](39_fastapi.md)), Streamlit / Chainlit / Gradio ([38](38_ai-ui.md)).
+> Proxy settings so LLM token streams and live UIs work. Disable buffering for SSE; pass `Upgrade` / `Connection` headers for WebSockets; long timeouts. Use it for streaming chat APIs ([39](39_fastapi.md)), Streamlit / Chainlit / Gradio ([38](38_ai-ui.md)).
 
 ```nginx
 location /chat {                               # SSE / streamed responses
@@ -249,9 +237,7 @@ Your app can also send the header `X-Accel-Buffering: no` to disable buffering p
 
 ## 8. Several Apps on One Server
 
-> - **What:** Routing by subdomain or path.
-> - **How:** One server block per subdomain, or several `location` blocks in one server.
-> - **When to use:** API + UI + docs on one VM.
+> Routing by subdomain or path. One server block per subdomain, or several `location` blocks in one server. Use it for API + UI + docs on one VM.
 
 ```nginx
 server {
@@ -273,9 +259,7 @@ server {
 
 ## 9. Basic Auth (Protect Ollama or Admin UIs)
 
-> - **What:** Requiring a username and password in front of an app that has no auth of its own.
-> - **How:** Create a password file with `htpasswd`; add `auth_basic` to the location. Always combine with HTTPS.
-> - **When to use:** Exposing Ollama, admin dashboards, internal demos. (For Ollama from your laptop, an SSH tunnel is simpler, [48](48_azure-vm-ollama.md).)
+> Requiring a username and password in front of an app that has no auth of its own. Create a password file with `htpasswd`; add `auth_basic` to the location. Always combine with HTTPS. Use it for exposing Ollama, admin dashboards, internal demos. (For Ollama from your laptop, an SSH tunnel is simpler, [48](48_azure-vm-ollama.md).).
 
 ```bash
 sudo apt install -y apache2-utils
@@ -299,9 +283,7 @@ server {
 
 ## 10. Rate Limiting and Upload Size
 
-> - **What:** Protecting the backend from floods and huge uploads.
-> - **How:** `limit_req_zone` defines a limit per client IP; `limit_req` applies it; `client_max_body_size` caps uploads.
-> - **When to use:** Public APIs, expensive LLM endpoints.
+> Protecting the backend from floods and huge uploads. `limit_req_zone` defines a limit per client IP; `limit_req` applies it; `client_max_body_size` caps uploads. Use it for public APIs, expensive LLM endpoints.
 
 ```nginx
 # in the http context (e.g. top of the site file, outside server {})
@@ -320,9 +302,7 @@ Per-user / per-API-key limits belong in the app (Redis, [41](41_redis-queues.md)
 
 ## 11. Load Balancing
 
-> - **What:** Spreading requests across several app instances.
-> - **How:** An `upstream` block lists backends; `proxy_pass` to the upstream name.
-> - **When to use:** Several uvicorn / container instances on one or more servers.
+> Spreading requests across several app instances. An `upstream` block lists backends; `proxy_pass` to the upstream name. Use it for several uvicorn / container instances on one or more servers.
 
 ```nginx
 upstream api_backend {
@@ -340,9 +320,7 @@ server {
 
 ## 12. Run Your App as a systemd Service
 
-> - **What:** Keeping your FastAPI app running after logout, crashes and reboots.
-> - **How:** A unit file describing how to start the app; systemd supervises it.
-> - **When to use:** Any app on a Linux VM without Docker.
+> Keeping your FastAPI app running after logout, crashes and reboots. A unit file describing how to start the app; systemd supervises it. Use it in any app on a Linux VM without Docker.
 
 ```ini
 # /etc/systemd/system/api.service
@@ -371,9 +349,7 @@ journalctl -u api -f
 
 ## 13. Firewall
 
-> - **What:** Allowing only the ports you need.
-> - **How:** `ufw` on the server, plus NSG rules in Azure ([48](48_azure-vm-ollama.md)).
-> - **When to use:** Every internet-facing server.
+> Allowing only the ports you need. `ufw` on the server, plus NSG rules in Azure ([48](48_azure-vm-ollama.md)). Use it in every internet-facing server.
 
 ```bash
 sudo ufw allow OpenSSH
@@ -386,9 +362,7 @@ Apps listen on `127.0.0.1` so only Nginx can reach them.
 
 ## 14. Caddy (Simpler Alternative)
 
-> - **What:** A web server that gets and renews HTTPS certificates automatically with almost no config.
-> - **How:** A tiny `Caddyfile`; Caddy handles TLS for any domain listed.
-> - **When to use:** Small projects where you want HTTPS with minimal setup.
+> A web server that gets and renews HTTPS certificates automatically with almost no config. A tiny `Caddyfile`; Caddy handles TLS for any domain listed. Use it for small projects where you want HTTPS with minimal setup.
 
 ```text
 # /etc/caddy/Caddyfile
@@ -406,9 +380,7 @@ sudo systemctl reload caddy
 
 ## 15. Logs and Debugging
 
-> - **What:** Finding out why a request fails.
-> - **How:** Nginx access / error logs, backend logs, curl from the server itself.
-> - **When to use:** 502s, timeouts, redirects gone wrong.
+> Finding out why a request fails. Nginx access / error logs, backend logs, curl from the server itself. Use it for 502s, timeouts, redirects gone wrong.
 
 ```bash
 sudo tail -f /var/log/nginx/error.log
@@ -434,9 +406,7 @@ curl -vk https://api.example.com/          # full TLS / header details from outs
 
 ## 17. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Reverse proxy
 
@@ -484,3 +454,9 @@ The site shows `502 Bad Gateway`. What do you check?
 1. Is the app running? `systemctl status api` / `docker ps`. 2. Does it answer locally? `curl 127.0.0.1:8000/health`. 3. Right port in `proxy_pass`? 4. `sudo tail -f /var/log/nginx/error.log` for the exact reason.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [43 - GitHub Actions (CI/CD)](43_github-actions.md) | **Index:** [All guides](README.md) | **Next:** [45 - Kubernetes](45_kubernetes.md)
+<!-- nav:end -->

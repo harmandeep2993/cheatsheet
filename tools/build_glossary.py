@@ -10,6 +10,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from build_nav import nav_for, with_nav
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "98_glossary.md"
 GUIDE_RE = re.compile(r"^(\d\d)_[a-z0-9-]+\.md$")
@@ -79,7 +81,7 @@ def build() -> str:
 
 
 def main() -> int:
-    content = build()
+    content = with_nav(build(), nav_for(OUT))
     if "--check" in sys.argv:
         current = OUT.read_text(encoding="utf-8").replace("\r\n", "\n") if OUT.exists() else ""
         if current != content:

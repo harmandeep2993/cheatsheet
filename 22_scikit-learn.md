@@ -1,5 +1,9 @@
 # 22 - Scikit-learn
 
+<!-- nav:start -->
+**Previous:** [21 - Seaborn](21_seaborn.md) | **Index:** [All guides](README.md) | **Next:** [23 - PyTorch](23_pytorch.md)
+<!-- nav:end -->
+
 Quick reference for machine learning with scikit-learn: preprocessing, models, evaluation, tuning and saving.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -87,9 +91,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The meaning of the parameters that appear again and again in scikit-learn.
-> - **How:** Parameters are set when you create an object (`Model(param=value)`), before `fit`.
-> - **When to use:** You see `RandomForestClassifier(n_estimators=300, max_depth=8, random_state=42)` and want to know what each argument does.
+> The meaning of the parameters that appear again and again in scikit-learn. Parameters are set when you create an object (`Model(param=value)`), before `fit`. Use this when you see `RandomForestClassifier(n_estimators=300, max_depth=8, random_state=42)` and want to know what each argument does.
 
 ```text
 RandomForestClassifier(n_estimators=300, max_depth=8, random_state=42, n_jobs=-1)
@@ -132,9 +134,7 @@ These settings are called **hyperparameters**: you choose them; the model learns
 
 ## 1. Install and Import
 
-> - **What:** Installing scikit-learn and the usual companions.
-> - **How:** Package name is `scikit-learn`, import name is `sklearn`.
-> - **When to use:** Any classic ML task on tabular data (not deep learning).
+> Installing scikit-learn and the usual companions. Package name is `scikit-learn`, import name is `sklearn`. Use it in any classic ML task on tabular data (not deep learning).
 
 ```powershell
 pip install scikit-learn pandas numpy matplotlib joblib
@@ -149,9 +149,7 @@ from sklearn.model_selection import train_test_split
 
 ## 2. The ML Workflow
 
-> - **What:** The standard steps of a machine learning project.
-> - **How:** Each step maps to a scikit-learn tool shown in the sections below.
-> - **When to use:** As a checklist for every modelling task.
+> The standard steps of a machine learning project. Each step maps to a scikit-learn tool shown in the sections below. Use it as a checklist for every modelling task.
 
 ```text
 1. Define the target (y) and features (X)
@@ -167,9 +165,7 @@ from sklearn.model_selection import train_test_split
 
 ## 3. The Estimator API
 
-> - **What:** The same few methods on every scikit-learn object.
-> - **How:** `fit` learns from data; `predict` or `transform` applies what was learned.
-> - **When to use:** Always; once you know this, every model and transformer works the same way.
+> The same few methods on every scikit-learn object. `fit` learns from data; `predict` or `transform` applies what was learned. Use it always; once you know this, every model and transformer works the same way.
 
 | Method | On | Does |
 |---|---|---|
@@ -191,9 +187,7 @@ Learned attributes end with `_`: `model.coef_`, `scaler.mean_`, `model.feature_i
 
 ## 4. Load Data (X and y)
 
-> - **What:** Getting features `X` (inputs) and target `y` (what to predict).
-> - **How:** From a DataFrame, or from built-in example datasets.
-> - **When to use:** The start of every task.
+> Getting features `X` (inputs) and target `y` (what to predict). From a DataFrame, or from built-in example datasets. Use it for the start of every task.
 
 ```python
 df = pd.read_csv("houses.csv")
@@ -209,9 +203,7 @@ X, y = fetch_california_housing(return_X_y=True, as_frame=True)  # regression
 
 ## 5. Train / Test Split
 
-> - **What:** Keeping some data aside to measure performance on unseen rows.
-> - **How:** `train_test_split` shuffles and splits rows; the test set is used only at the end.
-> - **When to use:** Every model; evaluating on training data gives falsely good results.
+> Keeping some data aside to measure performance on unseen rows. `train_test_split` shuffles and splits rows; the test set is used only at the end. Use it in every model; evaluating on training data gives falsely good results.
 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(
@@ -223,9 +215,7 @@ Time series: do not shuffle; train on the past, test on the future (`shuffle=Fal
 
 ## 6. Scaling Numeric Features
 
-> - **What:** Putting numeric columns on a similar scale.
-> - **How:** Fit the scaler on training data only, then transform train and test with it.
-> - **When to use:** Distance or gradient based models (linear / logistic regression, SVM, KNN, PCA, neural nets). Tree models do not need it.
+> Putting numeric columns on a similar scale. Fit the scaler on training data only, then transform train and test with it. Use it for distance or gradient based models (linear / logistic regression, SVM, KNN, PCA, neural nets). Tree models do not need it.
 
 ```python
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
@@ -243,9 +233,7 @@ X_test_s = scaler.transform(X_test)         # apply the SAME numbers to TEST
 
 ## 7. Encoding Categorical Features
 
-> - **What:** Turning text categories into numbers models can use.
-> - **How:** One-hot creates one 0/1 column per category; ordinal maps categories to ordered integers.
-> - **When to use:** Any text / category column (city, product type, size S/M/L).
+> Turning text categories into numbers models can use. One-hot creates one 0/1 column per category; ordinal maps categories to ordered integers. Use it in any text / category column (city, product type, size S/M/L).
 
 ```python
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, LabelEncoder
@@ -268,9 +256,7 @@ LabelEncoder().fit_transform(y)                 # for the TARGET only
 
 ## 8. Missing Values
 
-> - **What:** Filling empty values so models can train.
-> - **How:** `SimpleImputer` learns a fill value (mean, median, most frequent) from training data.
-> - **When to use:** Most models fail on NaN (some, like `HistGradientBoosting`, handle it themselves).
+> Filling empty values so models can train. `SimpleImputer` learns a fill value (mean, median, most frequent) from training data. Most models fail on NaN (some, like `HistGradientBoosting`, handle it themselves).
 
 ```python
 from sklearn.impute import SimpleImputer, KNNImputer
@@ -285,9 +271,7 @@ SimpleImputer(strategy="median", add_indicator=True)   # also add "was missing" 
 
 ## 9. ColumnTransformer
 
-> - **What:** Different preprocessing for different columns in one object.
-> - **How:** A list of `(name, transformer, columns)`; results are joined side by side.
-> - **When to use:** Real datasets with both numeric and categorical columns (almost always).
+> Different preprocessing for different columns in one object. A list of `(name, transformer, columns)`; results are joined side by side. Use it for real datasets with both numeric and categorical columns (almost always).
 
 ```python
 from sklearn.compose import ColumnTransformer, make_column_selector
@@ -310,9 +294,7 @@ make_column_selector(dtype_include=object)
 
 ## 10. Pipelines
 
-> - **What:** Preprocessing steps and a model chained into one object.
-> - **How:** `fit` runs every step on training data; `predict` applies the same steps to new data.
-> - **When to use:** Always. Prevents data leakage, keeps code short, and you save ONE object for production.
+> Preprocessing steps and a model chained into one object. `fit` runs every step on training data; `predict` applies the same steps to new data. Use it always. Prevents data leakage, keeps code short, and you save ONE object for production.
 
 ```python
 from sklearn.pipeline import Pipeline, make_pipeline
@@ -334,9 +316,7 @@ make_pipeline(StandardScaler(), LogisticRegression())   # auto-named steps
 
 ## 11. Regression Models
 
-> - **What:** Models that predict a number (price, demand, temperature).
-> - **How:** Same `fit` / `predict` API; they differ in how they learn the relationship.
-> - **When to use:** The target is continuous.
+> Models that predict a number (price, demand, temperature). Same `fit` / `predict` API; they differ in how they learn the relationship. Use this when the target is continuous.
 
 ```python
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
@@ -357,9 +337,7 @@ HistGradientBoostingRegressor()             # fast, strong, handles NaN
 
 ## 12. Classification Models
 
-> - **What:** Models that predict a category (spam / not spam, churn yes / no, species).
-> - **How:** Same API; `predict_proba` gives class probabilities.
-> - **When to use:** The target is a label.
+> Models that predict a category (spam / not spam, churn yes / no, species). Same API; `predict_proba` gives class probabilities. Use this when the target is a label.
 
 ```python
 from sklearn.linear_model import LogisticRegression
@@ -384,9 +362,7 @@ proba = model.predict_proba(X_test)[:, 1]   # probability of the positive class
 
 ## 13. Clustering and Dimensionality Reduction
 
-> - **What:** Finding groups without labels (clustering) and compressing many columns into few (PCA).
-> - **How:** Only `X` is used (no `y`); scale the data first.
-> - **When to use:** Customer segmentation, anomaly detection, visualising high-dimensional data.
+> Finding groups without labels (clustering) and compressing many columns into few (PCA). Only `X` is used (no `y`); scale the data first. Use it for customer segmentation, anomaly detection, visualising high-dimensional data.
 
 ```python
 from sklearn.cluster import KMeans, DBSCAN
@@ -409,9 +385,7 @@ pca.explained_variance_ratio_                # variance kept per component
 
 ## 14. Regression Metrics
 
-> - **What:** Numbers that say how good a regression model is.
-> - **How:** Compare `y_test` with `y_pred`.
-> - **When to use:** Evaluating and comparing regression models.
+> Numbers that say how good a regression model is. Compare `y_test` with `y_pred`. Use it for evaluating and comparing regression models.
 
 ```python
 from sklearn.metrics import (mean_absolute_error, mean_squared_error,
@@ -432,9 +406,7 @@ mean_absolute_percentage_error(y_test, y_pred)  # MAPE: error in % (bad if y nea
 
 ## 15. Classification Metrics
 
-> - **What:** Numbers and tables that say how good a classifier is.
-> - **How:** Compare true labels with predicted labels (or probabilities).
-> - **When to use:** Evaluating classifiers; accuracy alone is misleading for imbalanced data.
+> Numbers and tables that say how good a classifier is. Compare true labels with predicted labels (or probabilities). Use this when evaluating classifiers; accuracy alone is misleading for imbalanced data.
 
 ```python
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score,
@@ -469,9 +441,7 @@ Multi-class: add `average="macro"` or `"weighted"` to precision / recall / f1.
 
 ## 16. Cross-Validation
 
-> - **What:** Evaluating on several train / validation splits instead of one.
-> - **How:** Data is split into k folds; each fold is the validation set once; you get k scores.
-> - **When to use:** Comparing models or settings reliably, especially on small datasets.
+> Evaluating on several train / validation splits instead of one. Data is split into k folds; each fold is the validation set once; you get k scores. Use it for comparing models or settings reliably, especially on small datasets.
 
 ```python
 from sklearn.model_selection import cross_val_score, cross_validate, StratifiedKFold, KFold, TimeSeriesSplit
@@ -491,9 +461,7 @@ Train score much higher than validation score = overfitting.
 
 ## 17. Hyperparameter Tuning
 
-> - **What:** Searching for the best model settings.
-> - **How:** Try combinations with cross-validation; keep the best. Grid = all combinations, Random = a sample.
-> - **When to use:** After you have a working pipeline and baseline.
+> Searching for the best model settings. Try combinations with cross-validation; keep the best. Grid = all combinations, Random = a sample. Use it after you have a working pipeline and baseline.
 
 ```python
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
@@ -517,9 +485,7 @@ Parameter names in a pipeline: `<step name>__<parameter>` (two underscores).
 
 ## 18. Feature Importance
 
-> - **What:** Which features the model relies on most.
-> - **How:** Tree models expose `feature_importances_`; linear models `coef_`; permutation importance works for any model.
-> - **When to use:** Explaining a model, removing useless features, sanity-checking for leakage.
+> Which features the model relies on most. Tree models expose `feature_importances_`; linear models `coef_`; permutation importance works for any model. Use it for explaining a model, removing useless features, sanity-checking for leakage.
 
 ```python
 from sklearn.inspection import permutation_importance
@@ -536,9 +502,7 @@ A single feature with huge importance can mean data leakage (it contains the ans
 
 ## 19. Imbalanced Classes
 
-> - **What:** One class is much rarer than the other (fraud 1%, normal 99%).
-> - **How:** Weight rare classes more, choose better metrics, and adjust the decision threshold.
-> - **When to use:** Accuracy looks great but the model never predicts the rare class.
+> One class is much rarer than the other (fraud 1%, normal 99%). Weight rare classes more, choose better metrics, and adjust the decision threshold. Use this when accuracy looks great but the model never predicts the rare class.
 
 ```python
 LogisticRegression(class_weight="balanced", max_iter=1000)
@@ -553,9 +517,7 @@ Use F1, recall, precision or ROC AUC instead of accuracy. For resampling (SMOTE)
 
 ## 20. Save and Load a Model
 
-> - **What:** Storing a trained pipeline to use later or in an API.
-> - **How:** `joblib.dump` writes the fitted object to a file; `joblib.load` reads it back.
-> - **When to use:** After training, before serving predictions (for example with FastAPI).
+> Storing a trained pipeline to use later or in an API. `joblib.dump` writes the fitted object to a file; `joblib.load` reads it back. Use it after training, before serving predictions (for example with FastAPI).
 
 ```python
 import joblib
@@ -569,9 +531,7 @@ Load with the same scikit-learn version you saved with. Never load model files f
 
 ## 21. Full Example
 
-> - **What:** An end-to-end classification pipeline you can copy.
-> - **How:** Split, preprocess by column type, train, cross-validate, test, save.
-> - **When to use:** As a template for a new tabular ML task.
+> An end-to-end classification pipeline you can copy. Split, preprocess by column type, train, cross-validate, test, save. Use it as a template for a new tabular ML task.
 
 ```python
 import joblib
@@ -613,9 +573,7 @@ joblib.dump(pipe, "churn_model.joblib")
 
 ## 22. Which Model to Use
 
-> - **What:** A starting point for choosing a model.
-> - **How:** Match the task and data size; always compare against a dummy baseline.
-> - **When to use:** Starting a new problem.
+> A starting point for choosing a model. Match the task and data size; always compare against a dummy baseline. Use it for starting a new problem.
 
 | Situation | Start with |
 |---|---|
@@ -648,9 +606,7 @@ Official chooser: search "scikit-learn choosing the right estimator".
 
 ## 24. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: First pipeline
 
@@ -700,3 +656,9 @@ search.best_params_
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [21 - Seaborn](21_seaborn.md) | **Index:** [All guides](README.md) | **Next:** [23 - PyTorch](23_pytorch.md)
+<!-- nav:end -->

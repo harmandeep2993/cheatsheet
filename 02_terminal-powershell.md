@@ -1,5 +1,9 @@
 # 02 - Terminal and PowerShell
 
+<!-- nav:start -->
+**Previous:** [01 - Markdown](01_markdown.md) | **Index:** [All guides](README.md) | **Next:** [03 - Linux](03_linux.md)
+<!-- nav:end -->
+
 Quick reference for everyday terminal work on Windows (PowerShell, CMD) with Bash equivalents (Linux, Mac, Git Bash).
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -74,9 +78,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** How PowerShell, CMD and Bash parameters are written, and what each one used below means.
-> - **How:** A command is split into command name, parameters and values; tables list every parameter.
-> - **When to use:** You see a command like `Get-ChildItem -Recurse -Filter *.csv` and want to know what each part does.
+> How PowerShell, CMD and Bash parameters are written, and what each one used below means. A command is split into command name, parameters and values; tables list every parameter. Use this when you see a command like `Get-ChildItem -Recurse -Filter *.csv` and want to know what each part does.
 
 ### How a command is built
 
@@ -162,9 +164,7 @@ Get-ChildItem  -Path D:\data  -Filter *.csv  -Recurse
 
 ## 1. Which Shell Am I In?
 
-> - **What:** Identifying which command-line program (shell) you are typing into.
-> - **How:** Look at the prompt, or run `$PSVersionTable` in PowerShell.
-> - **When to use:** A command from a tutorial fails; it may be written for Bash while you are in PowerShell (or the reverse).
+> Identifying which command-line program (shell) you are typing into. Look at the prompt, or run `$PSVersionTable` in PowerShell. Use this when a command from a tutorial fails; it may be written for Bash while you are in PowerShell (or the reverse).
 
 | Prompt looks like | Shell |
 |---|---|
@@ -182,9 +182,7 @@ $PSVersionTable.PSVersion       # PowerShell version
 
 ## 2. Keyboard Shortcuts
 
-> - **What:** Keys that save typing and help you recover from mistakes.
-> - **How:** Built into the terminal; work in every shell with small differences.
-> - **When to use:** All the time: `Tab` for paths, `Up` to repeat, `Ctrl+C` to stop something stuck.
+> Keys that save typing and help you recover from mistakes. Built into the terminal; work in every shell with small differences. Use it for all the time: `Tab` for paths, `Up` to repeat, `Ctrl+C` to stop something stuck.
 
 | Keys | Action |
 |---|---|
@@ -200,9 +198,7 @@ $PSVersionTable.PSVersion       # PowerShell version
 
 ## 3. Help
 
-> - **What:** Built-in documentation for commands.
-> - **How:** `Get-Help` / `Get-Command` in PowerShell, `man` / `--help` in Bash.
-> - **When to use:** You remember roughly what a command is called but not its options.
+> Built-in documentation for commands. `Get-Help` / `Get-Command` in PowerShell, `man` / `--help` in Bash. Use this when you remember roughly what a command is called but not its options.
 
 ```powershell
 Get-Help Get-ChildItem          # help for a command
@@ -219,9 +215,7 @@ ls --help                       # short help
 
 ## 4. Navigation
 
-> - **What:** Moving between folders and seeing what is in them.
-> - **How:** `cd` to change folder, `ls` / `Get-ChildItem` to list, `pwd` to see where you are.
-> - **When to use:** The first thing in any terminal session: go to your project folder before running anything.
+> Moving between folders and seeing what is in them. `cd` to change folder, `ls` / `Get-ChildItem` to list, `pwd` to see where you are. Use it as the first thing in any terminal session: go to your project folder before running anything.
 
 ```powershell
 pwd                             # current folder (Get-Location)
@@ -243,9 +237,7 @@ Paths with spaces need quotes: `cd "C:\Program Files"`.
 
 ## 5. Files and Folders
 
-> - **What:** Creating, copying, moving, renaming and deleting files and folders.
-> - **How:** PowerShell `*-Item` cmdlets (with Linux-style aliases like `cp`, `mv`, `rm`).
-> - **When to use:** Setting up a project structure, cleaning build output, scripting file tasks.
+> Creating, copying, moving, renaming and deleting files and folders. PowerShell `*-Item` cmdlets (with Linux-style aliases like `cp`, `mv`, `rm`). Use it for setting up a project structure, cleaning build output, scripting file tasks.
 
 ```powershell
 mkdir new-folder                                    # create folder (New-Item -ItemType Directory)
@@ -273,9 +265,7 @@ rm file.txt ; rm -rf folder     # delete file, folder (no recycle bin!)
 
 ## 6. View and Search File Content
 
-> - **What:** Reading files and searching inside them without opening an editor.
-> - **How:** `Get-Content` to read (head, tail, follow), `Select-String` to search (like grep).
-> - **When to use:** Checking a log file, following a running server's log, finding where an error message appears.
+> Reading files and searching inside them without opening an editor. `Get-Content` to read (head, tail, follow), `Select-String` to search (like grep). Use it for checking a log file, following a running server's log, finding where an error message appears.
 
 ```powershell
 cat file.txt                            # show file (Get-Content)
@@ -300,9 +290,7 @@ less file.txt                           # scroll (q to quit)
 
 ## 7. Find Files
 
-> - **What:** Locating files by name, content or size.
-> - **How:** `Get-ChildItem -Recurse` with `-Filter`, piped into `Select-String` or `Sort-Object`.
-> - **When to use:** "Where is that config file?", "which scripts import pandas?", "what is filling my disk?"
+> Locating files by name, content or size. `Get-ChildItem -Recurse` with `-Filter`, piped into `Select-String` or `Sort-Object`. Use it to answer questions like "Where is that config file?", "which scripts import pandas?", "what is filling my disk?".
 
 ```powershell
 Get-ChildItem -Recurse -Filter *.csv                # find by name
@@ -318,9 +306,7 @@ du -sh *                                # folder sizes
 
 ## 8. Redirection and Pipes
 
-> - **What:** Sending command output to a file or into another command.
-> - **How:** `>` overwrite, `>>` append, `2>` errors, `|` pipe to the next command.
-> - **When to use:** Saving output for later, building a report, combining small commands into one.
+> Sending command output to a file or into another command. `>` overwrite, `>>` append, `2>` errors, `|` pipe to the next command. Use it for saving output for later, building a report, combining small commands into one.
 
 | Syntax | Meaning |
 |---|---|
@@ -340,9 +326,7 @@ Get-Content data.json -Raw | ConvertFrom-Json       # JSON text to objects
 
 ## 9. PowerShell Pipeline: Filter, Sort, Select
 
-> - **What:** Filtering, sorting and selecting PowerShell output by property.
-> - **How:** PowerShell passes objects; `Where-Object`, `Sort-Object`, `Select-Object` work on their properties.
-> - **When to use:** "Show the 5 processes using most CPU", "list files bigger than 100 MB".
+> Filtering, sorting and selecting PowerShell output by property. PowerShell passes objects; `Where-Object`, `Sort-Object`, `Select-Object` work on their properties. Use it to answer questions like "Show the 5 processes using most CPU", "list files bigger than 100 MB".
 
 PowerShell passes **objects**, not text, so you can filter on properties.
 
@@ -362,9 +346,7 @@ Comparison operators: `-eq -ne -gt -ge -lt -le -like -notlike -match -contains -
 
 ## 10. Variables
 
-> - **What:** Storing values to reuse in later commands.
-> - **How:** `$name = value` in PowerShell, `name=value` in Bash.
-> - **When to use:** Long values you type often (resource group, VM name, IP), like in the Azure guide.
+> Storing values to reuse in later commands. `$name = value` in PowerShell, `name=value` in Bash. Use it for long values you type often (resource group, VM name, IP), like in the Azure guide.
 
 ```powershell
 $name = "Harman"
@@ -384,9 +366,7 @@ echo "Hello $name"
 
 ## 11. Environment Variables
 
-> - **What:** System-wide or session-wide settings that programs read (PATH, API hosts, keys).
-> - **How:** `$env:NAME` in PowerShell; permanent via `SetEnvironmentVariable` or System Settings.
-> - **When to use:** A program cannot be found (PATH), or an app needs a setting like `OLLAMA_HOST`.
+> System-wide or session-wide settings that programs read (PATH, API hosts, keys). `$env:NAME` in PowerShell; permanent via `SetEnvironmentVariable` or System Settings. Use this when a program cannot be found (PATH), or an app needs a setting like `OLLAMA_HOST`.
 
 ```powershell
 $env:PATH                               # show
@@ -410,9 +390,7 @@ set MY_VAR=value
 
 ## 12. System Info
 
-> - **What:** Information about your machine: OS, user, memory, disks.
-> - **How:** Built-in cmdlets and tools such as `Get-ComputerInfo`, `systeminfo`, `Get-PSDrive`.
-> - **When to use:** Checking free disk space, OS version for an install guide, or RAM before running a model.
+> Information about your machine: OS, user, memory, disks. Built-in cmdlets and tools such as `Get-ComputerInfo`, `systeminfo`, `Get-PSDrive`. Use it for checking free disk space, OS version for an install guide, or RAM before running a model.
 
 ```powershell
 hostname                                # computer name
@@ -429,9 +407,7 @@ uname -a ; df -h ; free -h ; uptime ; date
 
 ## 13. Processes
 
-> - **What:** Running programs, their resource usage, and stopping them.
-> - **How:** `Get-Process` to list, `Stop-Process` to kill, `Get-NetTCPConnection` for ports.
-> - **When to use:** An app is frozen, or "port 8000 is already in use" and you need to find what uses it.
+> Running programs, their resource usage, and stopping them. `Get-Process` to list, `Stop-Process` to kill, `Get-NetTCPConnection` for ports. Use this when an app is frozen, or "port 8000 is already in use" and you need to find what uses it.
 
 ```powershell
 Get-Process                             # all processes (ps)
@@ -458,9 +434,7 @@ lsof -i :8000                           # who uses port 8000 (Mac/Linux)
 
 ## 14. Network
 
-> - **What:** Checking connectivity, IPs, DNS and downloading files.
-> - **How:** `ipconfig`, `ping`, `Test-NetConnection`, `Invoke-WebRequest` / `curl.exe`.
-> - **When to use:** "Can I reach the server?", "is port 443 open?", "what is my public IP?"
+> Checking connectivity, IPs, DNS and downloading files. `ipconfig`, `ping`, `Test-NetConnection`, `Invoke-WebRequest` / `curl.exe`. Use it to answer questions like "Can I reach the server?", "is port 443 open?", "what is my public IP?".
 
 ```powershell
 ipconfig                                # IP addresses
@@ -480,9 +454,7 @@ ip a ; ping -c 4 google.com ; curl -O https://example.com/file.zip
 
 ## 15. Install Software (winget)
 
-> - **What:** Installing and updating software from the command line on Windows.
-> - **How:** `winget` (Windows Package Manager) downloads and installs from a central catalog.
-> - **When to use:** Setting up a new laptop quickly, or updating all apps with one command.
+> Installing and updating software from the command line on Windows. `winget` (Windows Package Manager) downloads and installs from a central catalog. Use it for setting up a new laptop quickly, or updating all apps with one command.
 
 ```powershell
 winget search python                    # search
@@ -499,9 +471,7 @@ Mac: `brew install <name>`. Ubuntu: `sudo apt install <name>`.
 
 ## 16. Run Programs and Scripts
 
-> - **What:** Running scripts and programs, and the security policy that controls scripts.
-> - **How:** Prefix scripts with `.\`; set the execution policy once to allow local scripts.
-> - **When to use:** Running a `.ps1` setup script, or activating a venv fails with "scripts are disabled".
+> Running scripts and programs, and the security policy that controls scripts. Prefix scripts with `.\`; set the execution policy once to allow local scripts. Use it for running a `.ps1` setup script, or activating a venv fails with "scripts are disabled".
 
 ```powershell
 .\script.ps1                            # run a PowerShell script (.\ is required)
@@ -519,9 +489,7 @@ bash script.sh
 
 ## 17. Chaining Commands
 
-> - **What:** Running several commands in one line, optionally depending on success.
-> - **How:** `;` always runs the next; `&&` only on success (PowerShell 7 / Bash / CMD).
-> - **When to use:** "Build then run", "pull then install" as one line; copying commands from Bash tutorials.
+> Running several commands in one line, optionally depending on success. `;` always runs the next; `&&` only on success (PowerShell 7 / Bash / CMD). Use it to answer questions like "Build then run", "pull then install" as one line; copying commands from Bash tutorials.
 
 | Goal | PowerShell 5.1 | PowerShell 7 / Bash | CMD |
 |---|---|---|---|
@@ -533,9 +501,7 @@ Line continuation: backtick `` ` `` (PowerShell), backslash `\` (Bash), `^` (CMD
 
 ## 18. PowerShell Profile and Aliases
 
-> - **What:** Personal startup script with your own shortcuts.
-> - **How:** `$PROFILE` runs every time PowerShell starts; put aliases and functions there.
-> - **When to use:** You type the same long command every day and want a short alias for it.
+> Personal startup script with your own shortcuts. `$PROFILE` runs every time PowerShell starts; put aliases and functions there. Use this when you type the same long command every day and want a short alias for it.
 
 ```powershell
 $PROFILE                                # path of your profile script
@@ -547,9 +513,7 @@ Get-History                             # command history this session
 
 ## 19. Command Equivalents Table
 
-> - **What:** The same task side by side in PowerShell, CMD and Bash.
-> - **How:** Look up the task in the left column, read across to your shell.
-> - **When to use:** Following a tutorial written for another shell.
+> The same task side by side in PowerShell, CMD and Bash. Look up the task in the left column, read across to your shell. Use it for following a tutorial written for another shell.
 
 | Task | PowerShell | CMD | Bash |
 |---|---|---|---|
@@ -586,9 +550,7 @@ Get-History                             # command history this session
 
 ## 21. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Biggest CSV files
 
@@ -634,3 +596,9 @@ $env:PATH -split ";"
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [01 - Markdown](01_markdown.md) | **Index:** [All guides](README.md) | **Next:** [03 - Linux](03_linux.md)
+<!-- nav:end -->

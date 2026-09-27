@@ -1,5 +1,9 @@
 # 29 - Embeddings and Vector Databases
 
+<!-- nav:start -->
+**Previous:** [28 - Tool Use (Function Calling)](28_tool-use.md) | **Index:** [All guides](README.md) | **Next:** [30 - RAG (Retrieval-Augmented Generation)](30_rag.md)
+<!-- nav:end -->
+
 Quick reference for turning text into vectors (embeddings), measuring similarity, and storing / searching vectors with NumPy, FAISS, Chroma, pgvector, Qdrant and Azure AI Search.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -105,9 +109,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Creating Embeddings
 
-> - **What:** Converting text into vectors with an embedding model.
-> - **How:** Local models (sentence-transformers, Ollama) or hosted APIs (OpenAI, Voyage, Azure OpenAI, Cohere); send a list of texts, get a list of vectors.
-> - **When to use:** Indexing documents and embedding each search query with the SAME model.
+> Converting text into vectors with an embedding model. Local models (sentence-transformers, Ollama) or hosted APIs (OpenAI, Voyage, Azure OpenAI, Cohere); send a list of texts, get a list of vectors. Use it for indexing documents and embedding each search query with the SAME model.
 
 ```python
 # Local, free: sentence-transformers
@@ -139,9 +141,7 @@ Anthropic does not offer its own embedding model; Voyage AI models are a common 
 
 ## 2. Choosing an Embedding Model
 
-> - **What:** Picking the model that turns your text into vectors.
-> - **How:** Balance quality, language support, dimension (storage), speed, cost and privacy. Check the MTEB leaderboard on Hugging Face for rankings.
-> - **When to use:** Before indexing; changing the model later means re-embedding everything.
+> Picking the model that turns your text into vectors. Balance quality, language support, dimension (storage), speed, cost and privacy. Check the MTEB leaderboard on Hugging Face for rankings. Use it before indexing; changing the model later means re-embedding everything.
 
 | Model (examples) | Where | Dims | Notes |
 |---|---|---|---|
@@ -160,9 +160,7 @@ Rules:
 
 ## 3. Similarity Metrics
 
-> - **What:** How "closeness" between two vectors is measured.
-> - **How:** Cosine similarity compares direction; dot product equals cosine for normalised vectors; Euclidean measures straight-line distance.
-> - **When to use:** Configuring a vector DB; use what the embedding model recommends (usually cosine).
+> How "closeness" between two vectors is measured. Cosine similarity compares direction; dot product equals cosine for normalised vectors; Euclidean measures straight-line distance. Use it for configuring a vector DB; use what the embedding model recommends (usually cosine).
 
 | Metric | Formula idea | Range | Use |
 |---|---|---|---|
@@ -181,9 +179,7 @@ Similarity scores are **relative**: 0.8 might be "very similar" for one model an
 
 ## 4. Brute-Force Search with NumPy
 
-> - **What:** Searching by comparing the query to every stored vector.
-> - **How:** One matrix multiplication with normalised vectors gives all cosine scores; take the top k.
-> - **When to use:** Up to tens of thousands of chunks, prototypes, tests. Exact and dependency-free.
+> Searching by comparing the query to every stored vector. One matrix multiplication with normalised vectors gives all cosine scores; take the top k. Use it for up to tens of thousands of chunks, prototypes, tests. Exact and dependency-free.
 
 ```python
 import numpy as np
@@ -206,9 +202,7 @@ np.save("doc_vecs.npy", doc_vecs)                                   # persist
 
 ## 5. How Vector Indexes Work (ANN, HNSW)
 
-> - **What:** Data structures that find near vectors without checking every one.
-> - **How:** HNSW builds a multi-layer graph linking each vector to its neighbours; search walks the graph from coarse to fine. Results are approximate but very fast.
-> - **When to use:** Hundreds of thousands to billions of vectors, low latency needs.
+> Data structures that find near vectors without checking every one. HNSW builds a multi-layer graph linking each vector to its neighbours; search walks the graph from coarse to fine. Results are approximate but very fast. Use it for hundreds of thousands to billions of vectors, low latency needs.
 
 ```text
 Layer 2 (few nodes, long jumps)      A ----------------------- F
@@ -227,9 +221,7 @@ Search: start at the top, jump toward the query, go down a layer, refine, repeat
 
 ## 6. FAISS (In-Memory Library)
 
-> - **What:** Meta's library for fast vector search in memory (CPU / GPU).
-> - **How:** Build an index object, add vectors, search; save / load the index as a file. Stores vectors only (keep text / metadata in your own list or DB).
-> - **When to use:** Fast local search inside one Python process; research; large static datasets.
+> Meta's library for fast vector search in memory (CPU / GPU). Build an index object, add vectors, search; save / load the index as a file. Stores vectors only (keep text / metadata in your own list or DB). Use it for fast local search inside one Python process; research; large static datasets.
 
 ```python
 import faiss                             # pip install faiss-cpu
@@ -250,9 +242,7 @@ hnsw = faiss.IndexHNSWFlat(dim, 32)      # approximate, faster for big data
 
 ## 7. Chroma (Local Vector DB)
 
-> - **What:** An easy, open-source vector database that runs inside Python (or as a server).
-> - **How:** Collections store ids, documents, metadata and embeddings; Chroma can embed text for you with a default or custom embedding function.
-> - **When to use:** Prototypes, small / medium RAG apps, notebooks, local tools.
+> An easy, open-source vector database that runs inside Python (or as a server). Collections store ids, documents, metadata and embeddings; Chroma can embed text for you with a default or custom embedding function. Use it for prototypes, small / medium RAG apps, notebooks, local tools.
 
 ```python
 import chromadb                          # pip install chromadb
@@ -278,9 +268,7 @@ To use your own model, pass `embeddings=` in `add` / `query_embeddings=` in `que
 
 ## 8. pgvector (PostgreSQL)
 
-> - **What:** A PostgreSQL extension that adds a `vector` column type and similarity search.
-> - **How:** Store embeddings next to your normal data; query with distance operators in SQL; add an HNSW index for speed.
-> - **When to use:** You already use Postgres; you want vectors, metadata, permissions and transactions in one database.
+> A PostgreSQL extension that adds a `vector` column type and similarity search. Store embeddings next to your normal data; query with distance operators in SQL; add an HNSW index for speed. Use this when you already use Postgres; you want vectors, metadata, permissions and transactions in one database.
 
 ```bash
 docker run -d --name pgvec -e POSTGRES_PASSWORD=pass -p 5432:5432 pgvector/pgvector:pg16
@@ -326,9 +314,7 @@ Available as a managed option on Azure Database for PostgreSQL ([47 - Azure](47_
 
 ## 9. Qdrant (Vector DB Server)
 
-> - **What:** A fast, open-source vector database server with rich filtering.
-> - **How:** Runs as a service (Docker or cloud); Python client creates collections, upserts points (vector + payload) and queries.
-> - **When to use:** Production RAG with large collections, heavy filtering, multiple apps sharing one store.
+> A fast, open-source vector database server with rich filtering. Runs as a service (Docker or cloud); Python client creates collections, upserts points (vector + payload) and queries. Use it for production RAG with large collections, heavy filtering, multiple apps sharing one store.
 
 ```bash
 docker run -d -p 6333:6333 -v qdrant_data:/qdrant/storage qdrant/qdrant
@@ -358,9 +344,7 @@ hits = client.query_points(
 
 ## 10. Azure AI Search and Other Managed Options
 
-> - **What:** Hosted search services that combine vector, keyword and filter search.
-> - **How:** You push documents (with vectors or let the service vectorise them); query through an API; the provider handles scaling and backups.
-> - **When to use:** Enterprise apps, large data, when you do not want to run a database yourself.
+> Hosted search services that combine vector, keyword and filter search. You push documents (with vectors or let the service vectorise them); query through an API; the provider handles scaling and backups. Use it for enterprise apps, large data, when you do not want to run a database yourself.
 
 | Service | Notes |
 |---|---|
@@ -372,9 +356,7 @@ hits = client.query_points(
 
 ## 11. Metadata Filtering
 
-> - **What:** Restricting a vector search by structured fields.
-> - **How:** Store fields (source, date, language, customer, access level) with each vector; filter before / during the similarity search.
-> - **When to use:** Multi-tenant apps (users only see their documents), time ranges, document types, permissions.
+> Restricting a vector search by structured fields. Store fields (source, date, language, customer, access level) with each vector; filter before / during the similarity search. Use it for multi-tenant apps (users only see their documents), time ranges, document types, permissions.
 
 ```python
 col.query(query_texts=[q], n_results=5, where={"$and": [{"tenant_id": "acme"}, {"year": {"$gte": 2025}}]})
@@ -384,9 +366,7 @@ Security rule: enforce access filters in your code on every query; never rely on
 
 ## 12. Hybrid Search (Vector + Keyword)
 
-> - **What:** Combining semantic similarity with classic keyword matching.
-> - **How:** Run both searches, then merge the rankings (for example Reciprocal Rank Fusion).
-> - **When to use:** Queries with exact terms (product codes, names, error messages) where pure vector search misses matches.
+> Combining semantic similarity with classic keyword matching. Run both searches, then merge the rankings (for example Reciprocal Rank Fusion). Use it for queries with exact terms (product codes, names, error messages) where pure vector search misses matches.
 
 ```python
 from rank_bm25 import BM25Okapi       # pip install rank-bm25
@@ -410,9 +390,7 @@ Many vector DBs (Qdrant, Weaviate, Azure AI Search, Elasticsearch) have hybrid s
 
 ## 13. Other Uses: Clustering, Dedup, Classification
 
-> - **What:** Using embeddings beyond search.
-> - **How:** Treat vectors as features for classic ML ([22 - Scikit-learn](22_scikit-learn.md)).
-> - **When to use:** Grouping feedback, finding duplicates, cheap classifiers.
+> Using embeddings beyond search. Treat vectors as features for classic ML ([22 - Scikit-learn](22_scikit-learn.md)). Use it for grouping feedback, finding duplicates, cheap classifiers.
 
 ```python
 from sklearn.cluster import KMeans
@@ -429,9 +407,7 @@ clf = LogisticRegression(max_iter=1000).fit(train_vectors, train_labels)   # fas
 
 ## 14. Which Vector Store When
 
-> - **What:** Picking storage for your vectors.
-> - **How:** Start simple; move up when size, concurrency or features demand it.
-> - **When to use:** Designing a RAG / search system.
+> Picking storage for your vectors. Start simple; move up when size, concurrency or features demand it. Use it for designing a RAG / search system.
 
 | Situation | Choose |
 |---|---|
@@ -444,9 +420,7 @@ clf = LogisticRegression(max_iter=1000).fit(train_vectors, train_labels)   # fas
 
 ## 15. Performance and Cost Tips
 
-> - **What:** Keeping indexing and search fast and cheap.
-> - **How:** Batch embedding calls, cache vectors, choose dimensions wisely.
-> - **When to use:** Indexing large corpora, production search.
+> Keeping indexing and search fast and cheap. Batch embedding calls, cache vectors, choose dimensions wisely. Use it for indexing large corpora, production search.
 
 - Embed in **batches** (e.g. 64 to 256 texts per call) instead of one by one.
 - **Cache** embeddings (hash of text -> vector); never re-embed unchanged text.
@@ -470,9 +444,7 @@ clf = LogisticRegression(max_iter=1000).fit(train_vectors, train_labels)   # fas
 
 ## 17. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Cosine by hand
 
@@ -513,3 +485,9 @@ Why must documents and queries use the same embedding model?
 Each model has its own vector space: dimensions and meaning differ, so distances between vectors from two different models are meaningless. Changing the model means re-embedding everything.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [28 - Tool Use (Function Calling)](28_tool-use.md) | **Index:** [All guides](README.md) | **Next:** [30 - RAG (Retrieval-Augmented Generation)](30_rag.md)
+<!-- nav:end -->

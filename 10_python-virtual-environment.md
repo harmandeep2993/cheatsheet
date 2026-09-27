@@ -1,5 +1,9 @@
 # 10 - Python Virtual Environment
 
+<!-- nav:start -->
+**Previous:** [09 - Python Basics](09_python-basics.md) | **Index:** [All guides](README.md) | **Next:** [11 - uv](11_uv.md)
+<!-- nav:end -->
+
 Quick reference for creating and managing Python virtual environments with `venv` and `pip`. For a faster all-in-one tool, see [11 - uv](11_uv.md).
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -66,9 +70,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The meaning of every flag and value in the Python / pip commands below.
-> - **How:** A command is split into program, module, action and options; the table lists each one.
-> - **When to use:** You see `python -m pip install --upgrade pip` and want to know what each part does.
+> The meaning of every flag and value in the Python / pip commands below. A command is split into program, module, action and options; the table lists each one. Use this when you see `python -m pip install --upgrade pip` and want to know what each part does.
 
 ### How a command is built
 
@@ -112,9 +114,7 @@ python  -m pip  install  --upgrade  pip
 
 ## 1. What and Why
 
-> - **What:** An isolated Python setup per project.
-> - **How:** A folder (`.venv`) holding its own Python and packages, separate from the system.
-> - **When to use:** Every Python project, so package versions never clash between projects.
+> An isolated Python setup per project. A folder (`.venv`) holding its own Python and packages, separate from the system. Use it in every Python project, so package versions never clash between projects.
 
 A virtual environment is an isolated folder with its own Python interpreter and its own installed packages.
 
@@ -126,9 +126,7 @@ Common folder names: `.venv` (recommended), `venv`, `env`.
 
 ## 2. Check Python Installation
 
-> - **What:** Checking Python is installed and which version.
-> - **How:** `python --version`; on Windows `py -0` lists all installed versions.
-> - **When to use:** Before creating a venv, or when a project needs a specific Python version.
+> Checking Python is installed and which version. `python --version`; on Windows `py -0` lists all installed versions. Use it before creating a venv, or when a project needs a specific Python version.
 
 ```powershell
 python --version        # Windows
@@ -139,9 +137,7 @@ python3 --version       # Mac / Linux
 
 ## 3. Create
 
-> - **What:** Creating the environment folder.
-> - **How:** `python -m venv .venv` copies / links a Python interpreter into `.venv`.
-> - **When to use:** Once per project, right after creating or cloning it.
+> Creating the environment folder. `python -m venv .venv` copies / links a Python interpreter into `.venv`. Use it once per project, right after creating or cloning it.
 
 ```powershell
 python -m venv .venv            # Windows
@@ -151,9 +147,7 @@ py -3.12 -m venv .venv          # specific Python version (Windows)
 
 ## 4. Activate
 
-> - **What:** Switching the terminal to use the venv's Python and pip.
-> - **How:** Run the activate script for your shell; the prompt then shows `(.venv)`.
-> - **When to use:** Every new terminal before running or installing anything for the project.
+> Switching the terminal to use the venv's Python and pip. Run the activate script for your shell; the prompt then shows `(.venv)`. Use it in every new terminal before running or installing anything for the project.
 
 | Shell | Command |
 |---|---|
@@ -178,9 +172,7 @@ python -c "import sys; print(sys.prefix)"
 
 ## 5. Deactivate
 
-> - **What:** Switching back to the system Python.
-> - **How:** `deactivate` undoes the activation in the current terminal.
-> - **When to use:** Moving to another project in the same terminal.
+> Switching back to the system Python. `deactivate` undoes the activation in the current terminal. Use it for moving to another project in the same terminal.
 
 ```powershell
 deactivate
@@ -188,9 +180,7 @@ deactivate
 
 ## 6. Install and Manage Packages
 
-> - **What:** Adding, upgrading, removing and inspecting packages.
-> - **How:** `pip` installs from PyPI into the active environment.
-> - **When to use:** Whenever the project needs a new library or a different version.
+> Adding, upgrading, removing and inspecting packages. `pip` installs from PyPI into the active environment. Use this when whenever the project needs a new library or a different version.
 
 ```powershell
 pip install pandas                  # install latest
@@ -205,9 +195,7 @@ pip show pandas                     # details of one package
 
 ## 7. requirements.txt
 
-> - **What:** A file listing the exact packages the project needs.
-> - **How:** `pip freeze` writes installed versions; `pip install -r` reinstalls them.
-> - **When to use:** Sharing a project, deploying it, or rebuilding the venv on another machine.
+> A file listing the exact packages the project needs. `pip freeze` writes installed versions; `pip install -r` reinstalls them. Use it for sharing a project, deploying it, or rebuilding the venv on another machine.
 
 ```powershell
 pip freeze > requirements.txt       # save current packages
@@ -216,9 +204,7 @@ pip install -r requirements.txt     # install from file
 
 ## 8. Upgrade pip
 
-> - **What:** Updating pip itself.
-> - **How:** `python -m pip install --upgrade pip` inside the venv.
-> - **When to use:** Right after creating a venv, or when pip warns it is outdated.
+> Updating pip itself. `python -m pip install --upgrade pip` inside the venv. Use it right after creating a venv, or when pip warns it is outdated.
 
 ```powershell
 python -m pip install --upgrade pip
@@ -226,9 +212,7 @@ python -m pip install --upgrade pip
 
 ## 9. Delete
 
-> - **What:** Removing an environment completely.
-> - **How:** Delete the `.venv` folder; nothing else is installed system-wide.
-> - **When to use:** The venv is broken, the project moved, or you want a clean reinstall.
+> Removing an environment completely. Delete the `.venv` folder; nothing else is installed system-wide. Use this when the venv is broken, the project moved, or you want a clean reinstall.
 
 Deactivate first, then delete the folder:
 
@@ -240,9 +224,7 @@ rm -rf .venv                        # Mac / Linux
 
 ## 10. Use in VS Code
 
-> - **What:** Making VS Code use the project venv.
-> - **How:** Select the interpreter inside `.venv`; VS Code then activates it in new terminals.
-> - **When to use:** Imports show red squiggles, or Run uses the wrong Python.
+> Making VS Code use the project venv. Select the interpreter inside `.venv`; VS Code then activates it in new terminals. Use it for imports show red squiggles, or Run uses the wrong Python.
 
 1. `Ctrl+Shift+P` -> **Python: Select Interpreter**
 2. Choose the one inside `.venv`
@@ -250,9 +232,7 @@ rm -rf .venv                        # Mac / Linux
 
 ## 11. Git: Ignore the Environment
 
-> - **What:** Keeping the venv out of Git.
-> - **How:** Add the venv folder to `.gitignore`; commit only `requirements.txt`.
-> - **When to use:** Every project; venvs are large and machine-specific.
+> Keeping the venv out of Git. Add the venv folder to `.gitignore`; commit only `requirements.txt`. Use this when every project; venvs are large and machine-specific.
 
 Add to `.gitignore` (commit `requirements.txt`, never the environment folder):
 
@@ -264,9 +244,7 @@ env/
 
 ## 12. Typical Workflow
 
-> - **What:** The full step-by-step flow for new and cloned projects.
-> - **How:** Create, activate, upgrade pip, install, freeze.
-> - **When to use:** Starting any project; copy the block as a checklist.
+> The full step-by-step flow for new and cloned projects. Create, activate, upgrade pip, install, freeze. Use it for starting any project; copy the block as a checklist.
 
 ```powershell
 # New project
@@ -294,9 +272,7 @@ pip install -r requirements.txt
 
 ## 14. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Round trip
 
@@ -343,3 +319,9 @@ where.exe python                                   # first entry should be insid
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [09 - Python Basics](09_python-basics.md) | **Index:** [All guides](README.md) | **Next:** [11 - uv](11_uv.md)
+<!-- nav:end -->

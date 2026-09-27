@@ -1,5 +1,9 @@
 # 42 - Docker
 
+<!-- nav:start -->
+**Previous:** [41 - Redis, Caching and Task Queues](41_redis-queues.md) | **Index:** [All guides](README.md) | **Next:** [43 - GitHub Actions (CI/CD)](43_github-actions.md)
+<!-- nav:end -->
+
 Quick reference for building and running containers with Docker and Docker Compose.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -85,9 +89,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The meaning of every flag and value used in the Docker commands below.
-> - **How:** A command is split into program, action, flags and target; tables list every flag.
-> - **When to use:** You see a command like `docker run -d -p 8080:80 --name web nginx` and want to know what each part does.
+> The meaning of every flag and value used in the Docker commands below. A command is split into program, action, flags and target; tables list every flag. Use this when you see a command like `docker run -d -p 8080:80 --name web nginx` and want to know what each part does.
 
 ### How a command is built
 
@@ -158,9 +160,7 @@ docker  run  -d  -p 8080:80  --name web  nginx
 
 ## 1. Concepts
 
-> - **What:** The core Docker ideas: image, container, Dockerfile, registry.
-> - **How:** Build an image from a Dockerfile, run it as a container, share it through a registry.
-> - **When to use:** Read once; it explains the words used in every command below.
+> The core Docker ideas: image, container, Dockerfile, registry. Build an image from a Dockerfile, run it as a container, share it through a registry. Read once; it explains the words used in every command below.
 
 | Term | Meaning |
 |---|---|
@@ -183,9 +183,7 @@ Dockerfile --(docker build)--> Image --(docker run)--> Container
 
 ## 2. Install and Check
 
-> - **What:** Installing Docker and checking it works.
-> - **How:** Docker Desktop on Windows / Mac, Docker Engine on Linux; `docker run hello-world` to test.
-> - **When to use:** New machine or VM, before any other Docker command.
+> Installing Docker and checking it works. Docker Desktop on Windows / Mac, Docker Engine on Linux; `docker run hello-world` to test. Use it for new machine or VM, before any other Docker command.
 
 - Windows / Mac: install **Docker Desktop** (`winget install -e --id Docker.DockerDesktop`), uses WSL 2 on Windows.
 - Ubuntu: `curl -fsSL https://get.docker.com | sh`, then `sudo usermod -aG docker $USER` and log out / in.
@@ -199,9 +197,7 @@ docker run hello-world              # test everything works
 
 ## 3. Images
 
-> - **What:** Listing, downloading, tagging and deleting images.
-> - **How:** `docker pull` downloads from a registry; `docker images` lists local ones.
-> - **When to use:** Getting a base image (python, postgres), checking what you have, freeing space.
+> Listing, downloading, tagging and deleting images. `docker pull` downloads from a registry; `docker images` lists local ones. Use it for getting a base image (python, postgres), checking what you have, freeing space.
 
 ```bash
 docker images                       # list local images (also: docker image ls)
@@ -217,9 +213,7 @@ Image name format: `[registry/][user/]name[:tag]`, for example `docker.io/librar
 
 ## 4. Run a Container
 
-> - **What:** Starting a container from an image.
-> - **How:** `docker run [options] image`; options set ports, env vars, volumes, name, restart.
-> - **When to use:** Running an app, a database or a tool without installing it on your machine.
+> Starting a container from an image. `docker run [options] image`; options set ports, env vars, volumes, name, restart. Use it for running an app, a database or a tool without installing it on your machine.
 
 ```bash
 docker run nginx                                # run in foreground (Ctrl+C stops)
@@ -251,9 +245,7 @@ docker run -d --gpus all myapp                  # use NVIDIA GPU
 
 ## 5. Manage Containers
 
-> - **What:** Listing, stopping, starting and removing containers.
-> - **How:** `docker ps`, `stop`, `start`, `rm` by name or ID.
-> - **When to use:** Day-to-day control of what is running.
+> Listing, stopping, starting and removing containers. `docker ps`, `stop`, `start`, `rm` by name or ID. Use this when day-to-day control of what is running.
 
 ```bash
 docker ps                           # running containers
@@ -273,9 +265,7 @@ You can use the name or the first few characters of the container ID.
 
 ## 6. Inside a Container
 
-> - **What:** Running commands and copying files inside a running container.
-> - **How:** `docker exec -it <name> bash` opens a shell; `docker cp` copies files.
-> - **When to use:** Debugging: checking files, env vars or running a quick command inside the app.
+> Running commands and copying files inside a running container. `docker exec -it <name> bash` opens a shell; `docker cp` copies files. Use it for debugging: checking files, env vars or running a quick command inside the app.
 
 ```bash
 docker exec -it web bash            # open shell in running container
@@ -289,9 +279,7 @@ Type `exit` to leave the shell (the container keeps running).
 
 ## 7. Logs and Monitoring
 
-> - **What:** Seeing container output and resource usage.
-> - **How:** `docker logs` shows stdout / stderr; `docker stats` shows CPU and memory.
-> - **When to use:** A container exits or misbehaves; the logs usually tell you why.
+> Seeing container output and resource usage. `docker logs` shows stdout / stderr; `docker stats` shows CPU and memory. Use this when a container exits or misbehaves; the logs usually tell you why.
 
 ```bash
 docker logs web                     # all logs
@@ -305,9 +293,7 @@ docker events                       # live engine events
 
 ## 8. Dockerfile
 
-> - **What:** The instructions used to build an image.
-> - **How:** Each line is an instruction; each instruction adds a layer.
-> - **When to use:** Writing or reading a Dockerfile.
+> The instructions used to build an image. Each line is an instruction; each instruction adds a layer. Use it for writing or reading a Dockerfile.
 
 | Instruction | Purpose |
 |---|---|
@@ -326,9 +312,7 @@ docker events                       # live engine events
 
 ## 9. Example: Python App Dockerfile
 
-> - **What:** A complete, production-style Dockerfile for a Python web app.
-> - **How:** Slim base, dependencies before code (cache), non-root user, CMD with uvicorn.
-> - **When to use:** Containerising a FastAPI / Flask project; copy and adjust.
+> A complete, production-style Dockerfile for a Python web app. Slim base, dependencies before code (cache), non-root user, CMD with uvicorn. Use it for containerising a FastAPI / Flask project; copy and adjust.
 
 ```dockerfile
 FROM python:3.12-slim
@@ -362,9 +346,7 @@ Inside a container the app must listen on `0.0.0.0`, not `127.0.0.1`, or the por
 
 ## 10. .dockerignore
 
-> - **What:** Files excluded from the build.
-> - **How:** Patterns in `.dockerignore`, like `.gitignore` for Docker builds.
-> - **When to use:** Every project; keeps images small and secrets (`.env`) out of them.
+> Files excluded from the build. Patterns in `.dockerignore`, like `.gitignore` for Docker builds. Use it in every project; keeps images small and secrets (`.env`) out of them.
 
 Keeps files out of the build (smaller, faster, no secrets in the image):
 
@@ -381,9 +363,7 @@ data/
 
 ## 11. Build Images
 
-> - **What:** Creating an image from a Dockerfile.
-> - **How:** `docker build -t name:tag .` where `.` is the build context folder.
-> - **When to use:** After changing the Dockerfile or code, before running or pushing the image.
+> Creating an image from a Dockerfile. `docker build -t name:tag .` where `.` is the build context folder. Use it after changing the Dockerfile or code, before running or pushing the image.
 
 ```bash
 docker build -t myapp:1.0 .                         # build from Dockerfile in current folder
@@ -397,9 +377,7 @@ The `.` at the end is the **build context**: the folder whose files `COPY` can s
 
 ## 12. Volumes and Bind Mounts
 
-> - **What:** Keeping data outside the container's life cycle.
-> - **How:** Named volumes managed by Docker, or bind mounts of a host folder.
-> - **When to use:** Databases (volume) so data survives restarts; live code editing (bind mount).
+> Keeping data outside the container's life cycle. Named volumes managed by Docker, or bind mounts of a host folder. Use it for databases (volume) so data survives restarts; live code editing (bind mount).
 
 | Type | Syntax | Use for |
 |---|---|---|
@@ -419,9 +397,7 @@ Without a volume, data written inside the container is lost when the container i
 
 ## 13. Networks
 
-> - **What:** Letting containers talk to each other.
-> - **How:** Containers on the same user-defined network reach each other by name.
-> - **When to use:** App + database in separate containers (Compose does this automatically).
+> Letting containers talk to each other. Containers on the same user-defined network reach each other by name. Use it for app + database in separate containers (Compose does this automatically).
 
 ```bash
 docker network ls
@@ -439,9 +415,7 @@ docker network rm mynet
 
 ## 14. Environment Variables
 
-> - **What:** Configuring a container at run time.
-> - **How:** `-e KEY=value` or `--env-file`; the app reads them from the environment.
-> - **When to use:** Same image in dev and prod with different settings; passing secrets safely.
+> Configuring a container at run time. `-e KEY=value` or `--env-file`; the app reads them from the environment. Use it for same image in dev and prod with different settings; passing secrets safely.
 
 ```bash
 docker run -e DB_HOST=db -e DB_PORT=5432 myapp
@@ -453,9 +427,7 @@ Never bake secrets into the image (`ENV API_KEY=...` or `COPY .env`). Pass them 
 
 ## 15. Docker Compose
 
-> - **What:** Describing a multi-container app in one file.
-> - **How:** `compose.yaml` lists services, ports, volumes, env and dependencies.
-> - **When to use:** Any project with more than one container (API + database + cache).
+> Describing a multi-container app in one file. `compose.yaml` lists services, ports, volumes, env and dependencies. Use it in any project with more than one container (API + database + cache).
 
 `compose.yaml` (or `docker-compose.yml`):
 
@@ -492,9 +464,7 @@ volumes:
 
 ## 16. Compose Commands
 
-> - **What:** Starting, stopping and inspecting a Compose app.
-> - **How:** `docker compose up / down / logs / exec` act on all services in the file.
-> - **When to use:** Daily development with a multi-container setup.
+> Starting, stopping and inspecting a Compose app. `docker compose up / down / logs / exec` act on all services in the file. Use it daily development with a multi-container setup.
 
 ```bash
 docker compose up                   # start all (foreground)
@@ -516,9 +486,7 @@ Old syntax `docker-compose` (with hyphen) = Compose v1; use `docker compose`.
 
 ## 17. Registry (Docker Hub, ACR)
 
-> - **What:** Uploading and downloading images to / from a registry.
-> - **How:** Tag the image with the registry address, `docker login`, then `docker push`.
-> - **When to use:** Deploying to a server or cloud service, sharing images with a team.
+> Uploading and downloading images to / from a registry. Tag the image with the registry address, `docker login`, then `docker push`. Use it for deploying to a server or cloud service, sharing images with a team.
 
 ```bash
 # Docker Hub
@@ -537,9 +505,7 @@ docker logout
 
 ## 18. Cleanup
 
-> - **What:** Freeing disk space used by Docker.
-> - **How:** `prune` commands remove stopped containers, unused images, volumes and cache.
-> - **When to use:** Disk is full, or Docker Desktop uses tens of GB.
+> Freeing disk space used by Docker. `prune` commands remove stopped containers, unused images, volumes and cache. Use this when disk is full, or Docker Desktop uses tens of GB.
 
 ```bash
 docker container prune              # remove stopped containers
@@ -555,9 +521,7 @@ docker system df                    # disk usage by Docker
 
 ## 19. Useful Ready-Made Containers
 
-> - **What:** One-line commands for popular services.
-> - **How:** Official images with the right ports, env vars and volumes preset.
-> - **When to use:** You need a database, cache or Ollama quickly for development.
+> One-line commands for popular services. Official images with the right ports, env vars and volumes preset. Use this when you need a database, cache or Ollama quickly for development.
 
 ```bash
 docker run -d --name pg -p 5432:5432 -e POSTGRES_PASSWORD=pass -v pgdata:/var/lib/postgresql/data postgres:16
@@ -587,9 +551,7 @@ docker run -it --rm -p 8888:8888 jupyter/scipy-notebook
 
 ## 21. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Build and run the capstone
 
@@ -645,3 +607,9 @@ docker builder prune         # build cache
 Only run `docker volume prune` if you are sure the data is not needed.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [41 - Redis, Caching and Task Queues](41_redis-queues.md) | **Index:** [All guides](README.md) | **Next:** [43 - GitHub Actions (CI/CD)](43_github-actions.md)
+<!-- nav:end -->

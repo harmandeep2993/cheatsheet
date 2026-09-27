@@ -1,5 +1,9 @@
 # 14 - pytest
 
+<!-- nav:start -->
+**Previous:** [13 - Async Python](13_async-python.md) | **Index:** [All guides](README.md) | **Next:** [15 - Jupyter](15_jupyter.md)
+<!-- nav:end -->
+
 Quick reference for testing Python code with pytest: writing tests, fixtures, parametrising, mocking APIs and LLM calls, testing FastAPI, and coverage.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -96,9 +100,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The pytest command-line options you use every day.
-> - **How:** `pytest [options] [paths or node ids]`.
-> - **When to use:** You see `pytest -x -k "login and not slow" -vv tests/` and want to know what each part does.
+> The pytest command-line options you use every day. `pytest [options] [paths or node ids]`. Use this when you see `pytest -x -k "login and not slow" -vv tests/` and want to know what each part does.
 
 ```text
 pytest  -x  -k "login and not slow"  -vv  tests/test_auth.py::test_login_ok
@@ -131,9 +133,7 @@ pytest  -x  -k "login and not slow"  -vv  tests/test_auth.py::test_login_ok
 
 ## 1. Install and First Test
 
-> - **What:** Writing and running the simplest test.
-> - **How:** A file named `test_*.py` with functions named `test_*` that use `assert`.
-> - **When to use:** Start of every project, even with one function.
+> Writing and running the simplest test. A file named `test_*.py` with functions named `test_*` that use `assert`. Use it at the start of every project, even with one function.
 
 ```powershell
 pip install pytest            # or: uv add --dev pytest
@@ -165,9 +165,7 @@ pytest            # finds and runs all tests
 
 ## 2. Project Layout and Discovery
 
-> - **What:** Where tests live and how pytest finds them.
-> - **How:** pytest collects files `test_*.py` / `*_test.py`, functions `test_*`, classes `Test*` (no `__init__`).
-> - **When to use:** Setting up a new project.
+> Where tests live and how pytest finds them. pytest collects files `test_*.py` / `*_test.py`, functions `test_*`, classes `Test*` (no `__init__`). Use it for setting up a new project.
 
 ```text
 project/
@@ -186,9 +184,7 @@ With a `src/` layout install your package in editable mode (`pip install -e .` /
 
 ## 3. Assertions
 
-> - **What:** Checking results with plain `assert`.
-> - **How:** pytest rewrites asserts to show both sides of a failed comparison.
-> - **When to use:** Every test.
+> Checking results with plain `assert`. pytest rewrites asserts to show both sides of a failed comparison. Use it in every test.
 
 ```python
 assert result == 42
@@ -203,9 +199,7 @@ assert result == 42, f"unexpected result for input {x}"     # custom message
 
 ## 4. Testing Exceptions and Warnings
 
-> - **What:** Checking that bad input raises the right error.
-> - **How:** `pytest.raises` as a context manager; `match=` checks the message with a regex.
-> - **When to use:** Validation logic, error paths.
+> Checking that bad input raises the right error. `pytest.raises` as a context manager; `match=` checks the message with a regex. Use it for validation logic, error paths.
 
 ```python
 import pytest
@@ -223,9 +217,7 @@ def test_deprecation():
 
 ## 5. Fixtures
 
-> - **What:** Reusable setup code that tests receive as arguments.
-> - **How:** Decorate a function with `@pytest.fixture`; any test with a parameter of the same name gets its return value. Code after `yield` runs as cleanup.
-> - **When to use:** Sample data, clients, temp files, database connections.
+> Reusable setup code that tests receive as arguments. Decorate a function with `@pytest.fixture`; any test with a parameter of the same name gets its return value. Code after `yield` runs as cleanup. Use it for sample data, clients, temp files, database connections.
 
 ```python
 import pandas as pd
@@ -253,9 +245,7 @@ Fixtures can use other fixtures by listing them as parameters.
 
 ## 6. Fixture Scope and conftest.py
 
-> - **What:** How often a fixture is created, and where shared fixtures live.
-> - **How:** `scope="function"` (default, fresh per test), `"module"`, `"session"` (once per run); fixtures in `conftest.py` are available to all tests in that folder.
-> - **When to use:** Expensive setup (load a model, start a DB) shared by many tests.
+> How often a fixture is created, and where shared fixtures live. `scope="function"` (default, fresh per test), `"module"`, `"session"` (once per run); fixtures in `conftest.py` are available to all tests in that folder. Use it for expensive setup (load a model, start a DB) shared by many tests.
 
 ```python
 # tests/conftest.py
@@ -274,9 +264,7 @@ def no_real_api_keys(monkeypatch):
 
 ## 7. Built-in Fixtures
 
-> - **What:** Fixtures pytest provides out of the box.
-> - **How:** Just add their name as a test parameter.
-> - **When to use:** Temp files, env vars, captured output, logs.
+> Fixtures pytest provides out of the box. Just add their name as a test parameter. Use it for temp files, env vars, captured output, logs.
 
 | Fixture | Gives you |
 |---|---|
@@ -300,9 +288,7 @@ def test_reads_model_from_env(monkeypatch):
 
 ## 8. Parametrize
 
-> - **What:** Running one test function with many input / expected pairs.
-> - **How:** `@pytest.mark.parametrize("args", [cases])`; each case is reported as its own test.
-> - **When to use:** Edge cases, tables of inputs, regex / parser tests.
+> Running one test function with many input / expected pairs. `@pytest.mark.parametrize("args", [cases])`; each case is reported as its own test. Use it for edge cases, tables of inputs, regex / parser tests.
 
 ```python
 @pytest.mark.parametrize(
@@ -320,9 +306,7 @@ def test_add_tax(price, rate, expected):
 
 ## 9. Markers (skip, xfail, custom)
 
-> - **What:** Labels that change how tests run.
-> - **How:** `@pytest.mark.<name>`; select or skip with `-m`.
-> - **When to use:** Slow tests, tests needing real API keys, known bugs.
+> Labels that change how tests run. `@pytest.mark.<name>`; select or skip with `-m`. Use it for slow tests, tests needing real API keys, known bugs.
 
 ```python
 import os
@@ -352,9 +336,7 @@ Register custom markers in `pyproject.toml` (section 17), then run `pytest -m "n
 
 ## 10. Mocking with unittest.mock
 
-> - **What:** Replacing a real dependency with a fake object you control.
-> - **How:** `unittest.mock.patch` swaps an attribute during the test; `MagicMock` records calls and returns what you tell it.
-> - **When to use:** External APIs, time, randomness, anything slow or non-deterministic.
+> Replacing a real dependency with a fake object you control. `unittest.mock.patch` swaps an attribute during the test; `MagicMock` records calls and returns what you tell it. Use it for external APIs, time, randomness, anything slow or non-deterministic.
 
 ```python
 from unittest.mock import MagicMock, patch
@@ -377,9 +359,7 @@ Patch the name in the module that **uses** it (`myapp.users.send_email`), not wh
 
 ## 11. Mocking LLM Calls
 
-> - **What:** Testing your LLM app code without calling a real model.
-> - **How:** Inject a fake client (dependency injection) or patch the SDK method to return a canned response.
-> - **When to use:** Unit tests for prompt building, output parsing, tool routing, error handling. Fast, free and deterministic.
+> Testing your LLM app code without calling a real model. Inject a fake client (dependency injection) or patch the SDK method to return a canned response. Use it for unit tests for prompt building, output parsing, tool routing, error handling. Fast, free and deterministic.
 
 ```python
 # app.py - the client is a parameter, so tests can pass a fake one
@@ -419,9 +399,7 @@ Also test the unhappy paths: empty response, `stop_reason == "max_tokens"`, API 
 
 ## 12. Mocking HTTP Requests
 
-> - **What:** Faking HTTP responses for code that uses requests or httpx.
-> - **How:** Plugins intercept outgoing calls: `responses` (requests), `respx` (httpx).
-> - **When to use:** Testing API clients and error handling (404, 429, timeouts).
+> Faking HTTP responses for code that uses requests or httpx. Plugins intercept outgoing calls: `responses` (requests), `respx` (httpx). Use it for testing API clients and error handling (404, 429, timeouts).
 
 ```python
 import responses
@@ -442,9 +420,7 @@ def test_retries_on_429():
 
 ## 13. Testing pandas Code
 
-> - **What:** Comparing DataFrames and Series in tests.
-> - **How:** `pandas.testing` helpers give readable diffs and handle NaN and dtypes.
-> - **When to use:** Data cleaning and feature engineering functions.
+> Comparing DataFrames and Series in tests. `pandas.testing` helpers give readable diffs and handle NaN and dtypes. Use it for data cleaning and feature engineering functions.
 
 ```python
 import pandas as pd
@@ -461,9 +437,7 @@ assert_frame_equal(a, b, check_dtype=False, check_like=True)   # ignore dtypes /
 
 ## 14. Testing FastAPI
 
-> - **What:** Calling your API endpoints in tests without starting a server.
-> - **How:** `TestClient(app)` sends requests directly to the app; `dependency_overrides` swaps dependencies (DB, settings, LLM client).
-> - **When to use:** Every endpoint: status codes, validation errors, response shape.
+> Calling your API endpoints in tests without starting a server. `TestClient(app)` sends requests directly to the app; `dependency_overrides` swaps dependencies (DB, settings, LLM client). Use it in every endpoint: status codes, validation errors, response shape.
 
 ```python
 import pytest
@@ -493,9 +467,7 @@ def test_classify_validation_error(client):
 
 ## 15. Async Tests
 
-> - **What:** Testing `async def` functions.
-> - **How:** The `pytest-asyncio` plugin runs async tests in an event loop.
-> - **When to use:** Async clients, agents, async FastAPI dependencies.
+> Testing `async def` functions. The `pytest-asyncio` plugin runs async tests in an event loop. Use it for async clients, agents, async FastAPI dependencies.
 
 ```powershell
 pip install pytest-asyncio
@@ -517,9 +489,7 @@ Set `asyncio_mode = "auto"` in config to skip the decorator.
 
 ## 16. Coverage
 
-> - **What:** Measuring which lines your tests execute.
-> - **How:** `pytest-cov` runs coverage.py during the test run.
-> - **When to use:** Finding untested code; CI quality gates. High coverage does not guarantee good tests.
+> Measuring which lines your tests execute. `pytest-cov` runs coverage.py during the test run. Use it for finding untested code; CI quality gates. High coverage does not guarantee good tests.
 
 ```powershell
 pip install pytest-cov
@@ -530,9 +500,7 @@ pytest --cov=src --cov-fail-under=80              # fail if below 80%
 
 ## 17. Configuration (pyproject.toml)
 
-> - **What:** Project-wide pytest settings.
-> - **How:** `[tool.pytest.ini_options]` in `pyproject.toml` is read automatically.
-> - **When to use:** Set test paths, default flags and markers once.
+> Project-wide pytest settings. `[tool.pytest.ini_options]` in `pyproject.toml` is read automatically. Use it for set test paths, default flags and markers once.
 
 ```toml
 [tool.pytest.ini_options]
@@ -549,9 +517,7 @@ filterwarnings = ["error::DeprecationWarning"]
 
 ## 18. Good Testing Habits
 
-> - **What:** Practices that keep tests useful.
-> - **How:** Small, independent, fast, deterministic tests with clear names.
-> - **When to use:** Always.
+> Practices that keep tests useful. Small, independent, fast, deterministic tests with clear names. Use it always.
 
 - Name tests after behaviour: `test_refund_fails_when_order_already_refunded`.
 - One behaviour per test; several asserts about that behaviour are fine.
@@ -578,9 +544,7 @@ filterwarnings = ["error::DeprecationWarning"]
 
 ## 20. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Parametrize
 
@@ -636,3 +600,9 @@ uv run pytest tool_agent -v
 `client.messages.create.side_effect = [tool_use_message, text_message]` returns a different fake response on each call, so the test walks through the loop step by step.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [13 - Async Python](13_async-python.md) | **Index:** [All guides](README.md) | **Next:** [15 - Jupyter](15_jupyter.md)
+<!-- nav:end -->

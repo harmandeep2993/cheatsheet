@@ -1,5 +1,9 @@
 # 18 - Polars and DuckDB
 
+<!-- nav:start -->
+**Previous:** [17 - Pandas](17_pandas.md) | **Index:** [All guides](README.md) | **Next:** [19 - SQL](19_sql.md)
+<!-- nav:end -->
+
 Quick reference for two fast modern tools for data too big or too slow for pandas: Polars (DataFrames) and DuckDB (SQL on files and DataFrames).
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -89,9 +93,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Install
 
-> - **What:** Installing Polars, DuckDB and Parquet support.
-> - **How:** Plain pip / uv packages; `pyarrow` adds Parquet / Arrow support to pandas.
-> - **When to use:** Once per project.
+> Installing Polars, DuckDB and Parquet support. Plain pip / uv packages; `pyarrow` adds Parquet / Arrow support to pandas. Use it once per project.
 
 ```powershell
 pip install polars duckdb pyarrow
@@ -105,9 +107,7 @@ import polars as pl
 
 ## 2. Parquet Files
 
-> - **What:** The standard file format for analytical data.
-> - **How:** Stores data by column with compression and types; readers can skip columns and row groups.
-> - **When to use:** Instead of CSV for anything you will read more than once or that is large.
+> The standard file format for analytical data. Stores data by column with compression and types; readers can skip columns and row groups. Use it instead of CSV for anything you will read more than once or that is large.
 
 ```python
 df_pd.to_parquet("sales.parquet")                    # pandas (needs pyarrow)
@@ -126,9 +126,7 @@ pl.read_parquet("sales.parquet")
 
 ## 3. Polars: Create and Read
 
-> - **What:** Getting data into a Polars DataFrame.
-> - **How:** From dicts, files (eager `read_*`) or as a lazy scan (`scan_*`).
-> - **When to use:** Start of a Polars pipeline.
+> Getting data into a Polars DataFrame. From dicts, files (eager `read_*`) or as a lazy scan (`scan_*`). Use it at the start of a Polars pipeline.
 
 ```python
 df = pl.DataFrame({"region": ["N", "S", "N"], "amount": [10, 20, 30]})
@@ -141,9 +139,7 @@ df.write_csv("out.csv")
 
 ## 4. Polars: Inspect
 
-> - **What:** Looking at the data.
-> - **How:** Methods similar to pandas.
-> - **When to use:** Right after loading.
+> Looking at the data. Methods similar to pandas. Use it right after loading.
 
 ```python
 df.head(5) ; df.tail(5) ; df.sample(5)
@@ -156,9 +152,7 @@ df.null_count()
 
 ## 5. Polars: Expressions
 
-> - **What:** The core idea of Polars: describe a computation on columns with `pl.col(...)`.
-> - **How:** Expressions are combined and evaluated inside contexts (`select`, `filter`, `with_columns`, `group_by().agg`).
-> - **When to use:** Every transformation.
+> The core idea of Polars: describe a computation on columns with `pl.col(...)`. Expressions are combined and evaluated inside contexts (`select`, `filter`, `with_columns`, `group_by().agg`). Use it in every transformation.
 
 ```python
 pl.col("amount")                       # a column
@@ -173,9 +167,7 @@ pl.all() ; pl.col(pl.Float64)          # all columns / all float columns
 
 ## 6. Polars: Select, Filter, with_columns
 
-> - **What:** Choosing columns, filtering rows and adding columns.
-> - **How:** Each method takes expressions and returns a new DataFrame (no in-place changes).
-> - **When to use:** Most of your data preparation.
+> Choosing columns, filtering rows and adding columns. Each method takes expressions and returns a new DataFrame (no in-place changes). Use it in most of your data preparation.
 
 ```python
 df.select("region", "amount")
@@ -197,9 +189,7 @@ df.unique(subset=["region"])
 
 ## 7. Polars: Group By and Aggregate
 
-> - **What:** Summaries per group.
-> - **How:** `group_by(cols).agg(expressions)`; any number of aggregations in one pass.
-> - **When to use:** Reports, feature engineering.
+> Summaries per group. `group_by(cols).agg(expressions)`; any number of aggregations in one pass. Use it for reports, feature engineering.
 
 ```python
 df.group_by("region").agg(
@@ -214,9 +204,7 @@ df.pivot(on="month", index="region", values="amount", aggregate_function="sum")
 
 ## 8. Polars: Joins and Concat
 
-> - **What:** Combining tables.
-> - **How:** `join(other, on=..., how=...)` like SQL; `pl.concat` stacks frames.
-> - **When to use:** Enriching data with lookups, merging files.
+> Combining tables. `join(other, on=..., how=...)` like SQL; `pl.concat` stacks frames. Use it for enriching data with lookups, merging files.
 
 ```python
 orders.join(customers, on="customer_id", how="left")      # inner, left, right, full, semi, anti, cross
@@ -227,9 +215,7 @@ pl.concat([a, b], how="horizontal")
 
 ## 9. Polars: Strings, Dates, Nulls
 
-> - **What:** Common cleaning operations.
-> - **How:** Namespaces `.str`, `.dt`, and null methods on expressions.
-> - **When to use:** Cleaning raw data.
+> Common cleaning operations. Namespaces `.str`, `.dt`, and null methods on expressions. Use it for cleaning raw data.
 
 ```python
 df.with_columns(
@@ -245,9 +231,7 @@ df.drop_nulls(subset=["email"])
 
 ## 10. Polars: Lazy Mode
 
-> - **What:** Building a query plan that Polars optimises and runs at the end.
-> - **How:** Start with `scan_*` or `.lazy()`, chain operations, finish with `.collect()`; `.explain()` shows the plan.
-> - **When to use:** Large files, multi-step pipelines, data bigger than memory (`streaming`).
+> Building a query plan that Polars optimises and runs at the end. Start with `scan_*` or `.lazy()`, chain operations, finish with `.collect()`; `.explain()` shows the plan. Use it for large files, multi-step pipelines, data bigger than memory (`streaming`).
 
 ```python
 result = (
@@ -266,9 +250,7 @@ lf.sink_parquet("out.parquet")     # stream the result straight to a file
 
 ## 11. pandas to Polars Cheat Sheet
 
-> - **What:** Translating familiar pandas code.
-> - **How:** Most operations map one-to-one to an expression.
-> - **When to use:** Porting existing notebooks.
+> Translating familiar pandas code. Most operations map one-to-one to an expression. Use it for porting existing notebooks.
 
 | pandas | Polars |
 |---|---|
@@ -285,9 +267,7 @@ lf.sink_parquet("out.parquet")     # stream the result straight to a file
 
 ## 12. DuckDB: Query Files with SQL
 
-> - **What:** Running SQL directly on CSV / Parquet / JSON files.
-> - **How:** Use the file path (or a glob) as a table name in `FROM`.
-> - **When to use:** Quick analysis of big files, joining files, exploring data without loading it all.
+> Running SQL directly on CSV / Parquet / JSON files. Use the file path (or a glob) as a table name in `FROM`. Use it for quick analysis of big files, joining files, exploring data without loading it all.
 
 ```python
 import duckdb
@@ -309,9 +289,7 @@ duckdb.sql("COPY (SELECT * FROM 'data.csv') TO 'data.parquet' (FORMAT parquet)")
 
 ## 13. DuckDB: Query DataFrames
 
-> - **What:** Using SQL on pandas / Polars DataFrames in memory.
-> - **How:** Refer to the Python variable name as a table.
-> - **When to use:** When SQL is easier than DataFrame code (complex joins, window functions).
+> Using SQL on pandas / Polars DataFrames in memory. Refer to the Python variable name as a table. Use this when when SQL is easier than DataFrame code (complex joins, window functions).
 
 ```python
 orders = pd.read_csv("orders.csv")
@@ -326,9 +304,7 @@ duckdb.sql("""
 
 ## 14. DuckDB: Persistent Database and CLI
 
-> - **What:** Saving tables in a DuckDB file and using the command-line shell.
-> - **How:** `duckdb.connect("file.duckdb")` creates / opens a database file.
-> - **When to use:** Local analytics database, caching cleaned data between sessions.
+> Saving tables in a DuckDB file and using the command-line shell. `duckdb.connect("file.duckdb")` creates / opens a database file. Use it for local analytics database, caching cleaned data between sessions.
 
 ```python
 con = duckdb.connect("analytics.duckdb")
@@ -346,9 +322,7 @@ duckdb analytics.duckdb          # CLI shell (winget install DuckDB.cli)
 
 ## 15. Converting Between Tools
 
-> - **What:** Moving data between pandas, Polars, DuckDB and NumPy.
-> - **How:** All share Apache Arrow, so conversion is fast.
-> - **When to use:** Use the fastest tool for each step, then hand off (e.g. to scikit-learn or seaborn).
+> Moving data between pandas, Polars, DuckDB and NumPy. All share Apache Arrow, so conversion is fast. Use the fastest tool for each step, then hand off (e.g. to scikit-learn or seaborn).
 
 ```python
 pl_df = pl.from_pandas(pd_df)
@@ -360,9 +334,7 @@ pl_df = duckdb.sql("SELECT ...").pl()
 
 ## 16. Which Tool When
 
-> - **What:** Choosing between pandas, Polars and DuckDB.
-> - **How:** Match data size and whether you think in code or SQL.
-> - **When to use:** Starting an analysis or pipeline.
+> Choosing between pandas, Polars and DuckDB. Match data size and whether you think in code or SQL. Use it for starting an analysis or pipeline.
 
 | Situation | Use |
 |---|---|
@@ -387,9 +359,7 @@ pl_df = duckdb.sql("SELECT ...").pl()
 
 ## 18. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: CSV to Parquet
 
@@ -438,3 +408,9 @@ duckdb.sql('''
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [17 - Pandas](17_pandas.md) | **Index:** [All guides](README.md) | **Next:** [19 - SQL](19_sql.md)
+<!-- nav:end -->

@@ -1,5 +1,9 @@
 # 32 - Agent Frameworks
 
+<!-- nav:start -->
+**Previous:** [31 - AI Agents](31_ai-agents.md) | **Index:** [All guides](README.md) | **Next:** [33 - MCP (Model Context Protocol)](33_mcp.md)
+<!-- nav:end -->
+
 Quick reference for the main libraries used to build LLM apps and agents: Claude Agent SDK, OpenAI Agents SDK, LangChain / LangGraph, LlamaIndex, PydanticAI, CrewAI, Microsoft Agent Framework, plus how to choose between them.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -102,9 +106,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Comparison Table
 
-> - **What:** The frameworks side by side.
-> - **How:** Compare focus, control style and strengths.
-> - **When to use:** Picking a framework for a project.
+> The frameworks side by side. Compare focus, control style and strengths. Use it for picking a framework for a project.
 
 | Framework | Focus | Control style | Standout features |
 |---|---|---|---|
@@ -120,9 +122,7 @@ Where to read the latest, authoritative documentation:
 
 ## 2. Claude Agent SDK
 
-> - **What:** Claude Code's agent harness packaged as a Python / TypeScript library.
-> - **How:** You call `query(prompt, options)`; the SDK runs the loop with built-in tools (read / write / edit files, bash, grep, web search / fetch), context management, sub-agents, hooks and permission controls; you can add your own tools via MCP.
-> - **When to use:** Agents that work with files, code, shells and the web on your own infrastructure (coding agents, research agents, ops automation).
+> Claude Code's agent harness packaged as a Python / TypeScript library. You call `query(prompt, options)`; the SDK runs the loop with built-in tools (read / write / edit files, bash, grep, web search / fetch), context management, sub-agents, hooks and permission controls; you can add your own tools via MCP. Use it for agents that work with files, code, shells and the web on your own infrastructure (coding agents, research agents, ops automation).
 
 ```powershell
 pip install claude-agent-sdk
@@ -170,9 +170,7 @@ Run it in a container / VM with limited permissions: it can execute shell comman
 
 ## 3. OpenAI Agents SDK
 
-> - **What:** A lightweight Python framework from OpenAI for agents with tools, handoffs and guardrails.
-> - **How:** Define `Agent(name, instructions, tools, handoffs)`; run with `Runner`; tools are decorated Python functions.
-> - **When to use:** Simple-to-medium agents and multi-agent handoffs, especially with OpenAI models.
+> A lightweight Python framework from OpenAI for agents with tools, handoffs and guardrails. Define `Agent(name, instructions, tools, handoffs)`; run with `Runner`; tools are decorated Python functions. Use it for simple-to-medium agents and multi-agent handoffs, especially with OpenAI models.
 
 ```powershell
 pip install openai-agents
@@ -204,9 +202,7 @@ Also: input / output guardrails, sessions for memory, built-in tracing, and supp
 
 ## 4. LangChain Basics
 
-> - **What:** A large toolkit of components for LLM apps: chat models, prompts, output parsers, retrievers, tools and integrations.
-> - **How:** Provider packages (`langchain-anthropic`, `langchain-openai`, ...) give a common chat-model interface; components can be combined.
-> - **When to use:** You need many integrations (loaders, vector stores, providers) behind one interface.
+> A large toolkit of components for LLM apps: chat models, prompts, output parsers, retrievers, tools and integrations. Provider packages (`langchain-anthropic`, `langchain-openai`, ...) give a common chat-model interface; components can be combined. Use this when you need many integrations (loaders, vector stores, providers) behind one interface.
 
 ```powershell
 pip install langchain langchain-anthropic langchain-openai
@@ -231,9 +227,7 @@ structured = llm.with_structured_output(Ticket)             # Pydantic model -> 
 
 ## 5. LangChain Agents
 
-> - **What:** A prebuilt tool-calling agent on top of LangGraph.
-> - **How:** Give a model, tools and a system prompt; invoke with messages.
-> - **When to use:** Quick tool-using agents with LangChain integrations.
+> A prebuilt tool-calling agent on top of LangGraph. Give a model, tools and a system prompt; invoke with messages. Use it for quick tool-using agents with LangChain integrations.
 
 ```python
 from langchain.agents import create_agent
@@ -259,9 +253,7 @@ Older tutorials use `AgentExecutor` / `initialize_agent`; those APIs are legacy.
 
 ## 6. LangGraph (Graphs of Steps)
 
-> - **What:** A library for building agents and workflows as **graphs**: nodes are steps (LLM calls, tools, code), edges decide what runs next, and a typed **state** flows through.
-> - **How:** Define the state, add nodes and (conditional) edges, compile, invoke; add a checkpointer for memory, resume and human approval.
-> - **When to use:** Complex, long-running or stateful flows where you want explicit control over every transition.
+> A library for building agents and workflows as **graphs**: nodes are steps (LLM calls, tools, code), edges decide what runs next, and a typed **state** flows through. Define the state, add nodes and (conditional) edges, compile, invoke; add a checkpointer for memory, resume and human approval. Use it for complex, long-running or stateful flows where you want explicit control over every transition.
 
 ```powershell
 pip install langgraph langchain-anthropic
@@ -321,9 +313,7 @@ START -> classify --(billing)--> billing -> END
 
 ## 7. LlamaIndex (RAG-First)
 
-> - **What:** A framework focused on connecting LLMs to your data: loaders, indexes, retrievers, query engines and data agents.
-> - **How:** Load documents, build an index (embeds and stores chunks), ask questions through a query engine.
-> - **When to use:** RAG over many document types with advanced retrieval options.
+> A framework focused on connecting LLMs to your data: loaders, indexes, retrievers, query engines and data agents. Load documents, build an index (embeds and stores chunks), ask questions through a query engine. Use it for RAG over many document types with advanced retrieval options.
 
 ```powershell
 pip install llama-index llama-index-llms-anthropic llama-index-embeddings-huggingface
@@ -350,9 +340,7 @@ for node in response.source_nodes:                           # citations
 
 ## 8. PydanticAI
 
-> - **What:** A Python agent framework from the Pydantic team with type-safe outputs and dependency injection.
-> - **How:** `Agent("provider:model", output_type=..., system_prompt=...)`; tools are decorated functions; outputs are validated Pydantic objects.
-> - **When to use:** You like typed Python, want validated structured outputs and clean testing.
+> A Python agent framework from the Pydantic team with type-safe outputs and dependency injection. `Agent("provider:model", output_type=..., system_prompt=...)`; tools are decorated functions; outputs are validated Pydantic objects. Use this when you like typed Python, want validated structured outputs and clean testing.
 
 ```powershell
 pip install pydantic-ai
@@ -388,9 +376,7 @@ print(result.output)          # Answer(city='Berlin', country='Germany', confide
 
 ## 9. CrewAI (Role-Based Multi-Agent)
 
-> - **What:** A framework for teams of agents with roles, goals and tasks.
-> - **How:** Define `Agent`s (role, goal, backstory, tools), `Task`s (description, expected output, agent) and a `Crew` that runs them.
-> - **When to use:** Quick multi-agent prototypes (researcher + writer + editor).
+> A framework for teams of agents with roles, goals and tasks. Define `Agent`s (role, goal, backstory, tools), `Task`s (description, expected output, agent) and a `Crew` that runs them. Use it for quick multi-agent prototypes (researcher + writer + editor).
 
 ```powershell
 pip install crewai
@@ -414,15 +400,11 @@ print(Crew(agents=[researcher, writer], tasks=[research, brief]).kickoff())
 
 ## 10. Microsoft Agent Framework / Semantic Kernel / AutoGen
 
-> - **What:** Microsoft's agent tooling for Python and .NET.
-> - **How:** The **Microsoft Agent Framework** unifies ideas from Semantic Kernel (enterprise SDK) and AutoGen (multi-agent research framework) into one framework with agents, workflows and Azure integrations.
-> - **When to use:** Microsoft / Azure-centric teams, .NET codebases, Azure AI Foundry deployments. Check Microsoft Learn for the current packages and APIs.
+> Microsoft's agent tooling for Python and .NET. The **Microsoft Agent Framework** unifies ideas from Semantic Kernel (enterprise SDK) and AutoGen (multi-agent research framework) into one framework with agents, workflows and Azure integrations. Use it for microsoft / Azure-centric teams, .NET codebases, Azure AI Foundry deployments. Check Microsoft Learn for the current packages and APIs.
 
 ## 11. LiteLLM (One API for Many Providers)
 
-> - **What:** A library and proxy that exposes 100+ LLM providers through one OpenAI-style interface.
-> - **How:** `completion(model="provider/model", messages=[...])`; the proxy adds keys, budgets, logging and fallbacks centrally.
-> - **When to use:** Switching / comparing providers, central gateway for a team.
+> A library and proxy that exposes 100+ LLM providers through one OpenAI-style interface. `completion(model="provider/model", messages=[...])`; the proxy adds keys, budgets, logging and fallbacks centrally. Use it for switching / comparing providers, central gateway for a team.
 
 ```python
 from litellm import completion
@@ -433,17 +415,13 @@ resp.choices[0].message.content
 
 ## 12. Hosted Agent Platforms
 
-> - **What:** Services where the provider runs the agent loop (and often a sandbox) for you.
-> - **How:** You configure the agent (model, prompt, tools, MCP servers) and start sessions through an API; the platform executes tools and streams events.
-> - **When to use:** Long-running or scheduled agents without building infrastructure.
+> Services where the provider runs the agent loop (and often a sandbox) for you. You configure the agent (model, prompt, tools, MCP servers) and start sessions through an API; the platform executes tools and streams events. Use it for long-running or scheduled agents without building infrastructure.
 
 Examples: Anthropic's Managed Agents (beta), OpenAI's hosted agent tools, Azure AI Foundry Agent Service, AWS Bedrock Agents, Google Vertex AI Agent Builder. Features and pricing change quickly; compare against your needs for data residency, tools and control.
 
 ## 13. How to Choose
 
-> - **What:** A decision guide.
-> - **How:** Start from your need; pick the lightest option that covers it.
-> - **When to use:** Project kickoff.
+> A decision guide. Start from your need; pick the lightest option that covers it. Use it for project kickoff.
 
 | Need | Start with |
 |---|---|
@@ -459,9 +437,7 @@ Examples: Anthropic's Managed Agents (beta), OpenAI's hosted agent tools, Azure 
 
 ## 14. Framework Hygiene
 
-> - **What:** Practices that keep framework-based code maintainable.
-> - **How:** Pin versions, isolate framework code, keep prompts visible, trace everything.
-> - **When to use:** Any project using these libraries.
+> Practices that keep framework-based code maintainable. Pin versions, isolate framework code, keep prompts visible, trace everything. Use it in any project using these libraries.
 
 - **Pin versions** in `pyproject.toml` / `uv.lock` ([11](11_uv.md)); these libraries change often.
 - Keep **your business logic** outside framework classes (plain functions / services).
@@ -484,9 +460,7 @@ Examples: Anthropic's Managed Agents (beta), OpenAI's hosted agent tools, Azure 
 
 ## 16. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Choose
 
@@ -520,3 +494,9 @@ print(Runner.run_sync(Agent(name="Calc", instructions="Use tools for maths.", to
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [31 - AI Agents](31_ai-agents.md) | **Index:** [All guides](README.md) | **Next:** [33 - MCP (Model Context Protocol)](33_mcp.md)
+<!-- nav:end -->

@@ -1,5 +1,9 @@
 # 43 - GitHub Actions (CI/CD)
 
+<!-- nav:start -->
+**Previous:** [42 - Docker](42_docker.md) | **Index:** [All guides](README.md) | **Next:** [44 - Nginx, Reverse Proxy and HTTPS](44_nginx-https.md)
+<!-- nav:end -->
+
 Quick reference for automating tests, linting, evals, Docker builds and deployments with GitHub Actions.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -96,9 +100,7 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Workflow File Structure
 
-> - **What:** The anatomy of a workflow YAML file.
-> - **How:** `name`, `on` (triggers), `jobs` -> each job has `runs-on` and `steps`.
-> - **When to use:** Every workflow; files live in `.github/workflows/*.yml`.
+> The anatomy of a workflow YAML file. `name`, `on` (triggers), `jobs` -> each job has `runs-on` and `steps`. Use it in every workflow; files live in `.github/workflows/*.yml`.
 
 ```yaml
 name: CI                                  # shown in the Actions tab
@@ -121,9 +123,7 @@ jobs:                                     # WHAT to run
 
 ## 2. Triggers (on)
 
-> - **What:** Events that start a workflow.
-> - **How:** List one or more events with optional filters.
-> - **When to use:** Deciding when checks and deployments should run.
+> Events that start a workflow. List one or more events with optional filters. Use it for deciding when checks and deployments should run.
 
 ```yaml
 on:
@@ -145,9 +145,7 @@ on:
 
 ## 3. Python CI with uv
 
-> - **What:** Lint and test a uv project on every push / pull request.
-> - **How:** Install uv, sync dependencies from the lock file, run Ruff and pytest.
-> - **When to use:** Projects managed with uv ([11](11_uv.md)).
+> Lint and test a uv project on every push / pull request. Install uv, sync dependencies from the lock file, run Ruff and pytest. Use it for projects managed with uv ([11](11_uv.md)).
 
 ```yaml
 # .github/workflows/ci.yml
@@ -183,9 +181,7 @@ jobs:
 
 ## 4. Python CI with pip
 
-> - **What:** The same checks for a requirements.txt project.
-> - **How:** `actions/setup-python` with pip caching, then install and test.
-> - **When to use:** Projects using venv + pip ([10](10_python-virtual-environment.md)).
+> The same checks for a requirements.txt project. `actions/setup-python` with pip caching, then install and test. Use it for projects using venv + pip ([10](10_python-virtual-environment.md)).
 
 ```yaml
 jobs:
@@ -204,9 +200,7 @@ jobs:
 
 ## 5. Matrix Builds
 
-> - **What:** Running a job for several combinations (Python versions, OSes).
-> - **How:** `strategy.matrix` defines the values; the job runs once per combination.
-> - **When to use:** Libraries supporting several versions; checking Windows compatibility.
+> Running a job for several combinations (Python versions, OSes). `strategy.matrix` defines the values; the job runs once per combination. Use it for libraries supporting several versions; checking Windows compatibility.
 
 ```yaml
 jobs:
@@ -228,9 +222,7 @@ jobs:
 
 ## 6. Secrets and Variables
 
-> - **What:** Giving workflows API keys and config without putting them in the repo.
-> - **How:** Repo -> Settings -> Secrets and variables -> Actions; reference with `${{ secrets.NAME }}` / `${{ vars.NAME }}`; pass them as environment variables to steps.
-> - **When to use:** LLM API keys for eval jobs, registry passwords, deployment settings.
+> Giving workflows API keys and config without putting them in the repo. Repo -> Settings -> Secrets and variables -> Actions; reference with `${{ secrets.NAME }}` / `${{ vars.NAME }}`; pass them as environment variables to steps. Use it for LLM API keys for eval jobs, registry passwords, deployment settings.
 
 ```yaml
       - name: Run integration tests
@@ -250,9 +242,7 @@ gh variable set LLM_MODEL --body "claude-opus-5"
 
 ## 7. Caching Dependencies
 
-> - **What:** Reusing downloaded packages between runs to save time.
-> - **How:** Built-in caching in setup actions (`enable-cache`, `cache: pip`) or `actions/cache` with a key based on the lock file hash.
-> - **When to use:** Every CI workflow; can cut minutes from each run.
+> Reusing downloaded packages between runs to save time. Built-in caching in setup actions (`enable-cache`, `cache: pip`) or `actions/cache` with a key based on the lock file hash. Use it in every CI workflow; can cut minutes from each run.
 
 ```yaml
       - uses: actions/cache@v4
@@ -263,9 +253,7 @@ gh variable set LLM_MODEL --body "claude-opus-5"
 
 ## 8. Artifacts
 
-> - **What:** Files saved from a workflow run (test reports, eval results, build outputs).
-> - **How:** `actions/upload-artifact` in one job; `actions/download-artifact` in another; downloadable from the run page.
-> - **When to use:** Keeping eval results, coverage reports, built packages.
+> Files saved from a workflow run (test reports, eval results, build outputs). `actions/upload-artifact` in one job; `actions/download-artifact` in another; downloadable from the run page. Use it for keeping eval results, coverage reports, built packages.
 
 ```yaml
       - uses: actions/upload-artifact@v4
@@ -278,9 +266,7 @@ gh variable set LLM_MODEL --body "claude-opus-5"
 
 ## 9. Running LLM Evals in CI
 
-> - **What:** Automatically checking AI quality on pull requests and nightly.
-> - **How:** A small smoke eval on pull requests (fast, cheap) with a score threshold; the full eval on a schedule; results as artifacts.
-> - **When to use:** Repos with prompts, RAG or agents ([34](34_evals-observability.md)).
+> Automatically checking AI quality on pull requests and nightly. A small smoke eval on pull requests (fast, cheap) with a score threshold; the full eval on a schedule; results as artifacts. Use it for repos with prompts, RAG or agents ([34](34_evals-observability.md)).
 
 ```yaml
 name: Evals
@@ -315,9 +301,7 @@ Keep the PR set small to control cost and time; fail the job when the score drop
 
 ## 10. Build and Push a Docker Image
 
-> - **What:** Building your app image in CI and pushing it to a registry.
-> - **How:** Log in to the registry, then `docker/build-push-action` with tags (commit SHA + `latest`) and layer caching.
-> - **When to use:** Every deployable app ([42 - Docker](42_docker.md)).
+> Building your app image in CI and pushing it to a registry. Log in to the registry, then `docker/build-push-action` with tags (commit SHA + `latest`) and layer caching. Use it in every deployable app ([42 - Docker](42_docker.md)).
 
 ```yaml
 name: Build image
@@ -356,9 +340,7 @@ For Azure Container Registry, log in with `azure/login` (section 11) and `az acr
 
 ## 11. Deploy to Azure (OIDC)
 
-> - **What:** Deploying without storing Azure passwords in GitHub.
-> - **How:** Create an Entra ID app / managed identity with a **federated credential** trusting your repo; the workflow gets a short-lived token via OIDC.
-> - **When to use:** Any deployment from GitHub to Azure ([47](47_azure.md)).
+> Deploying without storing Azure passwords in GitHub. Create an Entra ID app / managed identity with a **federated credential** trusting your repo; the workflow gets a short-lived token via OIDC. Use it in any deployment from GitHub to Azure ([47](47_azure.md)).
 
 ```yaml
 name: Deploy
@@ -393,9 +375,7 @@ Setup (once): create an app registration / user-assigned identity, add a federat
 
 ## 12. Conditions, Needs and Environments
 
-> - **What:** Controlling order and when jobs / steps run.
-> - **How:** `needs` for dependencies, `if` for conditions, `environment` for protected deployments with approvals.
-> - **When to use:** Test -> build -> deploy pipelines.
+> Controlling order and when jobs / steps run. `needs` for dependencies, `if` for conditions, `environment` for protected deployments with approvals. Use it for test -> build -> deploy pipelines.
 
 ```yaml
 jobs:
@@ -420,9 +400,7 @@ jobs:
 
 ## 13. Scheduled Jobs
 
-> - **What:** Running workflows on a timer.
-> - **How:** `on.schedule.cron` in UTC.
-> - **When to use:** Nightly evals, re-indexing RAG documents, data refreshes, dependency checks.
+> Running workflows on a timer. `on.schedule.cron` in UTC. Use it nightly evals, re-indexing RAG documents, data refreshes, dependency checks.
 
 ```yaml
 on:
@@ -435,9 +413,7 @@ Scheduled workflows run on the default branch and may be delayed at busy times; 
 
 ## 14. Reusable Workflows and Composite Actions
 
-> - **What:** Sharing CI logic between workflows and repos.
-> - **How:** A reusable workflow (`on: workflow_call`) is called with `uses:` at job level; a composite action bundles steps in `action.yml`.
-> - **When to use:** Many repos with the same Python CI, standard deploy steps.
+> Sharing CI logic between workflows and repos. A reusable workflow (`on: workflow_call`) is called with `uses:` at job level; a composite action bundles steps in `action.yml`. Use it for many repos with the same Python CI, standard deploy steps.
 
 ```yaml
 # caller
@@ -451,9 +427,7 @@ jobs:
 
 ## 15. Branch Protection and Required Checks
 
-> - **What:** Preventing merges into `main` unless CI passes.
-> - **How:** Repo -> Settings -> Branches / Rulesets -> require pull requests and required status checks.
-> - **When to use:** Any shared repository.
+> Preventing merges into `main` unless CI passes. Repo -> Settings -> Branches / Rulesets -> require pull requests and required status checks. Use it in any shared repository.
 
 - Require status checks (e.g. `test`) to pass before merging.
 - Require pull request reviews.
@@ -461,9 +435,7 @@ jobs:
 
 ## 16. gh CLI for Actions
 
-> - **What:** Managing workflow runs from the terminal.
-> - **How:** `gh run` and `gh workflow` commands ([04 - Git](04_git.md)).
-> - **When to use:** Watching CI without opening the browser.
+> Managing workflow runs from the terminal. `gh run` and `gh workflow` commands ([04 - Git](04_git.md)). Use it for watching CI without opening the browser.
 
 ```bash
 gh workflow list
@@ -476,9 +448,7 @@ gh run rerun <run-id> --failed
 
 ## 17. Security Best Practices
 
-> - **What:** Keeping CI from becoming an attack path.
-> - **How:** Minimal permissions, pinned actions, OIDC instead of long-lived secrets, careful with pull requests from forks.
-> - **When to use:** Every repository.
+> Keeping CI from becoming an attack path. Minimal permissions, pinned actions, OIDC instead of long-lived secrets, careful with pull requests from forks. Use it in every repository.
 
 - Set `permissions:` explicitly (least privilege; default read-only).
 - Pin third-party actions to a version tag you trust or a commit SHA.
@@ -503,9 +473,7 @@ gh run rerun <run-id> --failed
 
 ## 19. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: CI for a uv project
 
@@ -559,3 +527,9 @@ Open `.github/workflows/` in this repo: which workflow catches a library API cha
 `examples.yml`, job `latest-deps`: it upgrades all dependencies (ignoring the lock file) and runs the tests every Monday, so breaking changes like MCP SDK v2 show up as a failing check.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [42 - Docker](42_docker.md) | **Index:** [All guides](README.md) | **Next:** [44 - Nginx, Reverse Proxy and HTTPS](44_nginx-https.md)
+<!-- nav:end -->

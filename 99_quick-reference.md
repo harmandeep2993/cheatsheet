@@ -1,5 +1,9 @@
 # 99 - Quick Reference
 
+<!-- nav:start -->
+**Previous:** [98 - Glossary](98_glossary.md) | **Index:** [All guides](README.md)
+<!-- nav:end -->
+
 The most-used commands and snippets from every guide on one page. For explanations, flags and troubleshooting, follow the link in each heading. Windows / macOS / Linux differences: [00 - Big Picture](00_big-picture.md) section 13.
 
 Jump to: [Foundations](#foundations) | [Python](#python) | [Data and ML](#data-and-ml) | [AI Engineering](#ai-engineering) | [APIs and Deployment](#apis-and-deployment)
@@ -429,3 +433,9 @@ az vm start -g $RG -n $VM ; ssh -i $KEY "$USER@$IP"
 ssh -i $KEY -N -L 11435:localhost:11434 "$USER@$IP"      # tunnel to the VM's Ollama
 az vm deallocate -g $RG -n $VM                             # ALWAYS at the end (stops compute billing)
 ```
+
+---
+
+<!-- nav:start -->
+**Previous:** [98 - Glossary](98_glossary.md) | **Index:** [All guides](README.md)
+<!-- nav:end -->

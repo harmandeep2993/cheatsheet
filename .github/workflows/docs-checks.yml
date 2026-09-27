@@ -22,6 +22,8 @@ jobs:
         run: python tools/check_docs.py
       - name: Check glossary is up to date
         run: python tools/build_glossary.py --check
+      - name: Check Previous / Next navigation is up to date
+        run: python tools/build_nav.py --check
 
   markdownlint:
     name: Markdown style

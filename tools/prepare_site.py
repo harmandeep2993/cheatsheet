@@ -14,7 +14,9 @@ def main() -> None:
     SITE_SRC.mkdir()
     for md in sorted(ROOT.glob("*.md")):
         target = "index.md" if md.name == "README.md" else md.name
-        shutil.copy2(md, SITE_SRC / target)
+        # On the site the README is the home page, so "All guides" links must point to index.md
+        text = md.read_text(encoding="utf-8").replace("](README.md)", "](index.md)")
+        (SITE_SRC / target).write_text(text, encoding="utf-8")
     # The examples overview is linked from the guides; the code itself stays on GitHub
     (SITE_SRC / "examples").mkdir()
     shutil.copy2(ROOT / "examples" / "README.md", SITE_SRC / "examples" / "README.md")

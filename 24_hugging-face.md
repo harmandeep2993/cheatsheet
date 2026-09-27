@@ -1,5 +1,9 @@
 # 24 - Hugging Face
 
+<!-- nav:start -->
+**Previous:** [23 - PyTorch](23_pytorch.md) | **Index:** [All guides](README.md) | **Next:** [25 - LLM Fundamentals](25_llm-fundamentals.md)
+<!-- nav:end -->
+
 Quick reference for the Hugging Face ecosystem: the Model Hub, `transformers` pipelines, tokenizers, running open models, embeddings, datasets and sharing models.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -104,9 +108,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The most common `from_pretrained` / `pipeline` / generation parameters.
-> - **How:** Passed as keyword arguments when loading or calling models.
-> - **When to use:** You see `pipeline("text-generation", model=..., device_map="auto", torch_dtype="auto")` and want to know what each part does.
+> The most common `from_pretrained` / `pipeline` / generation parameters. Passed as keyword arguments when loading or calling models. Use this when you see `pipeline("text-generation", model=..., device_map="auto", torch_dtype="auto")` and want to know what each part does.
 
 ```text
 pipeline("summarization", model="facebook/bart-large-cnn", device=0)
@@ -137,9 +139,7 @@ pipeline("summarization", model="facebook/bart-large-cnn", device=0)
 
 ## 1. Install and Log In
 
-> - **What:** Installing the libraries and authenticating to the Hub.
-> - **How:** pip install; log in with an access token from huggingface.co -> Settings -> Access Tokens.
-> - **When to use:** Once per machine; login is needed for gated / private models and uploads.
+> Installing the libraries and authenticating to the Hub. pip install; log in with an access token from huggingface.co -> Settings -> Access Tokens. Use this when once per machine; login is needed for gated / private models and uploads.
 
 ```powershell
 pip install transformers accelerate sentence-transformers datasets huggingface_hub
@@ -152,9 +152,7 @@ Or set the environment variable `HF_TOKEN`. Never commit tokens.
 
 ## 2. Finding Models on the Hub
 
-> - **What:** Choosing a good model for your task.
-> - **How:** Filter by task, language, licence, size; sort by downloads / trending; read the model card.
-> - **When to use:** Before writing any code.
+> Choosing a good model for your task. Filter by task, language, licence, size; sort by downloads / trending; read the model card. Use it before writing any code.
 
 Checklist for a model card:
 
@@ -166,9 +164,7 @@ Checklist for a model card:
 
 ## 3. Pipelines (One-Liners)
 
-> - **What:** The easiest way to run a model: task + model -> results.
-> - **How:** `pipeline(task, model=...)` downloads the model and tokenizer (cached), and handles pre / post-processing.
-> - **When to use:** Prototyping, simple production tasks.
+> The easiest way to run a model: task + model -> results. `pipeline(task, model=...)` downloads the model and tokenizer (cached), and handles pre / post-processing. Use it for prototyping, simple production tasks.
 
 ```python
 from transformers import pipeline
@@ -189,9 +185,7 @@ summ(long_text, max_length=120, min_length=30)
 
 ## 4. Pipeline Tasks Cheat Sheet
 
-> - **What:** Common task names and what they return.
-> - **How:** Use the task string in `pipeline(...)`.
-> - **When to use:** Picking the right task for your problem.
+> Common task names and what they return. Use the task string in `pipeline(...)`. Use it for picking the right task for your problem.
 
 | Task string | Input -> output | Example use |
 |---|---|---|
@@ -211,9 +205,7 @@ summ(long_text, max_length=120, min_length=30)
 
 ## 5. Tokenizers
 
-> - **What:** Converting text into the token IDs a model understands.
-> - **How:** Text is split into sub-word pieces from a fixed vocabulary; each piece has an ID. The tokenizer must match the model.
-> - **When to use:** Step-by-step inference, counting tokens, understanding context limits.
+> Converting text into the token IDs a model understands. Text is split into sub-word pieces from a fixed vocabulary; each piece has an ID. The tokenizer must match the model. Use it for step-by-step inference, counting tokens, understanding context limits.
 
 ```python
 from transformers import AutoTokenizer
@@ -231,9 +223,7 @@ Rule of thumb for English: 1 token is about 4 characters or 0.75 words. Other la
 
 ## 6. AutoModel: Step-by-Step Inference
 
-> - **What:** Loading tokenizer and model separately for full control.
-> - **How:** `AutoTokenizer` and `AutoModelFor<Task>` pick the right classes from the model's config.
-> - **When to use:** Custom batching, access to logits / hidden states, production code.
+> Loading tokenizer and model separately for full control. `AutoTokenizer` and `AutoModelFor<Task>` pick the right classes from the model's config. Use it for custom batching, access to logits / hidden states, production code.
 
 ```python
 import torch
@@ -261,9 +251,7 @@ labels = [model.config.id2label[i] for i in probs.argmax(dim=-1).tolist()]
 
 ## 7. Text Generation with Open LLMs
 
-> - **What:** Running an open-weight LLM (Llama, Qwen, Mistral, Gemma, Phi ...) yourself.
-> - **How:** Load with `AutoModelForCausalLM` or the `text-generation` pipeline; the model predicts the next token repeatedly.
-> - **When to use:** Private data, offline use, research, fine-tuning. For simple local chat, Ollama is easier ([35 - Local LLMs](35_local-llms.md)).
+> Running an open-weight LLM (Llama, Qwen, Mistral, Gemma, Phi ...) yourself. Load with `AutoModelForCausalLM` or the `text-generation` pipeline; the model predicts the next token repeatedly. Use it for private data, offline use, research, fine-tuning. For simple local chat, Ollama is easier ([35 - Local LLMs](35_local-llms.md)).
 
 ```python
 from transformers import pipeline
@@ -286,9 +274,7 @@ Memory needed (weights only, roughly): parameters x bytes per parameter. 7B mode
 
 ## 8. Chat Templates
 
-> - **What:** Each chat model expects messages formatted with its own special tokens.
-> - **How:** `tokenizer.apply_chat_template` turns a list of role / content messages into the exact prompt format the model was trained on.
-> - **When to use:** Any chat / instruct model used with `generate` directly.
+> Each chat model expects messages formatted with its own special tokens. `tokenizer.apply_chat_template` turns a list of role / content messages into the exact prompt format the model was trained on. Use it in any chat / instruct model used with `generate` directly.
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -307,9 +293,7 @@ Using the wrong format (plain text instead of the template) makes chat models be
 
 ## 9. Generation Parameters
 
-> - **What:** Settings that control how text is generated.
-> - **How:** At each step the model gives probabilities for every next token; these settings decide how to pick one.
-> - **When to use:** Tuning creativity vs precision, output length.
+> Settings that control how text is generated. At each step the model gives probabilities for every next token; these settings decide how to pick one. Use it for tuning creativity vs precision, output length.
 
 | Parameter | Effect |
 |---|---|
@@ -326,9 +310,7 @@ More about sampling in [25 - LLM Fundamentals](25_llm-fundamentals.md).
 
 ## 10. Running Big Models on Small Hardware
 
-> - **What:** Fitting models into limited GPU / CPU memory.
-> - **How:** Lower precision (float16 / bfloat16), quantization (8-bit / 4-bit), automatic offloading with `device_map="auto"`.
-> - **When to use:** Model does not fit, or you want faster inference.
+> Fitting models into limited GPU / CPU memory. Lower precision (float16 / bfloat16), quantization (8-bit / 4-bit), automatic offloading with `device_map="auto"`. Use this when model does not fit, or you want faster inference.
 
 ```python
 import torch
@@ -350,9 +332,7 @@ For CPU / laptop use, GGUF models via Ollama or llama.cpp are usually easier ([3
 
 ## 11. Embeddings with sentence-transformers
 
-> - **What:** Turning text into vectors that capture meaning, for search, clustering and RAG.
-> - **How:** An embedding model maps each sentence to a fixed-length vector; similar meanings give nearby vectors.
-> - **When to use:** Semantic search, duplicate detection, RAG retrieval ([29](29_embeddings-vector-db.md), [30](30_rag.md)).
+> Turning text into vectors that capture meaning, for search, clustering and RAG. An embedding model maps each sentence to a fixed-length vector; similar meanings give nearby vectors. Use it for semantic search, duplicate detection, RAG retrieval ([29](29_embeddings-vector-db.md), [30](30_rag.md)).
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -370,9 +350,7 @@ Multilingual / stronger options: `BAAI/bge-m3`, `intfloat/multilingual-e5-large`
 
 ## 12. Datasets Library
 
-> - **What:** Loading and processing datasets from the Hub or local files.
-> - **How:** `load_dataset` returns an Arrow-backed dataset; `map` applies functions efficiently in batches.
-> - **When to use:** Evaluation sets, fine-tuning data, benchmarks.
+> Loading and processing datasets from the Hub or local files. `load_dataset` returns an Arrow-backed dataset; `map` applies functions efficiently in batches. Use it for evaluation sets, fine-tuning data, benchmarks.
 
 ```python
 from datasets import load_dataset
@@ -389,9 +367,7 @@ small.to_pandas()
 
 ## 13. Hub: Download, Upload, Cache
 
-> - **What:** Managing model files and sharing your own.
-> - **How:** Models are Git repos; files are cached locally (default `~/.cache/huggingface`).
-> - **When to use:** Offline machines, Docker images, publishing a fine-tuned model.
+> Managing model files and sharing your own. Models are Git repos; files are cached locally (default `~/.cache/huggingface`). Use it for offline machines, Docker images, publishing a fine-tuned model.
 
 ```python
 from huggingface_hub import hf_hub_download, snapshot_download
@@ -411,9 +387,7 @@ $env:HF_HUB_OFFLINE = "1"                                  # use only cached fil
 
 ## 14. Inference Providers and Endpoints
 
-> - **What:** Running Hub models on hosted hardware instead of your machine.
-> - **How:** `InferenceClient` calls serverless providers; Inference Endpoints give you a dedicated, autoscaling deployment.
-> - **When to use:** No GPU locally, quick tests, production hosting of open models.
+> Running Hub models on hosted hardware instead of your machine. `InferenceClient` calls serverless providers; Inference Endpoints give you a dedicated, autoscaling deployment. Use it when you have no GPU locally, for quick tests, or for production hosting of open models.
 
 ```python
 from huggingface_hub import InferenceClient
@@ -430,15 +404,11 @@ Availability of specific models on serverless providers changes; check the model
 
 ## 15. Spaces
 
-> - **What:** Free hosted demo apps on Hugging Face.
-> - **How:** A Git repo with `app.py` using Gradio or Streamlit (or a Dockerfile); HF builds and serves it.
-> - **When to use:** Sharing a demo of your model or AI app. Building UIs: [38 - AI UIs](38_ai-ui.md).
+> Free hosted demo apps on Hugging Face. A Git repo with `app.py` using Gradio or Streamlit (or a Dockerfile); HF builds and serves it. Use it for sharing a demo of your model or AI app. Building UIs: [38 - AI UIs](38_ai-ui.md).
 
 ## 16. Licences
 
-> - **What:** The legal terms for using a model.
-> - **How:** Shown on the model card; some require accepting terms.
-> - **When to use:** Before using any model in a product.
+> The legal terms for using a model. Shown on the model card; some require accepting terms. Use it before using any model in a product.
 
 | Licence type | Examples | Commercial use |
 |---|---|---|
@@ -464,9 +434,7 @@ Availability of specific models on serverless providers changes; check the model
 
 ## 18. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Sentiment
 
@@ -519,3 +487,9 @@ sentences[i], sentences[j]
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [23 - PyTorch](23_pytorch.md) | **Index:** [All guides](README.md) | **Next:** [25 - LLM Fundamentals](25_llm-fundamentals.md)
+<!-- nav:end -->

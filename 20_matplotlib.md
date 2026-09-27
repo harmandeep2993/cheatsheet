@@ -1,5 +1,9 @@
 # 20 - Matplotlib
 
+<!-- nav:start -->
+**Previous:** [19 - SQL](19_sql.md) | **Index:** [All guides](README.md) | **Next:** [21 - Seaborn](21_seaborn.md)
+<!-- nav:end -->
+
 Quick reference for plotting with Matplotlib (the base plotting library; seaborn and pandas `.plot()` build on it).
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -72,9 +76,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The meaning of the arguments and parameters used in the matplotlib calls below.
-> - **How:** Explains how a call is built, then lists each parameter with its meaning and example.
-> - **When to use:** You see `ax.hist(data, bins=20, alpha=0.7, edgecolor="black")` and want to know what each argument does.
+> The meaning of the arguments and parameters used in the matplotlib calls below. Explains how a call is built, then lists each parameter with its meaning and example. Use this when you see `ax.hist(data, bins=20, alpha=0.7, edgecolor="black")` and want to know what each argument does.
 
 ### How a function call is built
 
@@ -128,9 +130,7 @@ ax.plot(x, y, color="red", linestyle="--", label="sales")
 
 ## 1. Install and Import
 
-> - **What:** Installing and importing matplotlib.
-> - **How:** `pip install matplotlib`, then `import matplotlib.pyplot as plt`.
-> - **When to use:** Any chart in Python; seaborn and pandas plotting use it underneath.
+> Installing and importing matplotlib. `pip install matplotlib`, then `import matplotlib.pyplot as plt`. Use it in any chart in Python; seaborn and pandas plotting use it underneath.
 
 ```powershell
 pip install matplotlib
@@ -143,9 +143,7 @@ import numpy as np
 
 ## 2. Two Ways to Plot
 
-> - **What:** The two coding styles: quick `plt.` calls vs explicit `fig, ax` objects.
-> - **How:** pyplot draws on the current chart; object-oriented draws on a named `ax`.
-> - **When to use:** pyplot for a fast single chart; `fig, ax` for anything you will customise or combine.
+> The two coding styles: quick `plt.` calls vs explicit `fig, ax` objects. pyplot draws on the current chart; object-oriented draws on a named `ax`. Use it for pyplot for a fast single chart; `fig, ax` for anything you will customise or combine.
 
 **pyplot style** (quick, one chart):
 
@@ -175,9 +173,7 @@ plt.show()
 
 ## 3. Figure Anatomy
 
-> - **What:** The parts of a chart and their names.
-> - **How:** A Figure holds one or more Axes; each Axes has title, axes, data and legend.
-> - **When to use:** Knowing what to call (`fig.` or `ax.`) when changing something.
+> The parts of a chart and their names. A Figure holds one or more Axes; each Axes has title, axes, data and legend. Use it for knowing what to call (`fig.` or `ax.`) when changing something.
 
 ```text
 Figure  (the whole window / image)
@@ -190,9 +186,7 @@ Figure  (the whole window / image)
 
 ## 4. Line Plot
 
-> - **What:** Lines connecting points in order.
-> - **How:** `ax.plot(x, y)`; call it several times for several lines.
-> - **When to use:** Trends over time or any ordered x-values.
+> Lines connecting points in order. `ax.plot(x, y)`; call it several times for several lines. Use it for trends over time or any ordered x-values.
 
 ```python
 x = np.linspace(0, 10, 100)
@@ -205,9 +199,7 @@ plt.show()
 
 ## 5. Scatter Plot
 
-> - **What:** Individual points for two numeric variables.
-> - **How:** `ax.scatter(x, y)`; size / colour can show extra variables.
-> - **When to use:** Relationship between two measures (price vs size), spotting clusters and outliers.
+> Individual points for two numeric variables. `ax.scatter(x, y)`; size / colour can show extra variables. Use it for relationship between two measures (price vs size), spotting clusters and outliers.
 
 ```python
 ax.scatter(x, y)
@@ -218,9 +210,7 @@ fig.colorbar(sc, ax=ax, label="value")
 
 ## 6. Bar Chart
 
-> - **What:** Bars comparing values across categories.
-> - **How:** `ax.bar` / `ax.barh`; shift x-positions for grouped bars, `bottom=` for stacked.
-> - **When to use:** Comparing totals per category (sales per product, count per department).
+> Bars comparing values across categories. `ax.bar` / `ax.barh`; shift x-positions for grouped bars, `bottom=` for stacked. Use it for comparing totals per category (sales per product, count per department).
 
 ```python
 cats = ["A", "B", "C"]
@@ -247,9 +237,7 @@ Stacked bars: `ax.bar(cats, a); ax.bar(cats, b, bottom=a)`
 
 ## 7. Histogram
 
-> - **What:** Distribution of one numeric variable in bins.
-> - **How:** `ax.hist(data, bins=n)` counts values per interval.
-> - **When to use:** Seeing how values are spread: skew, outliers, typical range.
+> Distribution of one numeric variable in bins. `ax.hist(data, bins=n)` counts values per interval. Use this when seeing how values are spread: skew, outliers, typical range.
 
 ```python
 ax.hist(data, bins=20)
@@ -260,9 +248,7 @@ ax.hist(data, bins=20, density=True)                       # proportions
 
 ## 8. Box Plot
 
-> - **What:** Median, quartiles and outliers in one compact shape.
-> - **How:** `ax.boxplot(data)`; pass a list to compare several groups.
-> - **When to use:** Comparing distributions across groups, detecting outliers.
+> Median, quartiles and outliers in one compact shape. `ax.boxplot(data)`; pass a list to compare several groups. Use it for comparing distributions across groups, detecting outliers.
 
 ```python
 ax.boxplot(data)
@@ -272,9 +258,7 @@ ax.boxplot(data, vert=False)                        # horizontal
 
 ## 9. Pie Chart
 
-> - **What:** Parts of a whole as slices.
-> - **How:** `ax.pie(values, labels=..., autopct=...)`.
-> - **When to use:** Only for a few categories (2 to 5) summing to 100%; otherwise prefer a bar chart.
+> Parts of a whole as slices. `ax.pie(values, labels=..., autopct=...)`. Use it only for a few categories (2 to 5) summing to 100%; otherwise prefer a bar chart.
 
 ```python
 ax.pie(vals, labels=cats, autopct="%1.1f%%", startangle=90)
@@ -285,9 +269,7 @@ A bar chart is usually easier to read than a pie chart.
 
 ## 10. Other Plot Types
 
-> - **What:** Less common chart types: areas, error bars, steps, violins, heatmaps.
-> - **How:** Dedicated `ax.` methods for each.
-> - **When to use:** Confidence ranges (fill_between / errorbar), matrices (imshow).
+> Less common chart types: areas, error bars, steps, violins, heatmaps. Dedicated `ax.` methods for each. Use it for confidence ranges (fill_between / errorbar), matrices (imshow).
 
 ```python
 ax.fill_between(x, y1, y2, alpha=0.3)       # shaded area
@@ -301,9 +283,7 @@ fig.colorbar(im, ax=ax)
 
 ## 11. Titles, Labels and Legend
 
-> - **What:** Text that explains the chart.
-> - **How:** `set_title`, `set_xlabel`, `set_ylabel`, `legend` (uses `label=` from plot calls).
-> - **When to use:** Every chart someone else will read.
+> Text that explains the chart. `set_title`, `set_xlabel`, `set_ylabel`, `legend` (uses `label=` from plot calls). Use it in every chart someone else will read.
 
 ```python
 ax.set_title("Sales per Month", fontsize=14, fontweight="bold")
@@ -319,9 +299,7 @@ ax.legend(title="Year", frameon=False)
 
 ## 12. Axes: Limits, Ticks, Scale, Grid
 
-> - **What:** Controlling axis range, tick marks, scale and grid.
-> - **How:** `set_xlim` / `set_ylim`, `set_xticks`, `set_yscale("log")`, `grid`.
-> - **When to use:** Zooming in, custom tick labels, data spanning many orders of magnitude (log).
+> Controlling axis range, tick marks, scale and grid. `set_xlim` / `set_ylim`, `set_xticks`, `set_yscale("log")`, `grid`. Use it for zooming in, custom tick labels, data spanning many orders of magnitude (log).
 
 ```python
 ax.set_xlim(0, 10) ; ax.set_ylim(0, 100)
@@ -337,9 +315,7 @@ ax2 = ax.twinx()                                      # second y-axis
 
 ## 13. Colors, Markers, Line Styles
 
-> - **What:** Look of lines and points.
-> - **How:** Keyword arguments `color`, `marker`, `linestyle`, `alpha`, `cmap`.
-> - **When to use:** Distinguishing series, matching brand colours, printing in black and white.
+> Look of lines and points. Keyword arguments `color`, `marker`, `linestyle`, `alpha`, `cmap`. Use it for distinguishing series, matching brand colours, printing in black and white.
 
 ```python
 ax.plot(x, y, color="tab:blue", marker="o", linestyle="--", linewidth=2, markersize=6)
@@ -356,9 +332,7 @@ ax.plot(x, y, "ro--")                   # shorthand: red, circle, dashed
 
 ## 14. Subplots (Several Charts)
 
-> - **What:** Several charts in one figure.
-> - **How:** `plt.subplots(rows, cols)` returns a grid of Axes; draw on each one.
-> - **When to use:** Comparing related charts side by side, dashboards, before / after views.
+> Several charts in one figure. `plt.subplots(rows, cols)` returns a grid of Axes; draw on each one. Use it for comparing related charts side by side, dashboards, before / after views.
 
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))    # 2 rows x 2 cols
@@ -378,9 +352,7 @@ for ax in axes.flat:                                    # loop over all
 
 ## 15. Annotations and Reference Lines
 
-> - **What:** Reference lines, shaded areas and text notes on a chart.
-> - **How:** `axhline` / `axvline`, `axvspan`, `text`, `annotate` with arrows.
-> - **When to use:** Marking a target, a threshold, an event date, or labelling a peak.
+> Reference lines, shaded areas and text notes on a chart. `axhline` / `axvline`, `axvspan`, `text`, `annotate` with arrows. Use it for marking a target, a threshold, an event date, or labelling a peak.
 
 ```python
 ax.axhline(y=50, color="gray", linestyle="--")      # horizontal line
@@ -393,9 +365,7 @@ ax.annotate("Peak", xy=(5, 95), xytext=(7, 110),
 
 ## 16. Figure Size and Styles
 
-> - **What:** Overall figure size and visual theme.
-> - **How:** `figsize=(w, h)` in inches; `plt.style.use()` for predefined looks.
-> - **When to use:** Charts for slides (bigger), reports (consistent style), dark backgrounds.
+> Overall figure size and visual theme. `figsize=(w, h)` in inches; `plt.style.use()` for predefined looks. Use it for charts for slides (bigger), reports (consistent style), dark backgrounds.
 
 ```python
 fig, ax = plt.subplots(figsize=(10, 5))     # width, height in inches
@@ -409,9 +379,7 @@ plt.style.use("default")                    # reset
 
 ## 17. Plot Directly from Pandas
 
-> - **What:** Plotting a DataFrame without writing matplotlib code.
-> - **How:** `df.plot(kind=...)` calls matplotlib and returns an `ax` you can customise.
-> - **When to use:** Fast exploration while analysing data in pandas.
+> Plotting a DataFrame without writing matplotlib code. `df.plot(kind=...)` calls matplotlib and returns an `ax` you can customise. Use it for fast exploration while analysing data in pandas.
 
 ```python
 df.plot(x="month", y="sales")                   # line
@@ -425,9 +393,7 @@ ax.set_title("Sales")
 
 ## 18. Save a Figure
 
-> - **What:** Writing the chart to an image or PDF file.
-> - **How:** `fig.savefig(path, dpi=..., bbox_inches="tight")` before `plt.show()`.
-> - **When to use:** Charts for reports, slides, README images.
+> Writing the chart to an image or PDF file. `fig.savefig(path, dpi=..., bbox_inches="tight")` before `plt.show()`. Use it for charts for reports, slides, README images.
 
 ```python
 fig.savefig("chart.png", dpi=300, bbox_inches="tight")   # call BEFORE plt.show()
@@ -439,9 +405,7 @@ plt.close(fig)                                            # free memory in loops
 
 ## 19. Jupyter Notes
 
-> - **What:** Matplotlib settings specific to Jupyter.
-> - **How:** `%matplotlib inline` or `widget`; `;` hides text output.
-> - **When to use:** Plots not showing in a notebook, or you want interactive zoom.
+> Matplotlib settings specific to Jupyter. `%matplotlib inline` or `widget`; `;` hides text output. Use it for plots not showing in a notebook, or you want interactive zoom.
 
 ```python
 %matplotlib inline          # static images (default in Jupyter)
@@ -465,9 +429,7 @@ End a cell with `plt.show()` or `;` to hide the `[<matplotlib...>]` text output.
 
 ## 21. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Two lines
 
@@ -518,3 +480,9 @@ ax.spines[["top", "right"]].set_visible(False)
 ```
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [19 - SQL](19_sql.md) | **Index:** [All guides](README.md) | **Next:** [21 - Seaborn](21_seaborn.md)
+<!-- nav:end -->

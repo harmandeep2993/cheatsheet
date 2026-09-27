@@ -1,5 +1,9 @@
 # 33 - MCP (Model Context Protocol)
 
+<!-- nav:start -->
+**Previous:** [32 - Agent Frameworks](32_agent-frameworks.md) | **Index:** [All guides](README.md) | **Next:** [34 - Evals and Observability](34_evals-observability.md)
+<!-- nav:end -->
+
 Quick reference for the Model Context Protocol: what it is, its architecture, building MCP servers in Python, connecting them to Claude Code, Claude Desktop, VS Code and your own apps, and security.
 
 > **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
@@ -101,9 +105,7 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> - **What:** The `claude mcp` commands and config fields you use to register servers.
-> - **How:** Name the server, choose a transport, give the command or URL.
-> - **When to use:** You see `claude mcp add --transport http github https://...` and want to know what each part does.
+> The `claude mcp` commands and config fields you use to register servers. Name the server, choose a transport, give the command or URL. Use this when you see `claude mcp add --transport http github https://...` and want to know what each part does.
 
 ```text
 claude  mcp  add  weather  --scope project  --  uv run server.py
@@ -133,9 +135,7 @@ claude  mcp  add  weather  --scope project  --  uv run server.py
 
 ## 1. Architecture and Message Flow
 
-> - **What:** What happens between host, client and server.
-> - **How:** On start the client and server exchange capabilities; the host lists the tools and gives them to the model; tool calls are forwarded to the server and results returned.
-> - **When to use:** Understanding and debugging MCP setups.
+> What happens between host, client and server. On start the client and server exchange capabilities; the host lists the tools and gives them to the model; tool calls are forwarded to the server and results returned. Use it for understanding and debugging MCP setups.
 
 ```text
 Host starts / connects to server
@@ -153,9 +153,7 @@ User: "What's the weather in Berlin?"
 
 ## 2. Transports: stdio vs Streamable HTTP
 
-> - **What:** The two ways a client talks to a server.
-> - **How:** stdio = host starts the server as a child process and talks over stdin / stdout; Streamable HTTP = server runs as a web service at a URL.
-> - **When to use:** stdio for local tools on your machine; HTTP for shared / remote / cloud servers.
+> The two ways a client talks to a server. stdio = host starts the server as a child process and talks over stdin / stdout; Streamable HTTP = server runs as a web service at a URL. Use it for stdio for local tools on your machine; HTTP for shared / remote / cloud servers.
 
 | | stdio | Streamable HTTP |
 |---|---|---|
@@ -169,9 +167,7 @@ With stdio, **never print to stdout** in your server (it corrupts the protocol);
 
 ## 3. Install the Python SDK
 
-> - **What:** The official Python SDK with the high-level `MCPServer` class (called `FastMCP` in SDK v1).
-> - **How:** Install with uv or pip; `mcp[cli]` adds the dev tools.
-> - **When to use:** Building servers or clients in Python.
+> The official Python SDK with the high-level `MCPServer` class (called `FastMCP` in SDK v1). Install with uv or pip; `mcp[cli]` adds the dev tools. Use it for building servers or clients in Python.
 
 ```powershell
 uv init mcp-weather
@@ -183,9 +179,7 @@ SDK versions: v2 renamed `FastMCP` to `MCPServer` (`from mcp.server.mcpserver im
 
 ## 4. Your First Server (Tools)
 
-> - **What:** A minimal MCP server exposing two tools.
-> - **How:** Create an `MCPServer` instance; decorate functions with `@mcp.tool()`; type hints and docstrings become the tool schema and description.
-> - **When to use:** Wrapping any Python function / API for AI apps.
+> A minimal MCP server exposing two tools. Create an `MCPServer` instance; decorate functions with `@mcp.tool()`; type hints and docstrings become the tool schema and description. Use it for wrapping any Python function / API for AI apps.
 
 ```python
 # server.py
@@ -231,9 +225,7 @@ if __name__ == "__main__":
 
 ## 5. Resources
 
-> - **What:** Read-only data the host can load into context.
-> - **How:** `@mcp.resource("uri://...")` functions return content; URI templates with `{params}` expose many items.
-> - **When to use:** Documents, configs, database records the user / app attaches as context.
+> Read-only data the host can load into context. `@mcp.resource("uri://...")` functions return content; URI templates with `{params}` expose many items. Use it for documents, configs, database records the user / app attaches as context.
 
 ```python
 @mcp.resource("config://app")
@@ -250,9 +242,7 @@ def customer(customer_id: str) -> str:
 
 ## 6. Prompts
 
-> - **What:** Reusable prompt templates exposed by the server.
-> - **How:** `@mcp.prompt()` functions return the prompt text (or messages); hosts often show them as slash commands.
-> - **When to use:** Standard team workflows ("review this SQL", "summarise incident").
+> Reusable prompt templates exposed by the server. `@mcp.prompt()` functions return the prompt text (or messages); hosts often show them as slash commands. Use it for standard team workflows ("review this SQL", "summarise incident").
 
 ```python
 @mcp.prompt()
@@ -263,9 +253,7 @@ def review_sql(query: str) -> str:
 
 ## 7. Structured and Rich Tool Results
 
-> - **What:** Returning typed data instead of plain strings.
-> - **How:** Return a Pydantic model / dict / list; the server converts it to structured content with an output schema.
-> - **When to use:** Results that other tools or code will use.
+> Returning typed data instead of plain strings. Return a Pydantic model / dict / list; the server converts it to structured content with an output schema. Use it for results that other tools or code will use.
 
 ```python
 from pydantic import BaseModel
@@ -286,9 +274,7 @@ async def get_forecast_structured(city: str) -> Forecast:
 
 ## 8. Test with MCP Inspector
 
-> - **What:** A browser-based tool to list and call your server's tools, resources and prompts.
-> - **How:** Start the inspector with your server command; click tools, fill arguments, see raw results.
-> - **When to use:** Always, before connecting a server to an AI app.
+> A browser-based tool to list and call your server's tools, resources and prompts. Start the inspector with your server command; click tools, fill arguments, see raw results. Use it always, before connecting a server to an AI app.
 
 ```powershell
 uv run mcp dev server.py                                  # starts the Inspector for this server
@@ -297,9 +283,7 @@ npx @modelcontextprotocol/inspector uv run server.py      # alternative (needs N
 
 ## 9. Connect to Claude Code
 
-> - **What:** Making your server's tools available in Claude Code.
-> - **How:** Register it with `claude mcp add`; for teams, commit a `.mcp.json` file at the project root.
-> - **When to use:** Giving your coding agent access to internal APIs, databases, docs.
+> Making your server's tools available in Claude Code. Register it with `claude mcp add`; for teams, commit a `.mcp.json` file at the project root. Use it for giving your coding agent access to internal APIs, databases, docs.
 
 ```powershell
 claude mcp add weather -- uv --directory D:\Projects\mcp-weather run server.py
@@ -323,9 +307,7 @@ Inside Claude Code, run `/mcp` to see server status and authenticate remote serv
 
 ## 10. Connect to Claude Desktop
 
-> - **What:** Using your server in the Claude desktop app.
-> - **How:** Add it to `claude_desktop_config.json` (Settings -> Developer -> Edit Config), then restart the app.
-> - **When to use:** Personal productivity tools with a chat interface.
+> Using your server in the Claude desktop app. Add it to `claude_desktop_config.json` (Settings -> Developer -> Edit Config), then restart the app. Use it for personal productivity tools with a chat interface.
 
 ```json
 {
@@ -342,9 +324,7 @@ Config location on Windows: `%APPDATA%\Claude\claude_desktop_config.json`; Mac: 
 
 ## 11. Connect to VS Code
 
-> - **What:** Using MCP servers with VS Code's agent / chat features.
-> - **How:** Add servers to `.vscode/mcp.json` (workspace) or user settings.
-> - **When to use:** Sharing tools with everyone who opens the repo in VS Code.
+> Using MCP servers with VS Code's agent / chat features. Add servers to `.vscode/mcp.json` (workspace) or user settings. Use it for sharing tools with everyone who opens the repo in VS Code.
 
 ```json
 {
@@ -360,9 +340,7 @@ Config location on Windows: `%APPDATA%\Claude\claude_desktop_config.json`; Mac: 
 
 ## 12. Use MCP from Your Own Python App
 
-> - **What:** Being the host yourself: connecting to MCP servers from Python and giving their tools to an LLM.
-> - **How:** Open a client session over stdio / HTTP, list tools, convert them to your LLM's tool format, forward tool calls.
-> - **When to use:** Custom agents that should reuse existing MCP servers.
+> Being the host yourself: connecting to MCP servers from Python and giving their tools to an LLM. Open a client session over stdio / HTTP, list tools, convert them to your LLM's tool format, forward tool calls. Use it for custom agents that should reuse existing MCP servers.
 
 ```python
 import asyncio
@@ -390,9 +368,7 @@ The Anthropic Python SDK has helpers to pass MCP tools straight to its tool runn
 
 ## 13. Remote MCP Servers (HTTP)
 
-> - **What:** Running a server as a web service many users can reach.
-> - **How:** Start the server with the Streamable HTTP transport; deploy like any web app (container, HTTPS, auth).
-> - **When to use:** Team-wide or company-wide tools, SaaS integrations.
+> Running a server as a web service many users can reach. Start the server with the Streamable HTTP transport; deploy like any web app (container, HTTPS, auth). Use it for team-wide or company-wide tools, SaaS integrations.
 
 ```python
 if __name__ == "__main__":
@@ -403,9 +379,7 @@ Production: put it behind HTTPS ([44](44_nginx-https.md)), add authentication (O
 
 ## 14. MCP with the Claude API
 
-> - **What:** Letting the Claude API connect directly to a remote MCP server during a request.
-> - **How:** Pass the server in `mcp_servers` AND add a matching `mcp_toolset` tool; uses a beta header.
-> - **When to use:** Server-side apps that want remote MCP tools without writing client code.
+> Letting the Claude API connect directly to a remote MCP server during a request. Pass the server in `mcp_servers` AND add a matching `mcp_toolset` tool; uses a beta header. Use it for server-side apps that want remote MCP tools without writing client code.
 
 ```python
 response = client.beta.messages.create(
@@ -422,9 +396,7 @@ Beta names change; check current docs.
 
 ## 15. Useful Existing Servers
 
-> - **What:** Ready-made servers you can install instead of building.
-> - **How:** Find them in the official MCP servers repository / registry and vendor documentation.
-> - **When to use:** Before writing your own.
+> Ready-made servers you can install instead of building. Find them in the official MCP servers repository / registry and vendor documentation. Use it before writing your own.
 
 | Area | Examples |
 |---|---|
@@ -438,9 +410,7 @@ Only install servers from sources you trust: they run code with your permissions
 
 ## 16. Designing a Good MCP Server
 
-> - **What:** Principles for servers that models use well.
-> - **How:** Same as good tool design ([28](28_tool-use.md) section 10) plus MCP specifics.
-> - **When to use:** Building a server for your team.
+> Principles for servers that models use well. Same as good tool design ([28](28_tool-use.md) section 10) plus MCP specifics. Use it for building a server for your team.
 
 - Focused server per domain (orders, docs, metrics), a handful of well-described tools each.
 - Clear tool names and docstrings; typed parameters; concise results with IDs.
@@ -451,9 +421,7 @@ Only install servers from sources you trust: they run code with your permissions
 
 ## 17. Security
 
-> - **What:** Risks of connecting AI apps to tools and data.
-> - **How:** A server can read / change whatever its credentials allow; tool descriptions and results can contain malicious instructions.
-> - **When to use:** Before installing or publishing any server.
+> Risks of connecting AI apps to tools and data. A server can read / change whatever its credentials allow; tool descriptions and results can contain malicious instructions. Use it before installing or publishing any server.
 
 | Risk | Mitigation |
 |---|---|
@@ -480,9 +448,7 @@ Only install servers from sources you trust: they run code with your permissions
 
 ## 19. Try It
 
-> - **What:** Short exercises to practise this guide.
-> - **How:** Try each task yourself first, then open the solution.
-> - **When to use:** Right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Inspect the example server
 
@@ -526,3 +492,9 @@ Why must a stdio MCP server never `print()` to stdout?
 With stdio transport, stdout carries the JSON-RPC protocol messages; any extra output corrupts them and the host disconnects. Log to stderr or a file instead.
 
 </details>
+
+---
+
+<!-- nav:start -->
+**Previous:** [32 - Agent Frameworks](32_agent-frameworks.md) | **Index:** [All guides](README.md) | **Next:** [34 - Evals and Observability](34_evals-observability.md)
+<!-- nav:end -->
