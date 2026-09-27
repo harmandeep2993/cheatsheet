@@ -80,3 +80,9 @@ def test_build_prompt_numbers_sources():
 
 def test_build_llm_without_key_is_fake():
     assert isinstance(build_llm(Settings(anthropic_api_key=None)), FakeLLM)
+
+
+def test_empty_key_from_compose_counts_as_no_key(monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "")
+    assert Settings().anthropic_api_key is None
+    assert isinstance(build_llm(Settings()), FakeLLM)

@@ -1,6 +1,6 @@
 """Settings for the chat service, read from CHAT_* environment variables (plus ANTHROPIC_API_KEY)."""
 
-from pydantic import Field, SecretStr
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import SettingsConfigDict
 
 from common import ServiceSettings
@@ -18,3 +18,11 @@ class Settings(ServiceSettings):
     model: str = "claude-opus-5"
     # The standard variable name, not CHAT_ prefixed; without it the service uses a fake offline LLM
     anthropic_api_key: SecretStr | None = Field(default=None, validation_alias="ANTHROPIC_API_KEY")
+
+    @field_validator("anthropic_api_key", mode="before")
+    @classmethod
+    def _blank_key_means_none(cls, value: object) -> object:
+        """Compose passes ANTHROPIC_API_KEY="" when the variable is unset; treat that as "no key"."""
+        if isinstance(value, str) and not value.strip():
+            return None
+        return value

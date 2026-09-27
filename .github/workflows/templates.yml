@@ -62,10 +62,13 @@ jobs:
           curl --fail --silent -X POST http://localhost:8080/api/documents/ \
             -H "Content-Type: application/json" \
             -d '{"title": "Refunds", "content": "Refunds are paid within 5 days."}'
-          curl --fail --silent -X POST http://localhost:8080/api/chat/ask \
+          answer=$(curl --silent --show-error -X POST http://localhost:8080/api/chat/ask \
             -H "Content-Type: application/json" \
-            -d '{"question": "How long do refunds take?"}' | grep -q "Refunds"
-          curl --fail --silent http://localhost:8080/ | grep -q '<div id="root">'
+            -d '{"question": "How long do refunds take?"}')
+          echo "chat answer: $answer"
+          echo "$answer" | grep -q "Refunds"
+          page=$(curl --fail --silent --show-error http://localhost:8080/)
+          echo "$page" | grep -q '<div id="root">' || { echo "frontend page: $page"; exit 1; }
       - name: Logs on failure
         if: failure()
         run: docker compose logs
