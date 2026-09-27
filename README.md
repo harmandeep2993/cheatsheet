@@ -39,7 +39,8 @@ Personal quick-reference cheat sheets, numbered from basic to advanced.
 |---|---|---|
 | 17 | [FastAPI](17_fastapi.md) | Routes, Pydantic validation, dependencies, settings, routers, testing, ML model API, Docker |
 | 18 | [Docker](18_docker.md) | Images, containers, run options, Dockerfile, volumes, networks, Compose, cleanup, registry |
-| 19 | [Azure VM + Linux + Ollama](19_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
+| 19 | [Azure](19_azure.md) | Concepts, CLI, resource groups, VMs, storage, ACR, Container Apps, App Service, Key Vault, databases, RBAC, Azure OpenAI, cost, Bicep |
+| 20 | [Azure VM + Linux + Ollama](20_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
 
 ## Conventions
 

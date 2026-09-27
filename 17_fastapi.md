@@ -41,7 +41,7 @@ Uvicorn (server) -> FastAPI (routing) -> validation (Pydantic) -> your function
 | ASGI server (Uvicorn) | The program that runs your app and handles connections |
 | Dependency injection | FastAPI passes shared things (DB, settings) into endpoints via `Depends` |
 
-**Where it fits:** serves models from [16 - Scikit-learn](16_scikit-learn.md) or Ollama ([19 - Azure VM](19_azure-vm-ollama.md)); ship it with [18 - Docker](18_docker.md).
+**Where it fits:** serves models from [16 - Scikit-learn](16_scikit-learn.md) or Ollama ([20 - Azure VM](20_azure-vm-ollama.md)); ship it with [18 - Docker](18_docker.md).
 
 ---
 
@@ -758,7 +758,7 @@ def predict(customer: Customer):
 
 > - **What:** An API endpoint that forwards a prompt to an Ollama model.
 > - **How:** Read `OLLAMA_HOST` from settings; call Ollama's chat API with the async client.
-> - **When to use:** Putting your own API (auth, logging, prompt templates) in front of a local or VM-hosted LLM. VM setup: [19 - Azure VM + Linux + Ollama](19_azure-vm-ollama.md).
+> - **When to use:** Putting your own API (auth, logging, prompt templates) in front of a local or VM-hosted LLM. VM setup: [20 - Azure VM + Linux + Ollama](20_azure-vm-ollama.md).
 
 ```python
 import os

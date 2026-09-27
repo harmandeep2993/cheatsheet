@@ -1,4 +1,4 @@
-# 19 - Azure VM + Linux + Ollama
+# 20 - Azure VM + Linux + Ollama
 
 Quick reference for running Ollama on an Azure Ubuntu VM and using it from a local app via SSH tunnel.
 
@@ -47,7 +47,7 @@ Laptop                                         Azure VM (Ubuntu)
 | LLM | Large language model that generates text |
 | Embedding model | Model that turns text into vectors for search / RAG |
 
-**Where it fits:** uses [02 - PowerShell](02_terminal-powershell.md), [03 - Linux](03_linux.md), [08 - venv](08_python-virtual-environment.md) and can be wrapped in an API with [17 - FastAPI](17_fastapi.md).
+**Where it fits:** a hands-on project on top of [19 - Azure](19_azure.md) (concepts and all other services); uses [02 - PowerShell](02_terminal-powershell.md), [03 - Linux](03_linux.md), [08 - venv](08_python-virtual-environment.md) and can be wrapped in an API with [17 - FastAPI](17_fastapi.md).
 
 ---
 
