@@ -29,7 +29,7 @@ SQL (Structured Query Language) is the standard language for working with **rela
 | Index | Structure that makes lookups on a column faster |
 | DDL / DML | Statements that define structure (CREATE) / change data (INSERT) |
 
-**Where it fits:** load query results into [17 - Pandas](17_pandas.md); run databases with [41 - Docker](41_docker.md).
+**Where it fits:** load query results into [17 - Pandas](17_pandas.md); run databases with [41 - Docker](41_docker.md). Vector search in Postgres: [29 - pgvector](29_embeddings-vector-db.md); SQL on files: [18 - DuckDB](18_polars-duckdb.md).
 
 ---
 

@@ -38,7 +38,7 @@ Scikit-learn (`sklearn`) is the standard Python library for **classical machine 
 | Data leakage | Information from the test data or the answer sneaks into training |
 | Pipeline | Preprocessing steps + model as one object |
 
-**Where it fits:** uses data prepared with [17 - Pandas](17_pandas.md); serve the trained model with [39 - FastAPI](39_fastapi.md).
+**Where it fits:** uses data prepared with [17 - Pandas](17_pandas.md); serve the trained model with [39 - FastAPI](39_fastapi.md). Deep learning and pretrained models: [23 - PyTorch](23_pytorch.md), [24 - Hugging Face](24_hugging-face.md); text features via [29 - Embeddings](29_embeddings-vector-db.md).
 
 ---
 

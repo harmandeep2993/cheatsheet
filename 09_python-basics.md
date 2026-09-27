@@ -28,7 +28,7 @@ Python is a general-purpose programming language known for readable, almost Engl
 | pip / uv | Tools to install packages |
 | Indentation | Spaces at the start of a line that define code blocks |
 
-**Where it fits:** the base for [10 - venv](10_python-virtual-environment.md), [16 - NumPy](16_numpy.md), [17 - Pandas](17_pandas.md), [22 - Scikit-learn](22_scikit-learn.md) and [39 - FastAPI](39_fastapi.md).
+**Where it fits:** the base for [10 - venv](10_python-virtual-environment.md), [16 - NumPy](16_numpy.md), [17 - Pandas](17_pandas.md), [22 - Scikit-learn](22_scikit-learn.md) and [39 - FastAPI](39_fastapi.md). Next steps: [12 - Pydantic](12_pydantic.md), [13 - Async](13_async-python.md), [14 - pytest](14_pytest.md); for AI work see [25 - LLM Fundamentals](25_llm-fundamentals.md).
 
 ---
 

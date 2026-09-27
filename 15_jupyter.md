@@ -28,7 +28,7 @@ Notebooks are less suited for production code: move stable code into `.py` modul
 | Magic command | Jupyter helper starting with `%` or `%%` (`%timeit`) |
 | Execution count | The number `[5]` showing the order cells ran |
 
-**Where it fits:** the usual place to work with [16 - NumPy](16_numpy.md), [17 - Pandas](17_pandas.md), [20 - Matplotlib](20_matplotlib.md) and [22 - Scikit-learn](22_scikit-learn.md).
+**Where it fits:** the usual place to work with [16 - NumPy](16_numpy.md), [17 - Pandas](17_pandas.md), [20 - Matplotlib](20_matplotlib.md) and [22 - Scikit-learn](22_scikit-learn.md). Also great for prototyping LLM calls ([26 - LLM APIs](26_llm-apis.md)) and RAG ([30](30_rag.md)).
 
 ---
 

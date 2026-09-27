@@ -51,7 +51,7 @@ Tenant (Microsoft Entra ID: users, groups, apps)
 | Managed identity | An identity Azure gives your app so it can access other resources without passwords |
 | Service principal | An identity for automation / CI pipelines |
 
-**Where it fits:** deploy containers from [41 - Docker](41_docker.md) and APIs from [39 - FastAPI](39_fastapi.md); a full VM + LLM walkthrough is in [47 - Azure VM + Linux + Ollama](47_azure-vm-ollama.md).
+**Where it fits:** deploy containers from [41 - Docker](41_docker.md) and APIs from [39 - FastAPI](39_fastapi.md); a full VM + LLM walkthrough is in [47 - Azure VM + Linux + Ollama](47_azure-vm-ollama.md). Automate it with [45 - Terraform](45_terraform.md) and [42 - GitHub Actions](42_github-actions.md); run Kubernetes on AKS with [44](44_kubernetes.md).
 
 ---
 
