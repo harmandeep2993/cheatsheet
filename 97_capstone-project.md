@@ -31,7 +31,9 @@ Build a real AI application end to end: a chatbot that answers questions from yo
 
 ## 1. What You Will Build
 
-> A support chatbot for a fictional outdoor shop that answers from its help documents. Retrieval-augmented generation: find the relevant passages, give them to Claude, answer with numbered citations. Use it as a portfolio project and a template for "chat with our documents" at work.
+> A support chatbot for a fictional outdoor shop that answers from its help documents. Retrieval-augmented generation: find the relevant passages, give them to Claude, answer with numbered citations.
+>
+> Use it as a portfolio project and a template for "chat with our documents" at work.
 
 ```text
                        INDEXING (startup / POST /reindex)
@@ -64,7 +66,9 @@ Around it: tests with a fake LLM [14], retrieval eval [34], Docker [42], CI [43]
 
 ## 2. Prerequisites
 
-> Tools and knowledge you need before starting. Install the tools once; skim the linked guides. Use it before Step 1.
+> Tools and knowledge you need before starting. Install the tools once; skim the linked guides.
+>
+> Use it before Step 1.
 
 - Tools: Git ([04](04_git.md)), uv ([11](11_uv.md)), VS Code ([05](05_vscode.md)), Docker ([42](42_docker.md)); Azure CLI for Step 11 ([47](47_azure.md)).
 - An Anthropic API key for real answers ([26](26_llm-apis.md) section 1). Tests and evals work without one.
@@ -72,7 +76,9 @@ Around it: tests with a fake LLM [14], retrieval eval [34], Docker [42], CI [43]
 
 ## 3. Step 1: Set Up the Project
 
-> A uv project with locked dependencies and a clean folder structure. `uv init`, `uv add` the libraries, add dev tools, create the package folder. Use it for the start of any Python service. Guides: [11 - uv](11_uv.md), [10 - venv](10_python-virtual-environment.md).
+> A uv project with locked dependencies and a clean folder structure. `uv init`, `uv add` the libraries, add dev tools, create the package folder.
+>
+> Use it for the start of any Python service. Guides: [11 - uv](11_uv.md), [10 - venv](10_python-virtual-environment.md).
 
 ```bash
 git clone https://github.com/harmandeep2993/pocket-guide.git
@@ -94,7 +100,9 @@ Put `ANTHROPIC_API_KEY` in a git-ignored `.env` or your shell, never in code ([0
 
 ## 4. Step 2: Load and Chunk Documents
 
-> Turn documents into retrievable pieces with metadata. Read each file, normalise whitespace, split on paragraph boundaries into ~1,200-character chunks with 200 characters of overlap, keep file name and title for citations. Use it as the first stage of every RAG system. Guide: [30 - RAG](30_rag.md) sections 2-6.
+> Turn documents into retrievable pieces with metadata. Read each file, normalise whitespace, split on paragraph boundaries into ~1,200-character chunks with 200 characters of overlap, keep file name and title for citations.
+>
+> Use it as the first stage of every RAG system. Guide: [30 - RAG](30_rag.md) sections 2-6.
 
 `chunking.py` (key part):
 
@@ -118,7 +126,9 @@ Try it: add your own `.md` file to `docs_chatbot/docs/`, then check `load_chunks
 
 ## 5. Step 3: Embed and Index
 
-> Convert chunks to vectors and search them by similarity. An `Embedder` turns text into unit-length vectors; `VectorIndex` stores them in a NumPy matrix; search is one matrix multiplication (cosine similarity) followed by top-k. Use it in every retrieval step. Guide: [29 - Embeddings and Vector DBs](29_embeddings-vector-db.md) sections 1-4.
+> Convert chunks to vectors and search them by similarity. An `Embedder` turns text into unit-length vectors; `VectorIndex` stores them in a NumPy matrix; search is one matrix multiplication (cosine similarity) followed by top-k.
+>
+> Use it in every retrieval step. Guide: [29 - Embeddings and Vector DBs](29_embeddings-vector-db.md) sections 1-4.
 
 ```python
 class VectorIndex:
@@ -133,7 +143,9 @@ The default `HashingEmbedder` hashes character 3- to 5-grams: it works offline, 
 
 ## 6. Step 4: Answer with Citations
 
-> Ask Claude to answer only from the retrieved passages and cite them. Numbered `<source>` tags first, question last; a system prompt that forbids outside knowledge and defines the "not found" reply; skip the LLM entirely when nothing relevant was retrieved. Use it in any grounded Q&A. Guides: [27 - Prompt Engineering](27_prompt-engineering.md) sections 4, 9, 10; [26 - LLM APIs](26_llm-apis.md).
+> Ask Claude to answer only from the retrieved passages and cite them. Numbered `<source>` tags first, question last; a system prompt that forbids outside knowledge and defines the "not found" reply; skip the LLM entirely when nothing relevant was retrieved.
+>
+> Use it in any grounded Q&A. Guides: [27 - Prompt Engineering](27_prompt-engineering.md) sections 4, 9, 10; [26 - LLM APIs](26_llm-apis.md).
 
 ```python
 SYSTEM_PROMPT = (
@@ -153,7 +165,9 @@ The response returns both the answer and the list of sources (file, title, score
 
 ## 7. Step 5: Service Layer and Settings
 
-> Keep business logic out of the web layer and configuration out of the code. `ChatbotService` owns the index, embedder and LLM client and exposes `ask()` and `reindex()`; `Settings` (pydantic-settings) validates every tunable value from `CHATBOT_*` env vars. Use it in any app you want to test, reuse from a CLI / MCP server, or configure per environment. Guide: [12 - Pydantic](12_pydantic.md) section 16.
+> Keep business logic out of the web layer and configuration out of the code. `ChatbotService` owns the index, embedder and LLM client and exposes `ask()` and `reindex()`; `Settings` (pydantic-settings) validates every tunable value from `CHATBOT_*` env vars.
+>
+> Use it in any app you want to test, reuse from a CLI / MCP server, or configure per environment. Guide: [12 - Pydantic](12_pydantic.md) section 16.
 
 ```python
 class Settings(BaseSettings):
@@ -170,7 +184,9 @@ $env:CHATBOT_TOP_K = "6"          # change behaviour without touching code
 
 ## 8. Step 6: HTTP API with FastAPI and Uvicorn
 
-> Serve the chatbot over HTTP with validation and docs. FastAPI routes validate input with Pydantic, call the service and return; the service is created once per worker in `lifespan`; Uvicorn runs the app. Use it for making any Python logic available to web apps, other services and UIs. Guides: [39 - FastAPI](39_fastapi.md), [40 - Uvicorn](40_uvicorn.md).
+> Serve the chatbot over HTTP with validation and docs. FastAPI routes validate input with Pydantic, call the service and return; the service is created once per worker in `lifespan`; Uvicorn runs the app.
+>
+> Use it for making any Python logic available to web apps, other services and UIs. Guides: [39 - FastAPI](39_fastapi.md), [40 - Uvicorn](40_uvicorn.md).
 
 ```python
 @asynccontextmanager
@@ -192,7 +208,9 @@ Open `http://127.0.0.1:8000/docs` to try `/ask`, `/reindex` and `/health` in the
 
 ## 9. Step 7: Test Everything
 
-> Automated tests for each layer, with no real API calls. A fake Claude response (`fake_text_message`), `tmp_path` for the index file, FastAPI's `TestClient` with `dependency_overrides` to inject a service with a fake client. Use it before every commit and in CI. Guide: [14 - pytest](14_pytest.md) sections 5, 11, 14.
+> Automated tests for each layer, with no real API calls. A fake Claude response (`fake_text_message`), `tmp_path` for the index file, FastAPI's `TestClient` with `dependency_overrides` to inject a service with a fake client.
+>
+> Use it before every commit and in CI. Guide: [14 - pytest](14_pytest.md) sections 5, 11, 14.
 
 ```python
 def test_service_answers_with_sources(settings):
@@ -211,7 +229,9 @@ What is covered: chunk sizes and overlap, index search and save / load, prompt s
 
 ## 10. Step 8: Measure Retrieval Quality
 
-> A small eval set that checks whether the right document is retrieved for each question. `eval_data/retrieval.jsonl` holds questions and the expected source; `evals.py` computes recall@k and fails below 0.85. Use it after every change to chunking, embeddings or `top_k`. Guides: [34 - Evals](34_evals-observability.md), [30 - RAG](30_rag.md) section 17.
+> A small eval set that checks whether the right document is retrieved for each question. `eval_data/retrieval.jsonl` holds questions and the expected source; `evals.py` computes recall@k and fails below 0.85.
+>
+> Use it after every change to chunking, embeddings or `top_k`. Guides: [34 - Evals](34_evals-observability.md), [30 - RAG](30_rag.md) section 17.
 
 ```bash
 uv run python -m docs_chatbot.evals
@@ -222,7 +242,9 @@ Add harder questions (paraphrases like "money back" instead of "refund") and wat
 
 ## 11. Step 9: Containerise with Docker
 
-> A production image that runs the API with Uvicorn. Slim Python base, uv installs from the lock file (cached layer), non-root user, exec-form `CMD` so Uvicorn receives stop signals. Use it before deploying anywhere. Guides: [42 - Docker](42_docker.md), [40 - Uvicorn](40_uvicorn.md) section 18.
+> A production image that runs the API with Uvicorn. Slim Python base, uv installs from the lock file (cached layer), non-root user, exec-form `CMD` so Uvicorn receives stop signals.
+>
+> Use it before deploying anywhere. Guides: [42 - Docker](42_docker.md), [40 - Uvicorn](40_uvicorn.md) section 18.
 
 ```bash
 cd examples
@@ -235,13 +257,17 @@ curl http://127.0.0.1:8000/health
 
 ## 12. Step 10: Automate with GitHub Actions
 
-> CI that lints, tests, evaluates and builds the image on every push. `.github/workflows/examples.yml` runs `uv sync --locked`, Ruff, pytest, the retrieval eval and a Docker build; a second job tests against the newest library versions weekly to catch breaking changes early. Use it in every project in a Git repo. Guide: [43 - GitHub Actions](43_github-actions.md).
+> CI that lints, tests, evaluates and builds the image on every push. `.github/workflows/examples.yml` runs `uv sync --locked`, Ruff, pytest, the retrieval eval and a Docker build; a second job tests against the newest library versions weekly to catch breaking changes early.
+>
+> Use it in every project in a Git repo. Guide: [43 - GitHub Actions](43_github-actions.md).
 
 The weekly "latest dependencies" job is how this repo discovered that the MCP SDK v2 renamed `FastMCP`: automated tests notice API changes before readers do.
 
 ## 13. Step 11: Deploy to Azure Container Apps
 
-> Run the container in the cloud with HTTPS and scale to zero. Build the image in Azure Container Registry, create a Container App with the API key as a secret. Use it for sharing the chatbot with real users. Guide: [47 - Azure](47_azure.md) sections 8, 9, 23.
+> Run the container in the cloud with HTTPS and scale to zero. Build the image in Azure Container Registry, create a Container App with the API key as a secret.
+>
+> Use it for sharing the chatbot with real users. Guide: [47 - Azure](47_azure.md) sections 8, 9, 23.
 
 ```bash
 RG=rg-docs-chatbot; LOC=swedencentral; ACR=acrdocsbot$RANDOM; APP=docs-chatbot
@@ -263,7 +289,9 @@ Before sharing publicly, add authentication and rate limiting ([37 - AI Security
 
 ## 14. Step 12: Add a Chat UI
 
-> A web chat that calls your API. A small Streamlit app sends the question to `/ask` and shows the answer with its sources. Use it for demos and internal tools. Guide: [38 - AI UIs](38_ai-ui.md).
+> A web chat that calls your API. A small Streamlit app sends the question to `/ask` and shows the answer with its sources.
+>
+> Use it for demos and internal tools. Guide: [38 - AI UIs](38_ai-ui.md).
 
 ```python
 # ui.py  ->  uv add streamlit httpx ; uv run streamlit run ui.py
@@ -285,7 +313,9 @@ if question := st.chat_input("Ask about refunds, shipping or your account"):
 
 ## 15. Step 13: Expose It to AI Tools with MCP
 
-> Let Claude Code, Claude Desktop or VS Code search the same documents. `examples/mcp_server/server.py` wraps the index as MCP tools (`search_docs`, `list_documents`) and a prompt. Use it for giving AI assistants access to your knowledge base. Guide: [33 - MCP](33_mcp.md).
+> Let Claude Code, Claude Desktop or VS Code search the same documents. `examples/mcp_server/server.py` wraps the index as MCP tools (`search_docs`, `list_documents`) and a prompt.
+>
+> Use it for giving AI assistants access to your knowledge base. Guide: [33 - MCP](33_mcp.md).
 
 ```bash
 cd examples
@@ -295,7 +325,9 @@ claude mcp add pocket-docs -- uv --directory "$(pwd)" run python -m mcp_server.s
 
 ## 16. Upgrade Path
 
-> How to grow the capstone into a production-grade system. Replace one component at a time and re-run the tests and eval after each change. Use it when the basic version works and you want better quality, scale or safety.
+> How to grow the capstone into a production-grade system. Replace one component at a time and re-run the tests and eval after each change.
+>
+> Use it when the basic version works and you want better quality, scale or safety.
 
 | Upgrade | How | Guide |
 |---|---|---|

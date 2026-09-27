@@ -107,7 +107,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The curl flags used most with APIs. `curl [flags] URL`; flags set method, headers, body and output. Use this when you see `curl -X POST -H "..." -d '{...}' URL` and want to know what each part does.
+> The curl flags used most with APIs. `curl [flags] URL`; flags set method, headers, body and output.
+>
+> Use this when you see `curl -X POST -H "..." -d '{...}' URL` and want to know what each part does.
 
 ```text
 curl  -X POST  https://api.example.com/items  -H "Content-Type: application/json"  -d '{"name": "Lamp"}'
@@ -140,7 +142,9 @@ curl  -X POST  https://api.example.com/items  -H "Content-Type: application/json
 
 ## 1. Anatomy of a URL
 
-> The parts of a web address. Scheme, host, port, path, query and fragment, each with a job. Use it for building request URLs, reading API docs, debugging wrong endpoints.
+> The parts of a web address. Scheme, host, port, path, query and fragment, each with a job.
+>
+> Use it for building request URLs, reading API docs, debugging wrong endpoints.
 
 ```text
 https://api.example.com:443/v1/users/42/orders?status=open&limit=10#top
@@ -161,7 +165,9 @@ Special characters in queries must be URL-encoded (`space` -> `%20`); libraries 
 
 ## 2. HTTP Methods
 
-> The verb that says what the request wants to do. Each method has a meaning servers and caches rely on. Use it for choosing the method when calling or designing an endpoint.
+> The verb that says what the request wants to do. Each method has a meaning servers and caches rely on.
+>
+> Use it for choosing the method when calling or designing an endpoint.
 
 | Method | Meaning | Body? | Safe | Idempotent | Example |
 |---|---|---|---|---|---|
@@ -177,7 +183,9 @@ Special characters in queries must be URL-encoded (`space` -> `%20`); libraries 
 
 ## 3. Status Codes
 
-> The 3-digit number that says how the request went. The first digit is the category; the rest gives detail. Check it first when something fails.
+> The 3-digit number that says how the request went. The first digit is the category; the rest gives detail.
+>
+> Check it first when something fails.
 
 | Code | Name | Meaning / typical cause |
 |---|---|---|
@@ -212,7 +220,9 @@ Rule of thumb: **retry** 408, 429, 5xx (with backoff); **fix your request** for 
 
 ## 4. Headers
 
-> Key-value metadata sent with requests and responses. Case-insensitive names; the server and client use them for auth, formats, caching and limits. Use it in every authenticated API call; debugging content-type and rate-limit issues.
+> Key-value metadata sent with requests and responses. Case-insensitive names; the server and client use them for auth, formats, caching and limits.
+>
+> Use it in every authenticated API call; debugging content-type and rate-limit issues.
 
 | Header | Direction | Meaning |
 |---|---|---|
@@ -230,7 +240,9 @@ Rule of thumb: **retry** 408, 429, 5xx (with backoff); **fix your request** for 
 
 ## 5. Request and Response Bodies
 
-> The actual data carried by a request or response. Usually JSON; forms and file uploads use other content types. Use it for sending data (POST / PUT / PATCH) and reading results.
+> The actual data carried by a request or response. Usually JSON; forms and file uploads use other content types.
+>
+> Use it for sending data (POST / PUT / PATCH) and reading results.
 
 | Content-Type | Used for |
 |---|---|
@@ -242,7 +254,9 @@ Rule of thumb: **retry** 408, 429, 5xx (with backoff); **fix your request** for 
 
 ## 6. REST API Design
 
-> Conventions for designing clear, predictable APIs. Nouns for resources in URLs, HTTP methods for actions, status codes for results, JSON bodies. Use it for designing endpoints in [39 - FastAPI](39_fastapi.md).
+> Conventions for designing clear, predictable APIs. Nouns for resources in URLs, HTTP methods for actions, status codes for results, JSON bodies.
+>
+> Use it for designing endpoints in [39 - FastAPI](39_fastapi.md).
 
 | Action | Method + path | Success |
 |---|---|---|
@@ -261,7 +275,9 @@ Rule of thumb: **retry** 408, 429, 5xx (with backoff); **fix your request** for 
 
 ## 7. Authentication
 
-> Proving who is calling. A secret or token travels in a header on every request; the server checks it. Use it in every non-public API. Keep secrets in environment variables, never in code or Git.
+> Proving who is calling. A secret or token travels in a header on every request; the server checks it.
+>
+> Use it in every non-public API. Keep secrets in environment variables, never in code or Git.
 
 | Method | How it looks | Used by |
 |---|---|---|
@@ -276,7 +292,9 @@ Rule of thumb: **retry** 408, 429, 5xx (with backoff); **fix your request** for 
 
 ## 8. curl
 
-> The universal command-line HTTP client. Build requests with flags (see section 0). Use it for quick tests, reproducing bugs, examples in docs.
+> The universal command-line HTTP client. Build requests with flags (see section 0).
+>
+> Use it for quick tests, reproducing bugs, examples in docs.
 
 ```bash
 curl https://httpbin.org/get                                   # GET
@@ -296,7 +314,9 @@ Windows PowerShell: use `curl.exe` (plain `curl` is an alias for `Invoke-WebRequ
 
 ## 9. PowerShell (Invoke-RestMethod)
 
-> PowerShell's built-in HTTP client that parses JSON automatically. `Invoke-RestMethod` returns objects; `ConvertTo-Json` builds bodies. Use this when scripting API calls on Windows without escaping headaches.
+> PowerShell's built-in HTTP client that parses JSON automatically. `Invoke-RestMethod` returns objects; `ConvertTo-Json` builds bodies.
+>
+> Use this when scripting API calls on Windows without escaping headaches.
 
 ```powershell
 $r = Invoke-RestMethod https://api.github.com/users/octocat
@@ -312,7 +332,9 @@ Invoke-WebRequest https://example.com -OutFile page.html       # raw response / 
 
 ## 10. Python requests
 
-> The classic, simple HTTP library for Python. One function per method; `json=` sends JSON, `params=` builds the query, `.json()` parses the response. Use it for scripts and synchronous code.
+> The classic, simple HTTP library for Python. One function per method; `json=` sends JSON, `params=` builds the query, `.json()` parses the response.
+>
+> Use it for scripts and synchronous code.
 
 ```python
 import os
@@ -342,7 +364,9 @@ with open("report.csv", "rb") as f:
 
 ## 11. Python httpx (Sync and Async)
 
-> A modern HTTP library with the same style as requests plus async support. `httpx.Client` for sync, `httpx.AsyncClient` with `await` for async. Use it for async apps (FastAPI endpoints), many concurrent calls, HTTP/2.
+> A modern HTTP library with the same style as requests plus async support. `httpx.Client` for sync, `httpx.AsyncClient` with `await` for async.
+>
+> Use it for async apps (FastAPI endpoints), many concurrent calls, HTTP/2.
 
 ```python
 import asyncio
@@ -365,7 +389,9 @@ See [13 - Async Python](13_async-python.md).
 
 ## 12. Timeouts and Retries
 
-> Protecting your app from slow or failing servers. A timeout stops waiting; retries with exponential backoff try again after growing delays. Use it in every external call. Without a timeout a hung server can freeze your app forever.
+> Protecting your app from slow or failing servers. A timeout stops waiting; retries with exponential backoff try again after growing delays.
+>
+> Use it in every external call. Without a timeout a hung server can freeze your app forever.
 
 ```python
 import random
@@ -394,7 +420,9 @@ LLM SDKs (`anthropic`, `openai`) already retry 429 / 5xx automatically (`max_ret
 
 ## 13. Rate Limits
 
-> The maximum number of requests (or tokens) you may send per time window. The server counts your usage; over the limit it answers 429 with a `retry-after` header. Use this when batch jobs, many parallel LLM calls, public APIs.
+> The maximum number of requests (or tokens) you may send per time window. The server counts your usage; over the limit it answers 429 with a `retry-after` header.
+>
+> Use this when batch jobs, many parallel LLM calls, public APIs.
 
 - Read the limit headers (`x-ratelimit-remaining-requests`, `...-tokens`) and slow down before hitting 0.
 - Limit concurrency: `asyncio.Semaphore(5)` allows only 5 requests at once.
@@ -403,7 +431,9 @@ LLM SDKs (`anthropic`, `openai`) already retry 429 / 5xx automatically (`max_ret
 
 ## 14. Pagination
 
-> Getting large result lists in pages. Offset (`?page=2&limit=50`) or cursor (`?after=<id>`); the response tells you how to get the next page. Use it in any list endpoint that can return many items.
+> Getting large result lists in pages. Offset (`?page=2&limit=50`) or cursor (`?after=<id>`); the response tells you how to get the next page.
+>
+> Use it in any list endpoint that can return many items.
 
 ```python
 items, cursor = [], None
@@ -420,7 +450,9 @@ while True:
 
 ## 15. Streaming (SSE)
 
-> The server sends the response in small chunks as they are produced, over one open connection. Server-Sent Events: `Content-Type: text/event-stream`, lines like `event: ...` and `data: {...}`, separated by blank lines. Use it for LLM chat UIs (show tokens as they arrive), progress updates, long-running responses.
+> The server sends the response in small chunks as they are produced, over one open connection. Server-Sent Events: `Content-Type: text/event-stream`, lines like `event: ...` and `data: {...}`, separated by blank lines.
+>
+> Use it for LLM chat UIs (show tokens as they arrive), progress updates, long-running responses.
 
 ```text
 event: content_block_delta
@@ -441,7 +473,9 @@ In practice use the SDK's streaming helper (see [26 - LLM APIs](26_llm-apis.md))
 
 ## 16. Webhooks
 
-> Reverse API calls: a service sends an HTTP POST to YOUR URL when an event happens. You register a URL; the service posts JSON; you verify its signature and reply 2xx quickly. Use it for payment confirmations, GitHub push events, finished batch jobs.
+> Reverse API calls: a service sends an HTTP POST to YOUR URL when an event happens. You register a URL; the service posts JSON; you verify its signature and reply 2xx quickly.
+>
+> Use it for payment confirmations, GitHub push events, finished batch jobs.
 
 - Verify the signature header (HMAC with a shared secret) before trusting the payload.
 - Respond fast (200) and do heavy work in a background job ([41 - Redis and Queues](41_redis-queues.md)).
@@ -450,19 +484,25 @@ In practice use the SDK's streaming helper (see [26 - LLM APIs](26_llm-apis.md))
 
 ## 17. CORS
 
-> A browser security rule: a page from domain A may only call an API on domain B if B allows it. The browser sends an `Origin` header (and sometimes an OPTIONS preflight); the API answers with `Access-Control-Allow-Origin`. Use this when a frontend on `localhost:3000` calls your API on `localhost:8000` and the browser shows "blocked by CORS policy".
+> A browser security rule: a page from domain A may only call an API on domain B if B allows it. The browser sends an `Origin` header (and sometimes an OPTIONS preflight); the API answers with `Access-Control-Allow-Origin`.
+>
+> Use this when a frontend on `localhost:3000` calls your API on `localhost:8000` and the browser shows "blocked by CORS policy".
 
 CORS only affects browsers; curl and Python are never blocked. Fix it on the **server** (FastAPI `CORSMiddleware`), not in the frontend.
 
 ## 18. HTTPS and TLS
 
-> HTTP encrypted with TLS so nobody in between can read or change the data. The server presents a certificate proving its identity; client and server agree on encryption keys. Use it always for anything public or carrying secrets. Setup: [44 - Nginx and HTTPS](44_nginx-https.md).
+> HTTP encrypted with TLS so nobody in between can read or change the data. The server presents a certificate proving its identity; client and server agree on encryption keys.
+>
+> Use it always for anything public or carrying secrets. Setup: [44 - Nginx and HTTPS](44_nginx-https.md).
 
 `SSL: CERTIFICATE_VERIFY_FAILED` means the certificate is not trusted (self-signed, corporate proxy, expired). Fix the certificate / CA bundle; do not disable verification (`verify=False`) in production.
 
 ## 19. REST vs GraphQL vs gRPC vs WebSocket
 
-> Other API styles you will meet. Each trades simplicity for a specific strength. Use it for knowing which one a service uses and why.
+> Other API styles you will meet. Each trades simplicity for a specific strength.
+>
+> Use it for knowing which one a service uses and why.
 
 | Style | How | Best for |
 |---|---|---|
@@ -492,7 +532,9 @@ CORS only affects browsers; curl and Python are never blocked. Fix it on the **s
 
 ## 21. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Status code only
 

@@ -125,7 +125,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Tokens
 
-> The units an LLM reads and writes. A tokenizer splits text into pieces from a fixed vocabulary (common words are one token, rare words several). Use it for estimating cost, fitting text into the context window, understanding odd behaviour (spelling, counting letters).
+> The units an LLM reads and writes. A tokenizer splits text into pieces from a fixed vocabulary (common words are one token, rare words several).
+>
+> Use it for estimating cost, fitting text into the context window, understanding odd behaviour (spelling, counting letters).
 
 ```text
 "Tokenization is surprisingly useful!"
@@ -143,7 +145,9 @@ Other languages, numbers and code usually need more tokens per word. Each provid
 
 ## 2. Next-Token Prediction
 
-> The one operation an LLM performs. Given the tokens so far, output a probability for every token in the vocabulary; pick one; append; repeat. Use it for understanding streaming, stop reasons and why output length drives cost and time.
+> The one operation an LLM performs. Given the tokens so far, output a probability for every token in the vocabulary; pick one; append; repeat.
+>
+> Use it for understanding streaming, stop reasons and why output length drives cost and time.
 
 - Generation is **sequential**: output token 500 needs tokens 1 to 499 first. Long outputs take longer.
 - **Streaming** simply shows each token as soon as it is picked.
@@ -152,7 +156,9 @@ Other languages, numbers and code usually need more tokens per word. Each provid
 
 ## 3. The Transformer and Attention (Intuition)
 
-> The neural network architecture behind all modern LLMs (2017, "Attention Is All You Need"). Each token looks at every other token in the context and decides which ones matter for it (**attention**); many stacked layers refine the meaning step by step. Use it for knowing why context matters and why long contexts cost more.
+> The neural network architecture behind all modern LLMs (2017, "Attention Is All You Need"). Each token looks at every other token in the context and decides which ones matter for it (**attention**); many stacked layers refine the meaning step by step.
+>
+> Use it for knowing why context matters and why long contexts cost more.
 
 ```text
 "The trophy did not fit in the suitcase because it was too big."
@@ -166,7 +172,9 @@ Attention for "it" -> strongly on "trophy" (big thing that does not fit), weakly
 
 ## 4. How LLMs Are Trained
 
-> The stages that turn a random network into a helpful assistant. Pretraining for knowledge and language; post-training for following instructions, helpfulness and safety. Use it for understanding knowledge cutoffs, why models refuse some requests, and what fine-tuning can and cannot do.
+> The stages that turn a random network into a helpful assistant. Pretraining for knowledge and language; post-training for following instructions, helpfulness and safety.
+>
+> Use it for understanding knowledge cutoffs, why models refuse some requests, and what fine-tuning can and cannot do.
 
 ```text
 1. PRETRAINING         trillions of tokens of text and code     -> "base model": great at continuing text,
@@ -185,7 +193,9 @@ Attention for "it" -> strongly on "trophy" (big thing that does not fit), weakly
 
 ## 5. Context Window
 
-> The maximum number of tokens the model can handle in one request (input + output). Everything the model "sees" must fit: system prompt, tools, history, documents, and the answer it writes. Use it for designing chat history handling, RAG chunk counts and document processing.
+> The maximum number of tokens the model can handle in one request (input + output). Everything the model "sees" must fit: system prompt, tools, history, documents, and the answer it writes.
+>
+> Use it for designing chat history handling, RAG chunk counts and document processing.
 
 ```text
 +------------------------------ context window -------------------------------+
@@ -200,7 +210,9 @@ Attention for "it" -> strongly on "trophy" (big thing that does not fit), weakly
 
 ## 6. Messages and Roles
 
-> How chat APIs structure the context. A list of messages, each with a role; the system prompt sets behaviour for the whole conversation. Use it in every API call and chat app.
+> How chat APIs structure the context. A list of messages, each with a role; the system prompt sets behaviour for the whole conversation.
+>
+> Use it in every API call and chat app.
 
 | Role | Contains |
 |---|---|
@@ -218,7 +230,9 @@ user:      A-1042                             <- the model sees ALL of this ever
 
 ## 7. Sampling: Temperature, top_p, top_k
 
-> How the next token is chosen from the probabilities. Temperature reshapes the distribution; top_p / top_k cut off unlikely tokens before sampling. Use it for tuning consistency vs variety (on models and APIs that expose these settings).
+> How the next token is chosen from the probabilities. Temperature reshapes the distribution; top_p / top_k cut off unlikely tokens before sampling.
+>
+> Use it for tuning consistency vs variety (on models and APIs that expose these settings).
 
 ```text
 Probabilities for next word:   "Paris" 0.70   "France" 0.15   "a" 0.10   "banana" 0.05
@@ -238,7 +252,9 @@ Some newer reasoning models fix these internally and do not accept them; you ste
 
 ## 8. Reasoning / Thinking Models
 
-> Models that generate internal reasoning before the final answer. The model spends extra tokens working through the problem step by step; you can often control how much (effort / thinking settings). Use it for maths, coding, planning, multi-step analysis, agents. Not needed for simple lookups or classification.
+> Models that generate internal reasoning before the final answer. The model spends extra tokens working through the problem step by step; you can often control how much (effort / thinking settings).
+>
+> Use it for maths, coding, planning, multi-step analysis, agents. Not needed for simple lookups or classification.
 
 - More thinking = usually better answers on hard problems, but more tokens (cost) and more latency.
 - You pay for thinking tokens even if they are hidden or summarised.
@@ -246,7 +262,9 @@ Some newer reasoning models fix these internally and do not accept them; you ste
 
 ## 9. Embeddings (Meaning as Numbers)
 
-> A vector (list of numbers) that represents the meaning of a text. An embedding model maps text to a point in a high-dimensional space; similar meanings land close together. Use it for semantic search, RAG retrieval, clustering, recommendations, deduplication.
+> A vector (list of numbers) that represents the meaning of a text. An embedding model maps text to a point in a high-dimensional space; similar meanings land close together.
+>
+> Use it for semantic search, RAG retrieval, clustering, recommendations, deduplication.
 
 ```text
 "How do I reset my password?"   -> [0.12, -0.40, 0.88, ...]  \
@@ -258,13 +276,17 @@ Embedding models are separate, smaller models from chat LLMs. Details: [29 - Emb
 
 ## 10. Multimodal Models
 
-> Models that accept images, PDFs, audio or video as input (and some that produce images / audio). Non-text inputs are converted into tokens / embeddings the model can attend to alongside text. Use it for reading invoices and screenshots, charts, handwriting, diagrams, voice apps.
+> Models that accept images, PDFs, audio or video as input (and some that produce images / audio). Non-text inputs are converted into tokens / embeddings the model can attend to alongside text.
+>
+> Use it for reading invoices and screenshots, charts, handwriting, diagrams, voice apps.
 
 Images and PDF pages cost tokens too (roughly proportional to resolution / page count).
 
 ## 11. Hallucinations and Grounding
 
-> Fluent, confident output that is false or made up (fake citations, wrong numbers, invented APIs). The model generates plausible text; without a source, plausible can be wrong. Use it for designing any app where correctness matters.
+> Fluent, confident output that is false or made up (fake citations, wrong numbers, invented APIs). The model generates plausible text; without a source, plausible can be wrong.
+>
+> Use it for designing any app where correctness matters.
 
 | Technique | Why it helps |
 |---|---|
@@ -278,7 +300,9 @@ Images and PDF pages cost tokens too (roughly proportional to resolution / page 
 
 ## 12. What LLMs Are Good and Bad At
 
-> Realistic expectations. Strong at language and pattern tasks; weak where exactness, fresh facts or hidden state matter. Use this when deciding whether an LLM is the right tool, and where to add tools or code.
+> Realistic expectations. Strong at language and pattern tasks; weak where exactness, fresh facts or hidden state matter.
+>
+> Use this when deciding whether an LLM is the right tool, and where to add tools or code.
 
 | Good at | Weak at (add tools / code) |
 |---|---|
@@ -292,7 +316,9 @@ Images and PDF pages cost tokens too (roughly proportional to resolution / page 
 
 ## 13. Cost and Latency
 
-> How LLM usage is priced and what makes it slow. You pay per **input token** and per **output token** (output is several times more expensive); latency grows with output length and reasoning. Use it for budgeting, choosing models, optimising apps.
+> How LLM usage is priced and what makes it slow. You pay per **input token** and per **output token** (output is several times more expensive); latency grows with output length and reasoning.
+>
+> Use it for budgeting, choosing models, optimising apps.
 
 ```text
 cost of one call = input_tokens x input_price + output_tokens x output_price   (prices per 1M tokens)
@@ -313,7 +339,9 @@ Example: 3,000 input + 500 output tokens at $5 / $25 per 1M
 
 ## 14. Closed vs Open Models
 
-> Hosted proprietary models vs models whose weights you can download. Closed models are used through a provider's API; open-weight models run on your hardware or a host of your choice. Use it for balancing quality, privacy, cost and control.
+> Hosted proprietary models vs models whose weights you can download. Closed models are used through a provider's API; open-weight models run on your hardware or a host of your choice.
+>
+> Use it for balancing quality, privacy, cost and control.
 
 | | Closed / hosted (Claude, GPT, Gemini) | Open-weight (Llama, Qwen, Mistral, Gemma, DeepSeek) |
 |---|---|---|
@@ -326,7 +354,9 @@ Example: 3,000 input + 500 output tokens at $5 / $25 per 1M
 
 ## 15. Choosing a Model
 
-> Picking the right model for each task. Start with a strong model to prove the task works, measure with evals, then optimise cost / latency. Use it in every new feature.
+> Picking the right model for each task. Start with a strong model to prove the task works, measure with evals, then optimise cost / latency.
+>
+> Use it in every new feature.
 
 1. Prototype with a **top-tier model** so model weakness is not the problem.
 2. Build a small **eval set** ([34](34_evals-observability.md)) with real examples.
@@ -342,7 +372,9 @@ Example: 3,000 input + 500 output tokens at $5 / $25 per 1M
 
 ## 16. Ways to Adapt a Model to Your Task
 
-> The options for making a general model good at your specific job, from cheapest to most effort. Most problems are solved by the first three; fine-tuning is for specific cases. Use it for deciding how to improve quality.
+> The options for making a general model good at your specific job, from cheapest to most effort. Most problems are solved by the first three; fine-tuning is for specific cases.
+>
+> Use it for deciding how to improve quality.
 
 ```text
 effort / cost  ->
@@ -363,7 +395,9 @@ effort / cost  ->
 
 ## 17. LLM Application Patterns
 
-> The common shapes of LLM apps, from simple to complex. Add complexity only when the simpler pattern is not enough. Use it for designing a new AI feature.
+> The common shapes of LLM apps, from simple to complex. Add complexity only when the simpler pattern is not enough.
+>
+> Use it for designing a new AI feature.
 
 | Pattern | How it works | Example |
 |---|---|---|
@@ -378,7 +412,9 @@ effort / cost  ->
 
 ## 18. Glossary of AI Buzzwords
 
-> Quick definitions of terms you will hear. One line each; follow the links for depth. Use it for reading docs, job posts, blog posts.
+> Quick definitions of terms you will hear. One line each; follow the links for depth.
+>
+> Use it for reading docs, job posts, blog posts.
 
 | Term | Meaning |
 |---|---|
@@ -407,7 +443,9 @@ effort / cost  ->
 
 ## 19. Common Misconceptions
 
-> Beliefs that lead to bad designs. Each has a short correction. Use it for sanity check when an AI feature misbehaves.
+> Beliefs that lead to bad designs. Each has a short correction.
+>
+> Use it for sanity check when an AI feature misbehaves.
 
 | Misconception | Reality |
 |---|---|
@@ -422,7 +460,9 @@ effort / cost  ->
 
 ## 20. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Estimate a bill
 

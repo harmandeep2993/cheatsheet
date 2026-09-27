@@ -79,7 +79,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The meaning of the arguments and parameters used in the pandas calls below. Explains how a call is built, then lists each parameter with its meaning and example. Use this when you see `df.drop_duplicates(subset=["A"], keep="first")` and want to know what each argument does.
+> The meaning of the arguments and parameters used in the pandas calls below. Explains how a call is built, then lists each parameter with its meaning and example.
+>
+> Use this when you see `df.drop_duplicates(subset=["A"], keep="first")` and want to know what each argument does.
 
 ### How a function call is built
 
@@ -130,7 +132,9 @@ df.sort_values("salary", ascending=False)
 
 ## 1. Install and Import
 
-> Installing and importing pandas. `pip install pandas`, then `import pandas as pd` by convention. Use it in any work with tabular data: CSV, Excel, SQL results.
+> Installing and importing pandas. `pip install pandas`, then `import pandas as pd` by convention.
+>
+> Use it in any work with tabular data: CSV, Excel, SQL results.
 
 ```powershell
 pip install pandas numpy openpyxl       # terminal (openpyxl for Excel)
@@ -147,7 +151,9 @@ import numpy as np
 
 ## 2. Create Series
 
-> A single labelled column of data. `pd.Series(list or dict)`; one column of a DataFrame is a Series. Use it for working with one column, or results of a groupby on one column.
+> A single labelled column of data. `pd.Series(list or dict)`; one column of a DataFrame is a Series.
+>
+> Use it for working with one column, or results of a groupby on one column.
 
 A Series is a single column with an index.
 
@@ -162,7 +168,9 @@ s.values                # values as array
 
 ## 3. Create DataFrames
 
-> A table of rows and columns. From a dict of columns, a list of rows, or a NumPy array. Use it for test data, or building a table from results you collected in Python.
+> A table of rows and columns. From a dict of columns, a list of rows, or a NumPy array.
+>
+> Use it for test data, or building a table from results you collected in Python.
 
 A DataFrame is a table of rows and columns.
 
@@ -174,7 +182,9 @@ df = pd.DataFrame(np.random.rand(5, 3), columns=["A", "B", "C"])        # random
 
 ## 4. Read and Write Files
 
-> Loading data from files / databases and saving it back. `pd.read_*` functions create a DataFrame; `df.to_*` methods write it. Use it for the start and end of almost every analysis.
+> Loading data from files / databases and saving it back. `pd.read_*` functions create a DataFrame; `df.to_*` methods write it.
+>
+> Use it for the start and end of almost every analysis.
 
 ```python
 # Read
@@ -193,7 +203,9 @@ df.to_sql("table", connection, if_exists="replace", index=False)
 
 ## 5. Inspect Data
 
-> First look at a dataset. `head`, `info`, `describe`, `value_counts` summarise structure and content. Use it right after loading data: check columns, types, missing values, odd values.
+> First look at a dataset. `head`, `info`, `describe`, `value_counts` summarise structure and content.
+>
+> Use it right after loading data: check columns, types, missing values, odd values.
 
 ```python
 df.head()               # first 5 rows
@@ -215,7 +227,9 @@ df["A"].value_counts(normalize=True)   # share of each value
 
 ## 6. Select Data
 
-> Picking columns, rows and single cells. `df["col"]` for columns; `loc` by label, `iloc` by position. Use it for focusing on the columns you need, or reading a specific value.
+> Picking columns, rows and single cells. `df["col"]` for columns; `loc` by label, `iloc` by position.
+>
+> Use it for focusing on the columns you need, or reading a specific value.
 
 ```python
 df["A"]                 # one column (Series)
@@ -234,7 +248,9 @@ df.iloc[0:2, 0:2]       # rows 0 to 1 (end EXCLUDED), by position
 
 ## 7. Filter Rows
 
-> Keeping only rows that match conditions. Boolean masks inside `df[...]`, combined with `&`, `|`, `~`; or `df.query()`. Use it to answer questions like "Customers from Berlin with orders > 100", removing invalid rows.
+> Keeping only rows that match conditions. Boolean masks inside `df[...]`, combined with `&`, `|`, `~`; or `df.query()`.
+>
+> Use it to answer questions like "Customers from Berlin with orders > 100", removing invalid rows.
 
 ```python
 df[df["A"] > 2]                             # one condition
@@ -249,7 +265,9 @@ df.loc[df["A"] > 2, ["A", "B"]]             # filter and select columns
 
 ## 8. Add, Change and Remove
 
-> Creating new columns, renaming, dropping, replacing values. Assign to `df["new"]`, `np.where` for conditional values, `rename` / `drop` / `replace`. Use it for feature engineering, cleaning column names, removing unused columns.
+> Creating new columns, renaming, dropping, replacing values. Assign to `df["new"]`, `np.where` for conditional values, `rename` / `drop` / `replace`.
+>
+> Use it for feature engineering, cleaning column names, removing unused columns.
 
 ```python
 df["C"] = df["A"] + df["B"]                 # new column
@@ -266,7 +284,9 @@ Most methods return a new DataFrame. Assign the result back (`df = df.drop(...)`
 
 ## 9. Missing Values
 
-> Finding and handling empty values. `isna` to detect, `dropna` to remove, `fillna` / `ffill` to fill. Use it in almost every real dataset; must be handled before statistics or models.
+> Finding and handling empty values. `isna` to detect, `dropna` to remove, `fillna` / `ffill` to fill.
+>
+> Use it in almost every real dataset; must be handled before statistics or models.
 
 ```python
 df.isna()               # True where missing
@@ -280,7 +300,9 @@ df.ffill()              # fill with previous value
 
 ## 10. Duplicates
 
-> Finding and removing repeated rows. `duplicated` flags repeats; `drop_duplicates` removes them. Use it for data merged from several sources, or exports that repeat records.
+> Finding and removing repeated rows. `duplicated` flags repeats; `drop_duplicates` removes them.
+>
+> Use it for data merged from several sources, or exports that repeat records.
 
 ```python
 df.duplicated().sum()                       # number of duplicate rows
@@ -290,7 +312,9 @@ df = df.drop_duplicates(subset=["A"], keep="first")
 
 ## 11. Data Types
 
-> Converting columns to the right type. `astype` for direct conversion; `pd.to_numeric(errors="coerce")` for dirty data. Use it for numbers read as text, IDs read as numbers, saving memory with `category`.
+> Converting columns to the right type. `astype` for direct conversion; `pd.to_numeric(errors="coerce")` for dirty data.
+>
+> Use it for numbers read as text, IDs read as numbers, saving memory with `category`.
 
 ```python
 df["A"] = df["A"].astype(int)
@@ -300,7 +324,9 @@ df["A"] = pd.to_numeric(df["A"], errors="coerce")   # invalid -> NaN
 
 ## 12. String Operations
 
-> Text operations on a whole column. The `.str` accessor applies string methods to every value. Use it for cleaning names (strip, lower), searching text, splitting full names.
+> Text operations on a whole column. The `.str` accessor applies string methods to every value.
+>
+> Use it for cleaning names (strip, lower), searching text, splitting full names.
 
 ```python
 df["Name"].str.lower()
@@ -314,7 +340,9 @@ df["Name"].str.len()
 
 ## 13. Dates
 
-> Working with date columns. `pd.to_datetime` parses text; the `.dt` accessor gives year, month, weekday. Use it for time analysis: sales per month, filtering a date range, weekday patterns.
+> Working with date columns. `pd.to_datetime` parses text; the `.dt` accessor gives year, month, weekday.
+>
+> Use it for time analysis: sales per month, filtering a date range, weekday patterns.
 
 ```python
 df["Date"] = pd.to_datetime(df["Date"])
@@ -326,7 +354,9 @@ df[df["Date"] >= "2024-01-01"]
 
 ## 14. Apply Functions
 
-> Running your own function on values, rows or columns. `apply` with a function or lambda; `map` with a dict for lookups. Use it for custom logic not covered by built-in methods (use vectorised methods first, they are faster).
+> Running your own function on values, rows or columns. `apply` with a function or lambda; `map` with a dict for lookups.
+>
+> Use it for custom logic not covered by built-in methods (use vectorised methods first, they are faster).
 
 ```python
 df["A"].apply(lambda x: x * 2)              # function on each value
@@ -337,7 +367,9 @@ df.apply(np.sum, axis=1)                    # per row
 
 ## 15. Sort
 
-> Ordering rows. `sort_values` by one or more columns; `nlargest` / `nsmallest` for top N. Use it for rankings, top 10 products, making output readable.
+> Ordering rows. `sort_values` by one or more columns; `nlargest` / `nsmallest` for top N.
+>
+> Use it for rankings, top 10 products, making output readable.
 
 ```python
 df.sort_values("A")                         # ascending
@@ -350,7 +382,9 @@ df.nsmallest(5, "A")                        # bottom 5
 
 ## 16. Statistics
 
-> Summary statistics for columns. Methods like `mean`, `median`, `std`, `corr`, `quantile` on DataFrames or Series. Use it for quick numeric summaries and checking relationships between columns.
+> Summary statistics for columns. Methods like `mean`, `median`, `std`, `corr`, `quantile` on DataFrames or Series.
+>
+> Use it for quick numeric summaries and checking relationships between columns.
 
 ```python
 df.sum()                # sum
@@ -365,7 +399,9 @@ df["A"].quantile(0.9)   # 90th percentile
 
 ## 17. Groupby Aggregation
 
-> Summarising data per group (split - apply - combine). `groupby(column)` splits rows into groups, then an aggregation summarises each. Use it to answer questions like "Average salary per department", "total sales per region and month".
+> Summarising data per group (split - apply - combine). `groupby(column)` splits rows into groups, then an aggregation summarises each.
+>
+> Use it to answer questions like "Average salary per department", "total sales per region and month".
 
 Split rows into groups, then summarize each group.
 
@@ -400,7 +436,9 @@ Docs: [DataFrame.groupby](https://pandas.pydata.org/docs/reference/api/pandas.Da
 
 ## 18. Pivot Tables
 
-> Spreadsheet-style summary tables. `pivot_table` puts one category on rows, another on columns, aggregated values in cells. Use it for reports comparing a metric across two dimensions (department x gender).
+> Spreadsheet-style summary tables. `pivot_table` puts one category on rows, another on columns, aggregated values in cells.
+>
+> Use it for reports comparing a metric across two dimensions (department x gender).
 
 Spreadsheet-style summary.
 
@@ -430,7 +468,9 @@ Docs: [pandas.pivot_table](https://pandas.pydata.org/docs/reference/api/pandas.p
 
 ## 19. Crosstab
 
-> Frequency tables of two categories. `pd.crosstab(a, b)` counts combinations; `normalize` gives shares. Use it to answer questions like "How many of each gender in each department?", survey analysis.
+> Frequency tables of two categories. `pd.crosstab(a, b)` counts combinations; `normalize` gives shares.
+>
+> Use it to answer questions like "How many of each gender in each department?", survey analysis.
 
 Count how often combinations of two categories occur.
 
@@ -442,7 +482,9 @@ pd.crosstab(df["Department"], df["Gender"], margins=True)        # add totals
 
 ## 20. Merge, Join and Concat
 
-> Combining tables side by side (by key) or stacked. `merge` joins on key columns like SQL; `concat` stacks rows or columns. Use it for adding customer info to orders (merge), combining monthly files (concat).
+> Combining tables side by side (by key) or stacked. `merge` joins on key columns like SQL; `concat` stacks rows or columns.
+>
+> Use it for adding customer info to orders (merge), combining monthly files (concat).
 
 ```python
 pd.merge(df1, df2, on="key")                    # inner join (default)
@@ -466,7 +508,9 @@ pd.concat([df1, df2], ignore_index=True)        # renumber index
 
 ## 21. Index Operations
 
-> Moving columns in and out of the row index. `set_index` makes a column the index; `reset_index` turns it back into a column. Use it after `groupby` (to get a normal table back), or for fast lookups by ID.
+> Moving columns in and out of the row index. `set_index` makes a column the index; `reset_index` turns it back into a column.
+>
+> Use it after `groupby` (to get a normal table back), or for fast lookups by ID.
 
 ```python
 df = df.set_index("id")                 # column -> index
@@ -476,7 +520,9 @@ df = df.reset_index(drop=True)          # discard old index
 
 ## 22. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Missing values
 

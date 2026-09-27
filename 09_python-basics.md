@@ -84,7 +84,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Run Python
 
-> Ways to start Python code. Interactive shell for experiments, `python file.py` for scripts, `-m` for modules. Use it for quick test in the shell; real work in files.
+> Ways to start Python code. Interactive shell for experiments, `python file.py` for scripts, `-m` for modules.
+>
+> Use it for quick test in the shell; real work in files.
 
 ```powershell
 python                          # interactive shell (exit() or Ctrl+Z Enter to leave)
@@ -95,7 +97,9 @@ python -c "print(1 + 1)"        # run one line
 
 ## 2. Variables and Data Types
 
-> Names that hold values, and the basic value types. Assign with `=`; Python figures out the type (str, int, float, bool, None). Use it everywhere; know the types to avoid errors like adding text to a number.
+> Names that hold values, and the basic value types. Assign with `=`; Python figures out the type (str, int, float, bool, None).
+>
+> Use it everywhere; know the types to avoid errors like adding text to a number.
 
 ```python
 name = "Harman"                 # str
@@ -116,7 +120,9 @@ Falsy values: `False`, `None`, `0`, `0.0`, `""`, `[]`, `{}`, `set()`. Everything
 
 ## 3. Numbers and Operators
 
-> Arithmetic and comparison. Operators `+ - * / // % **`, comparisons return True / False. Use it for calculations, conditions, loop counters.
+> Arithmetic and comparison. Operators `+ - * / // % **`, comparisons return True / False.
+>
+> Use it for calculations, conditions, loop counters.
 
 ```python
 7 + 2 ; 7 - 2 ; 7 * 2           # 9, 5, 14
@@ -134,7 +140,9 @@ Comparison: `==  !=  >  <  >=  <=`. Logic: `and  or  not`. Identity: `is`, `is n
 
 ## 4. Strings
 
-> Working with text. Strings are sequences: index / slice them and use methods like `split`, `replace`, `strip`. Use it for cleaning input, parsing file names, building messages.
+> Working with text. Strings are sequences: index / slice them and use methods like `split`, `replace`, `strip`.
+>
+> Use it for cleaning input, parsing file names, building messages.
 
 ```python
 s = "Hello World"
@@ -162,7 +170,9 @@ path = r"C:\new\folder"         # raw string: backslashes kept
 
 ## 5. f-Strings and Formatting
 
-> Putting values into text with formatting. Prefix with `f` and put expressions in `{}`; add `:` format codes. Use it for printing results, log messages, reports (decimals, percent, thousands separators).
+> Putting values into text with formatting. Prefix with `f` and put expressions in `{}`; add `:` format codes.
+>
+> Use it for printing results, log messages, reports (decimals, percent, thousands separators).
 
 ```python
 name, score = "Ana", 0.8765
@@ -178,7 +188,9 @@ f"{2 + 3}"                      # expressions allowed
 
 ## 6. Lists
 
-> Ordered, changeable collections. `[a, b, c]`; add with `append`, remove with `remove` / `pop`, access by index. Use it in any sequence of items: rows, file names, results you collect in a loop.
+> Ordered, changeable collections. `[a, b, c]`; add with `append`, remove with `remove` / `pop`, access by index.
+>
+> Use it in any sequence of items: rows, file names, results you collect in a loop.
 
 Ordered, changeable, allows duplicates.
 
@@ -207,7 +219,9 @@ first, *rest = [1, 2, 3]        # unpacking: first=1, rest=[2, 3]
 
 ## 7. Tuples
 
-> Ordered collections that cannot change. `(a, b)`; often unpacked into variables. Use it for fixed groups like coordinates, or returning several values from a function.
+> Ordered collections that cannot change. `(a, b)`; often unpacked into variables.
+>
+> Use it for fixed groups like coordinates, or returning several values from a function.
 
 Ordered, **unchangeable**.
 
@@ -219,7 +233,9 @@ single = (5,)                   # one-element tuple needs a comma
 
 ## 8. Dictionaries
 
-> Key-value lookup tables. `{"key": value}`; access by key, `.get()` for a safe default. Use it for config settings, JSON data, counting items, mapping codes to names.
+> Key-value lookup tables. `{"key": value}`; access by key, `.get()` for a safe default.
+>
+> Use it for config settings, JSON data, counting items, mapping codes to names.
 
 Key-value pairs.
 
@@ -245,7 +261,9 @@ counts[word] = counts.get(word, 0) + 1   # counting pattern
 
 ## 9. Sets
 
-> Collections of unique values. `{a, b}` or `set(list)`; supports union, intersection, difference. Use it for removing duplicates, fast "is x in here?" checks, comparing two lists.
+> Collections of unique values. `{a, b}` or `set(list)`; supports union, intersection, difference.
+>
+> Use it for removing duplicates, fast "is x in here?" checks, comparing two lists.
 
 Unordered, unique values.
 
@@ -261,7 +279,9 @@ empty = set()                   # {} is an empty dict, not a set
 
 ## 10. Conditions
 
-> Running code only when a condition is true. `if` / `elif` / `else`; `match` for many fixed cases. Use it for validating input, choosing behaviour based on a value.
+> Running code only when a condition is true. `if` / `elif` / `else`; `match` for many fixed cases.
+>
+> Use it for validating input, choosing behaviour based on a value.
 
 ```python
 if age >= 18:
@@ -288,7 +308,9 @@ match command:                                  # Python 3.10+
 
 ## 11. Loops
 
-> Repeating code. `for` over any collection; `while` until a condition changes; `break` / `continue` to control it. Use it for processing each file, row or item; retrying until something succeeds.
+> Repeating code. `for` over any collection; `while` until a condition changes; `break` / `continue` to control it.
+>
+> Use it for processing each file, row or item; retrying until something succeeds.
 
 ```python
 for item in ["a", "b", "c"]:
@@ -317,7 +339,9 @@ for x in nums:
 
 ## 12. Comprehensions
 
-> One-line way to build lists, dicts and sets. `[expression for item in items if condition]`. Use it for transforming or filtering a collection; replaces a 3-line loop with `append`.
+> One-line way to build lists, dicts and sets. `[expression for item in items if condition]`.
+>
+> Use it for transforming or filtering a collection; replaces a 3-line loop with `append`.
 
 ```python
 [x * 2 for x in nums]                       # list
@@ -331,7 +355,9 @@ sum(x * x for x in nums)                    # generator (no list created)
 
 ## 13. Functions
 
-> Reusable, named blocks of code. `def name(params):` with `return`; defaults, `*args` and `**kwargs` for flexible input. Use it whenever you repeat code or a block does one clear job.
+> Reusable, named blocks of code. `def name(params):` with `return`; defaults, `*args` and `**kwargs` for flexible input.
+>
+> Use it whenever you repeat code or a block does one clear job.
 
 ```python
 def greet(name, greeting="Hello"):
@@ -358,7 +384,9 @@ Never use a mutable default: `def f(items=[])` is shared between calls. Use `ite
 
 ## 14. Lambda, map, filter, sorted
 
-> Small anonymous functions and functional helpers. `lambda x: ...` passed to `sorted`, `map`, `filter`, `max`. Use it for sort by a field, pick the max by a key; short one-off logic.
+> Small anonymous functions and functional helpers. `lambda x: ...` passed to `sorted`, `map`, `filter`, `max`.
+>
+> Use it for sort by a field, pick the max by a key; short one-off logic.
 
 ```python
 square = lambda x: x ** 2
@@ -372,7 +400,9 @@ any(x > 10 for x in nums) ; all(x > 0 for x in nums)
 
 ## 15. Error Handling
 
-> Handling errors without crashing. `try` risky code, `except` specific errors, `finally` for cleanup; `raise` your own. Use it for reading files, parsing user input, calling APIs: things that can fail at runtime.
+> Handling errors without crashing. `try` risky code, `except` specific errors, `finally` for cleanup; `raise` your own.
+>
+> Use it for reading files, parsing user input, calling APIs: things that can fail at runtime.
 
 ```python
 try:
@@ -396,7 +426,9 @@ Always catch a specific exception type, never a bare `except:`.
 
 ## 16. Files
 
-> Reading and writing text files. `with open(...) as f:` closes the file automatically. Use it for reading config / data files, writing results or logs.
+> Reading and writing text files. `with open(...) as f:` closes the file automatically.
+>
+> Use it for reading config / data files, writing results or logs.
 
 ```python
 with open("notes.txt", "r", encoding="utf-8") as f:
@@ -415,7 +447,9 @@ with open("out.txt", "w", encoding="utf-8") as f:   # "w" overwrite, "a" append
 
 ## 17. Paths (pathlib)
 
-> Working with file paths in a way that works on Windows and Linux. `Path` objects joined with `/`; methods to read, write, list and check files. Use it in any file handling; avoids hard-coded `\` vs `/` problems.
+> Working with file paths in a way that works on Windows and Linux. `Path` objects joined with `/`; methods to read, write, list and check files.
+>
+> Use it in any file handling; avoids hard-coded `\` vs `/` problems.
 
 ```python
 from pathlib import Path
@@ -434,7 +468,9 @@ Path(__file__).parent                   # folder of the current script
 
 ## 18. JSON and CSV
 
-> Reading and writing JSON and CSV with the standard library. `json.load` / `json.dump`; `csv.DictReader` for rows as dicts. Use it for API responses and config (JSON), small tabular files when pandas is not needed (CSV).
+> Reading and writing JSON and CSV with the standard library. `json.load` / `json.dump`; `csv.DictReader` for rows as dicts.
+>
+> Use it for API responses and config (JSON), small tabular files when pandas is not needed (CSV).
 
 ```python
 import json
@@ -456,7 +492,9 @@ For real data work, use pandas (see [17 - Pandas](17_pandas.md)).
 
 ## 19. Modules and Imports
 
-> Using code from other files and libraries. `import module` or `from module import name`; folders with `__init__.py` are packages. Use it for splitting a project into files, using libraries like pandas.
+> Using code from other files and libraries. `import module` or `from module import name`; folders with `__init__.py` are packages.
+>
+> Use it for splitting a project into files, using libraries like pandas.
 
 ```python
 import math
@@ -477,7 +515,9 @@ project/
 
 ## 20. Classes
 
-> Custom types that bundle data and behaviour. `class` with `__init__` for data and methods for behaviour; inheritance to extend. Use it for modelling things with state and actions (an account, an API client, a game object).
+> Custom types that bundle data and behaviour. `class` with `__init__` for data and methods for behaviour; inheritance to extend.
+>
+> Use it for modelling things with state and actions (an account, an API client, a game object).
 
 ```python
 class Account:
@@ -514,7 +554,9 @@ print(acc)                                  # Account('Ana', 150)
 
 ## 21. Dataclasses
 
-> Classes for holding data with almost no boilerplate. `@dataclass` generates `__init__`, `__repr__` and comparison from type-annotated fields. Use it for records like a product, config or API result where you mainly store fields.
+> Classes for holding data with almost no boilerplate. `@dataclass` generates `__init__`, `__repr__` and comparison from type-annotated fields.
+>
+> Use it for records like a product, config or API result where you mainly store fields.
 
 Less boilerplate for classes that mainly hold data.
 
@@ -533,7 +575,9 @@ p                               # Product(name='Pen', price=1.5, tags=[])
 
 ## 22. Type Hints
 
-> Declaring expected types for variables and functions. `name: type` and `-> return_type`; checked by editors and mypy, not at runtime. Use it in any code you will maintain; catches bugs early and improves autocomplete.
+> Declaring expected types for variables and functions. `name: type` and `-> return_type`; checked by editors and mypy, not at runtime.
+>
+> Use it in any code you will maintain; catches bugs early and improves autocomplete.
 
 ```python
 def average(values: list[float]) -> float:
@@ -548,7 +592,9 @@ Hints are not enforced at runtime; tools like VS Code (Pylance) and mypy use the
 
 ## 23. Useful Built-ins
 
-> Functions available without importing, plus a few standard helpers. Built-ins like `len`, `zip`, `enumerate`; `Counter` / `defaultdict` from collections. Use it for counting, pairing lists, looping with an index.
+> Functions available without importing, plus a few standard helpers. Built-ins like `len`, `zip`, `enumerate`; `Counter` / `defaultdict` from collections.
+>
+> Use it for counting, pairing lists, looping with an index.
 
 ```python
 len() ; sum() ; min() ; max() ; abs() ; round()
@@ -565,7 +611,9 @@ groups = defaultdict(list)                # missing key -> empty list
 
 ## 24. Dates and Times
 
-> Dates, times and time differences. `datetime` objects; `strftime` to text, `strptime` from text, `timedelta` for arithmetic. Use it for timestamps in logs, date filters, "days until" calculations.
+> Dates, times and time differences. `datetime` objects; `strftime` to text, `strptime` from text, `timedelta` for arithmetic.
+>
+> Use it for timestamps in logs, date filters, "days until" calculations.
 
 ```python
 from datetime import datetime, date, timedelta
@@ -582,7 +630,9 @@ Format codes: `%Y` year, `%m` month, `%d` day, `%H` hour, `%M` minute, `%S` seco
 
 ## 25. Logging
 
-> Recording what a program does, with levels and timestamps. `logging.getLogger(__name__)`, then `.info()`, `.warning()`, `.error()`. Use it in any script or app beyond a quick test, instead of `print()`.
+> Recording what a program does, with levels and timestamps. `logging.getLogger(__name__)`, then `.info()`, `.warning()`, `.error()`.
+>
+> Use it in any script or app beyond a quick test, instead of `print()`.
 
 Use logging instead of `print()` in real programs.
 
@@ -601,7 +651,9 @@ logger.exception("crash")       # inside except: includes traceback
 
 ## 26. Script Entry Point and Arguments
 
-> Making a file runnable as a script with command-line options. `if __name__ == "__main__":` runs only when executed directly; `argparse` reads options. Use it for tools you run with different inputs (`python clean.py data.csv --limit 5`).
+> Making a file runnable as a script with command-line options. `if __name__ == "__main__":` runs only when executed directly; `argparse` reads options.
+>
+> Use it for tools you run with different inputs (`python clean.py data.csv --limit 5`).
 
 ```python
 import argparse
@@ -644,7 +696,9 @@ python script.py data.csv --limit 5
 
 ## 28. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Word counts
 

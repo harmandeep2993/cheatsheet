@@ -93,7 +93,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> Commands to start each tool's development server. Each has a `run` command with options for port and auto-reload. Use it for running apps locally and in containers.
+> Commands to start each tool's development server. Each has a `run` command with options for port and auto-reload.
+>
+> Use it for running apps locally and in containers.
 
 ```text
 streamlit  run  app.py  --server.port 8501  --server.address 0.0.0.0
@@ -127,7 +129,9 @@ streamlit  run  app.py  --server.port 8501  --server.address 0.0.0.0
 
 ## 2. Streamlit: Basics
 
-> Building a web page from a Python script. Each `st.` call adds an element; widgets return their current value; the script re-runs on each interaction. Use it for data apps and simple AI tools.
+> Building a web page from a Python script. Each `st.` call adds an element; widgets return their current value; the script re-runs on each interaction.
+>
+> Use it for data apps and simple AI tools.
 
 ```powershell
 pip install streamlit
@@ -154,7 +158,9 @@ if st.button("Explain with AI"):
 
 ## 3. Streamlit: Chat App with Streaming
 
-> A ChatGPT-style interface for Claude. Store messages in `st.session_state`; redraw them each run; stream the new reply with `st.write_stream`. Use it for chatbots, RAG assistants, prompt testing.
+> A ChatGPT-style interface for Claude. Store messages in `st.session_state`; redraw them each run; stream the new reply with `st.write_stream`.
+>
+> Use it for chatbots, RAG assistants, prompt testing.
 
 ```python
 import anthropic
@@ -200,7 +206,9 @@ if prompt := st.chat_input("Ask something"):
 
 ## 4. Streamlit: Session State and Caching
 
-> Keeping data between reruns and avoiding repeated expensive work. `st.session_state` = per-user variables; `@st.cache_resource` = shared objects (clients, models, DB connections); `@st.cache_data` = cached function results (DataFrames). Use it for chat history, loaded models, vector indexes, slow queries.
+> Keeping data between reruns and avoiding repeated expensive work. `st.session_state` = per-user variables; `@st.cache_resource` = shared objects (clients, models, DB connections); `@st.cache_data` = cached function results (DataFrames).
+>
+> Use it for chat history, loaded models, vector indexes, slow queries.
 
 ```python
 if "count" not in st.session_state:
@@ -220,7 +228,9 @@ def load_sales() -> pd.DataFrame:
 
 ## 5. Streamlit: Sidebar, Files and Layout
 
-> Common layout and input elements. `st.sidebar`, columns, tabs, expanders, file uploader. Use it for settings panels, document upload for RAG, multi-view apps.
+> Common layout and input elements. `st.sidebar`, columns, tabs, expanders, file uploader.
+>
+> Use it for settings panels, document upload for RAG, multi-view apps.
 
 ```python
 with st.sidebar:
@@ -244,7 +254,9 @@ with st.spinner("Thinking..."):
 
 ## 6. Streamlit: Secrets
 
-> Giving the app API keys without putting them in code. `.streamlit/secrets.toml` locally (git-ignored) or the hosting platform's secrets UI; read with `st.secrets`. Environment variables also work. Use it in every deployed Streamlit app.
+> Giving the app API keys without putting them in code. `.streamlit/secrets.toml` locally (git-ignored) or the hosting platform's secrets UI; read with `st.secrets`. Environment variables also work.
+>
+> Use it in every deployed Streamlit app.
 
 ```toml
 # .streamlit/secrets.toml  (add to .gitignore!)
@@ -257,7 +269,9 @@ client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
 
 ## 7. Gradio: Basics
 
-> Wrapping a Python function in a web UI. `gr.Interface(fn, inputs, outputs)`; `launch()` starts the server. Use it for ML model demos (text, image, audio), quick tools.
+> Wrapping a Python function in a web UI. `gr.Interface(fn, inputs, outputs)`; `launch()` starts the server.
+>
+> Use it for ML model demos (text, image, audio), quick tools.
 
 ```powershell
 pip install gradio
@@ -284,7 +298,9 @@ demo.launch()                                   # http://127.0.0.1:7860
 
 ## 8. Gradio: ChatInterface with Streaming
 
-> A full chat UI from one function. `gr.ChatInterface(fn)`; `fn(message, history)` receives the history as a list of role / content dicts; `yield` partial text to stream. Use it for chat demos, Hugging Face Spaces.
+> A full chat UI from one function. `gr.ChatInterface(fn)`; `fn(message, history)` receives the history as a list of role / content dicts; `yield` partial text to stream.
+>
+> Use it for chat demos, Hugging Face Spaces.
 
 ```python
 import anthropic
@@ -308,7 +324,9 @@ gr.ChatInterface(respond, type="messages", title="Claude Chat").launch()
 
 ## 9. Chainlit: Chat and Agent UI
 
-> A chat-first framework with streaming, visible steps, file upload and feedback. Decorated async handlers; `cl.Message` to send / stream; `cl.Step` to show intermediate agent steps; `cl.user_session` for per-user state. Use it for agent and RAG apps where users should see tool calls and sources.
+> A chat-first framework with streaming, visible steps, file upload and feedback. Decorated async handlers; `cl.Message` to send / stream; `cl.Step` to show intermediate agent steps; `cl.user_session` for per-user state.
+>
+> Use it for agent and RAG apps where users should see tool calls and sources.
 
 ```powershell
 pip install chainlit
@@ -348,7 +366,9 @@ async def on_message(message: cl.Message):
 
 ## 10. FastAPI Backend + Simple Web Frontend
 
-> Separating the AI logic (API) from the UI. FastAPI streams tokens with `StreamingResponse`; any frontend reads the stream with `fetch`. Use it for production apps, multiple frontends (web, mobile, Slack), custom design.
+> Separating the AI logic (API) from the UI. FastAPI streams tokens with `StreamingResponse`; any frontend reads the stream with `fetch`.
+>
+> Use it for production apps, multiple frontends (web, mobile, Slack), custom design.
 
 ```python
 # api.py
@@ -393,7 +413,9 @@ More in [39 - FastAPI](39_fastapi.md). JavaScript frameworks (Next.js with an AI
 
 ## 11. Showing Sources, Steps and Feedback
 
-> UI patterns that build trust and collect quality signals. Show citations / retrieved documents, show agent steps, add thumbs up / down stored with a trace ID. Use it for RAG and agent apps.
+> UI patterns that build trust and collect quality signals. Show citations / retrieved documents, show agent steps, add thumbs up / down stored with a trace ID.
+>
+> Use it for RAG and agent apps.
 
 ```python
 with st.chat_message("assistant"):
@@ -408,7 +430,9 @@ with st.chat_message("assistant"):
 
 ## 12. Authentication
 
-> Restricting who can use the app (and your API budget). Built-in auth options of the tool / platform, or put the app behind a login proxy. Use it for anything beyond a local demo.
+> Restricting who can use the app (and your API budget). Built-in auth options of the tool / platform, or put the app behind a login proxy.
+>
+> Use it for anything beyond a local demo.
 
 | Tool | Options |
 |---|---|
@@ -421,7 +445,9 @@ Also add rate limits and spend caps ([37](37_ai-security.md)).
 
 ## 13. Deployment
 
-> Putting the UI online. Managed hosting for quick demos; Docker containers for your own infrastructure. Use it for sharing with users.
+> Putting the UI online. Managed hosting for quick demos; Docker containers for your own infrastructure.
+>
+> Use it for sharing with users.
 
 | Option | Good for |
 |---|---|
@@ -458,7 +484,9 @@ Streaming behind a proxy: disable response buffering (Nginx `proxy_buffering off
 
 ## 15. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Echo chat
 

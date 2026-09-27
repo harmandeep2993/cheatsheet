@@ -97,7 +97,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The meaning of the server commands and the most common FastAPI parameters. Server flags control how the app runs; decorator and function parameters control each endpoint. Use this when you see `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000` and want to know what each part does.
+> The meaning of the server commands and the most common FastAPI parameters. Server flags control how the app runs; decorator and function parameters control each endpoint.
+>
+> Use this when you see `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000` and want to know what each part does.
 
 ```text
 uvicorn  app.main:app  --reload  --host 0.0.0.0  --port 8000
@@ -145,7 +147,9 @@ def read_item(item_id: int, q: str | None = None, db = Depends(get_db)):
 
 ## 1. Install
 
-> FastAPI plus a server to run it. `fastapi[standard]` includes uvicorn, the `fastapi` CLI and common extras. Use it for building an API for a web / mobile app, an ML model, or a service other programs call.
+> FastAPI plus a server to run it. `fastapi[standard]` includes uvicorn, the `fastapi` CLI and common extras.
+>
+> Use it for building an API for a web / mobile app, an ML model, or a service other programs call.
 
 ```powershell
 pip install "fastapi[standard]"
@@ -154,7 +158,9 @@ uv add "fastapi[standard]"          # with uv
 
 ## 2. Minimal App
 
-> The smallest working API. Create a `FastAPI()` object and decorate functions with the HTTP method and path. Use it as the starting point for every project.
+> The smallest working API. Create a `FastAPI()` object and decorate functions with the HTTP method and path.
+>
+> Use it as the starting point for every project.
 
 ```python
 # main.py
@@ -179,7 +185,9 @@ Return a dict, list, Pydantic model or plain value; FastAPI converts it to JSON.
 
 ## 3. Run the Server
 
-> Starting the app so it answers HTTP requests. The ASGI server (uvicorn) imports your `app` object and listens on a port. Use it for development with reload; production with workers and no reload.
+> Starting the app so it answers HTTP requests. The ASGI server (uvicorn) imports your `app` object and listens on a port.
+>
+> Use it for development with reload; production with workers and no reload.
 
 ```powershell
 fastapi dev main.py                         # development, http://127.0.0.1:8000
@@ -192,7 +200,9 @@ Stop with `Ctrl+C`.
 
 ## 4. Interactive Docs
 
-> Automatically generated API documentation you can test in the browser. FastAPI builds an OpenAPI schema from your routes and type hints. Use it for testing endpoints during development, sharing the API with frontend / other teams.
+> Automatically generated API documentation you can test in the browser. FastAPI builds an OpenAPI schema from your routes and type hints.
+>
+> Use it for testing endpoints during development, sharing the API with frontend / other teams.
 
 | URL | Shows |
 |---|---|
@@ -202,7 +212,9 @@ Stop with `Ctrl+C`.
 
 ## 5. HTTP Methods and Status Codes
 
-> Which method to use for which action and what the response codes mean. One decorator per method: `@app.get`, `.post`, `.put`, `.patch`, `.delete`. Use it for designing endpoints so clients know what each one does.
+> Which method to use for which action and what the response codes mean. One decorator per method: `@app.get`, `.post`, `.put`, `.patch`, `.delete`.
+>
+> Use it for designing endpoints so clients know what each one does.
 
 | Method | Purpose | Typical success code |
 |---|---|---|
@@ -235,7 +247,9 @@ def delete_item(item_id: int):
 
 ## 6. Path Parameters
 
-> Values that are part of the URL path, like an ID. Put `{name}` in the path and a function argument with the same name and a type. Use it for identifying one specific resource: `/users/42`, `/models/v2`.
+> Values that are part of the URL path, like an ID. Put `{name}` in the path and a function argument with the same name and a type.
+>
+> Use it for identifying one specific resource: `/users/42`, `/models/v2`.
 
 ```python
 @app.get("/users/{user_id}")
@@ -257,7 +271,9 @@ Order matters: define `/users/me` before `/users/{user_id}`.
 
 ## 7. Query Parameters
 
-> Optional values after `?` in the URL: `/items?skip=0&limit=10`. Any function argument that is not in the path and not a model becomes a query parameter. Use it for filtering, sorting, pagination, search terms.
+> Optional values after `?` in the URL: `/items?skip=0&limit=10`. Any function argument that is not in the path and not a model becomes a query parameter.
+>
+> Use it for filtering, sorting, pagination, search terms.
 
 ```python
 @app.get("/items")
@@ -273,7 +289,9 @@ def list_items(skip: int = 0, limit: int = 10, q: str | None = None, active: boo
 
 ## 8. Request Body (Pydantic Models)
 
-> JSON data sent by the client (usually with POST / PUT / PATCH). Define a Pydantic `BaseModel`; use it as an argument type; FastAPI parses and validates the JSON. Use it for creating or updating resources, sending input for a prediction.
+> JSON data sent by the client (usually with POST / PUT / PATCH). Define a Pydantic `BaseModel`; use it as an argument type; FastAPI parses and validates the JSON.
+>
+> Use it for creating or updating resources, sending input for a prediction.
 
 ```python
 from pydantic import BaseModel
@@ -302,7 +320,9 @@ Missing `name` or `"price": "abc"` -> automatic 422 response listing the problem
 
 ## 9. Validation Rules
 
-> Extra rules on input values: ranges, lengths, patterns. `Field()` in models; `Query()` / `Path()` for URL parameters; `Annotated` keeps it readable. Use it for rejecting bad input early (negative prices, empty names, huge limits).
+> Extra rules on input values: ranges, lengths, patterns. `Field()` in models; `Query()` / `Path()` for URL parameters; `Annotated` keeps it readable.
+>
+> Use it for rejecting bad input early (negative prices, empty names, huge limits).
 
 ```python
 from typing import Annotated
@@ -354,7 +374,9 @@ def create_user(user: UserIn):
 
 ## 11. Errors (HTTPException)
 
-> Returning an error response with a status code and message. `raise HTTPException(status_code=..., detail=...)`; FastAPI turns it into JSON. Use it for resource not found, not allowed, invalid business rule.
+> Returning an error response with a status code and message. `raise HTTPException(status_code=..., detail=...)`; FastAPI turns it into JSON.
+>
+> Use it for resource not found, not allowed, invalid business rule.
 
 ```python
 from fastapi import HTTPException
@@ -372,7 +394,9 @@ Response: `404 {"detail": "Item not found"}`.
 
 ## 12. Dependencies (Depends)
 
-> Reusable pieces that endpoints need: DB session, current user, settings, pagination. Write a function; add `param = Depends(func)`; FastAPI calls it for each request and passes the result. Use it for the same code would otherwise repeat in many endpoints; also makes testing easy (override it).
+> Reusable pieces that endpoints need: DB session, current user, settings, pagination. Write a function; add `param = Depends(func)`; FastAPI calls it for each request and passes the result.
+>
+> Use it for the same code would otherwise repeat in many endpoints; also makes testing easy (override it).
 
 ```python
 from typing import Annotated
@@ -401,7 +425,9 @@ def list_orders(page: Annotated[dict, Depends(pagination)], db=Depends(get_db)):
 
 ## 13. Settings and Environment Variables
 
-> Configuration (URLs, keys, model names) read from environment variables / `.env`. `pydantic-settings` reads variables into a typed settings class. Use it for anything that differs between laptop, test and production, and every secret.
+> Configuration (URLs, keys, model names) read from environment variables / `.env`. `pydantic-settings` reads variables into a typed settings class.
+>
+> Use it for anything that differs between laptop, test and production, and every secret.
 
 ```powershell
 pip install pydantic-settings
@@ -437,7 +463,9 @@ Keep secrets in `.env` (git-ignored); never hard-code them.
 
 ## 14. Project Structure and Routers
 
-> Splitting a growing API into files. `APIRouter` groups related endpoints; `app.include_router` adds them under a prefix. Use it for more than a handful of endpoints, or several resource types.
+> Splitting a growing API into files. `APIRouter` groups related endpoints; `app.include_router` adds them under a prefix.
+>
+> Use it for more than a handful of endpoints, or several resource types.
 
 ```text
 app/
@@ -501,7 +529,9 @@ Never call blocking code (like `time.sleep` or `requests.get`) inside `async def
 
 ## 16. Startup and Shutdown (Lifespan)
 
-> Code that runs once when the server starts and once when it stops. An async context manager passed as `lifespan=`; code before `yield` = startup, after = shutdown. Use it for loading an ML model, opening connection pools, warming caches.
+> Code that runs once when the server starts and once when it stops. An async context manager passed as `lifespan=`; code before `yield` = startup, after = shutdown.
+>
+> Use it for loading an ML model, opening connection pools, warming caches.
 
 ```python
 from contextlib import asynccontextmanager
@@ -524,7 +554,9 @@ app = FastAPI(lifespan=lifespan)
 
 ## 17. CORS and Middleware
 
-> Middleware runs around every request; CORS lets browsers on other domains call your API. `app.add_middleware(...)`, or `@app.middleware("http")` for your own. Use this when a frontend on `localhost:3000` calls your API on `localhost:8000` (browser shows a CORS error).
+> Middleware runs around every request; CORS lets browsers on other domains call your API. `app.add_middleware(...)`, or `@app.middleware("http")` for your own.
+>
+> Use this when a frontend on `localhost:3000` calls your API on `localhost:8000` (browser shows a CORS error).
 
 ```python
 import time
@@ -550,7 +582,9 @@ async def add_timing(request, call_next):
 
 ## 18. Background Tasks
 
-> Work that runs after the response is sent. Add a `BackgroundTasks` parameter and schedule a function with `add_task`. Use it for sending emails, writing logs, small follow-up jobs the client should not wait for (use Celery / a queue for heavy jobs).
+> Work that runs after the response is sent. Add a `BackgroundTasks` parameter and schedule a function with `add_task`.
+>
+> Use it for sending emails, writing logs, small follow-up jobs the client should not wait for (use Celery / a queue for heavy jobs).
 
 ```python
 from fastapi import BackgroundTasks
@@ -569,7 +603,9 @@ def notify(email: str, tasks: BackgroundTasks):
 
 ## 19. File Uploads and Forms
 
-> Receiving files and HTML form data. `UploadFile` for files, `Form()` for form fields (needs `python-multipart`, included in `fastapi[standard]`). Use it for uploading CSVs for analysis, images for a model, login forms.
+> Receiving files and HTML form data. `UploadFile` for files, `Form()` for form fields (needs `python-multipart`, included in `fastapi[standard]`).
+>
+> Use it for uploading CSVs for analysis, images for a model, login forms.
 
 ```python
 import io
@@ -594,7 +630,9 @@ def login(username: str = Form(...), password: str = Form(...)):
 
 ## 20. Headers, Cookies and API Keys
 
-> Reading request headers / cookies and protecting endpoints with a key. `Header()` / `Cookie()` parameters; a dependency that checks the key and raises 401. Use it for simple machine-to-machine auth, reading `User-Agent`, custom headers. (For user logins, use OAuth2 / JWT.).
+> Reading request headers / cookies and protecting endpoints with a key. `Header()` / `Cookie()` parameters; a dependency that checks the key and raises 401.
+>
+> Use it for simple machine-to-machine auth, reading `User-Agent`, custom headers. (For user logins, use OAuth2 / JWT.).
 
 ```python
 from fastapi import Header, Security
@@ -620,7 +658,9 @@ def agent(user_agent: str | None = Header(default=None)):
 
 ## 21. Testing
 
-> Automated tests that call your endpoints without running a server. `TestClient` sends requests directly to the app; run with pytest. Use it in every endpoint; run before each commit / in CI.
+> Automated tests that call your endpoints without running a server. `TestClient` sends requests directly to the app; run with pytest.
+>
+> Use it in every endpoint; run before each commit / in CI.
 
 ```python
 # tests/test_main.py
@@ -656,7 +696,9 @@ pytest -q
 
 ## 22. Call the API
 
-> Sending requests to your API from the terminal or Python. curl / PowerShell / requests / httpx with the method, URL, headers and JSON body. Use it for manual testing, scripts, other services calling yours.
+> Sending requests to your API from the terminal or Python. curl / PowerShell / requests / httpx with the method, URL, headers and JSON body.
+>
+> Use it for manual testing, scripts, other services calling yours.
 
 ```bash
 curl http://127.0.0.1:8000/items?limit=5
@@ -680,7 +722,9 @@ r.json()
 
 ## 23. Example: Serve an ML Model
 
-> A prediction API for a scikit-learn pipeline. Load the saved pipeline at startup, validate input with Pydantic, return the prediction. Use it for making a trained model available to apps and other services. Model training: [22 - Scikit-learn](22_scikit-learn.md).
+> A prediction API for a scikit-learn pipeline. Load the saved pipeline at startup, validate input with Pydantic, return the prediction.
+>
+> Use it for making a trained model available to apps and other services. Model training: [22 - Scikit-learn](22_scikit-learn.md).
 
 ```python
 from contextlib import asynccontextmanager
@@ -726,7 +770,9 @@ def predict(customer: Customer):
 
 ## 24. Example: Proxy to Ollama
 
-> An API endpoint that forwards a prompt to an Ollama model. Read `OLLAMA_HOST` from settings; call Ollama's chat API with the async client. Use it for putting your own API (auth, logging, prompt templates) in front of a local or VM-hosted LLM. VM setup: [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md).
+> An API endpoint that forwards a prompt to an Ollama model. Read `OLLAMA_HOST` from settings; call Ollama's chat API with the async client.
+>
+> Use it for putting your own API (auth, logging, prompt templates) in front of a local or VM-hosted LLM. VM setup: [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md).
 
 ```python
 import os
@@ -755,7 +801,9 @@ async def ask(body: Ask):
 
 ## 25. Deploy (Docker)
 
-> Packaging the API as a container for any server or cloud. Dockerfile installs dependencies, copies code, runs uvicorn on `0.0.0.0`. Use it for deploying to a VM, Azure Container Apps, App Service or Kubernetes. Details: [42 - Docker](42_docker.md).
+> Packaging the API as a container for any server or cloud. Dockerfile installs dependencies, copies code, runs uvicorn on `0.0.0.0`.
+>
+> Use it for deploying to a VM, Azure Container Apps, App Service or Kubernetes. Details: [42 - Docker](42_docker.md).
 
 ```dockerfile
 FROM python:3.12-slim
@@ -795,7 +843,9 @@ Production checklist: no `--reload`, secrets from environment, `--workers` or se
 
 ## 27. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: 404 handling
 

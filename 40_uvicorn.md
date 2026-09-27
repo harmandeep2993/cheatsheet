@@ -108,7 +108,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The Uvicorn command-line options. `uvicorn <module:app> [options]`; every option also exists as a `uvicorn.run(...)` argument and most as `UVICORN_*` environment variables. Use this when you see `uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4 --proxy-headers` and want to know what each part does.
+> The Uvicorn command-line options. `uvicorn <module:app> [options]`; every option also exists as a `uvicorn.run(...)` argument and most as `UVICORN_*` environment variables.
+>
+> Use this when you see `uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4 --proxy-headers` and want to know what each part does.
 
 ```text
 uvicorn  app.main:app  --host 0.0.0.0  --port 8000  --workers 4  --proxy-headers
@@ -158,7 +160,9 @@ uvicorn  app.main:app  --host 0.0.0.0  --port 8000  --workers 4  --proxy-headers
 
 ## 1. Install
 
-> Installing Uvicorn with or without the fast extras. `uvicorn[standard]` adds uvloop (faster event loop, not on Windows), httptools (fast HTTP parser), WebSockets, file watching for reload and `.env` support. Use it in every FastAPI / ASGI project. `fastapi[standard]` already includes it.
+> Installing Uvicorn with or without the fast extras. `uvicorn[standard]` adds uvloop (faster event loop, not on Windows), httptools (fast HTTP parser), WebSockets, file watching for reload and `.env` support.
+>
+> Use it in every FastAPI / ASGI project. `fastapi[standard]` already includes it.
 
 ```powershell
 pip install "uvicorn[standard]"           # recommended
@@ -169,7 +173,9 @@ uvicorn --version
 
 ## 2. Run an App
 
-> Starting the server for your app. Point Uvicorn at `module:variable`; it imports the module and serves the ASGI app it finds. Use it for local development and simple deployments.
+> Starting the server for your app. Point Uvicorn at `module:variable`; it imports the module and serves the ASGI app it finds.
+>
+> Use it for local development and simple deployments.
 
 ```python
 # main.py
@@ -194,7 +200,9 @@ Stop with `Ctrl+C`. Open `http://127.0.0.1:8000/docs` for FastAPI's interactive 
 
 ## 3. The App String and App Factory
 
-> How Uvicorn finds your app object. `package.module:attribute`, resolved from the current folder (or `--app-dir`); with `--factory`, the attribute is a function that builds the app. Use it for projects with a package layout; apps that need configuration at creation time (tests, several environments).
+> How Uvicorn finds your app object. `package.module:attribute`, resolved from the current folder (or `--app-dir`); with `--factory`, the attribute is a function that builds the app.
+>
+> Use it for projects with a package layout; apps that need configuration at creation time (tests, several environments).
 
 | Project layout | Command |
 |---|---|
@@ -221,7 +229,9 @@ uvicorn app.main:create_app --factory --reload
 
 ## 4. Run from Python Code
 
-> Starting Uvicorn inside a Python script. `uvicorn.run(...)` takes the same options as the CLI; pass the app as an import string to enable reload / workers. Use it for `python main.py` convenience, debugging in VS Code, embedding the server in a tool.
+> Starting Uvicorn inside a Python script. `uvicorn.run(...)` takes the same options as the CLI; pass the app as an import string to enable reload / workers.
+>
+> Use it for `python main.py` convenience, debugging in VS Code, embedding the server in a tool.
 
 ```python
 import uvicorn
@@ -234,7 +244,9 @@ if __name__ == "__main__":
 
 ## 5. Development: Auto-Reload
 
-> Restarting the server automatically when you save a file. A watcher process monitors files and restarts the worker on changes. Use it for local development only. Never in production (slower, single process, watches the file system).
+> Restarting the server automatically when you save a file. A watcher process monitors files and restarts the worker on changes.
+>
+> Use it for local development only. Never in production (slower, single process, watches the file system).
 
 ```powershell
 uvicorn app.main:app --reload
@@ -246,7 +258,9 @@ Large folders (`.venv`, `data/`, `node_modules/`) in the watch path make reload 
 
 ## 6. Host, Port and Sockets
 
-> Where the server listens. `127.0.0.1` accepts only local connections; `0.0.0.0` accepts from any network interface; a Unix socket is a file-based connection for a proxy on the same machine. Use it for `127.0.0.1` on laptops and behind a local Nginx; `0.0.0.0` inside Docker containers and when a load balancer connects over the network.
+> Where the server listens. `127.0.0.1` accepts only local connections; `0.0.0.0` accepts from any network interface; a Unix socket is a file-based connection for a proxy on the same machine.
+>
+> Use it for `127.0.0.1` on laptops and behind a local Nginx; `0.0.0.0` inside Docker containers and when a load balancer connects over the network.
 
 ```powershell
 uvicorn app.main:app --host 127.0.0.1 --port 8000     # local only (safe default)
@@ -258,7 +272,9 @@ A server on `0.0.0.0` on a VM is reachable from the internet if the firewall all
 
 ## 7. Workers and Concurrency
 
-> How Uvicorn handles many requests, and when to add processes. One worker = one process with one event loop. Async endpoints share it (thousands of waiting requests are fine); CPU-heavy or blocking code blocks it. More workers use more CPU cores, each with its own memory. Use it for production: start with 1 worker per CPU core (or let the platform scale containers instead).
+> How Uvicorn handles many requests, and when to add processes. One worker = one process with one event loop. Async endpoints share it (thousands of waiting requests are fine); CPU-heavy or blocking code blocks it. More workers use more CPU cores, each with its own memory.
+>
+> Use it for production: start with 1 worker per CPU core (or let the platform scale containers instead).
 
 ```text
 1 worker                              4 workers (--workers 4)
@@ -286,7 +302,9 @@ State in memory (dicts, caches) is **per worker**: use Redis / a database for an
 
 ## 8. Gunicorn with Uvicorn Workers
 
-> Using Gunicorn as a process manager that runs Uvicorn worker processes. Gunicorn starts, monitors and restarts workers; each worker is a Uvicorn server (worker class from the `uvicorn-worker` package). Use it for Linux VMs where you want Gunicorn's mature process management, or platforms that expect Gunicorn (e.g. some App Service setups). Modern `uvicorn --workers` also restarts crashed workers, so plain Uvicorn is often enough.
+> Using Gunicorn as a process manager that runs Uvicorn worker processes. Gunicorn starts, monitors and restarts workers; each worker is a Uvicorn server (worker class from the `uvicorn-worker` package).
+>
+> Use it for Linux VMs where you want Gunicorn's mature process management, or platforms that expect Gunicorn (e.g. some App Service setups). Modern `uvicorn --workers` also restarts crashed workers, so plain Uvicorn is often enough.
 
 ```bash
 pip install gunicorn uvicorn-worker
@@ -306,7 +324,9 @@ Gunicorn does not run on Windows; use it on Linux / in containers.
 
 ## 9. fastapi dev / fastapi run vs uvicorn
 
-> FastAPI's CLI commands that start Uvicorn for you. `fastapi dev` = Uvicorn with reload on 127.0.0.1; `fastapi run` = Uvicorn without reload on 0.0.0.0. Both auto-detect the app in the file. Use it for quick starts; use `uvicorn` directly when you need more options.
+> FastAPI's CLI commands that start Uvicorn for you. `fastapi dev` = Uvicorn with reload on 127.0.0.1; `fastapi run` = Uvicorn without reload on 0.0.0.0. Both auto-detect the app in the file.
+>
+> Use it for quick starts; use `uvicorn` directly when you need more options.
 
 | Command | Equivalent |
 |---|---|
@@ -316,7 +336,9 @@ Gunicorn does not run on Windows; use it on Linux / in containers.
 
 ## 10. Configuration via Environment Variables
 
-> Setting server options without changing the command. Uvicorn reads `UVICORN_*` variables for its options; `--env-file` loads a `.env` file into the environment (your app can read it too). Use it for containers and platforms where options come from environment settings.
+> Setting server options without changing the command. Uvicorn reads `UVICORN_*` variables for its options; `--env-file` loads a `.env` file into the environment (your app can read it too).
+>
+> Use it for containers and platforms where options come from environment settings.
 
 ```powershell
 $env:UVICORN_HOST = "0.0.0.0"
@@ -333,7 +355,9 @@ App configuration (API keys, model names) is best loaded by the app itself with 
 
 ## 11. Logging
 
-> Server and access logs. Uvicorn uses Python's `logging` with loggers `uvicorn` (server), `uvicorn.error` and `uvicorn.access` (one line per request); configure via flags or a logging config file. Use it for debugging, production log formats (JSON), reducing noise.
+> Server and access logs. Uvicorn uses Python's `logging` with loggers `uvicorn` (server), `uvicorn.error` and `uvicorn.access` (one line per request); configure via flags or a logging config file.
+>
+> Use it for debugging, production log formats (JSON), reducing noise.
 
 ```powershell
 uvicorn app.main:app --log-level debug
@@ -364,7 +388,9 @@ Access log line: `INFO: 172.18.0.1:53422 - "POST /chat HTTP/1.1" 200 OK`. Your a
 
 ## 12. Behind a Reverse Proxy
 
-> Running Uvicorn behind Nginx, a cloud load balancer or Kubernetes ingress. The proxy terminates HTTPS and forwards to Uvicorn; Uvicorn reads `X-Forwarded-For` / `X-Forwarded-Proto` (proxy headers) only from trusted IPs to get the real client IP and scheme. Use it in every production deployment.
+> Running Uvicorn behind Nginx, a cloud load balancer or Kubernetes ingress. The proxy terminates HTTPS and forwards to Uvicorn; Uvicorn reads `X-Forwarded-For` / `X-Forwarded-Proto` (proxy headers) only from trusted IPs to get the real client IP and scheme.
+>
+> Use it in every production deployment.
 
 ```bash
 # Nginx on the same machine
@@ -381,7 +407,9 @@ Without correct proxy settings: `request.client.host` shows the proxy's IP, and 
 
 ## 13. HTTPS Directly in Uvicorn
 
-> Serving TLS from Uvicorn without a proxy. Give it a key and certificate file. Use it for local HTTPS testing, internal services. For public sites prefer a proxy / platform that manages certificates ([44](44_nginx-https.md), [47](47_azure.md)).
+> Serving TLS from Uvicorn without a proxy. Give it a key and certificate file.
+>
+> Use it for local HTTPS testing, internal services. For public sites prefer a proxy / platform that manages certificates ([44](44_nginx-https.md), [47](47_azure.md)).
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 443 \
@@ -392,7 +420,9 @@ Local development certificates: `mkcert localhost` creates a trusted cert for yo
 
 ## 14. Timeouts, Limits and Graceful Shutdown
 
-> Protecting the server and shutting down cleanly. Limit concurrent work, recycle workers, keep-alive timeouts, and give in-flight requests time to finish on shutdown (deployments, scale-down). Use it for production, especially with long LLM requests and streaming.
+> Protecting the server and shutting down cleanly. Limit concurrent work, recycle workers, keep-alive timeouts, and give in-flight requests time to finish on shutdown (deployments, scale-down).
+>
+> Use it for production, especially with long LLM requests and streaming.
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --workers 4 \
@@ -413,7 +443,9 @@ Uvicorn has **no per-request timeout**: long requests run until done. Set timeou
 
 ## 15. Lifespan (Startup and Shutdown)
 
-> Code that runs once per worker when it starts and stops. Uvicorn sends ASGI lifespan events; FastAPI runs your `lifespan` context manager ([39](39_fastapi.md) section 16). Use it for load ML models, open DB / HTTP client pools, warm caches; close them cleanly.
+> Code that runs once per worker when it starts and stops. Uvicorn sends ASGI lifespan events; FastAPI runs your `lifespan` context manager ([39](39_fastapi.md) section 16).
+>
+> Use it for load ML models, open DB / HTTP client pools, warm caches; close them cleanly.
 
 ```python
 from contextlib import asynccontextmanager
@@ -436,7 +468,9 @@ With `--workers 4`, lifespan runs 4 times (once per process). `--lifespan off` d
 
 ## 16. Streaming and WebSockets
 
-> Long-lived responses: LLM token streaming (SSE / chunked) and WebSockets. Uvicorn sends chunks as your app yields them; WebSockets need a WebSocket implementation (included in `uvicorn[standard]`). Use it for chat UIs, live progress ([38](38_ai-ui.md)).
+> Long-lived responses: LLM token streaming (SSE / chunked) and WebSockets. Uvicorn sends chunks as your app yields them; WebSockets need a WebSocket implementation (included in `uvicorn[standard]`).
+>
+> Use it for chat UIs, live progress ([38](38_ai-ui.md)).
 
 - Install `uvicorn[standard]` (or `websockets`) for WebSocket support; otherwise you get "No supported WebSocket library detected".
 - Behind Nginx, disable buffering and pass upgrade headers ([44](44_nginx-https.md) section 7).
@@ -444,7 +478,9 @@ With `--workers 4`, lifespan runs 4 times (once per process). `--lifespan off` d
 
 ## 17. Performance Tips
 
-> Getting the most from each worker. Fast event loop and parser, async libraries, the right number of workers, no blocking in async code. Use it for load testing and tuning.
+> Getting the most from each worker. Fast event loop and parser, async libraries, the right number of workers, no blocking in async code.
+>
+> Use it for load testing and tuning.
 
 - Use `uvicorn[standard]`: uvloop + httptools on Linux / macOS.
 - Never block the event loop in `async def` (no `time.sleep`, `requests`, heavy pandas); use async clients or plain `def` endpoints ([13](13_async-python.md)).
@@ -454,7 +490,9 @@ With `--workers 4`, lifespan runs 4 times (once per process). `--lifespan off` d
 
 ## 18. Uvicorn in Docker
 
-> Running Uvicorn as the container's main process. Bind to `0.0.0.0`, use the exec form of `CMD` so Uvicorn receives stop signals (graceful shutdown), let the platform scale containers. Use it in every containerised API ([42 - Docker](42_docker.md)).
+> Running Uvicorn as the container's main process. Bind to `0.0.0.0`, use the exec form of `CMD` so Uvicorn receives stop signals (graceful shutdown), let the platform scale containers.
+>
+> Use it in every containerised API ([42 - Docker](42_docker.md)).
 
 ```dockerfile
 FROM python:3.12-slim
@@ -474,7 +512,9 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-
 
 ## 19. Uvicorn as a systemd Service
 
-> Keeping Uvicorn running on a Linux VM after logout, crashes and reboots. A systemd unit starts the venv's Uvicorn; Nginx proxies to it. Use it for deployments on a VM without Docker ([03 - Linux](03_linux.md), [48 - Azure VM](48_azure-vm-ollama.md)).
+> Keeping Uvicorn running on a Linux VM after logout, crashes and reboots. A systemd unit starts the venv's Uvicorn; Nginx proxies to it.
+>
+> Use it for deployments on a VM without Docker ([03 - Linux](03_linux.md), [48 - Azure VM](48_azure-vm-ollama.md)).
 
 ```ini
 # /etc/systemd/system/api.service
@@ -501,7 +541,9 @@ journalctl -u api -f
 
 ## 20. A Minimal ASGI App (How It Works Inside)
 
-> The raw interface Uvicorn uses, without a framework. An ASGI app is an async callable receiving `scope` (request info), `receive` (read events) and `send` (write events). Use this when understanding what FastAPI does for you; writing middleware.
+> The raw interface Uvicorn uses, without a framework. An ASGI app is an async callable receiving `scope` (request info), `receive` (read events) and `send` (write events).
+>
+> Use this when understanding what FastAPI does for you; writing middleware.
 
 ```python
 # raw_app.py  ->  uvicorn raw_app:app
@@ -521,7 +563,9 @@ FastAPI builds on Starlette, which turns these events into `Request` / `Response
 
 ## 21. Other ASGI Servers
 
-> Alternatives to Uvicorn. All run standard ASGI apps; swap the command. Use this when specific needs such as HTTP/2 or HTTP/3, or maximum throughput.
+> Alternatives to Uvicorn. All run standard ASGI apps; swap the command.
+>
+> Use this when specific needs such as HTTP/2 or HTTP/3, or maximum throughput.
 
 | Server | Notes |
 |---|---|
@@ -563,7 +607,9 @@ FastAPI builds on Starlette, which turns these events into `Request` / `Response
 
 ## 24. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Focused reload
 

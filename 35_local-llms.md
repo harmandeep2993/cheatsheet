@@ -98,7 +98,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> Key options for Ollama, llama.cpp and vLLM. Passed on the command line, in a Modelfile, or as request options. Use this when you see `vllm serve ... --max-model-len 8192 --gpu-memory-utilization 0.9` and want to know what each part does.
+> Key options for Ollama, llama.cpp and vLLM. Passed on the command line, in a Modelfile, or as request options.
+>
+> Use this when you see `vllm serve ... --max-model-len 8192 --gpu-memory-utilization 0.9` and want to know what each part does.
 
 ```text
 vllm  serve  Qwen/Qwen2.5-7B-Instruct  --max-model-len 8192  --gpu-memory-utilization 0.9  --port 8000
@@ -131,7 +133,9 @@ vllm  serve  Qwen/Qwen2.5-7B-Instruct  --max-model-len 8192  --gpu-memory-utiliz
 
 ## 1. Options at a Glance
 
-> The main tools for local / self-hosted inference. They differ in ease of use, hardware support and throughput. Use it for picking a tool.
+> The main tools for local / self-hosted inference. They differ in ease of use, hardware support and throughput.
+>
+> Use it for picking a tool.
 
 | Tool | Best for | Hardware | API |
 |---|---|---|---|
@@ -144,7 +148,9 @@ vllm  serve  Qwen/Qwen2.5-7B-Instruct  --max-model-len 8192  --gpu-memory-utiliz
 
 ## 2. Hardware Sizing
 
-> Estimating whether a model fits and how fast it runs. Memory for weights = parameters x bytes per parameter; add 10 to 30% plus the KV cache for your context length. Use it before downloading models or renting GPUs.
+> Estimating whether a model fits and how fast it runs. Memory for weights = parameters x bytes per parameter; add 10 to 30% plus the KV cache for your context length.
+>
+> Use it before downloading models or renting GPUs.
 
 ```text
 weights_GB ~= params_in_billions x bits_per_weight / 8
@@ -166,7 +172,9 @@ Speed depends mostly on memory bandwidth: GPUs >> Apple Silicon > CPUs. Anything
 
 ## 3. Quantization Levels
 
-> How many bits each weight is stored with. Fewer bits = smaller and faster, but slightly lower quality; the K-quants (`_K_M`) balance this well. Use it for choosing a model variant (tag) to download.
+> How many bits each weight is stored with. Fewer bits = smaller and faster, but slightly lower quality; the K-quants (`_K_M`) balance this well.
+>
+> Use it for choosing a model variant (tag) to download.
 
 | Level | Bits | Quality | Use |
 |---|---|---|---|
@@ -181,7 +189,9 @@ A bigger model at Q4 often beats a smaller model at Q8. GPU servers (vLLM) use f
 
 ## 4. Choosing an Open Model
 
-> Picking a model family and size. Start with a well-known instruct model that fits your hardware; test on your own eval set ([34](34_evals-observability.md)). Use it in any local project.
+> Picking a model family and size. Start with a well-known instruct model that fits your hardware; test on your own eval set ([34](34_evals-observability.md)).
+>
+> Use it in any local project.
 
 | Need | Look for |
 |---|---|
@@ -197,7 +207,9 @@ Check the **licence** ([24](24_hugging-face.md) section 16) and the model's **co
 
 ## 5. Ollama: Install and CLI
 
-> The easiest way to download and run local models. Install the app; it runs a background server on port 11434; the `ollama` CLI manages models. Use it for local development, prototypes, small servers.
+> The easiest way to download and run local models. Install the app; it runs a background server on port 11434; the `ollama` CLI manages models.
+>
+> Use it for local development, prototypes, small servers.
 
 ```powershell
 winget install -e --id Ollama.Ollama            # Windows (Mac: download app / brew install ollama)
@@ -220,7 +232,9 @@ In-chat commands: `/set parameter num_ctx 8192`, `/set nothink` (thinking models
 
 ## 6. Ollama: Python Library
 
-> Calling Ollama from Python. `pip install ollama`; `chat`, `generate`, `embed` functions; `Client(host=...)` for remote servers. Use it for apps, scripts and RAG pipelines using local models.
+> Calling Ollama from Python. `pip install ollama`; `chat`, `generate`, `embed` functions; `Client(host=...)` for remote servers.
+>
+> Use it for apps, scripts and RAG pipelines using local models.
 
 ```python
 import ollama
@@ -263,7 +277,9 @@ city = City.model_validate_json(resp["message"]["content"])
 
 ## 7. Ollama: REST API and OpenAI Compatibility
 
-> The HTTP endpoints behind Ollama. Native `/api/...` endpoints plus OpenAI-compatible `/v1/...` endpoints. Use it for other languages, curl tests, reusing OpenAI-based code and frameworks.
+> The HTTP endpoints behind Ollama. Native `/api/...` endpoints plus OpenAI-compatible `/v1/...` endpoints.
+>
+> Use it for other languages, curl tests, reusing OpenAI-based code and frameworks.
 
 ```bash
 curl http://localhost:11434/api/tags                                   # list models
@@ -285,7 +301,9 @@ print(r.choices[0].message.content)
 
 ## 8. Ollama: Modelfile (Custom Models)
 
-> A recipe that creates your own model variant with a built-in system prompt and parameters. Write a `Modelfile`, then `ollama create`. Use it for reusable assistants with fixed behaviour, bigger default context, or importing your own GGUF (e.g. a fine-tune).
+> A recipe that creates your own model variant with a built-in system prompt and parameters. Write a `Modelfile`, then `ollama create`.
+>
+> Use it for reusable assistants with fixed behaviour, bigger default context, or importing your own GGUF (e.g. a fine-tune).
 
 ```text
 # Modelfile
@@ -304,7 +322,9 @@ Import a local GGUF: `FROM ./my-finetune-Q4_K_M.gguf` in the Modelfile.
 
 ## 9. Ollama: Configuration and Server
 
-> Environment variables that control the Ollama server. Set them for the service (Windows: system env vars then restart Ollama; Linux: `systemctl edit ollama`). Use it for sharing Ollama on a network, moving model storage, keeping models loaded.
+> Environment variables that control the Ollama server. Set them for the service (Windows: system env vars then restart Ollama; Linux: `systemctl edit ollama`).
+>
+> Use it for sharing Ollama on a network, moving model storage, keeping models loaded.
 
 | Variable | Meaning |
 |---|---|
@@ -320,7 +340,9 @@ Ollama has no built-in authentication: never expose port 11434 to the internet. 
 
 ## 10. llama.cpp and GGUF
 
-> The C / C++ inference engine that Ollama and many tools build on; runs GGUF models almost anywhere. Download a release (or build), get a GGUF from Hugging Face, run `llama-cli` (chat) or `llama-server` (OpenAI-compatible API + web UI). Use it for fine control of settings, newest features, embedded / edge devices.
+> The C / C++ inference engine that Ollama and many tools build on; runs GGUF models almost anywhere. Download a release (or build), get a GGUF from Hugging Face, run `llama-cli` (chat) or `llama-server` (OpenAI-compatible API + web UI).
+>
+> Use it for fine control of settings, newest features, embedded / edge devices.
 
 ```powershell
 winget install llama.cpp                    # or download from github.com/ggml-org/llama.cpp releases; Mac: brew install llama.cpp
@@ -332,7 +354,9 @@ llama-server -m models/qwen2.5-7b-instruct-q4_k_m.gguf -c 8192 -ngl 99 --port 80
 
 ## 11. LM Studio and Chat UIs
 
-> Desktop and web interfaces for local models. LM Studio downloads GGUF / MLX models and can start a local OpenAI-compatible server; Open WebUI gives a ChatGPT-like web UI on top of Ollama or any OpenAI-compatible API. Use it for trying models without code; giving non-technical users a chat interface.
+> Desktop and web interfaces for local models. LM Studio downloads GGUF / MLX models and can start a local OpenAI-compatible server; Open WebUI gives a ChatGPT-like web UI on top of Ollama or any OpenAI-compatible API.
+>
+> Use it for trying models without code; giving non-technical users a chat interface.
 
 ```bash
 docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway \
@@ -342,7 +366,9 @@ docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway \
 
 ## 12. vLLM (Production Serving)
 
-> A high-throughput inference server for GPUs. Continuous batching and PagedAttention let one GPU serve many concurrent users efficiently; exposes an OpenAI-compatible API. Use it for many users / high request volume on NVIDIA GPUs (Linux). Ollama is simpler for single-user or dev.
+> A high-throughput inference server for GPUs. Continuous batching and PagedAttention let one GPU serve many concurrent users efficiently; exposes an OpenAI-compatible API.
+>
+> Use it for many users / high request volume on NVIDIA GPUs (Linux). Ollama is simpler for single-user or dev.
 
 ```bash
 pip install vllm                                  # Linux + NVIDIA GPU
@@ -359,7 +385,9 @@ client.chat.completions.create(model="Qwen/Qwen2.5-7B-Instruct", messages=[...])
 
 ## 13. Running in Docker
 
-> Containerised local inference. Official images for Ollama and vLLM; mount a volume for model files; pass GPUs with `--gpus all` (NVIDIA Container Toolkit needed on Linux). Use it for servers, reproducible setups, Compose stacks with your app.
+> Containerised local inference. Official images for Ollama and vLLM; mount a volume for model files; pass GPUs with `--gpus all` (NVIDIA Container Toolkit needed on Linux).
+>
+> Use it for servers, reproducible setups, Compose stacks with your app.
 
 ```yaml
 # compose.yaml: app + Ollama
@@ -387,7 +415,9 @@ docker compose exec ollama ollama pull qwen3:4b
 
 ## 14. Performance Tuning
 
-> Getting faster responses and more throughput. Keep everything on the GPU, right-size context, keep models loaded, batch requests. Use it for slow responses or many users.
+> Getting faster responses and more throughput. Keep everything on the GPU, right-size context, keep models loaded, batch requests.
+>
+> Use it for slow responses or many users.
 
 | Symptom | Try |
 |---|---|
@@ -428,7 +458,9 @@ Common hybrid: local models for embeddings, classification or sensitive steps; h
 
 ## 17. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Run and inspect
 

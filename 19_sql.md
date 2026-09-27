@@ -104,7 +104,9 @@ Keywords are not case-sensitive (`SELECT` = `select`); writing them in UPPERCASE
 
 ## 2. Query Order
 
-> The order clauses are written vs the order the database runs them. Written SELECT first, but executed FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY. Use this when understanding why an alias fails in WHERE, or where a filter belongs.
+> The order clauses are written vs the order the database runs them. Written SELECT first, but executed FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY.
+>
+> Use this when understanding why an alias fails in WHERE, or where a filter belongs.
 
 Written order:
 
@@ -124,7 +126,9 @@ That is why you cannot use a `SELECT` alias inside `WHERE`.
 
 ## 3. SELECT Basics
 
-> Reading columns from a table. `SELECT columns FROM table`, with aliases, calculations and DISTINCT. Use it in every query starts here.
+> Reading columns from a table. `SELECT columns FROM table`, with aliases, calculations and DISTINCT.
+>
+> Use it in every query starts here.
 
 ```sql
 SELECT * FROM employees;                            -- all columns
@@ -139,7 +143,9 @@ Comments: `-- one line` and `/* block */`.
 
 ## 4. WHERE Filters
 
-> Keeping only rows that match conditions. `WHERE` with comparisons, AND / OR, IN, BETWEEN, LIKE, IS NULL. Use it in any question about a subset: "orders from 2024", "customers in Berlin".
+> Keeping only rows that match conditions. `WHERE` with comparisons, AND / OR, IN, BETWEEN, LIKE, IS NULL.
+>
+> Use it in any question about a subset: "orders from 2024", "customers in Berlin".
 
 ```sql
 SELECT * FROM employees WHERE salary > 50000;
@@ -159,7 +165,9 @@ Operators: `=  <> (or !=)  >  <  >=  <=`. Text values use single quotes: `'Berli
 
 ## 5. Sorting and Limiting
 
-> Ordering results and returning only some rows. `ORDER BY col [DESC]`, then `LIMIT n OFFSET m`. Use it for top N lists, latest records, paging results in an app.
+> Ordering results and returning only some rows. `ORDER BY col [DESC]`, then `LIMIT n OFFSET m`.
+>
+> Use it for top N lists, latest records, paging results in an app.
 
 ```sql
 SELECT * FROM employees ORDER BY salary;                    -- ascending
@@ -173,7 +181,9 @@ SQL Server: `SELECT TOP 5 ...`. Oracle / standard: `FETCH FIRST 5 ROWS ONLY`.
 
 ## 6. Aggregate Functions
 
-> Calculating one value from many rows. `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` over the selected rows. Use it for totals and averages for a whole table or filtered subset.
+> Calculating one value from many rows. `COUNT`, `SUM`, `AVG`, `MIN`, `MAX` over the selected rows.
+>
+> Use it for totals and averages for a whole table or filtered subset.
 
 ```sql
 SELECT
@@ -190,7 +200,9 @@ FROM employees;
 
 ## 7. GROUP BY and HAVING
 
-> Aggregating per group and filtering groups. `GROUP BY` makes one row per group; `HAVING` filters on the aggregated values. Use it to answer questions like "Sales per region", "departments with more than 10 employees".
+> Aggregating per group and filtering groups. `GROUP BY` makes one row per group; `HAVING` filters on the aggregated values.
+>
+> Use it to answer questions like "Sales per region", "departments with more than 10 employees".
 
 ```sql
 -- One row per department
@@ -211,7 +223,9 @@ Every column in `SELECT` must be in `GROUP BY` or inside an aggregate function.
 
 ## 8. JOINs
 
-> Combining rows from two or more tables by a key. `JOIN ... ON a.key = b.key`; the join type decides what happens to non-matching rows. Use it for data spread across tables: employees + departments, orders + customers.
+> Combining rows from two or more tables by a key. `JOIN ... ON a.key = b.key`; the join type decides what happens to non-matching rows.
+>
+> Use it for data spread across tables: employees + departments, orders + customers.
 
 ```sql
 SELECT e.name, d.name AS department
@@ -248,7 +262,9 @@ JOIN projects p ON p.owner_id = e.id;
 
 ## 9. CASE (If / Else)
 
-> If / else logic inside a query. `CASE WHEN condition THEN value ... ELSE value END`. Use it for categorising values (salary bands), conditional counts / sums.
+> If / else logic inside a query. `CASE WHEN condition THEN value ... ELSE value END`.
+>
+> Use it for categorising values (salary bands), conditional counts / sums.
 
 ```sql
 SELECT name, salary,
@@ -268,7 +284,9 @@ FROM employees;
 
 ## 10. NULL Handling
 
-> Working with missing values. `IS NULL` to test, `COALESCE` for defaults, `NULLIF` to avoid division by zero. Use it for optional fields, left joins that produce NULLs, safe ratios.
+> Working with missing values. `IS NULL` to test, `COALESCE` for defaults, `NULLIF` to avoid division by zero.
+>
+> Use it for optional fields, left joins that produce NULLs, safe ratios.
 
 ```sql
 WHERE manager_id IS NULL
@@ -282,7 +300,9 @@ Any comparison with NULL (`= NULL`, `<> NULL`) is unknown, not true. Aggregates 
 
 ## 11. String Functions
 
-> Changing and extracting text. Functions like `UPPER`, `TRIM`, `SUBSTRING`, `CONCAT` (names vary slightly per database). Use it for cleaning names, building labels, matching inconsistent text.
+> Changing and extracting text. Functions like `UPPER`, `TRIM`, `SUBSTRING`, `CONCAT` (names vary slightly per database).
+>
+> Use it for cleaning names, building labels, matching inconsistent text.
 
 ```sql
 UPPER(name) ; LOWER(name)
@@ -297,7 +317,9 @@ LEFT(name, 3) ; RIGHT(name, 3)
 
 ## 12. Date Functions
 
-> Extracting parts of dates and date arithmetic. Database-specific functions (`EXTRACT`, `DATE_TRUNC`, `STRFTIME`, `DATE_ADD`). Use it for monthly reports, filtering the last 30 days, grouping by year.
+> Extracting parts of dates and date arithmetic. Database-specific functions (`EXTRACT`, `DATE_TRUNC`, `STRFTIME`, `DATE_ADD`).
+>
+> Use it for monthly reports, filtering the last 30 days, grouping by year.
 
 ```sql
 -- PostgreSQL
@@ -321,7 +343,9 @@ DATE_FORMAT(hire_date, '%Y-%m')
 
 ## 13. Subqueries
 
-> A query inside another query. Put `(SELECT ...)` in WHERE, FROM or SELECT. Use it for comparing to an aggregate ("above average"), or filtering by another table.
+> A query inside another query. Put `(SELECT ...)` in WHERE, FROM or SELECT.
+>
+> Use it for comparing to an aggregate ("above average"), or filtering by another table.
 
 ```sql
 -- In WHERE: above average salary
@@ -345,7 +369,9 @@ SELECT AVG(headcount) FROM (
 
 ## 14. CTEs (WITH)
 
-> Named temporary result sets defined before the main query. `WITH name AS (SELECT ...)` then use `name` like a table. Use it for complex queries in readable steps; replaces deeply nested subqueries.
+> Named temporary result sets defined before the main query. `WITH name AS (SELECT ...)` then use `name` like a table.
+>
+> Use it for complex queries in readable steps; replaces deeply nested subqueries.
 
 Named temporary result; easier to read than nested subqueries.
 
@@ -365,7 +391,9 @@ Several CTEs: `WITH a AS (...), b AS (...) SELECT ...`
 
 ## 15. Window Functions
 
-> Calculations across related rows while keeping every row. `function() OVER (PARTITION BY ... ORDER BY ...)`. Use it for rankings, top N per group, running totals, comparing with the previous row.
+> Calculations across related rows while keeping every row. `function() OVER (PARTITION BY ... ORDER BY ...)`.
+>
+> Use it for rankings, top N per group, running totals, comparing with the previous row.
 
 Calculate across related rows **without** collapsing them (unlike GROUP BY).
 
@@ -402,7 +430,9 @@ Moving average: `AVG(sales) OVER (ORDER BY day ROWS BETWEEN 6 PRECEDING AND CURR
 
 ## 16. UNION, INTERSECT, EXCEPT
 
-> Combining results of two queries vertically. `UNION` (unique rows), `UNION ALL` (all rows), `INTERSECT`, `EXCEPT`. Use it for merging similar tables (customers + suppliers), finding rows in one list but not another.
+> Combining results of two queries vertically. `UNION` (unique rows), `UNION ALL` (all rows), `INTERSECT`, `EXCEPT`.
+>
+> Use it for merging similar tables (customers + suppliers), finding rows in one list but not another.
 
 ```sql
 SELECT city FROM customers
@@ -418,7 +448,9 @@ Both queries need the same number of columns with compatible types.
 
 ## 17. Create Tables
 
-> Defining a new table and its columns. `CREATE TABLE` with column types and constraints (PRIMARY KEY, NOT NULL, REFERENCES). Use it for setting up a new database or storing processed results.
+> Defining a new table and its columns. `CREATE TABLE` with column types and constraints (PRIMARY KEY, NOT NULL, REFERENCES).
+>
+> Use it for setting up a new database or storing processed results.
 
 ```sql
 CREATE TABLE departments (
@@ -444,7 +476,9 @@ Common types: `INTEGER`, `BIGINT`, `NUMERIC(p, s)`, `REAL` / `FLOAT`, `VARCHAR(n
 
 ## 18. Insert, Update, Delete
 
-> Adding, changing and removing rows. `INSERT INTO`, `UPDATE ... SET ... WHERE`, `DELETE FROM ... WHERE`. Use it for loading data, correcting records, removing test data.
+> Adding, changing and removing rows. `INSERT INTO`, `UPDATE ... SET ... WHERE`, `DELETE FROM ... WHERE`.
+>
+> Use it for loading data, correcting records, removing test data.
 
 ```sql
 INSERT INTO departments (name, city) VALUES ('Data', 'Berlin');
@@ -466,7 +500,9 @@ ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
 
 ## 19. Alter and Drop
 
-> Changing or removing a table's structure. `ALTER TABLE` adds / drops / renames columns; `DROP TABLE` removes the table. Use this when the schema needs a new column, or an old table is no longer used.
+> Changing or removing a table's structure. `ALTER TABLE` adds / drops / renames columns; `DROP TABLE` removes the table.
+>
+> Use this when the schema needs a new column, or an old table is no longer used.
 
 ```sql
 ALTER TABLE employees ADD COLUMN email VARCHAR(200);
@@ -481,7 +517,9 @@ DROP TABLE IF EXISTS logs;
 
 ## 20. Indexes and Views
 
-> Speed-ups for queries and saved queries. An index is a lookup structure on columns; a view is a stored SELECT. Use it for slow filters / joins on large tables (index); reusable reports (view).
+> Speed-ups for queries and saved queries. An index is a lookup structure on columns; a view is a stored SELECT.
+>
+> Use it for slow filters / joins on large tables (index); reusable reports (view).
 
 ```sql
 CREATE INDEX idx_emp_dept ON employees(department_id);      -- faster filters / joins
@@ -500,7 +538,9 @@ EXPLAIN ANALYZE SELECT * FROM employees WHERE department_id = 2;  -- plan + real
 
 ## 21. Transactions
 
-> Several changes that succeed or fail together. `BEGIN`, run statements, then `COMMIT` or `ROLLBACK`. Use it for money transfers, multi-table updates where partial changes would corrupt data.
+> Several changes that succeed or fail together. `BEGIN`, run statements, then `COMMIT` or `ROLLBACK`.
+>
+> Use it for money transfers, multi-table updates where partial changes would corrupt data.
 
 ```sql
 BEGIN;
@@ -512,7 +552,9 @@ COMMIT;             -- save both
 
 ## 22. SQLite and PostgreSQL CLI
 
-> Command-line clients for SQLite and PostgreSQL. `sqlite3 file.db` or `psql -h host -U user -d db`; dot / backslash commands inspect the database. Use it for quick checks on a server or container without a GUI tool.
+> Command-line clients for SQLite and PostgreSQL. `sqlite3 file.db` or `psql -h host -U user -d db`; dot / backslash commands inspect the database.
+>
+> Use it for quick checks on a server or container without a GUI tool.
 
 **SQLite** (file-based, no server):
 
@@ -547,7 +589,9 @@ Postgres in Docker: see [42 - Docker](42_docker.md), section "Useful Ready-Made 
 
 ## 23. SQL from Python and Pandas
 
-> Running SQL from Python and moving data between SQL and pandas. `sqlite3` / SQLAlchemy connections; `pd.read_sql` and `df.to_sql`. Use it for pulling data from a database into an analysis, or saving results back.
+> Running SQL from Python and moving data between SQL and pandas. `sqlite3` / SQLAlchemy connections; `pd.read_sql` and `df.to_sql`.
+>
+> Use it for pulling data from a database into an analysis, or saving results back.
 
 ```python
 import sqlite3
@@ -578,7 +622,9 @@ Keep connection strings (with passwords) in environment variables, not in code.
 
 ## 24. SQL vs Pandas
 
-> The pandas equivalent of each SQL operation. Find the SQL clause on the left, use the pandas code on the right. Use this when you know how to do it in SQL but not in pandas (or the reverse).
+> The pandas equivalent of each SQL operation. Find the SQL clause on the left, use the pandas code on the right.
+>
+> Use this when you know how to do it in SQL but not in pandas (or the reverse).
 
 | SQL | Pandas |
 |---|---|
@@ -619,7 +665,9 @@ See [17 - Pandas](17_pandas.md).
 
 ## 26. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Top 3 per department
 

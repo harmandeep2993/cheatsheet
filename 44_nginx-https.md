@@ -95,7 +95,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The nginx / certbot commands and the most common config directives. Commands manage the service; directives inside config blocks define behaviour. Use this when you see `proxy_pass http://127.0.0.1:8000;` or `certbot --nginx -d api.example.com` and want to know what each part does.
+> The nginx / certbot commands and the most common config directives. Commands manage the service; directives inside config blocks define behaviour.
+>
+> Use this when you see `proxy_pass http://127.0.0.1:8000;` or `certbot --nginx -d api.example.com` and want to know what each part does.
 
 ```text
 sudo  certbot  --nginx  -d api.example.com  -d www.example.com
@@ -136,7 +138,9 @@ sudo  certbot  --nginx  -d api.example.com  -d www.example.com
 
 ## 2. Install Nginx
 
-> Installing and starting Nginx on Ubuntu. `apt install`, enable the service, check the welcome page. Use it for fresh server setup.
+> Installing and starting Nginx on Ubuntu. `apt install`, enable the service, check the welcome page.
+>
+> Use it for fresh server setup.
 
 ```bash
 sudo apt update && sudo apt install -y nginx
@@ -146,7 +150,9 @@ curl -I http://localhost                  # HTTP/1.1 200 OK, Server: nginx
 
 ## 3. Config File Layout
 
-> Where Nginx configuration lives (Ubuntu / Debian). One file per site in `sites-available`, enabled by a symlink in `sites-enabled`. Use it for adding or editing sites.
+> Where Nginx configuration lives (Ubuntu / Debian). One file per site in `sites-available`, enabled by a symlink in `sites-enabled`.
+>
+> Use it for adding or editing sites.
 
 | Path | Contains |
 |---|---|
@@ -164,7 +170,9 @@ sudo nginx -t && sudo systemctl reload nginx
 
 ## 4. Reverse Proxy for FastAPI
 
-> Forwarding requests from port 80 to your app on port 8000. A `server` block with `proxy_pass` and forwarding headers. Use it for serving any web app / API.
+> Forwarding requests from port 80 to your app on port 8000. A `server` block with `proxy_pass` and forwarding headers.
+>
+> Use it for serving any web app / API.
 
 ```nginx
 # /etc/nginx/sites-available/api
@@ -188,7 +196,9 @@ Run uvicorn with `--proxy-headers --forwarded-allow-ips="127.0.0.1"` so FastAPI 
 
 ## 5. Domain and DNS
 
-> Pointing a domain name at your server. At your DNS provider, create an **A record** `api.example.com -> <server public IP>`; wait for it to propagate. Use it before requesting certificates.
+> Pointing a domain name at your server. At your DNS provider, create an **A record** `api.example.com -> <server public IP>`; wait for it to propagate.
+>
+> Use it before requesting certificates.
 
 ```bash
 nslookup api.example.com             # should return your server IP
@@ -198,7 +208,9 @@ Azure VMs: give the public IP a DNS label to get a free name like `myvm.swedence
 
 ## 6. HTTPS with Let's Encrypt (certbot)
 
-> Free, auto-renewing TLS certificates. certbot proves you control the domain (via port 80), gets a certificate, edits the Nginx config for HTTPS and sets up renewal. Use it in every public site.
+> Free, auto-renewing TLS certificates. certbot proves you control the domain (via port 80), gets a certificate, edits the Nginx config for HTTPS and sets up renewal.
+>
+> Use it in every public site.
 
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
@@ -211,7 +223,9 @@ After certbot, your server block has `listen 443 ssl;`, `ssl_certificate` lines 
 
 ## 7. Streaming (SSE) and WebSockets
 
-> Proxy settings so LLM token streams and live UIs work. Disable buffering for SSE; pass `Upgrade` / `Connection` headers for WebSockets; long timeouts. Use it for streaming chat APIs ([39](39_fastapi.md)), Streamlit / Chainlit / Gradio ([38](38_ai-ui.md)).
+> Proxy settings so LLM token streams and live UIs work. Disable buffering for SSE; pass `Upgrade` / `Connection` headers for WebSockets; long timeouts.
+>
+> Use it for streaming chat APIs ([39](39_fastapi.md)), Streamlit / Chainlit / Gradio ([38](38_ai-ui.md)).
 
 ```nginx
 location /chat {                               # SSE / streamed responses
@@ -237,7 +251,9 @@ Your app can also send the header `X-Accel-Buffering: no` to disable buffering p
 
 ## 8. Several Apps on One Server
 
-> Routing by subdomain or path. One server block per subdomain, or several `location` blocks in one server. Use it for API + UI + docs on one VM.
+> Routing by subdomain or path. One server block per subdomain, or several `location` blocks in one server.
+>
+> Use it for API + UI + docs on one VM.
 
 ```nginx
 server {
@@ -259,7 +275,9 @@ server {
 
 ## 9. Basic Auth (Protect Ollama or Admin UIs)
 
-> Requiring a username and password in front of an app that has no auth of its own. Create a password file with `htpasswd`; add `auth_basic` to the location. Always combine with HTTPS. Use it for exposing Ollama, admin dashboards, internal demos. (For Ollama from your laptop, an SSH tunnel is simpler, [48](48_azure-vm-ollama.md).).
+> Requiring a username and password in front of an app that has no auth of its own. Create a password file with `htpasswd`; add `auth_basic` to the location. Always combine with HTTPS.
+>
+> Use it for exposing Ollama, admin dashboards, internal demos. (For Ollama from your laptop, an SSH tunnel is simpler, [48](48_azure-vm-ollama.md).).
 
 ```bash
 sudo apt install -y apache2-utils
@@ -283,7 +301,9 @@ server {
 
 ## 10. Rate Limiting and Upload Size
 
-> Protecting the backend from floods and huge uploads. `limit_req_zone` defines a limit per client IP; `limit_req` applies it; `client_max_body_size` caps uploads. Use it for public APIs, expensive LLM endpoints.
+> Protecting the backend from floods and huge uploads. `limit_req_zone` defines a limit per client IP; `limit_req` applies it; `client_max_body_size` caps uploads.
+>
+> Use it for public APIs, expensive LLM endpoints.
 
 ```nginx
 # in the http context (e.g. top of the site file, outside server {})
@@ -302,7 +322,9 @@ Per-user / per-API-key limits belong in the app (Redis, [41](41_redis-queues.md)
 
 ## 11. Load Balancing
 
-> Spreading requests across several app instances. An `upstream` block lists backends; `proxy_pass` to the upstream name. Use it for several uvicorn / container instances on one or more servers.
+> Spreading requests across several app instances. An `upstream` block lists backends; `proxy_pass` to the upstream name.
+>
+> Use it for several uvicorn / container instances on one or more servers.
 
 ```nginx
 upstream api_backend {
@@ -320,7 +342,9 @@ server {
 
 ## 12. Run Your App as a systemd Service
 
-> Keeping your FastAPI app running after logout, crashes and reboots. A unit file describing how to start the app; systemd supervises it. Use it in any app on a Linux VM without Docker.
+> Keeping your FastAPI app running after logout, crashes and reboots. A unit file describing how to start the app; systemd supervises it.
+>
+> Use it in any app on a Linux VM without Docker.
 
 ```ini
 # /etc/systemd/system/api.service
@@ -349,7 +373,9 @@ journalctl -u api -f
 
 ## 13. Firewall
 
-> Allowing only the ports you need. `ufw` on the server, plus NSG rules in Azure ([48](48_azure-vm-ollama.md)). Use it in every internet-facing server.
+> Allowing only the ports you need. `ufw` on the server, plus NSG rules in Azure ([48](48_azure-vm-ollama.md)).
+>
+> Use it in every internet-facing server.
 
 ```bash
 sudo ufw allow OpenSSH
@@ -362,7 +388,9 @@ Apps listen on `127.0.0.1` so only Nginx can reach them.
 
 ## 14. Caddy (Simpler Alternative)
 
-> A web server that gets and renews HTTPS certificates automatically with almost no config. A tiny `Caddyfile`; Caddy handles TLS for any domain listed. Use it for small projects where you want HTTPS with minimal setup.
+> A web server that gets and renews HTTPS certificates automatically with almost no config. A tiny `Caddyfile`; Caddy handles TLS for any domain listed.
+>
+> Use it for small projects where you want HTTPS with minimal setup.
 
 ```text
 # /etc/caddy/Caddyfile
@@ -380,7 +408,9 @@ sudo systemctl reload caddy
 
 ## 15. Logs and Debugging
 
-> Finding out why a request fails. Nginx access / error logs, backend logs, curl from the server itself. Use it for 502s, timeouts, redirects gone wrong.
+> Finding out why a request fails. Nginx access / error logs, backend logs, curl from the server itself.
+>
+> Use it for 502s, timeouts, redirects gone wrong.
 
 ```bash
 sudo tail -f /var/log/nginx/error.log
@@ -406,7 +436,9 @@ curl -vk https://api.example.com/          # full TLS / header details from outs
 
 ## 17. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Reverse proxy
 

@@ -27,7 +27,9 @@ Start here. This guide is the map of the whole pocket guide: how the tools fit t
 
 ## 1. How to Use This Pocket Guide
 
-> How the guides are organised. Numbered from basic to advanced; every guide has the same structure. Use it on your first visit, or when you are not sure where to look.
+> How the guides are organised. Numbered from basic to advanced; every guide has the same structure.
+>
+> Use it on your first visit, or when you are not sure where to look.
 
 Every guide follows the same layout:
 
@@ -50,7 +52,9 @@ Reading strategy:
 
 ## 2. The Map: Layers of the Stack
 
-> Every guide placed in the layer of the stack it belongs to. Lower layers are foundations used by everything above them. Use it for seeing how a topic relates to the rest.
+> Every guide placed in the layer of the stack it belongs to. Lower layers are foundations used by everything above them.
+>
+> Use it for seeing how a topic relates to the rest.
 
 ```text
 +--------------------------------------------------------------------------------------------+
@@ -75,7 +79,9 @@ Reading strategy:
 
 ## 3. Journey of One Request Through an AI App
 
-> What happens, step by step, when a user asks a question in a production AI assistant. Each step names the technology and the guide that explains it. Use it for understanding how all the pieces work together in one system.
+> What happens, step by step, when a user asks a question in a production AI assistant. Each step names the technology and the guide that explains it.
+>
+> Use it for understanding how all the pieces work together in one system.
 
 ```text
  USER: "What is our refund policy for jackets, and has my order A-1042 shipped?"
@@ -123,7 +129,9 @@ Reading strategy:
 
 ## 4. From Idea to Production (Development Lifecycle)
 
-> The path a project takes from a quick experiment to a running service. Each stage adds structure, safety and automation. Use it for planning a project; knowing what to learn next.
+> The path a project takes from a quick experiment to a running service. Each stage adds structure, safety and automation.
+>
+> Use it for planning a project; knowing what to learn next.
 
 ```text
  1. EXPLORE        Jupyter notebook, pandas, quick LLM calls             [15] [17] [26]
@@ -150,7 +158,9 @@ Reading strategy:
 
 ## 5. The Data and ML Lifecycle
 
-> The typical flow of a data science / ML project. Each step maps to tools in this guide. Use it for data analysis and classic ML work.
+> The typical flow of a data science / ML project. Each step maps to tools in this guide.
+>
+> Use it for data analysis and classic ML work.
 
 ```text
  COLLECT    SQL, APIs, files (CSV, Parquet, JSON)             [19] [08] [07] [18]
@@ -172,7 +182,9 @@ Reading strategy:
 
 ## 6. The AI Application Ladder
 
-> The levels of sophistication in LLM applications. Climb only as high as your problem requires; each level adds cost and complexity. Use it for designing an AI feature.
+> The levels of sophistication in LLM applications. Climb only as high as your problem requires; each level adds cost and complexity.
+>
+> Use it for designing an AI feature.
 
 ```text
  Level 6  MULTI-AGENT SYSTEMS    orchestrator + specialised agents          [31] [32]
@@ -189,7 +201,9 @@ Reading strategy:
 
 ## 7. Where Code Runs
 
-> The places your code can execute, from laptop to managed cloud. Moving right means less to manage but less control. Use it for choosing a deployment target.
+> The places your code can execute, from laptop to managed cloud. Moving right means less to manage but less control.
+>
+> Use it for choosing a deployment target.
 
 ```text
  YOUR LAPTOP        VIRTUAL MACHINE       CONTAINER PLATFORM        KUBERNETES           SERVERLESS / PaaS
@@ -203,7 +217,9 @@ Reading strategy:
 
 ## 8. Which Tool for Which Job
 
-> A one-table tech stack cheat sheet. Find the job, use the tool, open the guide. Use it for choosing tools for a new project.
+> A one-table tech stack cheat sheet. Find the job, use the tool, open the guide.
+>
+> Use it for choosing tools for a new project.
 
 | Job | Default choice | Alternatives | Guide |
 |---|---|---|---|
@@ -238,7 +254,9 @@ Reading strategy:
 
 ## 9. How the Pieces Talk to Each Other
 
-> The few "languages" that connect every component. Almost all communication is HTTP + JSON, configured through environment variables and YAML / TOML files. Use it for understanding integration and debugging connections.
+> The few "languages" that connect every component. Almost all communication is HTTP + JSON, configured through environment variables and YAML / TOML files.
+>
+> Use it for understanding integration and debugging connections.
 
 ```text
  WHAT FLOWS BETWEEN COMPONENTS          HOW                          GUIDE
@@ -257,7 +275,9 @@ Reading strategy:
 
 ## 10. Learning Paths
 
-> Suggested orders for reading the guides, depending on your goal. Each path builds on the previous steps; practise with a small project at each stage. Use it for planning your learning.
+> Suggested orders for reading the guides, depending on your goal. Each path builds on the previous steps; practise with a small project at each stage.
+>
+> Use it for planning your learning.
 
 ### Path A: Foundations (everyone, first)
 
@@ -299,7 +319,9 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 
 ## 11. "I Want To..." Quick Finder
 
-> Common tasks mapped to the right guide and section. Find your task, open the guide. Use it for looking something up fast.
+> Common tasks mapped to the right guide and section. Find your task, open the guide.
+>
+> Use it for looking something up fast.
 
 | I want to ... | Go to |
 |---|---|
@@ -335,7 +357,9 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 
 ## 12. Core Mental Models in One Page
 
-> The handful of ideas that explain most of this guide. One line each; the linked guide has the full picture. Use it for quick revision.
+> The handful of ideas that explain most of this guide. One line each; the linked guide has the full picture.
+>
+> Use it for quick revision.
 
 | Concept | Mental model | Guide |
 |---|---|---|
@@ -368,7 +392,9 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 
 ## 13. Windows, macOS and Linux Differences
 
-> The places where commands in these guides differ between operating systems. Most guides show Windows (PowerShell) and Linux / macOS (Bash) side by side; this table collects the differences you meet most. Use it for a command from a guide or tutorial fails on your machine.
+> The places where commands in these guides differ between operating systems. Most guides show Windows (PowerShell) and Linux / macOS (Bash) side by side; this table collects the differences you meet most.
+>
+> Use it for a command from a guide or tutorial fails on your machine.
 
 | Topic | Windows (PowerShell) | macOS | Linux (Ubuntu) |
 |---|---|---|---|
@@ -397,7 +423,9 @@ Tips:
 
 ## 14. Practice and Extras
 
-> Pages that help you practise and look things up. Exercises at the end of every guide, runnable examples, a capstone project, a glossary and a one-page command summary. Use it after reading a guide (practise), when building your portfolio (capstone), when you only need a command (quick reference).
+> Pages that help you practise and look things up. Exercises at the end of every guide, runnable examples, a capstone project, a glossary and a one-page command summary.
+>
+> Use it after reading a guide (practise), when building your portfolio (capstone), when you only need a command (quick reference).
 
 | Resource | What it gives you |
 |---|---|

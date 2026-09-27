@@ -38,6 +38,10 @@ theme:
 plugins:
   - search
 
+# More line spacing, section dividers and a shaded summary box (site_assets/stylesheets/extra.css)
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - tables
   - admonition

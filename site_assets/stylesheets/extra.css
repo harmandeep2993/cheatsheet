@@ -1,0 +1,93 @@
+/* === Pocket guide: reading comfort on the docs site === */
+
+:root {
+  --pg-line-height: 1.75;
+  --pg-block-gap: 1.1rem;
+  --pg-section-gap: 3.2rem;
+  --pg-section-padding: 1.6rem;
+  --pg-subsection-gap: 2rem;
+  --pg-divider-width: 1px;
+  --pg-divider-color: var(--md-default-fg-color--lightest);
+  --pg-summary-bg: var(--md-code-bg-color);
+  --pg-summary-border-width: 4px;
+  --pg-summary-border-color: var(--md-primary-fg-color);
+  --pg-summary-padding: 0.9rem 1.2rem;
+  --pg-radius: 0.4rem;
+  --pg-table-cell-padding: 0.7em 1em;
+  --pg-code-line-height: 1.6;
+  --pg-nav-font-size: 0.72rem;
+  --pg-nav-opacity: 0.85;
+}
+
+/* === Text rhythm === */
+
+.md-typeset {
+  line-height: var(--pg-line-height);
+}
+
+.md-typeset p,
+.md-typeset ul,
+.md-typeset ol,
+.md-typeset table,
+.md-typeset pre,
+.md-typeset details {
+  margin-top: var(--pg-block-gap);
+  margin-bottom: var(--pg-block-gap);
+}
+
+.md-typeset li + li {
+  margin-top: calc(var(--pg-block-gap) / 3);
+}
+
+/* === Clear separation between numbered sections === */
+
+.md-typeset h2 {
+  margin-top: var(--pg-section-gap);
+  padding-top: var(--pg-section-padding);
+  border-top: var(--pg-divider-width) solid var(--pg-divider-color);
+}
+
+.md-typeset h3 {
+  margin-top: var(--pg-subsection-gap);
+}
+
+/* === Section summary box (the blockquote under each heading) === */
+
+.md-typeset blockquote {
+  background: var(--pg-summary-bg);
+  border-left: var(--pg-summary-border-width) solid var(--pg-summary-border-color);
+  border-radius: var(--pg-radius);
+  padding: var(--pg-summary-padding);
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset blockquote p {
+  margin-top: 0;
+  margin-bottom: calc(var(--pg-block-gap) / 2);
+}
+
+.md-typeset blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* === Roomier tables and code === */
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: var(--pg-table-cell-padding);
+}
+
+.md-typeset pre > code {
+  line-height: var(--pg-code-line-height);
+}
+
+/* === Previous / Next links: smaller, so they do not compete with the content === */
+
+.md-typeset .pg-nav {
+  font-size: var(--pg-nav-font-size);
+  opacity: var(--pg-nav-opacity);
+}
+
+.md-typeset .pg-nav p {
+  margin: 0;
+}

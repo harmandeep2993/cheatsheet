@@ -77,7 +77,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The options of the `code` command you type in a terminal. `code [options] [path]`; the path is a file or folder to open. Use it for opening projects, comparing files or installing extensions from the terminal.
+> The options of the `code` command you type in a terminal. `code [options] [path]`; the path is a file or folder to open.
+>
+> Use it for opening projects, comparing files or installing extensions from the terminal.
 
 ```text
 code  -g  app.py:42:5
@@ -105,7 +107,9 @@ code  -g  app.py:42:5
 
 ## 1. Install and Open
 
-> Installing VS Code and opening a project folder. Install with winget or from code.visualstudio.com; open a whole folder, not single files. Use it for new machine, or the start of every work session.
+> Installing VS Code and opening a project folder. Install with winget or from code.visualstudio.com; open a whole folder, not single files.
+>
+> Use it for new machine, or the start of every work session.
 
 ```powershell
 winget install -e --id Microsoft.VisualStudioCode
@@ -117,7 +121,9 @@ During install on Windows, tick **Add to PATH** and **Open with Code** (right-cl
 
 ## 2. Interface Overview
 
-> The main areas of the window. Activity bar on the left switches the side panel; editor in the middle; panel (terminal) at the bottom. Use this when getting oriented; knowing where things are when a guide says "open the Explorer".
+> The main areas of the window. Activity bar on the left switches the side panel; editor in the middle; panel (terminal) at the bottom.
+>
+> Use this when getting oriented; knowing where things are when a guide says "open the Explorer".
 
 | Area | Shortcut | Purpose |
 |---|---|---|
@@ -135,7 +141,9 @@ During install on Windows, tick **Add to PATH** and **Open with Code** (right-cl
 
 ## 3. Command Palette and Quick Open
 
-> Search boxes for every command and every file. Type part of a name; results filter as you type. Use this when you do not remember a shortcut or where a file is. This is the most useful shortcut in VS Code.
+> Search boxes for every command and every file. Type part of a name; results filter as you type.
+>
+> Use this when you do not remember a shortcut or where a file is. This is the most useful shortcut in VS Code.
 
 | Shortcut | Opens | Tip |
 |---|---|---|
@@ -148,7 +156,9 @@ During install on Windows, tick **Add to PATH** and **Open with Code** (right-cl
 
 ## 4. Essential Shortcuts
 
-> The shortcuts worth learning first. Built in; see or change all in `Ctrl+K Ctrl+S`. Use it every day; they remove most mouse work.
+> The shortcuts worth learning first. Built in; see or change all in `Ctrl+K Ctrl+S`.
+>
+> Use it every day; they remove most mouse work.
 
 | Shortcut | Action |
 |---|---|
@@ -167,7 +177,9 @@ During install on Windows, tick **Add to PATH** and **Open with Code** (right-cl
 
 ## 5. Editing Shortcuts
 
-> Shortcuts for moving, copying and changing lines of code. Work on the current line when nothing is selected. Use it for reorganising code without cut-and-paste.
+> Shortcuts for moving, copying and changing lines of code. Work on the current line when nothing is selected.
+>
+> Use it for reorganising code without cut-and-paste.
 
 | Shortcut | Action |
 |---|---|
@@ -189,7 +201,9 @@ During install on Windows, tick **Add to PATH** and **Open with Code** (right-cl
 
 ## 6. Multi-Cursor and Selection
 
-> Editing many places at once. Add extra cursors; everything you type happens at each cursor. Use it for renaming a word in a few places, editing a column of values, adding quotes to many lines.
+> Editing many places at once. Add extra cursors; everything you type happens at each cursor.
+>
+> Use it for renaming a word in a few places, editing a column of values, adding quotes to many lines.
 
 | Shortcut | Action |
 |---|---|
@@ -206,7 +220,9 @@ During install on Windows, tick **Add to PATH** and **Open with Code** (right-cl
 
 ## 7. Search and Replace
 
-> Finding and replacing text in one file or the whole project. `Ctrl+F` / `Ctrl+H` in a file, `Ctrl+Shift+F` / `Ctrl+Shift+H` across files; toggles for case, word and regex. Use it for renaming a setting in many files, finding every use of a function, bulk edits with regex.
+> Finding and replacing text in one file or the whole project. `Ctrl+F` / `Ctrl+H` in a file, `Ctrl+Shift+F` / `Ctrl+Shift+H` across files; toggles for case, word and regex.
+>
+> Use it for renaming a setting in many files, finding every use of a function, bulk edits with regex.
 
 | Shortcut | Action |
 |---|---|
@@ -228,7 +244,9 @@ Replace:  logger.info($1)
 
 ## 8. Code Navigation
 
-> Jumping between definitions, usages and past positions. Uses the language extension (Pylance for Python) to understand the code. Use it for reading unfamiliar code, finding where a function is defined or used.
+> Jumping between definitions, usages and past positions. Uses the language extension (Pylance for Python) to understand the code.
+>
+> Use it for reading unfamiliar code, finding where a function is defined or used.
 
 | Shortcut | Action |
 |---|---|
@@ -243,7 +261,9 @@ Replace:  logger.info($1)
 
 ## 9. Integrated Terminal
 
-> A terminal inside VS Code, opened in the project folder. `` Ctrl+` `` toggles it; choose the shell (PowerShell, Git Bash, WSL) from the dropdown. Use it for running scripts, git, pip and docker without leaving the editor.
+> A terminal inside VS Code, opened in the project folder. `` Ctrl+` `` toggles it; choose the shell (PowerShell, Git Bash, WSL) from the dropdown.
+>
+> Use it for running scripts, git, pip and docker without leaving the editor.
 
 | Shortcut | Action |
 |---|---|
@@ -258,7 +278,9 @@ Change the default shell: `Ctrl+Shift+P` -> **Terminal: Select Default Profile**
 
 ## 10. Python Setup
 
-> Making VS Code use the right Python and venv. Install the Python extension, then select the interpreter inside `.venv`. Use it in every new project; red squiggles on imports usually mean the wrong interpreter.
+> Making VS Code use the right Python and venv. Install the Python extension, then select the interpreter inside `.venv`.
+>
+> Use it in every new project; red squiggles on imports usually mean the wrong interpreter.
 
 1. Install the **Python** extension (includes Pylance and the debugger).
 2. Create the venv: see [10 - Python Virtual Environment](10_python-virtual-environment.md) or [11 - uv](11_uv.md).
@@ -270,7 +292,9 @@ Send selected lines to Python: `Shift+Enter`.
 
 ## 11. Run and Debug
 
-> Running code step by step and inspecting variables. Set breakpoints, start with `F5`, then step through; values show in the Variables panel. Use this when a result is wrong and print statements are not enough.
+> Running code step by step and inspecting variables. Set breakpoints, start with `F5`, then step through; values show in the Variables panel.
+>
+> Use this when a result is wrong and print statements are not enough.
 
 | Shortcut | Action |
 |---|---|
@@ -289,7 +313,9 @@ Send selected lines to Python: `Shift+Enter`.
 
 ## 12. launch.json (Debug Configurations)
 
-> Saved debug setups (file, arguments, env vars) in `.vscode/launch.json`. Run and Debug -> **create a launch.json file**; pick one from the dropdown, then `F5`. Use it for debugging a script with arguments, a FastAPI app, or with a `.env` file.
+> Saved debug setups (file, arguments, env vars) in `.vscode/launch.json`. Run and Debug -> **create a launch.json file**; pick one from the dropdown, then `F5`.
+>
+> Use it for debugging a script with arguments, a FastAPI app, or with a `.env` file.
 
 ```json
 {
@@ -318,7 +344,9 @@ Send selected lines to Python: `Shift+Enter`.
 
 ## 13. Git in VS Code
 
-> Git through the Source Control panel instead of commands. Changed files appear in `Ctrl+Shift+G`; stage with `+`, type a message, commit, then sync. Use it for reviewing diffs visually, staging parts of files, resolving merge conflicts. Commands: see [04 - Git](04_git.md).
+> Git through the Source Control panel instead of commands. Changed files appear in `Ctrl+Shift+G`; stage with `+`, type a message, commit, then sync.
+>
+> Use it for reviewing diffs visually, staging parts of files, resolving merge conflicts. Commands: see [04 - Git](04_git.md).
 
 | Action | How |
 |---|---|
@@ -334,7 +362,9 @@ Send selected lines to Python: `Shift+Enter`.
 
 ## 14. Recommended Extensions
 
-> Add-ons that add language support and tools. `Ctrl+Shift+X`, search, Install; or `code --install-extension <id>`. Use it for setting up a new machine; install only what you use (extensions slow startup).
+> Add-ons that add language support and tools. `Ctrl+Shift+X`, search, Install; or `code --install-extension <id>`.
+>
+> Use it for setting up a new machine; install only what you use (extensions slow startup).
 
 | Extension | ID | For |
 |---|---|---|
@@ -353,7 +383,9 @@ Send selected lines to Python: `Shift+Enter`.
 
 ## 15. Settings
 
-> Preferences for the editor, per user or per project. `Ctrl+,` for the UI; `Ctrl+Shift+P` -> **Preferences: Open User Settings (JSON)** for the file. Use it for changing font size, auto save, formatting on save, or project-specific settings.
+> Preferences for the editor, per user or per project. `Ctrl+,` for the UI; `Ctrl+Shift+P` -> **Preferences: Open User Settings (JSON)** for the file.
+>
+> Use it for changing font size, auto save, formatting on save, or project-specific settings.
 
 | Level | File | Applies to |
 |---|---|---|
@@ -376,7 +408,9 @@ Send selected lines to Python: `Shift+Enter`.
 
 ## 16. Formatting and Linting (Ruff)
 
-> Automatic code style (formatting) and error / smell detection (linting). The Ruff extension formats and fixes on save using rules from `pyproject.toml`. Use it in every Python project; keeps code consistent without thinking about it.
+> Automatic code style (formatting) and error / smell detection (linting). The Ruff extension formats and fixes on save using rules from `pyproject.toml`.
+>
+> Use it in every Python project; keeps code consistent without thinking about it.
 
 ```json
 {
@@ -402,7 +436,9 @@ select = ["E", "F", "I", "B", "UP"]   # errors, pyflakes, imports, bugbear, pyup
 
 ## 17. Workspace Files and Tasks
 
-> Project-level config in the `.vscode/` folder. `settings.json`, `launch.json`, `tasks.json`, `extensions.json` are read when the folder opens. Use it for sharing the same setup with teammates, or one-key commands like "run tests".
+> Project-level config in the `.vscode/` folder. `settings.json`, `launch.json`, `tasks.json`, `extensions.json` are read when the folder opens.
+>
+> Use it for sharing the same setup with teammates, or one-key commands like "run tests".
 
 ```json
 // .vscode/extensions.json - VS Code suggests these when someone opens the project
@@ -422,7 +458,9 @@ select = ["E", "F", "I", "B", "UP"]   # errors, pyflakes, imports, bugbear, pyup
 
 ## 18. Remote Development (SSH, WSL, Containers)
 
-> Using VS Code on your laptop while the code runs on another machine. Remote extensions install a small server on the target; you edit and run there with local UI. Use it for coding on an Azure VM (SSH), in Linux on Windows (WSL), or inside a Docker container.
+> Using VS Code on your laptop while the code runs on another machine. Remote extensions install a small server on the target; you edit and run there with local UI.
+>
+> Use it for coding on an Azure VM (SSH), in Linux on Windows (WSL), or inside a Docker container.
 
 | Target | Steps |
 |---|---|
@@ -448,7 +486,9 @@ The green / blue button at the bottom left shows the current remote and opens th
 
 ## 20. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Rename safely
 

@@ -67,7 +67,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Headings
 
-> Titles that structure a document into levels, from H1 (page title) to H6. Start a line with 1 to 6 `#` characters followed by a space. Use it in every README or note: one H1 for the title, H2 for main sections, H3 for sub-sections.
+> Titles that structure a document into levels, from H1 (page title) to H6. Start a line with 1 to 6 `#` characters followed by a space.
+>
+> Use it in every README or note: one H1 for the title, H2 for main sections, H3 for sub-sections.
 
 ### ATX style (`#`) - recommended
 
@@ -99,7 +101,9 @@ Heading 2
 
 ## 2. Paragraphs and Line Breaks
 
-> Blocks of text and how Markdown decides where a new line starts. Separate paragraphs with an empty line; force a line break inside a paragraph with `<br>`. Use this when your text shows up as one long line on GitHub even though you pressed Enter.
+> Blocks of text and how Markdown decides where a new line starts. Separate paragraphs with an empty line; force a line break inside a paragraph with `<br>`.
+>
+> Use this when your text shows up as one long line on GitHub even though you pressed Enter.
 
 ```markdown
 First paragraph.
@@ -114,7 +118,9 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 
 ## 3. Text Formatting
 
-> Inline styles such as bold, italic, strikethrough and inline code. Wrap words in `**`, `*`, `~~` or backticks. Use it for highlight a key word, a warning, or a command name inside a sentence.
+> Inline styles such as bold, italic, strikethrough and inline code. Wrap words in `**`, `*`, `~~` or backticks.
+>
+> Use it for highlight a key word, a warning, or a command name inside a sentence.
 
 | Result | Syntax |
 |---|---|
@@ -128,7 +134,9 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 
 ## 4. Lists
 
-> Bullet lists and numbered lists, optionally nested. Start lines with `-` (bullets) or `1.` (numbers); indent to nest. Use it for steps to follow (numbered) or a set of features / requirements (bullets).
+> Bullet lists and numbered lists, optionally nested. Start lines with `-` (bullets) or `1.` (numbers); indent to nest.
+>
+> Use it for steps to follow (numbered) or a set of features / requirements (bullets).
 
 ### Unordered
 
@@ -150,7 +158,9 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 
 ## 5. Links
 
-> Clickable references to websites, other files or headings in the same file. `[text](target)` where target is a URL, a relative file path or `#heading-anchor`. Use it for point to official docs, link between your guides, or build a contents list.
+> Clickable references to websites, other files or headings in the same file. `[text](target)` where target is a URL, a relative file path or `#heading-anchor`.
+>
+> Use it for point to official docs, link between your guides, or build a contents list.
 
 ```markdown
 [Link text](https://example.com)
@@ -162,7 +172,9 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 
 ## 6. Images
 
-> Pictures shown inside the document. Same as a link with `!` in front: `![alt](path)`; use HTML `<img>` to resize. Use it for screenshots in a README, architecture diagrams, chart results.
+> Pictures shown inside the document. Same as a link with `!` in front: `![alt](path)`; use HTML `<img>` to resize.
+>
+> Use it for screenshots in a README, architecture diagrams, chart results.
 
 ```markdown
 ![Alt text](path/to/image.png)
@@ -177,7 +189,9 @@ Resize (HTML):
 
 ## 7. Code
 
-> Text shown in a monospace font without formatting, with syntax highlighting. Single backticks for inline code; triple backticks plus a language name for blocks. Use it in any command, file name or code snippet someone might copy.
+> Text shown in a monospace font without formatting, with syntax highlighting. Single backticks for inline code; triple backticks plus a language name for blocks.
+>
+> Use it in any command, file name or code snippet someone might copy.
 
 ### Inline
 
@@ -199,7 +213,9 @@ Common language names: `python`, `bash`, `powershell`, `json`, `sql`, `html`, `c
 
 ## 8. Blockquotes
 
-> Indented quote block, plus GitHub coloured alert boxes. Start lines with `>`; add `[!NOTE]`, `[!WARNING]` etc. on the first line for alerts. Use it for quoting someone, or making an important note / warning stand out.
+> Indented quote block, plus GitHub coloured alert boxes. Start lines with `>`; add `[!NOTE]`, `[!WARNING]` etc. on the first line for alerts.
+>
+> Use it for quoting someone, or making an important note / warning stand out.
 
 ```markdown
 > This is a quote.
@@ -221,7 +237,9 @@ Other types: `[!TIP]`, `[!IMPORTANT]`, `[!CAUTION]`.
 
 ## 9. Tables
 
-> Rows and columns of data. Separate cells with `|` and put a `|---|` line under the header row. Use it for comparisons, option lists, command-vs-meaning references (like this guide).
+> Rows and columns of data. Separate cells with `|` and put a `|---|` line under the header row.
+>
+> Use it for comparisons, option lists, command-vs-meaning references (like this guide).
 
 ```markdown
 | Left | Center | Right |
@@ -235,7 +253,9 @@ Other types: `[!TIP]`, `[!IMPORTANT]`, `[!CAUTION]`.
 
 ## 10. Horizontal Rule
 
-> A horizontal divider line. Three dashes `---` on their own line with a blank line above. Use it for visually separate the contents list from the body, or big parts of a document.
+> A horizontal divider line. Three dashes `---` on their own line with a blank line above.
+>
+> Use it for visually separate the contents list from the body, or big parts of a document.
 
 ```markdown
 ---
@@ -245,7 +265,9 @@ Put a blank line above it, otherwise the text above becomes an H2 (Setext style)
 
 ## 11. Task Lists
 
-> Checkboxes that render as ticked / unticked on GitHub. `- [ ]` for open, `- [x]` for done. Use it for to-do lists in a README, PR description or issue.
+> Checkboxes that render as ticked / unticked on GitHub. `- [ ]` for open, `- [x]` for done.
+>
+> Use it for to-do lists in a README, PR description or issue.
 
 ```markdown
 - [x] Done
@@ -254,7 +276,9 @@ Put a blank line above it, otherwise the text above becomes an H2 (Setext style)
 
 ## 12. Escaping Characters
 
-> Showing a Markdown symbol literally instead of it formatting text. Put a backslash `\` before the symbol. Use this when you need a literal `*`, `#` or `_` (for example in a file name) and it keeps turning into formatting.
+> Showing a Markdown symbol literally instead of it formatting text. Put a backslash `\` before the symbol.
+>
+> Use this when you need a literal `*`, `#` or `_` (for example in a file name) and it keeps turning into formatting.
 
 Put a backslash before a special character to show it literally:
 
@@ -267,7 +291,9 @@ Characters that can be escaped: `` \ ` * _ { } [ ] ( ) # + - . ! | ``
 
 ## 13. Table of Contents (Anchor Links)
 
-> Links that jump to a heading in the same document. GitHub creates an anchor from each heading: lowercase, spaces to `-`, punctuation removed. Use it for long documents: a clickable contents list at the top (every guide here uses one).
+> Links that jump to a heading in the same document. GitHub creates an anchor from each heading: lowercase, spaces to `-`, punctuation removed.
+>
+> Use it for long documents: a clickable contents list at the top (every guide here uses one).
 
 Heading anchors are built from the heading text: lowercase, spaces become `-`, punctuation is removed.
 
@@ -279,7 +305,9 @@ Heading anchors are built from the heading text: lowercase, spaces become `-`, p
 
 ## 14. Collapsible Section (GitHub)
 
-> A section that is hidden until the reader clicks it. HTML `<details>` with a `<summary>` title; leave a blank line before the content. Use it for long logs, optional details, or FAQ answers that would clutter the page.
+> A section that is hidden until the reader clicks it. HTML `<details>` with a `<summary>` title; leave a blank line before the content.
+>
+> Use it for long logs, optional details, or FAQ answers that would clutter the page.
 
 ```html
 <details>
@@ -292,7 +320,9 @@ Hidden content here (leave a blank line after summary).
 
 ## 15. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Setup section
 

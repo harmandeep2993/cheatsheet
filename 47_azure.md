@@ -111,7 +111,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> How `az` commands are built and what the common flags mean. `az <group> [<sub-group>] <action> --flags`; most flags work the same across all services. Use this when you see `az containerapp create -g rg -n api --image ... --ingress external` and want to know what each part does.
+> How `az` commands are built and what the common flags mean. `az <group> [<sub-group>] <action> --flags`; most flags work the same across all services.
+>
+> Use this when you see `az containerapp create -g rg -n api --image ... --ingress external` and want to know what each part does.
 
 ```text
 az  storage  blob  upload  --account-name stsales  -c data  -n sales.csv  -f ./sales.csv  --auth-mode login
@@ -168,7 +170,9 @@ Help anywhere: `az storage blob upload --help`, `az find "container app"` (examp
 
 ## 1. Install, Log In, Cloud Shell
 
-> Getting the Azure CLI and signing in. Install `az`, then `az login` opens the browser; Cloud Shell in the Portal has `az` pre-installed. Use it as the first step on any machine; Cloud Shell when you cannot install anything locally.
+> Getting the Azure CLI and signing in. Install `az`, then `az login` opens the browser; Cloud Shell in the Portal has `az` pre-installed.
+>
+> Use it as the first step on any machine; Cloud Shell when you cannot install anything locally.
 
 ```powershell
 winget install -e --id Microsoft.AzureCLI       # Windows
@@ -186,7 +190,9 @@ az logout
 
 ## 2. Subscriptions and Account
 
-> Choosing which subscription your commands act on. `az account` lists and switches subscriptions; the selected one is used by every later command. Use this when you have several subscriptions (work, personal, trial) or resources "disappear" (wrong subscription).
+> Choosing which subscription your commands act on. `az account` lists and switches subscriptions; the selected one is used by every later command.
+>
+> Use this when you have several subscriptions (work, personal, trial) or resources "disappear" (wrong subscription).
 
 ```bash
 az account show -o table                        # current subscription
@@ -213,7 +219,9 @@ Tip: one RG per app per environment (`rg-sales-dev`, `rg-sales-prod`).
 
 ## 4. Regions, Providers and Quotas
 
-> Where resources run, which services are enabled, and how much you are allowed to create. Regions are chosen per resource; providers must be registered once per subscription; quotas limit vCPUs etc. Use it to answer questions like "Not available in region", "provider not registered" or "quota exceeded" errors.
+> Where resources run, which services are enabled, and how much you are allowed to create. Regions are chosen per resource; providers must be registered once per subscription; quotas limit vCPUs etc.
+>
+> Use it to answer questions like "Not available in region", "provider not registered" or "quota exceeded" errors.
 
 ```bash
 az account list-locations --query "[].name" -o tsv        # all regions
@@ -230,7 +238,9 @@ Choose a region close to your users; EU data: `swedencentral`, `westeurope`, `no
 
 ## 5. Output Formats and --query
 
-> Controlling how results look and picking only the fields you need. `-o` changes the format; `--query` uses JMESPath to filter and reshape the JSON. Use it for readable tables for humans (`-o table`), single values for scripts (`-o tsv`).
+> Controlling how results look and picking only the fields you need. `-o` changes the format; `--query` uses JMESPath to filter and reshape the JSON.
+>
+> Use it for readable tables for humans (`-o table`), single values for scripts (`-o tsv`).
 
 | `-o` | Result |
 |---|---|
@@ -257,7 +267,9 @@ az vm list -d --query "[].{Name:name, State:powerState, IP:publicIps}" -o table
 
 ## 6. Virtual Machines
 
-> Full computers in the cloud where you control the OS (IaaS). Pick an image, size and login method; Azure creates disk, network card, public IP and NSG with it. Use it for custom software, GPU workloads, LLM hosting, anything needing full OS control. Full walkthrough: [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md).
+> Full computers in the cloud where you control the OS (IaaS). Pick an image, size and login method; Azure creates disk, network card, public IP and NSG with it.
+>
+> Use it for custom software, GPU workloads, LLM hosting, anything needing full OS control. Full walkthrough: [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md).
 
 ```bash
 az vm create -g rg-demo -n myvm \
@@ -279,7 +291,9 @@ az vm delete -g rg-demo -n myvm --yes           # disk / IP / NIC may remain: de
 
 ## 7. Storage Accounts and Blobs
 
-> Cheap, durable storage for files (blobs), plus queues, tables and file shares. A storage account holds containers; containers hold blobs (files). Access with Entra login + RBAC or keys / SAS. Use it for data files for analysis, model files, backups, images, static websites.
+> Cheap, durable storage for files (blobs), plus queues, tables and file shares. A storage account holds containers; containers hold blobs (files). Access with Entra login + RBAC or keys / SAS.
+>
+> Use it for data files for analysis, model files, backups, images, static websites.
 
 ```bash
 az storage account create -n stsalesdev123 -g rg-demo -l swedencentral --sku Standard_LRS
@@ -305,7 +319,9 @@ Storage account names: 3 to 24 lowercase letters and digits, globally unique. Ro
 
 ## 8. Container Registry (ACR)
 
-> Private Docker image storage in Azure. Push images with Docker, or let ACR build them in the cloud with `az acr build`. Use it for storing images for Container Apps, App Service or VMs. Docker basics: [42 - Docker](42_docker.md).
+> Private Docker image storage in Azure. Push images with Docker, or let ACR build them in the cloud with `az acr build`.
+>
+> Use it for storing images for Container Apps, App Service or VMs. Docker basics: [42 - Docker](42_docker.md).
 
 ```bash
 az acr create -g rg-demo -n acrsalesdev --sku Basic
@@ -321,7 +337,9 @@ az acr repository show-tags -n acrsalesdev --repository myapi -o table
 
 ## 9. Container Apps
 
-> Serverless containers: run any Docker image with HTTPS, autoscaling and scale-to-zero, without managing servers or Kubernetes. Apps run in an environment; set image, port and ingress; Azure provides a public HTTPS URL. Use it for APIs (FastAPI), web apps, background workers. Usually the easiest way to run a container in Azure.
+> Serverless containers: run any Docker image with HTTPS, autoscaling and scale-to-zero, without managing servers or Kubernetes. Apps run in an environment; set image, port and ingress; Azure provides a public HTTPS URL.
+>
+> Use it for APIs (FastAPI), web apps, background workers. Usually the easiest way to run a container in Azure.
 
 ```bash
 az extension add --name containerapp --upgrade
@@ -351,7 +369,9 @@ az containerapp update -n sales-api -g rg-demo --set-env-vars API_KEY=secretref:
 
 ## 10. App Service (Web Apps)
 
-> Managed hosting for web apps from code or containers (PaaS). An App Service plan (the server size) hosts one or more web apps; deploy code, Azure runs it. Use it for classic web apps / APIs where you deploy code without a Dockerfile, with deployment slots, custom domains and always-on.
+> Managed hosting for web apps from code or containers (PaaS). An App Service plan (the server size) hosts one or more web apps; deploy code, Azure runs it.
+>
+> Use it for classic web apps / APIs where you deploy code without a Dockerfile, with deployment slots, custom domains and always-on.
 
 ```bash
 # Quickest: from the project folder
@@ -372,7 +392,9 @@ App settings become environment variables inside the app. `F1` free tier exists 
 
 ## 11. Azure Functions
 
-> Serverless functions triggered by HTTP, timers, queues or blob uploads; pay per execution. Write small functions locally with Core Tools, then publish to a Function App. Use it for scheduled jobs (nightly data pull), reacting to file uploads, small webhooks.
+> Serverless functions triggered by HTTP, timers, queues or blob uploads; pay per execution. Write small functions locally with Core Tools, then publish to a Function App.
+>
+> Use it for scheduled jobs (nightly data pull), reacting to file uploads, small webhooks.
 
 ```bash
 npm install -g azure-functions-core-tools@4     # or: winget install Microsoft.Azure.FunctionsCoreTools
@@ -389,7 +411,9 @@ func azure functionapp publish fn-sales-dev
 
 ## 12. Key Vault (Secrets)
 
-> Secure storage for secrets (API keys, passwords), keys and certificates. Store secrets once; apps read them at runtime with their managed identity; access controlled by RBAC and logged. Use it in every secret in production, instead of `.env` files or hard-coded values.
+> Secure storage for secrets (API keys, passwords), keys and certificates. Store secrets once; apps read them at runtime with their managed identity; access controlled by RBAC and logged.
+>
+> Use it in every secret in production, instead of `.env` files or hard-coded values.
 
 ```bash
 az keyvault create -n kv-sales-dev -g rg-demo -l swedencentral     # RBAC authorization is the default
@@ -407,7 +431,9 @@ Key Vault names are globally unique (3 to 24 characters). Soft delete keeps dele
 
 ## 13. Databases
 
-> Managed databases: PostgreSQL, MySQL, Azure SQL, Cosmos DB. Azure runs the server (backups, patching, HA); you connect with normal tools (psql, SQLAlchemy). Use it for app data that must persist. SQL basics: [19 - SQL](19_sql.md).
+> Managed databases: PostgreSQL, MySQL, Azure SQL, Cosmos DB. Azure runs the server (backups, patching, HA); you connect with normal tools (psql, SQLAlchemy).
+>
+> Use it for app data that must persist. SQL basics: [19 - SQL](19_sql.md).
 
 ```bash
 # PostgreSQL Flexible Server (password from an environment variable, not typed in the command)
@@ -432,7 +458,9 @@ psql "host=pg-sales-dev.postgres.database.azure.com port=5432 dbname=salesdb use
 
 ## 14. Networking
 
-> Virtual networks, subnets, firewalls and IP addresses. A VNet is your private network; NSGs filter traffic; resources get private and optionally public IPs. Use it for securing VMs and databases, connecting services privately, opening ports.
+> Virtual networks, subnets, firewalls and IP addresses. A VNet is your private network; NSGs filter traffic; resources get private and optionally public IPs.
+>
+> Use it for securing VMs and databases, connecting services privately, opening ports.
 
 ```bash
 az network vnet create -g rg-demo -n vnet-demo --address-prefix 10.0.0.0/16 \
@@ -448,7 +476,9 @@ Never open SSH (22), RDP (3389) or database ports to `*`. Limit to your IP (see 
 
 ## 15. Identity and Access (RBAC)
 
-> Controlling who can do what on which resources. A role assignment = **who** (user, group, identity) + **role** (set of permissions) + **scope** (subscription, RG or resource). Use it for giving a teammate access, letting an app read storage, fixing "AuthorizationFailed".
+> Controlling who can do what on which resources. A role assignment = **who** (user, group, identity) + **role** (set of permissions) + **scope** (subscription, RG or resource).
+>
+> Use it for giving a teammate access, letting an app read storage, fixing "AuthorizationFailed".
 
 | Role | Can |
 |---|---|
@@ -471,7 +501,9 @@ Give the smallest role on the smallest scope that works (least privilege).
 
 ## 16. Managed Identity and Service Principals
 
-> Identities for apps and automation instead of personal accounts or stored passwords. Managed identity: Azure creates and rotates credentials for a resource. Service principal: an app identity with a secret or certificate, for outside Azure (CI). Use it for an app in Azure accessing storage / Key Vault (managed identity); GitHub Actions deploying to Azure (service principal / federated credential).
+> Identities for apps and automation instead of personal accounts or stored passwords. Managed identity: Azure creates and rotates credentials for a resource. Service principal: an app identity with a secret or certificate, for outside Azure (CI).
+>
+> Use it for an app in Azure accessing storage / Key Vault (managed identity); GitHub Actions deploying to Azure (service principal / federated credential).
 
 ```bash
 # Managed identity for a container app, then allow it to read secrets
@@ -487,7 +519,9 @@ az ad sp create-for-rbac --name sp-sales-ci --role Contributor \
 
 ## 17. Azure SDK for Python
 
-> Python libraries to use Azure services from code. `DefaultAzureCredential` tries your `az login` locally and the managed identity in Azure, so the same code works in both. Use it for reading blobs, secrets or databases from a Python app or notebook.
+> Python libraries to use Azure services from code. `DefaultAzureCredential` tries your `az login` locally and the managed identity in Azure, so the same code works in both.
+>
+> Use it for reading blobs, secrets or databases from a Python app or notebook.
 
 ```powershell
 pip install azure-identity azure-storage-blob azure-keyvault-secrets
@@ -509,7 +543,9 @@ data = blobs.get_blob_client("data", "sales.csv").download_blob().readall()
 
 ## 18. Azure OpenAI
 
-> OpenAI models (GPT family, embeddings) hosted in Azure, with Azure security and regions. Create an Azure OpenAI resource, deploy a model under a deployment name, call it with the `openai` Python package. Use it for LLM features where data must stay in Azure / EU, or enterprise requirements. For self-hosted open models, see [48 - Azure VM + Ollama](48_azure-vm-ollama.md).
+> OpenAI models (GPT family, embeddings) hosted in Azure, with Azure security and regions. Create an Azure OpenAI resource, deploy a model under a deployment name, call it with the `openai` Python package.
+>
+> Use it for LLM features where data must stay in Azure / EU, or enterprise requirements. For self-hosted open models, see [48 - Azure VM + Ollama](48_azure-vm-ollama.md).
 
 ```bash
 az cognitiveservices account create -n aoai-sales -g rg-demo -l swedencentral --kind OpenAI --sku S0
@@ -541,7 +577,9 @@ Model names, versions and API versions change often: check `list-models` and the
 
 ## 19. Monitoring and Logs
 
-> Seeing what happened (activity log), how resources perform (metrics) and what apps log. Activity log records management actions; Azure Monitor collects metrics; Application Insights / Log Analytics store app logs and traces. Use it to answer questions like "Who deleted this?", "why is the app slow?", debugging production errors.
+> Seeing what happened (activity log), how resources perform (metrics) and what apps log. Activity log records management actions; Azure Monitor collects metrics; Application Insights / Log Analytics store app logs and traces.
+>
+> Use it to answer questions like "Who deleted this?", "why is the app slow?", debugging production errors.
 
 ```bash
 az monitor activity-log list -g rg-demo --offset 1d -o table           # who did what, last day
@@ -561,7 +599,9 @@ configure_azure_monitor()       # reads APPLICATIONINSIGHTS_CONNECTION_STRING fr
 
 ## 20. Cost Management
 
-> Tracking and limiting what you spend. Cost Management in the Portal shows spend per resource / RG; budgets send alerts; stop or delete idle resources. Use it for from day one; cloud bills grow quietly.
+> Tracking and limiting what you spend. Cost Management in the Portal shows spend per resource / RG; budgets send alerts; stop or delete idle resources.
+>
+> Use it for from day one; cloud bills grow quietly.
 
 - Portal -> **Cost Management** -> Cost analysis (group by resource group) and **Budgets** (alert at 50%, 80%, 100%).
 - Use the **Pricing calculator** (azure.microsoft.com/pricing/calculator) before creating big resources.
@@ -585,7 +625,9 @@ az group delete -n rg-demo --yes                # the only way to be sure nothin
 
 ## 21. Tags, Locks and Cleanup
 
-> Labels for organising / billing, and locks that prevent accidental deletion. Tags are key=value pairs on resources; locks block delete (or all changes) until removed. Use it for tags on everything (owner, env, project); locks on production resources.
+> Labels for organising / billing, and locks that prevent accidental deletion. Tags are key=value pairs on resources; locks block delete (or all changes) until removed.
+>
+> Use it for tags on everything (owner, env, project); locks on production resources.
 
 ```bash
 az group update -n rg-demo --tags env=dev owner=harman project=sales
@@ -601,7 +643,9 @@ az group list --query "[?tags.env=='dev'].name" -o tsv     # find dev groups to 
 
 ## 22. Infrastructure as Code (Bicep)
 
-> Describing Azure resources in files instead of clicking or running many commands. Bicep files declare resources; `az deployment group create` makes Azure match the file (repeatable, reviewable in Git). Use it for anything you will create more than once (dev / test / prod), or want to review in pull requests.
+> Describing Azure resources in files instead of clicking or running many commands. Bicep files declare resources; `az deployment group create` makes Azure match the file (repeatable, reviewable in Git).
+>
+> Use it for anything you will create more than once (dev / test / prod), or want to review in pull requests.
 
 ```bicep
 // main.bicep
@@ -630,7 +674,9 @@ Terraform is a popular multi-cloud alternative; the Azure Developer CLI (`azd up
 
 ## 23. End to End: Deploy a FastAPI Container
 
-> The full path from local FastAPI project to a public HTTPS API. Resource group -> registry build -> container app -> test URL -> clean up. Use it for shipping an API from [39 - FastAPI](39_fastapi.md) with the Dockerfile from [42 - Docker](42_docker.md).
+> The full path from local FastAPI project to a public HTTPS API. Resource group -> registry build -> container app -> test URL -> clean up.
+>
+> Use it for shipping an API from [39 - FastAPI](39_fastapi.md) with the Dockerfile from [42 - Docker](42_docker.md).
 
 ```bash
 RG=rg-sales-api; LOC=swedencentral; ACR=acrsalesapi$RANDOM; APP=sales-api
@@ -659,7 +705,9 @@ For production, prefer a managed identity with the `AcrPull` role over registry 
 
 ## 24. Which Service to Use
 
-> A quick mapping from need to Azure service. Start with the most managed option; go lower (VMs) only when you need the control. Use it for planning where to run a project.
+> A quick mapping from need to Azure service. Start with the most managed option; go lower (VMs) only when you need the control.
+>
+> Use it for planning where to run a project.
 
 | Need | Service |
 |---|---|
@@ -680,7 +728,9 @@ For production, prefer a managed identity with the `AcrPull` role over registry 
 
 ## 25. Naming Conventions
 
-> A consistent pattern for resource names. `<type prefix>-<app>-<env>[-<region>]`; some types forbid dashes. Use it in every resource; makes costs, logs and cleanup easy to follow.
+> A consistent pattern for resource names. `<type prefix>-<app>-<env>[-<region>]`; some types forbid dashes.
+>
+> Use it in every resource; makes costs, logs and cleanup easy to follow.
 
 | Resource | Prefix | Example |
 |---|---|---|
@@ -714,7 +764,9 @@ For production, prefer a managed identity with the `AcrPull` role over registry 
 
 ## 27. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Inventory
 

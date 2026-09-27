@@ -73,7 +73,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The meaning of the arguments and parameters used in the seaborn calls below. Explains how a call is built, then lists each parameter with its meaning and example. Use this when you see `sns.catplot(data=tips, x="day", y="tip", kind="box", col="time")` and want to know what each argument does.
+> The meaning of the arguments and parameters used in the seaborn calls below. Explains how a call is built, then lists each parameter with its meaning and example.
+>
+> Use this when you see `sns.catplot(data=tips, x="day", y="tip", kind="box", col="time")` and want to know what each argument does.
 
 ### How a function call is built
 
@@ -131,7 +133,9 @@ sns.boxplot(data=tips, x="day", y="tip", hue="sex")
 
 ## 1. Install and Import
 
-> Installing and importing seaborn. `pip install seaborn`, then `import seaborn as sns` (plus matplotlib to show / save). Use it for statistical charts from DataFrames with less code than matplotlib.
+> Installing and importing seaborn. `pip install seaborn`, then `import seaborn as sns` (plus matplotlib to show / save).
+>
+> Use it for statistical charts from DataFrames with less code than matplotlib.
 
 ```powershell
 pip install seaborn
@@ -145,7 +149,9 @@ import pandas as pd
 
 ## 2. Built-in Datasets
 
-> Sample datasets that ship with seaborn. `sns.load_dataset(name)` downloads a small DataFrame. Use it for practising, testing a plot type, or reproducing documentation examples.
+> Sample datasets that ship with seaborn. `sns.load_dataset(name)` downloads a small DataFrame.
+>
+> Use it for practising, testing a plot type, or reproducing documentation examples.
 
 ```python
 sns.get_dataset_names()             # list available datasets (needs internet)
@@ -181,7 +187,9 @@ plt.show()
 
 ## 4. Theme and Style
 
-> Global look: background, grid, font size, colours. `sns.set_theme(style=..., context=..., palette=...)` affects all following plots. Use it at the start of a notebook to make all charts consistent and presentation-ready.
+> Global look: background, grid, font size, colours. `sns.set_theme(style=..., context=..., palette=...)` affects all following plots.
+>
+> Use it at the start of a notebook to make all charts consistent and presentation-ready.
 
 ```python
 sns.set_theme()                                     # default seaborn look
@@ -193,7 +201,9 @@ sns.despine()                                       # remove top and right borde
 
 ## 5. Distribution Plots
 
-> How values of one variable are spread. `histplot`, `kdeplot`, `ecdfplot`; `hue` compares groups. Use it for checking skew, outliers and differences between groups before modelling.
+> How values of one variable are spread. `histplot`, `kdeplot`, `ecdfplot`; `hue` compares groups.
+>
+> Use it for checking skew, outliers and differences between groups before modelling.
 
 One variable: how are values spread?
 
@@ -209,7 +219,9 @@ sns.displot(data=tips, x="total_bill", col="time", kde=True)            # figure
 
 ## 6. Categorical Plots
 
-> Comparing a numeric value across categories. Counts (`countplot`), estimates (`barplot`), distributions (`boxplot`, `violinplot`), points (`stripplot`). Use it to answer questions like "Which day has the highest bills?", "how do salaries differ by department?".
+> Comparing a numeric value across categories. Counts (`countplot`), estimates (`barplot`), distributions (`boxplot`, `violinplot`), points (`stripplot`).
+>
+> Use it to answer questions like "Which day has the highest bills?", "how do salaries differ by department?".
 
 One category axis and one numeric axis.
 
@@ -244,7 +256,9 @@ Horizontal: swap `x` and `y` (category on `y`).
 
 ## 7. Relationship Plots
 
-> Relationship between two numeric variables. `scatterplot` for points, `lineplot` for trends (with confidence band). Use it for correlation checks, time series by group.
+> Relationship between two numeric variables. `scatterplot` for points, `lineplot` for trends (with confidence band).
+>
+> Use it for correlation checks, time series by group.
 
 Two numeric variables.
 
@@ -259,7 +273,9 @@ sns.relplot(data=df, x="month", y="sales", kind="line")
 
 ## 8. Regression Plots
 
-> Scatter plot with a fitted trend line. `regplot` / `lmplot` fit a linear (or polynomial) model and draw it. Use it for quick visual check of a linear relationship before building a model.
+> Scatter plot with a fitted trend line. `regplot` / `lmplot` fit a linear (or polynomial) model and draw it.
+>
+> Use it for quick visual check of a linear relationship before building a model.
 
 ```python
 sns.regplot(data=tips, x="total_bill", y="tip")             # scatter + fit line
@@ -271,7 +287,9 @@ sns.residplot(data=tips, x="total_bill", y="tip")           # residuals
 
 ## 9. Heatmap and Correlation
 
-> Colour-coded matrix of values. `sns.heatmap(matrix, annot=True)`; often on `df.corr()` or a pivot table. Use it for correlation overview of many columns, or a two-category summary table.
+> Colour-coded matrix of values. `sns.heatmap(matrix, annot=True)`; often on `df.corr()` or a pivot table.
+>
+> Use it for correlation overview of many columns, or a two-category summary table.
 
 ```python
 corr = tips.corr(numeric_only=True)
@@ -286,7 +304,9 @@ sns.clustermap(corr, cmap="coolwarm")                       # clustered heatmap
 
 ## 10. Pair Plot and Joint Plot
 
-> Many relationships in one view. `pairplot` draws every pair of numeric columns; `jointplot` one pair with margins. Use it for a first exploration of a new dataset with several numeric columns.
+> Many relationships in one view. `pairplot` draws every pair of numeric columns; `jointplot` one pair with margins.
+>
+> Use it for a first exploration of a new dataset with several numeric columns.
 
 ```python
 sns.pairplot(iris, hue="species")                           # every numeric pair
@@ -299,7 +319,9 @@ sns.jointplot(data=tips, x="total_bill", y="tip", kind="reg")   # scatter, kde, 
 
 ## 11. Figure-level vs Axes-level
 
-> The two kinds of seaborn functions and how they differ. Axes-level draw into one `ax`; figure-level create their own figure and support facets. Use it for deciding between `ax=` (combine with subplots) and `col=` / `row=` (facets).
+> The two kinds of seaborn functions and how they differ. Axes-level draw into one `ax`; figure-level create their own figure and support facets.
+>
+> Use it for deciding between `ax=` (combine with subplots) and `col=` / `row=` (facets).
 
 | Figure-level (own figure, supports `col` / `row`) | Axes-level (draws into one `ax`) |
 |---|---|
@@ -324,7 +346,9 @@ g.figure.suptitle("Tips by Day", y=1.03)
 
 ## 12. Facets (Grid of Plots)
 
-> A grid of the same plot split by categories. `col=` / `row=` in figure-level functions, or `FacetGrid` for full control. Use it for comparing a pattern across groups (lunch vs dinner, smokers vs non-smokers).
+> A grid of the same plot split by categories. `col=` / `row=` in figure-level functions, or `FacetGrid` for full control.
+>
+> Use it for comparing a pattern across groups (lunch vs dinner, smokers vs non-smokers).
 
 ```python
 sns.relplot(data=tips, x="total_bill", y="tip", col="time", row="smoker")
@@ -337,7 +361,9 @@ g.add_legend()
 
 ## 13. Colors and Palettes
 
-> Choosing colours. Named palettes via `palette=` or `set_palette`; match the palette type to the data. Use it for categories (qualitative), low-to-high (sequential), around zero (diverging).
+> Choosing colours. Named palettes via `palette=` or `set_palette`; match the palette type to the data.
+>
+> Use it for categories (qualitative), low-to-high (sequential), around zero (diverging).
 
 ```python
 sns.color_palette()                                 # current palette
@@ -355,7 +381,9 @@ sns.barplot(data=tips, x="day", y="tip", color="steelblue")    # one color
 
 ## 14. Customize with Matplotlib
 
-> Fine-tuning seaborn charts with matplotlib. Axes-level functions return `ax`; use `ax.set_title`, `ax.bar_label` and so on. Use it for titles, rotated labels, value labels, moving the legend.
+> Fine-tuning seaborn charts with matplotlib. Axes-level functions return `ax`; use `ax.set_title`, `ax.bar_label` and so on.
+>
+> Use it for titles, rotated labels, value labels, moving the legend.
 
 Axes-level functions return a matplotlib `ax`:
 
@@ -374,7 +402,9 @@ See [20 - Matplotlib](20_matplotlib.md) for more options.
 
 ## 15. Save a Figure
 
-> Writing seaborn charts to files. `ax.figure.savefig` (axes-level) or `g.savefig` (figure-level). Use it for charts for reports, slides and READMEs.
+> Writing seaborn charts to files. `ax.figure.savefig` (axes-level) or `g.savefig` (figure-level).
+>
+> Use it for charts for reports, slides and READMEs.
 
 ```python
 # Axes-level
@@ -388,7 +418,9 @@ g.savefig("pairplot.png", dpi=300)
 
 ## 16. Which Plot to Use
 
-> A lookup table from question to plot type. Find your question on the left, use the plot on the right. Use this when you know what you want to show but not which chart fits.
+> A lookup table from question to plot type. Find your question on the left, use the plot on the right.
+>
+> Use this when you know what you want to show but not which chart fits.
 
 | Question | Plot |
 |---|---|
@@ -416,7 +448,9 @@ g.savefig("pairplot.png", dpi=300)
 
 ## 18. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Distribution by group
 

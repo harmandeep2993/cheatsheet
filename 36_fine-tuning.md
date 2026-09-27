@@ -109,7 +109,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Decision Checklist
 
-> Questions to answer before fine-tuning. If any answer is "no", fix that first. Use it before spending time on data and GPUs.
+> Questions to answer before fine-tuning. If any answer is "no", fix that first.
+>
+> Use it before spending time on data and GPUs.
 
 - [ ] Prompt engineering with a strong model has been tried and measured
 - [ ] The knowledge is stable (not changing weekly) or is style / format, not facts
@@ -120,7 +122,9 @@ Where to read the latest, authoritative documentation:
 
 ## 2. Types of Fine-tuning
 
-> Different training objectives. Each uses a different kind of data. Use it for match the method to the problem.
+> Different training objectives. Each uses a different kind of data.
+>
+> Use it for match the method to the problem.
 
 | Method | Data | Teaches |
 |---|---|---|
@@ -132,7 +136,9 @@ Where to read the latest, authoritative documentation:
 
 ## 3. Full Fine-tuning vs LoRA vs QLoRA
 
-> How much of the model you train. Full updates all weights; LoRA trains small adapters; QLoRA does LoRA on a 4-bit base to save more memory. Use it for loRA / QLoRA for almost all practical projects.
+> How much of the model you train. Full updates all weights; LoRA trains small adapters; QLoRA does LoRA on a 4-bit base to save more memory.
+>
+> Use it for loRA / QLoRA for almost all practical projects.
 
 | | Full | LoRA | QLoRA |
 |---|---|---|---|
@@ -143,7 +149,9 @@ Where to read the latest, authoritative documentation:
 
 ## 4. Preparing the Dataset
 
-> Training examples in the chat format the model expects. JSONL, one conversation per line with `messages` (system / user / assistant); the model learns to produce the assistant turns. Use it for SFT with modern chat models.
+> Training examples in the chat format the model expects. JSONL, one conversation per line with `messages` (system / user / assistant); the model learns to produce the assistant turns.
+>
+> Use it for SFT with modern chat models.
 
 ```text
 {"messages": [{"role": "system", "content": "You convert support emails to JSON tickets."}, {"role": "user", "content": "Hi, charged twice for order A-1042!"}, {"role": "assistant", "content": "{\"category\": \"billing\", \"order_id\": \"A-1042\", \"urgency\": 4}"}]}
@@ -169,7 +177,9 @@ Ways to get data: historical human-written outputs, expert labelling, outputs of
 
 ## 5. Data Quality Rules
 
-> What makes a good fine-tuning dataset. Quality beats quantity; the model copies everything, including mistakes. Use it for building and reviewing the dataset.
+> What makes a good fine-tuning dataset. Quality beats quantity; the model copies everything, including mistakes.
+>
+> Use it for building and reviewing the dataset.
 
 - **Correct**: every assistant answer is exactly what you want the model to produce.
 - **Consistent**: same format, style and rules across examples.
@@ -181,7 +191,9 @@ Ways to get data: historical human-written outputs, expert labelling, outputs of
 
 ## 6. Train / Validation / Test Split
 
-> Separating data for training, tuning and final evaluation. Typical 80 / 10 / 10; the test set is never used during training decisions. Use it in every fine-tuning run.
+> Separating data for training, tuning and final evaluation. Typical 80 / 10 / 10; the test set is never used during training decisions.
+>
+> Use it in every fine-tuning run.
 
 ```python
 from datasets import load_dataset
@@ -194,7 +206,9 @@ train, val, test = splits["train"], val_test["train"], val_test["test"]
 
 ## 7. Hardware and Cost
 
-> Where to run training. Match model size and method to GPU memory; rent GPUs by the hour. Use it for planning a run.
+> Where to run training. Match model size and method to GPU memory; rent GPUs by the hour.
+>
+> Use it for planning a run.
 
 | Model size | Method | Typical GPU |
 |---|---|---|
@@ -207,7 +221,9 @@ Options: Google Colab / Kaggle, cloud GPU VMs ([47 - Azure](47_azure.md), [48](4
 
 ## 8. SFT with LoRA using TRL
 
-> A complete LoRA fine-tuning script with Hugging Face TRL and PEFT. Load the chat-format dataset, configure LoRA, train with `SFTTrainer`, save the adapter. Use this when your first fine-tuning run on an open model.
+> A complete LoRA fine-tuning script with Hugging Face TRL and PEFT. Load the chat-format dataset, configure LoRA, train with `SFTTrainer`, save the adapter.
+>
+> Use this when your first fine-tuning run on an open model.
 
 ```powershell
 pip install torch transformers datasets peft trl accelerate
@@ -261,7 +277,9 @@ The trainer applies the model's chat template to `messages` automatically and (b
 
 ## 9. Key Hyperparameters
 
-> Settings that most affect results. Start with common defaults; change one at a time based on validation results. Use it for tuning a run that under- or over-fits.
+> Settings that most affect results. Start with common defaults; change one at a time based on validation results.
+>
+> Use it for tuning a run that under- or over-fits.
 
 | Setting | Typical start | If ... |
 |---|---|---|
@@ -274,7 +292,9 @@ The trainer applies the model's chat template to `messages` automatically and (b
 
 ## 10. Monitoring Training
 
-> Watching loss curves during training. Training loss should go down; validation loss should go down then flatten; if validation rises while training falls, stop (overfitting). Use it in every run.
+> Watching loss curves during training. Training loss should go down; validation loss should go down then flatten; if validation rises while training falls, stop (overfitting).
+>
+> Use it in every run.
 
 ```text
 loss
@@ -289,7 +309,9 @@ Log to TensorBoard or Weights & Biases (`report_to="tensorboard"` / `"wandb"` in
 
 ## 11. Evaluating the Fine-tuned Model
 
-> Proving the fine-tune is better than the baseline. Run base model (with your best prompt) and fine-tuned model on the held-out test set with the same graders. Use it before deploying.
+> Proving the fine-tune is better than the baseline. Run base model (with your best prompt) and fine-tuned model on the held-out test set with the same graders.
+>
+> Use it before deploying.
 
 - Compare against: base model + good prompt, and a strong hosted model.
 - Check task metrics (accuracy, valid JSON rate, rubric scores) with [34 - Evals](34_evals-observability.md).
@@ -298,7 +320,9 @@ Log to TensorBoard or Weights & Biases (`report_to="tensorboard"` / `"wandb"` in
 
 ## 12. Using, Merging and Sharing the Adapter
 
-> Loading the adapter for inference, or merging it into the base model. PEFT loads base + adapter; `merge_and_unload()` produces a standalone model. Use it for serving the fine-tuned model.
+> Loading the adapter for inference, or merging it into the base model. PEFT loads base + adapter; `merge_and_unload()` produces a standalone model.
+>
+> Use it for serving the fine-tuned model.
 
 ```python
 from peft import AutoPeftModelForCausalLM
@@ -317,7 +341,9 @@ vLLM can also serve base model + LoRA adapters directly (`--enable-lora`).
 
 ## 13. Export to GGUF for Ollama
 
-> Converting the merged model to GGUF so Ollama / llama.cpp can run it. Use llama.cpp's conversion script, quantize, then create an Ollama model from it. Use it for running your fine-tune locally on laptops / CPU.
+> Converting the merged model to GGUF so Ollama / llama.cpp can run it. Use llama.cpp's conversion script, quantize, then create an Ollama model from it.
+>
+> Use it for running your fine-tune locally on laptops / CPU.
 
 ```bash
 git clone https://github.com/ggml-org/llama.cpp
@@ -341,7 +367,9 @@ Unsloth (section 16) can export to GGUF in one call.
 
 ## 14. Preference Tuning (DPO)
 
-> Teaching the model which of two answers is better. Dataset rows with `prompt`, `chosen`, `rejected`; `DPOTrainer` pushes probability toward chosen answers. Use it after SFT, to refine tone, helpfulness, refusals or style where "better" is easier to judge than to write.
+> Teaching the model which of two answers is better. Dataset rows with `prompt`, `chosen`, `rejected`; `DPOTrainer` pushes probability toward chosen answers.
+>
+> Use it after SFT, to refine tone, helpfulness, refusals or style where "better" is easier to judge than to write.
 
 ```text
 {"prompt": [{"role": "user", "content": "Explain LoRA briefly."}],
@@ -360,7 +388,9 @@ trainer.train()
 
 ## 15. Hosted Fine-tuning Services
 
-> Fine-tuning without managing GPUs. Upload JSONL data, start a job, get a model ID you call via the provider's API. Use this when you want to fine-tune a provider's model or avoid infrastructure.
+> Fine-tuning without managing GPUs. Upload JSONL data, start a job, get a model ID you call via the provider's API.
+>
+> Use this when you want to fine-tune a provider's model or avoid infrastructure.
 
 | Service | Notes |
 |---|---|
@@ -372,11 +402,15 @@ Supported models, formats and prices change often; check each provider's current
 
 ## 16. Tools: Unsloth, Axolotl, LLaMA-Factory
 
-> Tools that make open-model fine-tuning faster or config-driven. Unsloth patches models for faster, lower-memory training with notebooks; Axolotl and LLaMA-Factory run training from YAML configs / a web UI. Use it for limited GPU memory (Unsloth), repeatable config-driven runs (Axolotl / LLaMA-Factory).
+> Tools that make open-model fine-tuning faster or config-driven. Unsloth patches models for faster, lower-memory training with notebooks; Axolotl and LLaMA-Factory run training from YAML configs / a web UI.
+>
+> Use it for limited GPU memory (Unsloth), repeatable config-driven runs (Axolotl / LLaMA-Factory).
 
 ## 17. Fine-tuning Classic Models (BERT-style)
 
-> Fine-tuning small encoder models for classification, NER or embeddings. `AutoModelForSequenceClassification` + `Trainer`; trains in minutes on a small GPU. Use it for high-volume classification where a tiny specialised model beats LLM calls on cost and latency.
+> Fine-tuning small encoder models for classification, NER or embeddings. `AutoModelForSequenceClassification` + `Trainer`; trains in minutes on a small GPU.
+>
+> Use it for high-volume classification where a tiny specialised model beats LLM calls on cost and latency.
 
 ```python
 from transformers import (AutoModelForSequenceClassification, AutoTokenizer, Trainer,
@@ -414,7 +448,9 @@ trainer.train()
 
 ## 19. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Should you fine-tune?
 

@@ -97,7 +97,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. JSON Syntax
 
-> The rules for writing valid JSON. Objects in `{}`, lists in `[]`, keys always double-quoted strings, values separated by commas. Use it for writing API request bodies, test data, config for tools that need JSON.
+> The rules for writing valid JSON. Objects in `{}`, lists in `[]`, keys always double-quoted strings, values separated by commas.
+>
+> Use it for writing API request bodies, test data, config for tools that need JSON.
 
 ```json
 {
@@ -127,7 +129,9 @@ Where to read the latest, authoritative documentation:
 
 ## 2. JSON in Python
 
-> Converting between JSON text and Python dicts / lists. `json.loads` / `json.dumps` for strings, `json.load` / `json.dump` for files. Use it for reading API responses, saving results, parsing LLM JSON output.
+> Converting between JSON text and Python dicts / lists. `json.loads` / `json.dumps` for strings, `json.load` / `json.dump` for files.
+>
+> Use it for reading API responses, saving results, parsing LLM JSON output.
 
 ```python
 import json
@@ -150,7 +154,9 @@ json.dumps({"when": now}, default=str)          # convert unsupported types (dat
 
 ## 3. JSON on the Command Line (jq)
 
-> `jq` is a small tool to pretty-print, filter and transform JSON in the terminal. Pipe JSON into `jq` with a filter expression. Use it for inspecting API responses from curl, extracting fields in scripts.
+> `jq` is a small tool to pretty-print, filter and transform JSON in the terminal. Pipe JSON into `jq` with a filter expression.
+>
+> Use it for inspecting API responses from curl, extracting fields in scripts.
 
 ```bash
 curl -s https://api.github.com/repos/python/cpython | jq .              # pretty print
@@ -164,7 +170,9 @@ Install: `winget install jqlang.jq` / `sudo apt install jq`. PowerShell alternat
 
 ## 4. JSON Lines (JSONL)
 
-> One JSON object per line, no surrounding list. Each line is parsed independently, so files can be streamed and appended. Use it for datasets for fine-tuning and evals, logs, batch API inputs and outputs.
+> One JSON object per line, no surrounding list. Each line is parsed independently, so files can be streamed and appended.
+>
+> Use it for datasets for fine-tuning and evals, logs, batch API inputs and outputs.
 
 ```text
 {"prompt": "What is 2+2?", "answer": "4"}
@@ -183,7 +191,9 @@ df = pd.read_json("data.jsonl", lines=True)
 
 ## 5. JSON Schema
 
-> A JSON document that describes what valid JSON looks like (types, required fields, allowed values). Tools validate data against the schema; LLM APIs use it to define tool inputs and structured outputs. Use it for tool definitions for LLMs, API contracts, validating config files.
+> A JSON document that describes what valid JSON looks like (types, required fields, allowed values). Tools validate data against the schema; LLM APIs use it to define tool inputs and structured outputs.
+>
+> Use it for tool definitions for LLMs, API contracts, validating config files.
 
 ```json
 {
@@ -202,7 +212,9 @@ In Python you rarely write schemas by hand: a Pydantic model generates one with 
 
 ## 6. YAML Syntax
 
-> The rules for writing YAML config files. Indentation (spaces only, usually 2) creates nesting; `key: value` for mappings, `- item` for lists; `#` for comments. Use it for Docker Compose, GitHub Actions, Kubernetes manifests, app and agent configs.
+> The rules for writing YAML config files. Indentation (spaces only, usually 2) creates nesting; `key: value` for mappings, `- item` for lists; `#` for comments.
+>
+> Use it for Docker Compose, GitHub Actions, Kubernetes manifests, app and agent configs.
 
 ```yaml
 # Application config
@@ -237,7 +249,9 @@ version_string: "3.10"            # without quotes 3.10 becomes the number 3.1
 
 ## 7. YAML Multi-line Strings, Anchors, Multiple Documents
 
-> YAML features for long text, reuse and several documents per file. `|` keeps line breaks, `>` folds lines; `&name` defines an anchor, `*name` reuses it; `---` separates documents. Use it for prompts inside config, shell scripts in CI steps, Kubernetes files with several resources.
+> YAML features for long text, reuse and several documents per file. `|` keeps line breaks, `>` folds lines; `&name` defines an anchor, `*name` reuses it; `---` separates documents.
+>
+> Use it for prompts inside config, shell scripts in CI steps, Kubernetes files with several resources.
 
 ```yaml
 system_prompt: |
@@ -259,7 +273,9 @@ kind: Service              # second document in the same file
 
 ## 8. YAML in Python
 
-> Reading and writing YAML from Python. Install PyYAML; always use `safe_load` (plain `load` can execute code from untrusted files). Use it for loading app / prompt / agent configs.
+> Reading and writing YAML from Python. Install PyYAML; always use `safe_load` (plain `load` can execute code from untrusted files).
+>
+> Use it for loading app / prompt / agent configs.
 
 ```powershell
 pip install pyyaml
@@ -280,7 +296,9 @@ docs = list(yaml.safe_load_all(open("multi.yaml", encoding="utf-8")))   # severa
 
 ## 9. TOML Syntax
 
-> A config format with `[sections]` and `key = value` lines. Explicit types, no indentation rules; `[a.b]` for nested tables, `[[items]]` for lists of tables. Use it for `pyproject.toml`, Ruff / pytest / uv settings, simple app configs.
+> A config format with `[sections]` and `key = value` lines. Explicit types, no indentation rules; `[a.b]` for nested tables, `[[items]]` for lists of tables.
+>
+> Use it for `pyproject.toml`, Ruff / pytest / uv settings, simple app configs.
 
 ```toml
 # pyproject.toml
@@ -307,7 +325,9 @@ cost = 2.0
 
 ## 10. TOML in Python
 
-> Reading TOML (built in since Python 3.11). `tomllib` reads; use the `tomli-w` package to write. Use it for reading project settings or your own TOML config.
+> Reading TOML (built in since Python 3.11). `tomllib` reads; use the `tomli-w` package to write.
+>
+> Use it for reading project settings or your own TOML config.
 
 ```python
 import tomllib
@@ -319,7 +339,9 @@ data["project"]["dependencies"]
 
 ## 11. .env Files
 
-> A file of `KEY=value` lines that become environment variables for your app. `python-dotenv` or `pydantic-settings` loads it at startup; `os.getenv` reads the values. Use it for API keys, database URLs, model names that differ per machine. Never commit it.
+> A file of `KEY=value` lines that become environment variables for your app. `python-dotenv` or `pydantic-settings` loads it at startup; `os.getenv` reads the values.
+>
+> Use it for API keys, database URLs, model names that differ per machine. Never commit it.
 
 ```text
 # .env  (add ".env" to .gitignore!)
@@ -344,7 +366,9 @@ Commit a `.env.example` with the key names and fake values so others know what t
 
 ## 12. Which Format When
 
-> Choosing the right format. Match the audience: machines -> JSON; humans editing config -> YAML / TOML; secrets -> `.env`. Use it for designing a new config file or data export.
+> Choosing the right format. Match the audience: machines -> JSON; humans editing config -> YAML / TOML; secrets -> `.env`.
+>
+> Use it for designing a new config file or data export.
 
 | Need | Format |
 |---|---|
@@ -370,7 +394,9 @@ Commit a `.env.example` with the key names and fake values so others know what t
 
 ## 14. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: JSON to YAML
 

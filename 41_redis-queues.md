@@ -97,7 +97,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> Common options for redis-cli and worker commands. Command-line flags connect to the right server and control workers. Use this when you see `celery -A app.worker worker --loglevel=info --concurrency=4` and want to know what each part does.
+> Common options for redis-cli and worker commands. Command-line flags connect to the right server and control workers.
+>
+> Use this when you see `celery -A app.worker worker --loglevel=info --concurrency=4` and want to know what each part does.
 
 ```text
 celery  -A app.worker  worker  --loglevel=info  --concurrency=4
@@ -127,7 +129,9 @@ celery  -A app.worker  worker  --loglevel=info  --concurrency=4
 
 ## 1. Run Redis
 
-> Starting a Redis server. Docker is easiest on every OS (Redis has no official native Windows build). Use it for local development; production usually uses a managed Redis.
+> Starting a Redis server. Docker is easiest on every OS (Redis has no official native Windows build).
+>
+> Use it for local development; production usually uses a managed Redis.
 
 ```bash
 docker run -d --name redis -p 6379:6379 redis:7
@@ -142,7 +146,9 @@ Linux: `sudo apt install redis-server`. WSL works too. Other compatible servers:
 
 ## 2. redis-cli Basics
 
-> The interactive command-line client. Type commands; keys are strings; values have types. Use it for inspecting caches, debugging queues.
+> The interactive command-line client. Type commands; keys are strings; values have types.
+>
+> Use it for inspecting caches, debugging queues.
 
 ```text
 SET greeting "hello"              -> OK
@@ -163,7 +169,9 @@ MONITOR                           -> live view of all commands (debug only)
 
 ## 3. Data Types
 
-> The value types Redis supports. Each type has its own commands. Use it for choosing the right structure for your data.
+> The value types Redis supports. Each type has its own commands.
+>
+> Use it for choosing the right structure for your data.
 
 | Type | Use for | Commands |
 |---|---|---|
@@ -177,7 +185,9 @@ MONITOR                           -> live view of all commands (debug only)
 
 ## 4. Redis from Python
 
-> The `redis` Python client. Create one client (connection pool) and reuse it; `decode_responses=True` returns `str` instead of `bytes`. Use it in any Python app using Redis.
+> The `redis` Python client. Create one client (connection pool) and reuse it; `decode_responses=True` returns `str` instead of `bytes`.
+>
+> Use it in any Python app using Redis.
 
 ```powershell
 pip install redis
@@ -207,7 +217,9 @@ Async version: `import redis.asyncio as aioredis; r = aioredis.from_url(...); aw
 
 ## 5. Caching Pattern (Cache-Aside)
 
-> Check the cache first; compute and store on a miss. A deterministic key from the inputs, a TTL so data does not go stale forever. Use this when expensive, repeatable results: API calls, DB queries, embeddings, LLM answers.
+> Check the cache first; compute and store on a miss. A deterministic key from the inputs, a TTL so data does not go stale forever.
+>
+> Use this when expensive, repeatable results: API calls, DB queries, embeddings, LLM answers.
 
 ```python
 import functools
@@ -240,7 +252,9 @@ def get_weather(city: str) -> dict:
 
 ## 6. Caching LLM Responses
 
-> Reusing answers to identical requests. Key = hash of model + system prompt + messages + relevant parameters; only for deterministic-enough use cases. Use it for repeated FAQ questions, classification of identical texts, embeddings of unchanged documents, eval runs.
+> Reusing answers to identical requests. Key = hash of model + system prompt + messages + relevant parameters; only for deterministic-enough use cases.
+>
+> Use it for repeated FAQ questions, classification of identical texts, embeddings of unchanged documents, eval runs.
 
 ```python
 def cached_llm(model: str, system: str, user: str, ttl: int = 86_400) -> str:
@@ -260,7 +274,9 @@ def cached_llm(model: str, system: str, user: str, ttl: int = 86_400) -> str:
 
 ## 7. Rate Limiting
 
-> Limiting how many requests a user / IP / API key can make. Counters in Redis shared by all API instances; fixed window (simple) or sliding window (smoother). Use it for public endpoints, expensive LLM routes, protecting provider rate limits and budgets.
+> Limiting how many requests a user / IP / API key can make. Counters in Redis shared by all API instances; fixed window (simple) or sliding window (smoother).
+>
+> Use it for public endpoints, expensive LLM routes, protecting provider rate limits and budgets.
 
 ```python
 import time
@@ -284,7 +300,9 @@ Libraries: `slowapi` (FastAPI / Starlette), `fastapi-limiter`. Token-based limit
 
 ## 8. Sessions and Chat History
 
-> Storing conversation state outside the web process. A list or JSON per session ID with a TTL; any API instance can read it. Use it for chat apps with several API replicas, stateless containers.
+> Storing conversation state outside the web process. A list or JSON per session ID with a TTL; any API instance can read it.
+>
+> Use it for chat apps with several API replicas, stateless containers.
 
 ```python
 HISTORY_TTL = 60 * 60 * 24
@@ -306,7 +324,9 @@ For permanent history, store it in a database (Postgres) and use Redis as a fast
 
 ## 9. Pub/Sub and Streams
 
-> Sending messages between processes in real time. Pub/Sub broadcasts to current subscribers (fire and forget); Streams keep messages durably with consumer groups and acknowledgements. Use it for pushing job progress to the API / browser, event-driven pipelines.
+> Sending messages between processes in real time. Pub/Sub broadcasts to current subscribers (fire and forget); Streams keep messages durably with consumer groups and acknowledgements.
+>
+> Use it for pushing job progress to the API / browser, event-driven pipelines.
 
 ```python
 r.publish("job:123:progress", json.dumps({"step": "indexing", "pct": 40}))
@@ -335,7 +355,9 @@ r.xadd("events", {"type": "doc_uploaded", "doc_id": "42"})          # durable st
 
 ## 11. FastAPI BackgroundTasks (Simplest)
 
-> Running a function after the response is sent, in the same process. Add a `BackgroundTasks` parameter and `add_task`. Use it for small, quick follow-ups (logging, a single email). Not for long / critical jobs: they are lost if the process restarts.
+> Running a function after the response is sent, in the same process. Add a `BackgroundTasks` parameter and `add_task`.
+>
+> Use it for small, quick follow-ups (logging, a single email). Not for long / critical jobs: they are lost if the process restarts.
 
 ```python
 from fastapi import BackgroundTasks
@@ -349,7 +371,9 @@ def feedback(data: Feedback, tasks: BackgroundTasks):
 
 ## 12. RQ (Redis Queue)
 
-> A simple Python job queue backed by Redis. Enqueue a function call; `rq worker` processes jobs; job status and results are stored in Redis. Use it for straightforward background jobs with minimal setup (Linux / macOS / WSL / Docker workers).
+> A simple Python job queue backed by Redis. Enqueue a function call; `rq worker` processes jobs; job status and results are stored in Redis.
+>
+> Use it for straightforward background jobs with minimal setup (Linux / macOS / WSL / Docker workers).
 
 ```powershell
 pip install rq
@@ -384,7 +408,9 @@ rq worker default --url redis://localhost:6379
 
 ## 13. Celery
 
-> The most widely used, feature-rich Python task queue. Define a Celery app with a broker (Redis / RabbitMQ); decorate tasks; call `.delay()`; run workers and optionally `beat` for schedules. Use it for larger systems: retries, rate limits per task, routing to queues, periodic tasks, chains / groups.
+> The most widely used, feature-rich Python task queue. Define a Celery app with a broker (Redis / RabbitMQ); decorate tasks; call `.delay()`; run workers and optionally `beat` for schedules.
+>
+> Use it for larger systems: retries, rate limits per task, routing to queues, periodic tasks, chains / groups.
 
 ```powershell
 pip install "celery[redis]"
@@ -425,7 +451,9 @@ pip install flower && celery -A app.worker flower             # web dashboard on
 
 ## 14. arq (Async Queue)
 
-> A lightweight asyncio-based job queue on Redis. Jobs are `async def` functions; a worker settings class lists them. Use it for async codebases (FastAPI + async LLM clients) with many concurrent I/O-bound jobs.
+> A lightweight asyncio-based job queue on Redis. Jobs are `async def` functions; a worker settings class lists them.
+>
+> Use it for async codebases (FastAPI + async LLM clients) with many concurrent I/O-bound jobs.
 
 ```python
 # app/worker.py
@@ -456,7 +484,9 @@ arq app.worker.WorkerSettings
 
 ## 15. Job Status and Progress Pattern
 
-> The standard API shape for long-running work. POST creates a job and returns 202 + job ID; GET returns status / progress / result; optionally stream progress events. Use it for agents, document processing, reports.
+> The standard API shape for long-running work. POST creates a job and returns 202 + job ID; GET returns status / progress / result; optionally stream progress events.
+>
+> Use it for agents, document processing, reports.
 
 ```python
 @app.post("/jobs", status_code=202)
@@ -478,7 +508,9 @@ Workers update progress with `job.meta["progress"] = 40; job.save_meta()` (RQ) o
 
 ## 16. Retries, Idempotency and Timeouts
 
-> Making background work reliable. Retry transient failures with backoff; design jobs so re-running is safe; set timeouts. Use it in every production job.
+> Making background work reliable. Retry transient failures with backoff; design jobs so re-running is safe; set timeouts.
+>
+> Use it in every production job.
 
 - **Idempotent jobs**: use upserts, check "already done" flags, deterministic output paths; a retried job must not double-charge or double-send.
 - **Retries**: only for transient errors (network, 429, 5xx); not for bugs or invalid input.
@@ -488,7 +520,9 @@ Workers update progress with `job.meta["progress"] = 40; job.save_meta()` (RQ) o
 
 ## 17. Production Notes
 
-> Running Redis and workers safely at scale. Managed Redis, authentication, persistence choices, monitoring. Use it for going live.
+> Running Redis and workers safely at scale. Managed Redis, authentication, persistence choices, monitoring.
+>
+> Use it for going live.
 
 - Use a managed Redis (Azure Managed Redis / Cache for Redis, AWS ElastiCache, Redis Cloud) with TLS and auth.
 - Never expose Redis to the internet without auth / network rules.
@@ -514,7 +548,9 @@ Workers update progress with `job.meta["progress"] = 40; job.save_meta()` (RQ) o
 
 ## 19. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Keys with expiry
 

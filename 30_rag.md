@@ -109,7 +109,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. When to Use RAG (and When Not)
 
-> Choosing between RAG, long context, fine-tuning and tools. Match the size and nature of the knowledge to the technique. Use it before building anything.
+> Choosing between RAG, long context, fine-tuning and tools. Match the size and nature of the knowledge to the technique.
+>
+> Use it before building anything.
 
 | Situation | Best approach |
 |---|---|
@@ -122,7 +124,9 @@ Where to read the latest, authoritative documentation:
 
 ## 2. Loading Documents
 
-> Getting plain text (and structure) out of files. Use a loader per file type; keep page numbers, headings and source paths as metadata. Use it at the start of the indexing pipeline.
+> Getting plain text (and structure) out of files. Use a loader per file type; keep page numbers, headings and source paths as metadata.
+>
+> Use it at the start of the indexing pipeline.
 
 ```python
 from pathlib import Path
@@ -161,7 +165,9 @@ for p in Path("docs").rglob("*"):
 
 ## 3. Cleaning Text
 
-> Removing noise that hurts retrieval. Normalise whitespace, drop headers / footers / page numbers, fix broken hyphenation, remove boilerplate. Use it after loading, before chunking.
+> Removing noise that hurts retrieval. Normalise whitespace, drop headers / footers / page numbers, fix broken hyphenation, remove boilerplate.
+>
+> Use it after loading, before chunking.
 
 ```python
 import re
@@ -179,7 +185,9 @@ Look at your extracted text before indexing; garbage in = garbage retrieved.
 
 ## 4. Chunking Strategies
 
-> Splitting documents into retrievable pieces. Chunks should be big enough to contain a complete idea and small enough to be specific; overlap avoids cutting ideas in half. Use this when every RAG index. Chunking is one of the biggest quality levers.
+> Splitting documents into retrievable pieces. Chunks should be big enough to contain a complete idea and small enough to be specific; overlap avoids cutting ideas in half.
+>
+> Use this when every RAG index. Chunking is one of the biggest quality levers.
 
 | Strategy | How | Good for |
 |---|---|---|
@@ -194,7 +202,9 @@ Starting point: **300 to 800 tokens per chunk, 10 to 20% overlap**, split on par
 
 ## 5. Chunking in Code
 
-> A simple, dependency-free recursive chunker. Split by paragraphs; merge paragraphs until the size limit; carry overlap into the next chunk. Use it for learning and small projects (frameworks have ready-made splitters).
+> A simple, dependency-free recursive chunker. Split by paragraphs; merge paragraphs until the size limit; carry overlap into the next chunk.
+>
+> Use it for learning and small projects (frameworks have ready-made splitters).
 
 ```python
 CHUNK_CHARS = 2000          # about 500 tokens of English
@@ -224,7 +234,9 @@ def chunk_text(text: str, size: int = CHUNK_CHARS, overlap: int = OVERLAP_CHARS)
 
 ## 6. Metadata
 
-> Extra fields stored with each chunk. Keep source, page, section, date, language, access level, a stable chunk ID. Use it for citations, filtering, permissions, updating / deleting documents.
+> Extra fields stored with each chunk. Keep source, page, section, date, language, access level, a stable chunk ID.
+>
+> Use it for citations, filtering, permissions, updating / deleting documents.
 
 ```python
 chunks = []
@@ -241,7 +253,9 @@ for rec in records:
 
 ## 7. Embedding and Indexing
 
-> Turning chunks into vectors and storing them. Batch-embed chunk texts; store id, text, vector and metadata in a vector store. Use it for initial build and whenever documents change.
+> Turning chunks into vectors and storing them. Batch-embed chunk texts; store id, text, vector and metadata in a vector store.
+>
+> Use it for initial build and whenever documents change.
 
 ```python
 import chromadb
@@ -264,7 +278,9 @@ for start in range(0, len(chunks), BATCH):
 
 ## 8. Retrieval
 
-> Finding the chunks most relevant to the question. Embed the query with the same model, search top-k with filters; optionally combine with keyword search. Use it in every question.
+> Finding the chunks most relevant to the question. Embed the query with the same model, search top-k with filters; optionally combine with keyword search.
+>
+> Use it in every question.
 
 ```python
 TOP_K = 20
@@ -283,7 +299,9 @@ Typical settings: retrieve 10 to 30 candidates, then rerank down to 3 to 8 for t
 
 ## 9. Reranking
 
-> A second, more accurate scoring of retrieved chunks. A cross-encoder reads the question and each chunk **together** and scores relevance (slower than embeddings, so only on the top candidates). It is almost always worth it once basic RAG works; big quality gain for little code.
+> A second, more accurate scoring of retrieved chunks. A cross-encoder reads the question and each chunk **together** and scores relevance (slower than embeddings, so only on the top candidates).
+>
+> It is almost always worth it once basic RAG works; big quality gain for little code.
 
 ```python
 from sentence_transformers import CrossEncoder
@@ -302,7 +320,9 @@ Hosted rerankers exist too (Cohere, Voyage, Azure AI Search semantic ranker).
 
 ## 10. The Generation Prompt (with Citations)
 
-> Asking the LLM to answer from the retrieved chunks only, and cite them. Put numbered, tagged sources first, the question last, rules for citations and for missing information. Use it in every RAG answer.
+> Asking the LLM to answer from the retrieved chunks only, and cite them. Put numbered, tagged sources first, the question last, rules for citations and for missing information.
+>
+> Use it in every RAG answer.
 
 ```python
 RAG_SYSTEM = (
@@ -325,7 +345,9 @@ Provider features like Claude's **citations** on document blocks can return exac
 
 ## 11. Complete Minimal RAG App
 
-> All steps together in one small program. Retrieve -> rerank -> prompt -> Claude answer with sources. Use it as a template for your first RAG project.
+> All steps together in one small program. Retrieve -> rerank -> prompt -> Claude answer with sources.
+>
+> Use it as a template for your first RAG project.
 
 ```python
 import anthropic
@@ -357,7 +379,9 @@ Serve it with FastAPI ([39](39_fastapi.md)) and a chat UI ([38](38_ai-ui.md)).
 
 ## 12. Improving Retrieval
 
-> Techniques to find better chunks. Change the query, the index or the ranking; measure each change. Use it when the right answer exists in the docs but is not retrieved.
+> Techniques to find better chunks. Change the query, the index or the ranking; measure each change.
+>
+> Use it when the right answer exists in the docs but is not retrieved.
 
 | Technique | How | Helps when |
 |---|---|---|
@@ -373,7 +397,9 @@ Serve it with FastAPI ([39](39_fastapi.md)) and a chat UI ([38](38_ai-ui.md)).
 
 ## 13. Contextual Retrieval
 
-> Adding a short explanation of each chunk's context before embedding it. For each chunk, an LLM writes 1 to 2 sentences situating it in the whole document ("This section of the 2025 refund policy covers jackets..."); prepend that to the chunk text for embedding and keyword indexing. Use it for chunks that are ambiguous on their own ("It must be returned within 30 days" - what is "it"?). Use prompt caching on the full document to keep the cost low.
+> Adding a short explanation of each chunk's context before embedding it. For each chunk, an LLM writes 1 to 2 sentences situating it in the whole document ("This section of the 2025 refund policy covers jackets..."); prepend that to the chunk text for embedding and keyword indexing.
+>
+> Use it for chunks that are ambiguous on their own ("It must be returned within 30 days" - what is "it"?). Use prompt caching on the full document to keep the cost low.
 
 ```python
 CONTEXT_PROMPT = """<document>
@@ -389,7 +415,9 @@ Answer only with the context."""
 
 ## 14. Agentic RAG
 
-> Letting the LLM decide when and what to search, possibly several times. Expose retrieval as a tool (`search_docs(query, filters)`); the model searches, reads results, refines the query, and answers when it has enough ([28](28_tool-use.md), [31](31_ai-agents.md)). Use it for complex questions needing several lookups or comparisons; mixed sources (docs + DB + web).
+> Letting the LLM decide when and what to search, possibly several times. Expose retrieval as a tool (`search_docs(query, filters)`); the model searches, reads results, refines the query, and answers when it has enough ([28](28_tool-use.md), [31](31_ai-agents.md)).
+>
+> Use it for complex questions needing several lookups or comparisons; mixed sources (docs + DB + web).
 
 ```text
 User: "Compare our 2024 and 2025 refund policies for electronics."
@@ -402,7 +430,9 @@ Trade-offs: better on hard questions, but slower, costlier and less predictable 
 
 ## 15. Conversational RAG (Follow-up Questions)
 
-> Handling questions that depend on earlier turns ("and what about shoes?"). Before retrieval, rewrite the latest question into a standalone query using the chat history. Use it in every chat-style RAG app.
+> Handling questions that depend on earlier turns ("and what about shoes?"). Before retrieval, rewrite the latest question into a standalone query using the chat history.
+>
+> Use it in every chat-style RAG app.
 
 ```python
 REWRITE_PROMPT = """Given the conversation and the follow-up question, rewrite the follow-up
@@ -416,13 +446,17 @@ Follow-up: {question}"""
 
 ## 16. Structured Data: Text-to-SQL
 
-> Answering questions about tables by generating SQL instead of embedding rows. Give the LLM the schema; it writes a query; your code runs it with a read-only user; the LLM explains the result. Use it for numbers, aggregates, filters over databases ("revenue by region last quarter"). Embeddings are bad at arithmetic over rows.
+> Answering questions about tables by generating SQL instead of embedding rows. Give the LLM the schema; it writes a query; your code runs it with a read-only user; the LLM explains the result.
+>
+> Use it for numbers, aggregates, filters over databases ("revenue by region last quarter"). Embeddings are bad at arithmetic over rows.
 
 Safety: read-only DB user, allow-listed tables, row limits, statement timeouts, validate / parse the SQL before running. See [19 - SQL](19_sql.md).
 
 ## 17. Evaluating RAG
 
-> Measuring retrieval and answer quality separately. Build a test set of questions with expected answers and the source chunks that contain them; score each stage. Use it before launch, and after every change to chunking, models or prompts.
+> Measuring retrieval and answer quality separately. Build a test set of questions with expected answers and the source chunks that contain them; score each stage.
+>
+> Use it before launch, and after every change to chunking, models or prompts.
 
 | Stage | Metric | Question it answers |
 |---|---|---|
@@ -447,7 +481,9 @@ Generation quality is often graded with an LLM-as-judge and a rubric. Tools: Rag
 
 ## 18. Keeping the Index Fresh
 
-> Updating the index when documents change. Stable chunk IDs, content hashes to detect changes, upsert changed chunks, delete removed ones. Use it in any living knowledge base.
+> Updating the index when documents change. Stable chunk IDs, content hashes to detect changes, upsert changed chunks, delete removed ones.
+>
+> Use it in any living knowledge base.
 
 - Store a hash of each document; re-process only changed files.
 - Delete all chunks of a document (by `source` metadata) before re-adding its new version.
@@ -456,7 +492,9 @@ Generation quality is often graded with an LLM-as-judge and a rubric. Tools: Rag
 
 ## 19. Security and Permissions
 
-> Making sure users only get answers from documents they may see, and that documents cannot hijack the model. Filter by user permissions at retrieval; treat retrieved text as untrusted data. Use it in any multi-user or internal-document RAG.
+> Making sure users only get answers from documents they may see, and that documents cannot hijack the model. Filter by user permissions at retrieval; treat retrieved text as untrusted data.
+>
+> Use it in any multi-user or internal-document RAG.
 
 - Store access metadata (tenant, team, role) with every chunk; filter on **every** query in code.
 - Retrieved documents can contain prompt-injection text ("ignore previous instructions..."); tag them as data and do not give the RAG model risky tools ([37](37_ai-security.md)).
@@ -465,7 +503,9 @@ Generation quality is often graded with an LLM-as-judge and a rubric. Tools: Rag
 
 ## 20. RAG Frameworks
 
-> Libraries that provide loaders, splitters, retrievers and pipelines. They wrap the steps above; you trade control for speed of setup. Use it for many file types, complex pipelines, or quick prototypes. Plain code is often clearer for small apps.
+> Libraries that provide loaders, splitters, retrievers and pipelines. They wrap the steps above; you trade control for speed of setup.
+>
+> Use it for many file types, complex pipelines, or quick prototypes. Plain code is often clearer for small apps.
 
 | Framework | Strength |
 |---|---|
@@ -492,7 +532,9 @@ More in [32 - Agent Frameworks](32_agent-frameworks.md).
 
 ## 22. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Run the retrieval eval
 

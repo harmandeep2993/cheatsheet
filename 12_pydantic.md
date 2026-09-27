@@ -91,7 +91,9 @@ Where to read the latest, authoritative documentation:
 
 ## 1. Install and First Model
 
-> Defining a model and creating validated objects. Subclass `BaseModel`, declare fields with type hints, create instances with keyword arguments. Use it any time data enters your program from outside.
+> Defining a model and creating validated objects. Subclass `BaseModel`, declare fields with type hints, create instances with keyword arguments.
+>
+> Use it any time data enters your program from outside.
 
 ```powershell
 pip install pydantic
@@ -118,7 +120,9 @@ u.name = "Bo"                          # models are mutable by default
 
 ## 2. Field Types
 
-> The types Pydantic understands and validates. Standard Python types plus special ones for common formats. Use it for choosing the most precise type gives the best validation for free.
+> The types Pydantic understands and validates. Standard Python types plus special ones for common formats.
+>
+> Use it for choosing the most precise type gives the best validation for free.
 
 | Type | Accepts / validates |
 |---|---|
@@ -137,7 +141,9 @@ u.name = "Bo"                          # models are mutable by default
 
 ## 3. Optional Fields and Defaults
 
-> Fields that may be missing or empty. A default value makes a field optional; `X | None = None` allows missing and null. Use it for partial updates, optional metadata, LLM outputs where a value may not exist.
+> Fields that may be missing or empty. A default value makes a field optional; `X | None = None` allows missing and null.
+>
+> Use it for partial updates, optional metadata, LLM outputs where a value may not exist.
 
 ```python
 from pydantic import BaseModel, Field
@@ -155,7 +161,9 @@ Required vs optional is decided by the **default**, not by `| None`: `x: int | N
 
 ## 4. Field Constraints
 
-> Extra rules on values: ranges, lengths, patterns. `Field(...)` with keyword arguments, or `Annotated[type, Field(...)]` for reusable types. Use it for prices >= 0, names not empty, codes matching a pattern.
+> Extra rules on values: ranges, lengths, patterns. `Field(...)` with keyword arguments, or `Annotated[type, Field(...)]` for reusable types.
+>
+> Use it for prices >= 0, names not empty, codes matching a pattern.
 
 ```python
 from typing import Annotated
@@ -184,7 +192,9 @@ class Product(BaseModel):
 
 ## 5. Nested Models and Lists
 
-> Models inside models, for tree-shaped data. Use a model as a field type; dicts are converted into model instances automatically. Use it for orders with line items, API responses with nested objects, complex LLM outputs.
+> Models inside models, for tree-shaped data. Use a model as a field type; dicts are converted into model instances automatically.
+>
+> Use it for orders with line items, API responses with nested objects, complex LLM outputs.
 
 ```python
 class Address(BaseModel):
@@ -213,7 +223,9 @@ order.items[0].qty          # 2
 
 ## 6. Validation Errors
 
-> What happens when data does not match. Pydantic raises `ValidationError` listing every problem with its location and message. Use it for returning helpful errors to users, re-asking an LLM to fix its output.
+> What happens when data does not match. Pydantic raises `ValidationError` listing every problem with its location and message.
+>
+> Use it for returning helpful errors to users, re-asking an LLM to fix its output.
 
 ```python
 from pydantic import ValidationError
@@ -233,7 +245,9 @@ FastAPI turns this automatically into a 422 response.
 
 ## 7. Custom Validators
 
-> Your own checking / cleaning logic. `@field_validator` for one field; `@model_validator` for rules that involve several fields. Use it for normalising text, cross-field rules (end date after start date).
+> Your own checking / cleaning logic. `@field_validator` for one field; `@model_validator` for rules that involve several fields.
+>
+> Use it for normalising text, cross-field rules (end date after start date).
 
 ```python
 from pydantic import BaseModel, field_validator, model_validator
@@ -263,7 +277,9 @@ class Booking(BaseModel):
 
 ## 8. Serialization (dump)
 
-> Turning a model back into a dict or JSON string. `model_dump()` -> dict, `model_dump_json()` -> str; options to include / exclude fields. Use it for returning API responses, saving to files / databases, sending to LLMs.
+> Turning a model back into a dict or JSON string. `model_dump()` -> dict, `model_dump_json()` -> str; options to include / exclude fields.
+>
+> Use it for returning API responses, saving to files / databases, sending to LLMs.
 
 ```python
 order.model_dump()                          # dict (nested models become dicts)
@@ -279,7 +295,9 @@ order.model_copy(update={"id": 2})          # copy with changes
 
 ## 9. Parsing JSON and Dicts
 
-> Creating models from dicts or raw JSON text. `model_validate(dict)` or `model_validate_json(str)` (faster than `json.loads` + validate). Use it for API responses, LLM JSON, files.
+> Creating models from dicts or raw JSON text. `model_validate(dict)` or `model_validate_json(str)` (faster than `json.loads` + validate).
+>
+> Use it for API responses, LLM JSON, files.
 
 ```python
 user = User.model_validate({"id": 1, "name": "Ana"})
@@ -293,7 +311,9 @@ with open("user.json", encoding="utf-8") as f:
 
 ## 10. JSON Schema
 
-> An automatically generated description of the model. `model_json_schema()` returns a dict following the JSON Schema standard, including descriptions and constraints. Use it for LLM tool definitions, structured output schemas, API documentation.
+> An automatically generated description of the model. `model_json_schema()` returns a dict following the JSON Schema standard, including descriptions and constraints.
+>
+> Use it for LLM tool definitions, structured output schemas, API documentation.
 
 ```python
 class WeatherQuery(BaseModel):
@@ -313,7 +333,9 @@ Good `description`s matter: the LLM reads them to decide how to fill the fields.
 
 ## 11. Model Configuration
 
-> Settings that change how a model behaves. `model_config = ConfigDict(...)` inside the class. Use it for rejecting unknown fields, immutability, reading from ORM objects.
+> Settings that change how a model behaves. `model_config = ConfigDict(...)` inside the class.
+>
+> Use it for rejecting unknown fields, immutability, reading from ORM objects.
 
 ```python
 from pydantic import BaseModel, ConfigDict
@@ -332,7 +354,9 @@ class Strict(BaseModel):
 
 ## 12. Enums and Literals
 
-> Restricting a field to a fixed set of values. `Literal[...]` for simple cases; `Enum` when you want a named, reusable type. Use it for status fields, categories, LLM classification labels.
+> Restricting a field to a fixed set of values. `Literal[...]` for simple cases; `Enum` when you want a named, reusable type.
+>
+> Use it for status fields, categories, LLM classification labels.
 
 ```python
 from enum import Enum
@@ -355,7 +379,9 @@ Review(sentiment="positive", priority="high").sentiment    # <Sentiment.positive
 
 ## 13. Aliases (Different Names in JSON)
 
-> Using one name in Python and another in JSON. `Field(alias=...)`, or an `alias_generator` for all fields (e.g. camelCase). Use it for external APIs that use `camelCase` or names that are Python keywords.
+> Using one name in Python and another in JSON. `Field(alias=...)`, or an `alias_generator` for all fields (e.g. camelCase).
+>
+> Use it for external APIs that use `camelCase` or names that are Python keywords.
 
 ```python
 from pydantic import ConfigDict
@@ -375,7 +401,9 @@ u.model_dump(by_alias=True)              # {'userId': 1, 'firstName': 'Ana'}
 
 ## 14. Computed Fields
 
-> Read-only values derived from other fields, included in output. `@computed_field` on a `@property`. Use it for totals, full names, derived flags you want in the JSON output.
+> Read-only values derived from other fields, included in output. `@computed_field` on a `@property`.
+>
+> Use it for totals, full names, derived flags you want in the JSON output.
 
 ```python
 from pydantic import computed_field
@@ -395,7 +423,9 @@ Cart(prices=[1.5, 2.25]).model_dump()     # {'prices': [1.5, 2.25], 'total': 3.7
 
 ## 15. TypeAdapter (Validate Without a Model)
 
-> Validating plain types like `list[int]` or `dict[str, User]` without writing a model class. Wrap the type in `TypeAdapter`, then call `validate_python` / `validate_json`. Use it for validating a list of models from an API, quick checks.
+> Validating plain types like `list[int]` or `dict[str, User]` without writing a model class. Wrap the type in `TypeAdapter`, then call `validate_python` / `validate_json`.
+>
+> Use it for validating a list of models from an API, quick checks.
 
 ```python
 from pydantic import TypeAdapter
@@ -406,7 +436,9 @@ TypeAdapter(list[User]).json_schema()
 
 ## 16. Settings from Environment (pydantic-settings)
 
-> A typed config object loaded from environment variables and `.env`. Subclass `BaseSettings`; field names map to env var names (case-insensitive). Use it in every app with API keys, URLs or feature flags.
+> A typed config object loaded from environment variables and `.env`. Subclass `BaseSettings`; field names map to env var names (case-insensitive).
+>
+> Use it in every app with API keys, URLs or feature flags.
 
 ```powershell
 pip install pydantic-settings
@@ -434,7 +466,9 @@ settings.anthropic_api_key.get_secret_value()
 
 ## 17. Pydantic for LLM Structured Output
 
-> Getting LLM answers as validated Python objects instead of free text. Define a model; the SDK sends its JSON Schema and parses the reply into the model. Use it for extraction, classification, any time code (not a human) reads the LLM output.
+> Getting LLM answers as validated Python objects instead of free text. Define a model; the SDK sends its JSON Schema and parses the reply into the model.
+>
+> Use it for extraction, classification, any time code (not a human) reads the LLM output.
 
 ```python
 import anthropic
@@ -462,7 +496,9 @@ More in [26 - LLM APIs](26_llm-apis.md) and [27 - Prompt Engineering](27_prompt-
 
 ## 18. Pydantic vs dataclass vs TypedDict
 
-> Three ways to describe structured data in Python. They differ in whether data is validated at runtime. Use it for Pydantic at boundaries (untrusted input); dataclasses for internal data; TypedDict to type plain dicts.
+> Three ways to describe structured data in Python. They differ in whether data is validated at runtime.
+>
+> Use it for Pydantic at boundaries (untrusted input); dataclasses for internal data; TypedDict to type plain dicts.
 
 | | `BaseModel` | `@dataclass` | `TypedDict` |
 |---|---|---|---|
@@ -474,7 +510,9 @@ More in [26 - LLM APIs](26_llm-apis.md) and [27 - Prompt Engineering](27_prompt-
 
 ## 19. v1 to v2 Cheat Sheet
 
-> Renamed methods between Pydantic v1 and v2. Old tutorials use v1 names; v2 (current) uses the `model_` prefix. Use it for reading older code or Stack Overflow answers.
+> Renamed methods between Pydantic v1 and v2. Old tutorials use v1 names; v2 (current) uses the `model_` prefix.
+>
+> Use it for reading older code or Stack Overflow answers.
 
 | v1 | v2 |
 |---|---|
@@ -507,7 +545,9 @@ More in [26 - LLM APIs](26_llm-apis.md) and [27 - Prompt Engineering](27_prompt-
 
 ## 21. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: Validate an order
 

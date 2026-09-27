@@ -108,7 +108,9 @@ Where to read the latest, authoritative documentation:
 
 ## 0. Flags and Parameters
 
-> The parameters of `client.messages.create(...)`. Keyword arguments; only `model`, `max_tokens` and `messages` are required. Use this when you see a request with `system=`, `thinking=`, `output_config=`, `cache_control=` and want to know what each does.
+> The parameters of `client.messages.create(...)`. Keyword arguments; only `model`, `max_tokens` and `messages` are required.
+>
+> Use this when you see a request with `system=`, `thinking=`, `output_config=`, `cache_control=` and want to know what each does.
 
 ```text
 client.messages.create(model="claude-opus-5", max_tokens=16000, system="...", messages=[...])
@@ -139,7 +141,9 @@ client.messages.create(model="claude-opus-5", max_tokens=16000, system="...", me
 
 ## 1. Setup and API Keys
 
-> Installing the SDK and authenticating. Get a key from the provider console; store it in an environment variable; the SDK reads it automatically. Use it once per project / machine.
+> Installing the SDK and authenticating. Get a key from the provider console; store it in an environment variable; the SDK reads it automatically.
+>
+> Use it once per project / machine.
 
 ```powershell
 pip install anthropic openai python-dotenv          # or: uv add anthropic openai python-dotenv
@@ -164,7 +168,9 @@ Never hard-code keys, commit `.env`, or put keys in frontend code. Set spend lim
 
 ## 2. Claude Models
 
-> The model IDs you pass as `model`. Pick by capability vs cost vs speed; use exact IDs (no date suffixes for current models). Use it in every request. Prices and models change: check the provider's models page / Models API.
+> The model IDs you pass as `model`. Pick by capability vs cost vs speed; use exact IDs (no date suffixes for current models).
+>
+> Use it in every request. Prices and models change: check the provider's models page / Models API.
 
 | Model | ID | Context | Input / Output $ per 1M tokens* | Use for |
 |---|---|---|---|---|
@@ -182,7 +188,9 @@ client.models.retrieve("claude-opus-5")           # context window (max_input_to
 
 ## 3. First Request (Claude)
 
-> The minimal working call. `messages.create` with a model, an output limit and one user message. Use it as the starting point for any feature.
+> The minimal working call. `messages.create` with a model, an output limit and one user message.
+>
+> Use it as the starting point for any feature.
 
 ```python
 import anthropic
@@ -202,7 +210,9 @@ for block in response.content:
 
 ## 4. The Response Object
 
-> What comes back from the API. A `Message` with a list of content blocks, a stop reason and token usage. Use this when reading answers, handling tool calls, tracking cost.
+> What comes back from the API. A `Message` with a list of content blocks, a stop reason and token usage.
+>
+> Use this when reading answers, handling tool calls, tracking cost.
 
 ```python
 response.id                 # "msg_..."
@@ -222,7 +232,9 @@ Always check `block.type` before reading `.text`: responses can contain `thinkin
 
 ## 5. System Prompts
 
-> Instructions that shape the model's behaviour for the whole conversation. Pass `system="..."`; it is placed before the messages. Use it for role, rules, tone, output format, background knowledge.
+> Instructions that shape the model's behaviour for the whole conversation. Pass `system="..."`; it is placed before the messages.
+>
+> Use it for role, rules, tone, output format, background knowledge.
 
 ```python
 response = client.messages.create(
@@ -242,7 +254,9 @@ How to write good system prompts: [27 - Prompt Engineering](27_prompt-engineerin
 
 ## 6. Multi-Turn Conversations
 
-> Chat with memory. Keep a list of messages; append each user message and each assistant reply; send the whole list every time. Use it for chatbots, assistants, any back-and-forth.
+> Chat with memory. Keep a list of messages; append each user message and each assistant reply; send the whole list every time.
+>
+> Use it for chatbots, assistants, any back-and-forth.
 
 ```python
 history = []
@@ -270,7 +284,9 @@ chat("What's my name?")          # "Your name is Ana."
 
 ## 7. Streaming
 
-> Receiving the answer token by token as it is generated. `client.messages.stream(...)` as a context manager; iterate `text_stream`; get the full message at the end. Use it for chat UIs (text appears instantly), long outputs (avoids HTTP timeouts), large `max_tokens`.
+> Receiving the answer token by token as it is generated. `client.messages.stream(...)` as a context manager; iterate `text_stream`; get the full message at the end.
+>
+> Use it for chat UIs (text appears instantly), long outputs (avoids HTTP timeouts), large `max_tokens`.
 
 ```python
 with client.messages.stream(
@@ -289,7 +305,9 @@ Stream from your own backend to a browser with FastAPI `StreamingResponse` ([39]
 
 ## 8. Structured Outputs (JSON)
 
-> Getting output that is guaranteed to match a schema, parsed into Python objects. Pass a Pydantic model to `messages.parse(...)` (or a raw JSON schema via `output_config`); the API constrains generation to the schema. Use it for extraction, classification, anything your code reads. More reliable than "please reply in JSON".
+> Getting output that is guaranteed to match a schema, parsed into Python objects. Pass a Pydantic model to `messages.parse(...)` (or a raw JSON schema via `output_config`); the API constrains generation to the schema.
+>
+> Use it for extraction, classification, anything your code reads. More reliable than "please reply in JSON".
 
 ```python
 from pydantic import BaseModel, Field
@@ -335,7 +353,9 @@ data = json.loads(next(b.text for b in response.content if b.type == "text"))
 
 ## 9. Images and PDFs
 
-> Sending images and documents for the model to read. Content becomes a list of blocks: `image` / `document` blocks (base64 or URL) plus a `text` block with your question. Use it for invoices, screenshots, charts, contracts, scanned forms.
+> Sending images and documents for the model to read. Content becomes a list of blocks: `image` / `document` blocks (base64 or URL) plus a `text` block with your question.
+>
+> Use it for invoices, screenshots, charts, contracts, scanned forms.
 
 ```python
 import base64
@@ -371,7 +391,9 @@ Also: `{"type": "image", "source": {"type": "url", "url": "https://..."}}`. The 
 
 ## 10. Thinking and Effort
 
-> Letting the model reason before answering, and controlling how hard it works. `thinking={"type": "adaptive"}` lets the model decide when and how much to think; `output_config={"effort": ...}` trades quality for cost / speed. Use it for high effort for complex reasoning, coding, agents; low effort for simple, high-volume tasks.
+> Letting the model reason before answering, and controlling how hard it works. `thinking={"type": "adaptive"}` lets the model decide when and how much to think; `output_config={"effort": ...}` trades quality for cost / speed.
+>
+> Use it for high effort for complex reasoning, coding, agents; low effort for simple, high-volume tasks.
 
 ```python
 response = client.messages.create(
@@ -394,7 +416,9 @@ for block in response.content:
 
 ## 11. Prompt Caching
 
-> The provider remembers a long, repeated prompt prefix so later requests read it from cache. Mark the prompt with `cache_control`; identical prefix = cache hit (about 10% of normal input price, faster). Any change in the prefix breaks the cache from that point. Use it for long system prompts, big documents asked about repeatedly, agents and chats that resend history.
+> The provider remembers a long, repeated prompt prefix so later requests read it from cache. Mark the prompt with `cache_control`; identical prefix = cache hit (about 10% of normal input price, faster). Any change in the prefix breaks the cache from that point.
+>
+> Use it for long system prompts, big documents asked about repeatedly, agents and chats that resend history.
 
 ```python
 response = client.messages.create(
@@ -414,7 +438,9 @@ response.usage.cache_read_input_tokens       # read from cache (later calls)
 
 ## 12. Token Counting and Cost
 
-> Knowing how many tokens a request uses before and after sending it. `count_tokens` for estimates; `response.usage` for actuals. Use it for budgeting, guarding context limits, choosing chunk sizes.
+> Knowing how many tokens a request uses before and after sending it. `count_tokens` for estimates; `response.usage` for actuals.
+>
+> Use it for budgeting, guarding context limits, choosing chunk sizes.
 
 ```python
 count = client.messages.count_tokens(
@@ -434,7 +460,9 @@ Log `usage` for every call in production; it is your cost dashboard.
 
 ## 13. Batch Processing
 
-> Submitting many requests at once for asynchronous processing at a discount (about 50%). Create a batch of requests with your own `custom_id`s, poll until it has ended, then read the results. Use it for offline jobs: classify 50,000 reviews, nightly summaries, eval runs. Not for real-time users.
+> Submitting many requests at once for asynchronous processing at a discount (about 50%). Create a batch of requests with your own `custom_id`s, poll until it has ended, then read the results.
+>
+> Use it for offline jobs: classify 50,000 reviews, nightly summaries, eval runs. Not for real-time users.
 
 ```python
 import time
@@ -462,7 +490,9 @@ for result in client.messages.batches.results(batch.id):
 
 ## 14. Errors, Retries and Timeouts
 
-> Handling failures correctly. The SDK retries 408 / 409 / 429 / 5xx and connection errors automatically (default 2 retries); catch specific exception classes for the rest. Use it in every production call.
+> Handling failures correctly. The SDK retries 408 / 409 / 429 / 5xx and connection errors automatically (default 2 retries); catch specific exception classes for the rest.
+>
+> Use it in every production call.
 
 ```python
 import anthropic
@@ -489,7 +519,9 @@ Per-request override: `client.with_options(timeout=30, max_retries=5).messages.c
 
 ## 15. Stop Reasons and Refusals
 
-> Why the model stopped, which decides what your code does next. Check `response.stop_reason` before using the content. Use it in every response in production code.
+> Why the model stopped, which decides what your code does next. Check `response.stop_reason` before using the content.
+>
+> Use it in every response in production code.
 
 | `stop_reason` | Meaning | Your code should |
 |---|---|---|
@@ -504,7 +536,9 @@ The newest Claude models support server-side **fallbacks**: on a refusal, the AP
 
 ## 16. Async Client
 
-> The same API for async code. `AsyncAnthropic` + `await`; combine with `asyncio.gather` and a semaphore for concurrency. Use it for FastAPI endpoints, processing many inputs in parallel. See [13 - Async Python](13_async-python.md).
+> The same API for async code. `AsyncAnthropic` + `await`; combine with `asyncio.gather` and a semaphore for concurrency.
+>
+> Use it for FastAPI endpoints, processing many inputs in parallel. See [13 - Async Python](13_async-python.md).
 
 ```python
 import asyncio
@@ -525,7 +559,9 @@ answers = asyncio.run(asyncio.gather(*(ask(q) for q in questions)))   # use a Se
 
 ## 17. Tool Use (Preview)
 
-> Letting the model call your Python functions. Describe functions as tools; the model returns a `tool_use` block; you run the function and send back a `tool_result`; repeat until done. Use it for live data, calculations, actions. Full guide: [28 - Tool Use](28_tool-use.md).
+> Letting the model call your Python functions. Describe functions as tools; the model returns a `tool_use` block; you run the function and send back a `tool_result`; repeat until done.
+>
+> Use it for live data, calculations, actions. Full guide: [28 - Tool Use](28_tool-use.md).
 
 ```python
 from anthropic import beta_tool
@@ -553,7 +589,9 @@ for message in runner:          # the SDK runs the tool loop for you
 
 ## 18. OpenAI SDK Equivalents
 
-> The same tasks with the OpenAI Python SDK. OpenAI has the newer **Responses API** and the older, widely copied **Chat Completions API**; both are shown. Use it for projects using GPT models, Azure OpenAI, or OpenAI-compatible servers (Ollama, vLLM). Model names change often; check the current list.
+> The same tasks with the OpenAI Python SDK. OpenAI has the newer **Responses API** and the older, widely copied **Chat Completions API**; both are shown.
+>
+> Use it for projects using GPT models, Azure OpenAI, or OpenAI-compatible servers (Ollama, vLLM). Model names change often; check the current list.
 
 ```python
 import os
@@ -602,7 +640,9 @@ parsed.output_parsed
 
 ## 19. Provider-Agnostic Design
 
-> Structuring code so the model provider can change without rewriting the app. Put LLM calls behind one small interface in your code; keep prompts and model names in config. Use it for apps that may switch models, compare providers in evals, or use local and cloud models.
+> Structuring code so the model provider can change without rewriting the app. Put LLM calls behind one small interface in your code; keep prompts and model names in config.
+>
+> Use it for apps that may switch models, compare providers in evals, or use local and cloud models.
 
 ```python
 from typing import Protocol
@@ -628,7 +668,9 @@ Libraries like LiteLLM or LangChain offer one interface for many providers ([32]
 
 ## 20. Claude on Cloud Platforms
 
-> Using Claude through AWS, Google Cloud or Microsoft Azure. Dedicated client classes with the same `messages.create` interface; model IDs and auth follow the platform. Use this when your company's data or billing must stay in one cloud.
+> Using Claude through AWS, Google Cloud or Microsoft Azure. Dedicated client classes with the same `messages.create` interface; model IDs and auth follow the platform.
+>
+> Use this when your company's data or billing must stay in one cloud.
 
 | Platform | Python client |
 |---|---|
@@ -640,7 +682,9 @@ Feature availability can differ per platform; check the platform docs.
 
 ## 21. Production Checklist
 
-> What to have in place before real users hit your LLM feature. A list to review. Use it before launch and in code review.
+> What to have in place before real users hit your LLM feature. A list to review.
+>
+> Use it before launch and in code review.
 
 - [ ] Keys in env vars / Key Vault; spend limits set in the console
 - [ ] Model ID and prompts in config, not scattered in code
@@ -673,7 +717,9 @@ Feature availability can differ per platform; check the platform docs.
 
 ## 23. Try It
 
-> Short exercises to practise this guide. Try each task yourself first, then open the solution. Use it right after reading the guide, or later as a quick self-test.
+> Short exercises to practise this guide. Try each task yourself first, then open the solution.
+>
+> Use it right after reading the guide, or later as a quick self-test.
 
 ### Exercise 1: First call with usage
 
