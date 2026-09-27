@@ -1,0 +1,35 @@
+# Development overrides, layered on top of compose.yaml:
+#   docker compose -f compose.yaml -f compose.dev.yaml up --build
+# Python code is mounted from your disk and uvicorn restarts on every save.
+# For the frontend, run `npm run dev` in frontend/ and open http://localhost:5173 (Vite forwards /api here).
+
+services:
+  documents-service:
+    command: ["uvicorn", "--factory", "documents_service.main:create_app", "--host", "0.0.0.0", "--port", "8000",
+              "--reload", "--reload-dir", "/app/services/documents-service/src", "--reload-dir", "/app/libs/common/src"]
+    environment:
+      # Put the mounted source ahead of the installed copy, so edits take effect without a rebuild
+      PYTHONPATH: /app/services/documents-service/src:/app/libs/common/src
+      DOCUMENTS_LOG_LEVEL: DEBUG
+    volumes:
+      - ./services/documents-service/src:/app/services/documents-service/src
+      - ./libs/common/src:/app/libs/common/src
+    ports:
+      - "8001:8000"
+
+  chat-service:
+    command: ["uvicorn", "--factory", "chat_service.main:create_app", "--host", "0.0.0.0", "--port", "8000",
+              "--reload", "--reload-dir", "/app/services/chat-service/src", "--reload-dir", "/app/libs/common/src"]
+    environment:
+      PYTHONPATH: /app/services/chat-service/src:/app/libs/common/src
+      CHAT_LOG_LEVEL: DEBUG
+    volumes:
+      - ./services/chat-service/src:/app/services/chat-service/src
+      - ./libs/common/src:/app/libs/common/src
+    ports:
+      - "8002:8000"
+
+  # Direct database access for tools like psql or DBeaver (dev only)
+  documents-db:
+    ports:
+      - "5432:5432"

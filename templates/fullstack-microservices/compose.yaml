@@ -1,0 +1,80 @@
+# Production-like local run of the whole system:
+#   cp .env.example .env      (then edit .env)
+#   docker compose up --build
+#   open http://localhost:8080
+# Only the proxy publishes a port; everything else is reachable only inside the Compose network.
+
+name: fullstack-microservices
+
+x-python-healthcheck: &python-healthcheck
+  test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+  interval: 10s
+  timeout: 3s
+  retries: 5
+  start_period: 10s
+
+services:
+  proxy:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      frontend:
+        condition: service_started
+      documents-service:
+        condition: service_healthy
+      chat-service:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+
+  documents-service:
+    build:
+      context: .
+      dockerfile: services/documents-service/Dockerfile
+    environment:
+      DOCUMENTS_DATABASE_URL: postgresql+psycopg://documents:${DOCUMENTS_DB_PASSWORD:?set DOCUMENTS_DB_PASSWORD in .env}@documents-db:5432/documents
+      DOCUMENTS_LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      documents-db:
+        condition: service_healthy
+    healthcheck: *python-healthcheck
+    restart: unless-stopped
+
+  # Owned by documents-service only. Another service that needs documents calls the API instead.
+  documents-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: documents
+      POSTGRES_DB: documents
+      POSTGRES_PASSWORD: ${DOCUMENTS_DB_PASSWORD:?set DOCUMENTS_DB_PASSWORD in .env}
+    volumes:
+      - documents-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U documents -d documents"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  chat-service:
+    build:
+      context: .
+      dockerfile: services/chat-service/Dockerfile
+    environment:
+      CHAT_DOCUMENTS_URL: http://documents-service:8000
+      CHAT_LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    depends_on:
+      documents-service:
+        condition: service_healthy
+    healthcheck: *python-healthcheck
+    restart: unless-stopped
+
+volumes:
+  documents-db-data:

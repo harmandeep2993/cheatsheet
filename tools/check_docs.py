@@ -16,7 +16,11 @@ TOC_RE = re.compile(r"^\d+\. \[[^\]]+\]\(#([^)]+)\)$")
 SECTION_REF_RE = re.compile(r"\]\((\d\d_[a-z0-9-]+\.md)\)(?:[^\n\[]{0,40}?)sections? (\d+)(?:-(\d+))?")
 # Guides that are reference pages rather than tool guides, so they have no Introduction / docs table
 REFERENCE_PAGES = {"00", "97", "98", "99"}
-ASCII_GLOBS = ["*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml"]
+ASCII_GLOBS = [
+    "*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
+    "templates/**/*.py", "templates/**/*.md", "templates/**/*.ts", "templates/**/*.tsx", "templates/**/*.css",
+    "templates/**/*.yaml", "templates/**/*.conf", "templates/**/Dockerfile",
+]
 # Installed packages and build output are not ours to check
 SKIP_DIRS = {".venv", "node_modules", "_site_src", "_site", "__pycache__"}
 

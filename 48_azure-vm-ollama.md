@@ -1,7 +1,7 @@
 # 48 - Azure VM + Linux + Ollama
 
 <!-- nav:start -->
-**Previous:** [47 - Azure](47_azure.md) | **Index:** [All guides](README.md) | **Next:** [97 - Capstone Project: Document Chatbot](97_capstone-project.md)
+**Previous:** [47 - Azure](47_azure.md) | **Index:** [All guides](README.md) | **Next:** [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md)
 <!-- nav:end -->
 
 Quick reference for running Ollama on an Azure Ubuntu VM and using it from a local app via SSH tunnel.
@@ -512,5 +512,5 @@ az vm list -d -o table          # PowerState must say "VM deallocated"
 ---
 
 <!-- nav:start -->
-**Previous:** [47 - Azure](47_azure.md) | **Index:** [All guides](README.md) | **Next:** [97 - Capstone Project: Document Chatbot](97_capstone-project.md)
+**Previous:** [47 - Azure](47_azure.md) | **Index:** [All guides](README.md) | **Next:** [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md)
 <!-- nav:end -->

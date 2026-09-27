@@ -1,0 +1,73 @@
+name: Templates
+
+on:
+  push:
+    branches: [main]
+    paths: ["templates/**", ".github/workflows/templates.yml"]
+  pull_request:
+    paths: ["templates/**", ".github/workflows/templates.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: templates/fullstack-microservices
+
+jobs:
+  python:
+    name: Services lint and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --all-packages --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest
+
+  frontend:
+    name: Frontend type-check and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: templates/fullstack-microservices/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: templates/fullstack-microservices/frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  compose:
+    name: Whole system starts and answers
+    runs-on: ubuntu-latest
+    env:
+      # Throwaway value for this CI run only; no API key, so chat-service uses its offline fake
+      DOCUMENTS_DB_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up --build --detach --wait --wait-timeout 180
+      - name: Smoke test through the proxy
+        run: |
+          curl --fail --silent http://localhost:8080/api/documents/health
+          curl --fail --silent http://localhost:8080/api/chat/health
+          curl --fail --silent -X POST http://localhost:8080/api/documents/ \
+            -H "Content-Type: application/json" \
+            -d '{"title": "Refunds", "content": "Refunds are paid within 5 days."}'
+          curl --fail --silent -X POST http://localhost:8080/api/chat/ask \
+            -H "Content-Type: application/json" \
+            -d '{"question": "How long do refunds take?"}' | grep -q "Refunds"
+          curl --fail --silent http://localhost:8080/ | grep -q '<div id="root">'
+      - name: Logs on failure
+        if: failure()
+        run: docker compose logs
+      - if: always()
+        run: docker compose down -v

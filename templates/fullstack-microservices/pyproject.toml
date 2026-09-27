@@ -1,0 +1,29 @@
+# Workspace root: one lock file (uv.lock) for every Python service and shared library.
+# Run `uv sync --all-packages` here to install everything for development and tests.
+[project]
+name = "fullstack-microservices"
+version = "0.1.0"
+description = "Starter: several Python services in Docker plus a separate React frontend"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv.workspace]
+members = ["libs/*", "services/*"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6", "httpx>=0.27"]
+
+[tool.pytest.ini_options]
+# importlib mode lets several services have test files with the same names
+addopts = "-q --import-mode=importlib"
+testpaths = ["libs/common/tests", "services/documents-service/tests", "services/chat-service/tests"]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["frontend"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["common", "documents_service", "chat_service"]

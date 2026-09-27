@@ -1,0 +1,94 @@
+/* === Design tokens === */
+:root {
+  --color-bg: #f4f7f7;
+  --color-surface: #ffffff;
+  --color-text: #1d2b2b;
+  --color-muted: #5b6b6b;
+  --color-primary: #00796b;
+  --color-primary-text: #ffffff;
+  --color-border: #d5dfdf;
+  --color-error: #b3261e;
+  --font-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --radius: 0.5rem;
+  --content-width: 64rem;
+  --column-min: 20rem;
+  --border-width: 1px;
+  --opacity-disabled: 0.6;
+}
+
+/* === Base === */
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+/* === Layout === */
+.layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--column-min), 1fr));
+  gap: var(--space-3);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-3);
+}
+
+.layout__header {
+  grid-column: 1 / -1;
+}
+
+.card {
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* === Controls === */
+input,
+textarea,
+button {
+  font: inherit;
+  padding: var(--space-1);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--color-border);
+}
+
+button {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: wait;
+}
+
+/* === Content === */
+.list {
+  padding-left: var(--space-2);
+}
+
+.answer {
+  margin-top: var(--space-2);
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+/* === Status tiers === */
+.status--error {
+  color: var(--color-error);
+}

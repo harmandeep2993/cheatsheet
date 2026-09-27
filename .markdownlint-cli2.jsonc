@@ -11,6 +11,6 @@
     "MD024": { "siblings_only": true },
     "MD033": { "allowed_elements": ["details", "summary", "br", "sub", "sup", "img"] }
   },
-  "globs": ["*.md", "examples/**/*.md"],
-  "ignores": ["_site_src/**", "_site/**", "node_modules/**", "**/.venv/**"]
+  "globs": ["*.md", "examples/**/*.md", "templates/**/*.md"],
+  "ignores": ["_site_src/**", "_site/**", "**/node_modules/**", "**/.venv/**"]
 }

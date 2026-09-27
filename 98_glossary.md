@@ -23,6 +23,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Anchor | Link target created from a heading (`#1-headings`) | [01 - Markdown](01_markdown.md) |
 | ANN | Approximate nearest neighbour: fast, slightly inexact search | [29 - Embeddings and Vector Databases](29_embeddings-vector-db.md) |
 | API | Interface that lets programs talk to each other | [39 - FastAPI](39_fastapi.md) |
+| API gateway | The single entry point that routes requests to services (here: the Nginx proxy) | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | API key | Secret that identifies and bills you; keep in env vars | [26 - LLM APIs](26_llm-apis.md) |
 | App string `module:attribute` | Where Uvicorn finds the app, e.g. `app.main:app` | [40 - Uvicorn (ASGI Server)](40_uvicorn.md) |
 | Arrow | In-memory columnar format shared by Polars, DuckDB, pandas | [18 - Polars and DuckDB](18_polars-duckdb.md) |
@@ -55,6 +56,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Broadcasting | Automatic stretching of arrays with different shapes | [16 - NumPy](16_numpy.md) |
 | Broker | The queue storage that holds jobs (Redis, RabbitMQ) | [41 - Redis, Caching and Task Queues](41_redis-queues.md) |
 | Buffering | Proxy collects the response before sending (breaks streaming if on) | [44 - Nginx, Reverse Proxy and HTTPS](44_nginx-https.md) |
+| Build context | The folder Docker sends to the builder; files outside it cannot be copied into the image | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 
 ## C
 
@@ -86,6 +88,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Commit | A saved snapshot with a message | [04 - Git and GitHub](04_git.md) |
 | Completion / output | Tokens the model generates | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
 | Compose | Tool to run several containers from one YAML file | [42 - Docker](42_docker.md) |
+| Compose override file | A second Compose file whose settings are merged over the first (for example for development) | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Computer use | Agent operates a GUI (screenshots, clicks, typing) | [31 - AI Agents](31_ai-agents.md) |
 | Concurrency | Many tasks in progress at once (interleaved) | [13 - Async Python](13_async-python.md) |
 | ConfigMap / Secret | Configuration / sensitive values injected into pods | [45 - Kubernetes](45_kubernetes.md) |
@@ -110,6 +113,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Data exfiltration | Sneaking private data out (e.g. via a URL or email) | [37 - AI Security and Responsible AI](37_ai-security.md) |
 | DataFrame | A table: rows and named columns | [17 - Pandas](17_pandas.md) |
 | Data leakage | Information from the test data or the answer sneaks into training | [22 - Scikit-learn](22_scikit-learn.md) |
+| Data ownership | Rule that only one service reads and writes a given database | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Data source | Read-only lookup of something that already exists | [46 - Terraform](46_terraform.md) |
 | DDL / DML | Statements that define structure (CREATE) / change data (INSERT) | [19 - SQL](19_sql.md) |
 | Deallocate | Stop the VM and its compute billing (disk still billed) | [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md) |
@@ -264,6 +268,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Latency | Time until the (first) response | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
 | Latency, TTFT | Total response time / time to first token | [34 - Evals and Observability](34_evals-observability.md) |
 | Layer | One cached step of an image build | [42 - Docker](42_docker.md) |
+| Layered architecture | Splitting code into routes (HTTP), services (business logic) and repositories (data access) | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Lazy frame | A query plan that runs only on `.collect()` | [18 - Polars and DuckDB](18_polars-duckdb.md) |
 | Learning rate | Size of each update step | [23 - PyTorch](23_pytorch.md) |
 | Least privilege | Give only the minimum access needed | [37 - AI Security and Responsible AI](37_ai-security.md) |
@@ -293,6 +298,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Metacharacter | A symbol with special meaning (`. * + ? ^ $`) | [06 - Regex](06_regex.md) |
 | Metadata / payload | Extra fields stored with each vector (source, date, user) for filtering | [29 - Embeddings and Vector Databases](29_embeddings-vector-db.md) |
 | Method (verb) | What to do: GET, POST, PUT, PATCH, DELETE | [08 - HTTP and APIs](08_http-apis.md) |
+| Microservice | A small, separately deployable service that owns one business capability and its data | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Mock / fake / stub | A stand-in for a real dependency (API, database, LLM) | [14 - pytest](14_pytest.md) |
 | Model | A class inheriting `BaseModel` that defines fields and types | [12 - Pydantic](12_pydantic.md) |
 | Model card | README of a model: purpose, licence, limitations | [24 - Hugging Face](24_hugging-face.md) |
@@ -300,9 +306,11 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Model Hub | Website hosting models, datasets and Spaces | [24 - Hugging Face](24_hugging-face.md) |
 | Model ID | Exact model string, e.g. `claude-opus-5` | [26 - LLM APIs](26_llm-apis.md) |
 | Model / module | A network: layers + a `forward` method (`nn.Module`) | [23 - PyTorch](23_pytorch.md) |
+| Modular monolith | One deployable app split internally into well separated modules; often the better first step | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Module | Reusable group of resources (like a function) | [46 - Terraform](46_terraform.md) |
 | Module / package | A `.py` file / a folder of modules you can import | [09 - Python Basics](09_python-basics.md) |
 | Monkeypatch | Temporarily replace an attribute or env var during a test | [14 - pytest](14_pytest.md) |
+| Monorepo | One Git repository containing several services and apps | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Multi-agent | Several agents with roles (orchestrator, workers, reviewers) | [31 - AI Agents](31_ai-agents.md) |
 | Multimodal | Can take images / PDFs / audio as input | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
 
@@ -421,7 +429,9 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Remote / origin | The copy of the repo on a server (GitHub) | [04 - Git and GitHub](04_git.md) |
 | Render | Turning Markdown symbols into formatted output | [01 - Markdown](01_markdown.md) |
 | ReplicaSet | Created by a Deployment to maintain the pod count | [45 - Kubernetes](45_kubernetes.md) |
+| Repository pattern | A class that hides database queries behind simple methods like `add` and `get` | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | Repository (repo) | A project folder tracked by Git (history lives in `.git/`) | [04 - Git and GitHub](04_git.md) |
+| Request ID | An ID attached to a request and passed between services so logs can be joined | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | requirements.txt | Text file listing the project's packages and versions | [10 - Python Virtual Environment](10_python-virtual-environment.md) |
 | Reranker | Model that re-scores retrieved chunks more precisely | [30 - RAG (Retrieval-Augmented Generation)](30_rag.md) |
 | Rerun (Streamlit) | Script executes again after each user interaction | [38 - AI User Interfaces (Streamlit, Gradio, Chainlit)](38_ai-ui.md) |
@@ -530,6 +540,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | User prompt | The specific request / input for this turn | [27 - Prompt Engineering](27_prompt-engineering.md) |
 | `uv.lock` | Exact versions of every package; commit it to Git | [11 - uv](11_uv.md) |
 | uvloop / httptools | Faster event loop and HTTP parser (included in `uvicorn[standard]`) | [40 - Uvicorn (ASGI Server)](40_uvicorn.md) |
+| uv workspace | Several Python packages in one repository sharing one `uv.lock` and one virtual environment | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 
 ## V
 
@@ -559,6 +570,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Workflow | A YAML file describing automation | [43 - GitHub Actions (CI/CD)](43_github-actions.md) |
 | Working directory | The folder the terminal is currently "in" | [02 - Terminal and PowerShell](02_terminal-powershell.md) |
 | Workspace | The folder (project) you have open | [05 - VS Code](05_vscode.md) |
+| Workspace member | One package inside a uv workspace (a service or a shared library) | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | WSGI | Older sync interface (Flask, classic Django) | [40 - Uvicorn (ASGI Server)](40_uvicorn.md) |
 
 ## Z

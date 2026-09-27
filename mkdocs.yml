@@ -130,3 +130,4 @@ nav:
       - 46_terraform.md
       - 47_azure.md
       - 48_azure-vm-ollama.md
+      - 49_project-structure.md
