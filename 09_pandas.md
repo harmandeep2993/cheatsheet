@@ -4,6 +4,7 @@ Quick reference for data analysis with pandas.
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Install and Import](#1-install-and-import)
 2. [Create Series](#2-create-series)
 3. [Create DataFrames](#3-create-dataframes)
@@ -27,6 +28,59 @@ Quick reference for data analysis with pandas.
 21. [Index Operations](#21-index-operations)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of the arguments and parameters used in the pandas calls below.
+> - **How:** Explains how a call is built, then lists each parameter with its meaning and example.
+> - **When to use:** You see `df.drop_duplicates(subset=["A"], keep="first")` and want to know what each argument does.
+
+### How a function call is built
+
+```text
+df.sort_values("salary", ascending=False)
+|  |           |         |
+|  |           |         +-- keyword argument: name=value, any order, optional
+|  |           +------------ positional argument: meaning comes from its position
+|  +------------------------ method name
++--------------------------- the object it works on (DataFrame)
+```
+
+- **Positional** arguments come first, in a fixed order. **Keyword** arguments use `name=value` and can be in any order.
+- Arguments you leave out use their **default** value (for example `ascending=True`).
+- See all parameters and defaults: `help(pd.DataFrame.sort_values)`, or `Shift+Tab` inside the brackets in Jupyter.
+
+| Parameter | Used in | Meaning | Example |
+|---|---|---|---|
+| `sep` | `read_csv` | Column separator in the file | `sep=";"` |
+| `encoding` | `read_csv`, `to_csv` | Text encoding of the file | `encoding="utf-8"` |
+| `sheet_name` | `read_excel` | Which Excel sheet to read | `sheet_name="Sheet1"` |
+| `index` | `to_csv`, `to_excel`, `to_sql` | `False` = do not write the row index as a column | `index=False` |
+| `if_exists` | `to_sql` | Table already exists: `"fail"`, `"replace"` or `"append"` | `if_exists="replace"` |
+| `n` (1st argument) | `head`, `tail`, `sample`, `nlargest` | Number of rows | `df.head(10)` |
+| `include` | `describe` | `"all"` = also summarise text columns | `include="all"` |
+| `normalize` | `value_counts`, `crosstab` | Shares instead of counts (`"index"` = per row in crosstab) | `normalize=True` |
+| `axis` | `drop`, `apply`, `concat` | `0` = rows, `1` = columns | `axis=1` |
+| `columns` / `index` | `drop`, `rename` | Which columns / rows to act on | `columns=["C"]` |
+| `inplace` | many methods | `True` = change `df` itself instead of returning a new one (prefer `df = ...`) | `inplace=True` |
+| `subset` | `dropna`, `drop_duplicates` | Only look at these columns | `subset=["A"]` |
+| `keep` | `drop_duplicates` | Which duplicate to keep: `"first"`, `"last"`, `False` (drop all) | `keep="first"` |
+| `errors` | `to_numeric`, `to_datetime` | `"coerce"` = turn invalid values into NaN instead of failing | `errors="coerce"` |
+| `case` | `str.contains` | `False` = ignore upper / lower case | `case=False` |
+| `ascending` | `sort_values` | `False` = largest first; list for several columns | `ascending=[True, False]` |
+| `numeric_only` | `corr`, `mean` | Ignore text columns | `numeric_only=True` |
+| `on` | `merge` | Key column present in both tables | `on="key"` |
+| `left_on`, `right_on` | `merge` | Key columns with different names | `left_on="id", right_on="user_id"` |
+| `how` | `merge`, `join` | Join type: `"inner"`, `"left"`, `"right"`, `"outer"` | `how="left"` |
+| `ignore_index` | `concat` | Renumber the index 0, 1, 2 ... | `ignore_index=True` |
+| `values` | `pivot_table` | Column(s) to aggregate | `values="Age"` |
+| `index` | `pivot_table` | Column(s) that become the rows | `index="Department"` |
+| `columns` | `pivot_table` | Column(s) that become the columns | `columns="Gender"` |
+| `aggfunc` | `pivot_table`, `agg` | Aggregation: `"mean"`, `"sum"`, `"count"`, list for several | `aggfunc=["sum", "max"]` |
+| `fill_value` | `pivot_table` | Value for empty cells | `fill_value=0` |
+| `margins` | `crosstab`, `pivot_table` | Add row and column totals | `margins=True` |
+| `drop` | `reset_index` | `True` = throw the old index away instead of making it a column | `drop=True` |
+| `method` | `rank` | How ties are ranked (`"first"` = by order of appearance) | `method="first"` |
 
 ## 1. Install and Import
 

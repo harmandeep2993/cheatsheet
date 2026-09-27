@@ -4,6 +4,7 @@ Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebook
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Install and Start](#1-install-and-start)
 2. [Use a Virtual Environment as Kernel](#2-use-a-virtual-environment-as-kernel)
 3. [Notebooks in VS Code](#3-notebooks-in-vs-code)
@@ -23,6 +24,53 @@ Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebook
 17. [Troubleshooting](#17-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of every flag in the Jupyter commands and magics below.
+> - **How:** Tables list each command-line flag and magic option.
+> - **When to use:** You see `python -m ipykernel install --user --name myproject` and want to know what each part does.
+
+### How a command is built
+
+```text
+python -m ipykernel  install  --user  --name myproject  --display-name "Python (myproject)"
+          |          |        |       |                 |
+          |          |        |       |                 +-- label shown in the kernel menu
+          |          |        |       +-------------------- internal kernel name (no spaces)
+          |          |        +---------------------------- install for your user only (no admin)
+          |          +------------------------------------- action
+          +------------------------------------------------ module that registers kernels
+```
+
+### Command-line flags
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `jupyter lab` | `--no-browser` | Start the server without opening a browser |
+| `jupyter lab` | `--port 8889` | Use another port (default 8888) |
+| `ipykernel install` | `--user` | Install for the current user only |
+| `ipykernel install` | `--name` | Internal kernel name |
+| `ipykernel install` | `--display-name` | Name shown in the kernel list |
+| `nbconvert` | `--to html` | Output format: `html`, `script`, `markdown`, `pdf`, `webpdf`, `notebook` |
+| `nbconvert` | `--no-input` | Hide code cells, keep outputs |
+| `nbconvert` | `--execute` | Run all cells before converting |
+| `nbconvert` | `--clear-output` | Remove all outputs |
+| `nbconvert` | `--inplace` | Overwrite the input file instead of creating a new one |
+| `nbstripout` | `--install` | Add a Git filter that strips outputs on every commit |
+| `jupytext` | `--set-formats ipynb,py:percent` | Keep the notebook paired with a `.py` file using `# %%` cells |
+
+### Magic options
+
+| Magic | Option | Meaning |
+|---|---|---|
+| `%reset` | `-f` | Force: do not ask for confirmation |
+| `%history` | `-n 1-10` | Show inputs 1 to 10 with their numbers |
+| `%autoreload` | `2` | Reload all modules before each cell (`1` = only `%aimport` ones, `0` = off) |
+| `%matplotlib` | `inline` / `widget` | Static images / interactive plots |
+| `%%capture` | `output` | Variable name that stores the hidden output |
+| `%%writefile` | `helpers.py` | File to write the cell into (`-a` to append) |
+| `?` / `??` | after a name | Show docstring / show source code |
 
 ## 1. Install and Start
 

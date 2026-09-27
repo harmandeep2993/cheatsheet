@@ -4,6 +4,7 @@ Quick reference for building and running containers with Docker and Docker Compo
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Concepts](#1-concepts)
 2. [Install and Check](#2-install-and-check)
 3. [Images](#3-images)
@@ -26,6 +27,79 @@ Quick reference for building and running containers with Docker and Docker Compo
 20. [Troubleshooting](#20-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of every flag and value used in the Docker commands below.
+> - **How:** A command is split into program, action, flags and target; tables list every flag.
+> - **When to use:** You see a command like `docker run -d -p 8080:80 --name web nginx` and want to know what each part does.
+
+### How a command is built
+
+```text
+docker  run  -d  -p 8080:80  --name web  nginx
+|       |    |   |          |           |
+|       |    |   |          |           +-- image to start a container from
+|       |    |   |          +-------------- --name: call the container "web"
+|       |    |   +------------------------- -p host:container: laptop 8080 -> container 80
+|       |    +----------------------------- -d: detached, run in the background
+|       +---------------------------------- action: create and start a new container
++------------------------------------------ program
+```
+
+- Short flags can be combined: `-it` = `-i -t`.
+- In `host:container` pairs (ports, volumes) the **left side is your machine**, the right side is inside the container.
+- Show every flag of any command: `docker run --help`.
+
+### docker run
+
+| Flag | Long form | Meaning | Example |
+|---|---|---|---|
+| `-d` | `--detach` | Run in the background and return the prompt | `docker run -d nginx` |
+| `-i` | `--interactive` | Keep input (STDIN) open so you can type | `-i` |
+| `-t` | `--tty` | Give the container a terminal (prompt, colours) | `-t` |
+| `-it` | | Both: an interactive shell | `docker run -it python:3.12 bash` |
+| `--rm` | | Delete the container automatically when it stops | `--rm` |
+| `--name` | | Name to use instead of a random one | `--name web` |
+| `-p` | `--publish` | Publish a port `host:container` | `-p 8000:8000` |
+| `-e` | `--env` | Set an environment variable | `-e APP_ENV=prod` |
+| `--env-file` | | Load environment variables from a file | `--env-file .env` |
+| `-v` | `--volume` | Mount a volume or folder `source:target[:ro]`; `:ro` = read-only | `-v mydata:/data` |
+| `--network` | | Attach to a network | `--network mynet` |
+| `--restart` | | Restart policy: `no`, `always`, `unless-stopped`, `on-failure` | `--restart unless-stopped` |
+| `--memory` | `-m` | Memory limit | `--memory 512m` |
+| `--cpus` | | CPU limit (number of cores) | `--cpus 1` |
+| `--gpus` | | Give access to GPUs | `--gpus all` |
+| `${PWD}` | | Current folder (PowerShell and Bash) | `-v ${PWD}:/app` |
+
+### Other docker commands
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `docker ps` | `-a` (`--all`) | Include stopped containers |
+| `docker rm` | `-f` (`--force`) | Stop the container first if it is running |
+| `docker exec` | `-it` | Interactive terminal inside a running container |
+| `docker logs` | `-f` (`--follow`) | Keep printing new log lines |
+| `docker logs` | `--tail 50` | Only the last 50 lines |
+| `docker logs` | `--since 10m` | Only logs from the last 10 minutes (`s`, `m`, `h`) |
+| `docker build` | `-t name:tag` | Name and tag for the new image |
+| `docker build` | `-f path` | Use a Dockerfile at another path |
+| `docker build` | `.` (last argument) | Build context: the folder `COPY` can read from |
+| `docker build` | `--no-cache` | Rebuild every layer, ignore the cache |
+| `docker build` | `--build-arg K=V` | Value for an `ARG` in the Dockerfile |
+| `docker build` | `--platform linux/amd64` | Build for another CPU architecture |
+| `docker image prune` | `-a` (`--all`) | Remove all unused images, not only untagged ones |
+| `docker system prune` | `--volumes` | Also remove unused volumes (data is lost) |
+
+### docker compose
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `up` | `-d` | Start in the background |
+| `up` | `--build` | Rebuild images before starting |
+| `down` | `-v` | Also delete the volumes declared in the file |
+| `logs` | `-f` | Follow logs |
+| `logs` / `exec` / `restart` | `<service>` | Act on one service only, e.g. `api` |
 
 ## 1. Concepts
 

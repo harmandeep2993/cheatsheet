@@ -4,6 +4,7 @@ Quick reference for everyday terminal work on Windows (PowerShell, CMD) with Bas
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Which Shell Am I In?](#1-which-shell-am-i-in)
 2. [Keyboard Shortcuts](#2-keyboard-shortcuts)
 3. [Help](#3-help)
@@ -26,6 +27,94 @@ Quick reference for everyday terminal work on Windows (PowerShell, CMD) with Bas
 20. [Troubleshooting](#20-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** How PowerShell, CMD and Bash parameters are written, and what each one used below means.
+> - **How:** A command is split into command name, parameters and values; tables list every parameter.
+> - **When to use:** You see a command like `Get-ChildItem -Recurse -Filter *.csv` and want to know what each part does.
+
+### How a command is built
+
+```text
+Get-ChildItem  -Path D:\data  -Filter *.csv  -Recurse
+|              |              |              |
+|              |              |              +-- switch parameter: on when present, no value
+|              |              +----------------- parameter with value: only names matching *.csv
+|              +-------------------------------- parameter with value: folder to look in
++----------------------------------------------- command: Verb-Noun (Get = read, ChildItem = folder contents)
+```
+
+- PowerShell parameters start with one dash and a word: `-Recurse`. They are **not** case-sensitive.
+- You may shorten a parameter while it stays unique: `-Rec` = `-Recurse`. `Tab` completes names.
+- Some values can be given **by position** without the name: `Get-ChildItem D:\data` = `Get-ChildItem -Path D:\data`.
+- CMD commands use slashes: `/s`, `/q`. Bash uses dashes: `-r` (short) and `--recursive` (long).
+- See all parameters: `Get-Help Get-ChildItem -Full`, or `Get-Help Get-ChildItem -Parameter Filter`.
+
+### PowerShell parameters
+
+| Command | Parameter | Meaning |
+|---|---|---|
+| `Get-ChildItem` | `-Force` | Include hidden and system items |
+| `Get-ChildItem` | `-Recurse` | Include all subfolders |
+| `Get-ChildItem` | `-Filter *.csv` | Only names matching the pattern (`*` = any characters) |
+| `Get-Content` | `-TotalCount 10` | First 10 lines |
+| `Get-Content` | `-Tail 10` | Last 10 lines |
+| `Get-Content` | `-Wait` | Keep reading as the file grows (like `tail -f`) |
+| `Get-Content` | `-Raw` | Read as one string instead of a list of lines |
+| `Select-String` | `-CaseSensitive` | Match upper / lower case exactly (default ignores case) |
+| `New-Item` | `-ItemType Directory` | Create a folder instead of a file |
+| `New-Item` | `-Force` | Create parent folders / overwrite |
+| `Remove-Item` | `-Recurse` | Delete folder contents too |
+| `Remove-Item` / `Stop-Process` | `-Force` | Do not ask; include read-only / hidden items |
+| `Copy-Item` | `-Recurse` | Copy a folder with all contents |
+| `Sort-Object` | `-Descending` | Largest / newest first |
+| `Select-Object` | `-First 5` | Only the first 5 objects |
+| `Select-Object` | `Name, Id` | Only these properties (columns) |
+| `Measure-Object` | `-Sum` | Add up the given property |
+| `Format-Table` | `-AutoSize` | Fit column widths to content |
+| `Out-File` / `Set-Content` | `-Encoding utf8` | Character encoding of the written file |
+| `Export-Csv` | `-NoTypeInformation` | Do not write the `#TYPE` header line |
+| `Get-Help` | `-Examples` | Only show usage examples |
+| `Get-PSDrive` | `-PSProvider FileSystem` | Only disk drives (not registry etc.) |
+| `Stop-Process` | `-Name` / `-Id` | Choose the process by name / by process ID |
+| `Start-Process` | `-Verb RunAs` | Start as Administrator |
+| `Get-NetTCPConnection` | `-LocalPort 8000` | Only connections on this local port |
+| `Get-NetTCPConnection` | `-State Listen` | Only ports waiting for connections |
+| `Test-NetConnection` | `-Port 443` | Test this TCP port, not just ping |
+| `Invoke-WebRequest` | `-OutFile page.html` | Save the download to a file |
+| `Set-ExecutionPolicy` | `-Scope CurrentUser` | Change only for your user (no admin needed) |
+| `Set-ExecutionPolicy` | `RemoteSigned` | Local scripts run; downloaded scripts need a signature |
+
+### PowerShell operators and symbols
+
+| Symbol | Meaning | Example |
+|---|---|---|
+| `\|` | Pipe: pass the output objects to the next command | `Get-Process \| Sort-Object CPU` |
+| `$_` | The current object inside `{ }` in a pipeline | `Where-Object { $_.CPU -gt 100 }` |
+| `-eq -ne -gt -ge -lt -le` | Equal, not equal, greater, greater or equal, less, less or equal | `CPU -gt 100` |
+| `-like` | Wildcard match (`*`, `?`) | `$_.Name -like "py*"` |
+| `-match` | Regular expression match | `$_ -match "^err"` |
+| `-split` | Split a string into parts | `$env:PATH -split ";"` |
+| `$env:NAME` | Environment variable | `$env:PATH` |
+| `.\` | Current folder (required to run a script there) | `.\script.ps1` |
+| `&` | Call operator: run a program whose path is in quotes | `& "C:\Program Files\app.exe"` |
+| `$?` | True if the last command succeeded | `if ($?) { ... }` |
+| `` ` `` | Line continuation / escape character | |
+
+### CMD and other Windows tools
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `rmdir` | `/s` / `/q` | Delete all subfolders and files / quiet, do not ask |
+| `ipconfig` | `/flushdns` | Clear the DNS cache |
+| `netstat` | `-ano` | `-a` all connections, `-n` numbers not names, `-o` show process ID |
+| `findstr` | `:8000` | Keep only lines containing this text (like grep) |
+| `taskkill` | `/PID 1234 /F` | Kill process 1234, `/F` = force |
+| `winget install` | `-e --id X` | Exact match on package ID X |
+| `winget upgrade` | `--all` | Upgrade every package that has an update |
+| `ping` (Bash) | `-c 4` | Send 4 packets then stop (Windows ping stops after 4 by default) |
+| `curl` | `-O` | Save with the remote file name |
 
 ## 1. Which Shell Am I In?
 

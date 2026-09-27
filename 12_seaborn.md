@@ -4,6 +4,7 @@ Quick reference for statistical plots with Seaborn (built on matplotlib, works d
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Install and Import](#1-install-and-import)
 2. [Built-in Datasets](#2-built-in-datasets)
 3. [How Seaborn Works](#3-how-seaborn-works)
@@ -23,6 +24,66 @@ Quick reference for statistical plots with Seaborn (built on matplotlib, works d
 17. [Troubleshooting](#17-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of the arguments and parameters used in the seaborn calls below.
+> - **How:** Explains how a call is built, then lists each parameter with its meaning and example.
+> - **When to use:** You see `sns.catplot(data=tips, x="day", y="tip", kind="box", col="time")` and want to know what each argument does.
+
+### How a function call is built
+
+```text
+sns.boxplot(data=tips, x="day", y="tip", hue="sex")
+|   |       |          |        |        |
+|   |       |          |        |        +-- colour by this column
+|   |       |          |        +----------- column for the y axis
+|   |       |          +-------------------- column for the x axis
+|   |       +------------------------------- the DataFrame to use
+|   +--------------------------------------- plot type
++------------------------------------------- seaborn module
+```
+
+- **Positional** arguments come first, in a fixed order. **Keyword** arguments use `name=value` and can be in any order.
+- Arguments you leave out use their **default** value (for example no `hue` = one colour).
+- See all parameters and defaults: `help(sns.boxplot)`, or `Shift+Tab` inside the brackets in Jupyter.
+
+| Parameter | Used in | Meaning | Example |
+|---|---|---|---|
+| `data` | all | The DataFrame | `data=tips` |
+| `x`, `y` | all | Column names for the axes | `x="day", y="tip"` |
+| `hue` | most | Colour by this column | `hue="sex"` |
+| `size` | `scatterplot`, `relplot` | Marker size by this column | `size="size"` |
+| `style` | `scatterplot`, `lineplot` | Marker / line style by this column | `style="time"` |
+| `col`, `row` | figure-level (`relplot`, `catplot`, `displot`, `lmplot`) | One subplot per value of this column | `col="time"` |
+| `col_wrap` | figure-level | Max subplots per row | `col_wrap=2` |
+| `kind` | `catplot`, `relplot`, `displot`, `jointplot` | Which plot to draw | `kind="box"` |
+| `ax` | axes-level | Draw into this matplotlib Axes | `ax=axes[0]` |
+| `height`, `aspect` | figure-level | Height of each subplot (inches), width = height x aspect | `height=4, aspect=1.5` |
+| `palette` | most | Colour set for `hue` | `palette="Set2"` |
+| `color` | most | One colour for everything | `color="steelblue"` |
+| `order`, `hue_order` | categorical | Order of categories | `order=["Thur", "Fri"]` |
+| `legend` | most | `False` = hide the legend | `legend=False` |
+| `bins` | `histplot` | Number of bars | `bins=20` |
+| `kde` | `histplot`, `displot` | Add a smooth density curve | `kde=True` |
+| `multiple` | `histplot` | Several hue groups: `"layer"`, `"stack"`, `"dodge"`, `"fill"` | `multiple="stack"` |
+| `fill` | `kdeplot` | Fill the area under the curve | `fill=True` |
+| `estimator` | `barplot`, `pointplot` | What the bar height shows: `"mean"` (default), `"sum"`, `"median"` | `estimator="sum"` |
+| `errorbar` | `barplot`, `lineplot` | Error bar type: `("ci", 95)` default, `"sd"`, `None` | `errorbar=None` |
+| `split` | `violinplot` | Two hue groups as halves of one violin | `split=True` |
+| `jitter` | `stripplot` | Spread points sideways so they overlap less | `jitter=True` |
+| `ci` | `regplot`, `lmplot` | Confidence band around the line; `None` = hide | `ci=None` |
+| `order` | `regplot` | Polynomial degree of the fitted line (not category order here) | `order=2` |
+| `scatter_kws` | `regplot` | Extra options for the points, as a dict | `scatter_kws={"alpha": 0.5}` |
+| `annot` | `heatmap` | Write the value in each cell | `annot=True` |
+| `fmt` | `heatmap` | Number format of `annot` | `fmt=".2f"` |
+| `cmap` | `heatmap` | Colour map | `cmap="coolwarm"` |
+| `vmin`, `vmax`, `center` | `heatmap` | Colour scale limits and middle value | `vmin=-1, vmax=1, center=0` |
+| `linewidths` | `heatmap` | Gap between cells | `linewidths=0.5` |
+| `corner` | `pairplot` | Only lower triangle (no duplicates) | `corner=True` |
+| `diag_kind` | `pairplot` | Plot on the diagonal: `"hist"` or `"kde"` | `diag_kind="kde"` |
+| `vars` | `pairplot` | Only these columns | `vars=["tip", "size"]` |
+| `style`, `context`, `font_scale` | `set_theme` | Background style, overall size, font size factor | `style="whitegrid"` |
 
 ## 1. Install and Import
 

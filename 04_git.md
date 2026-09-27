@@ -4,6 +4,7 @@ Quick reference for version control with Git and working with GitHub (including 
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Concepts](#1-concepts)
 2. [Install and Configure](#2-install-and-configure)
 3. [Start a Repository](#3-start-a-repository)
@@ -27,6 +28,112 @@ Quick reference for version control with Git and working with GitHub (including 
 21. [Troubleshooting](#21-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of every flag, value and special name used in the Git commands below.
+> - **How:** A command is split into program, sub-command, flags and arguments; tables list every flag.
+> - **When to use:** You see a command like `git push -u origin main` and want to know what each part does.
+
+### How a command is built
+
+```text
+git  push  -u  origin  main
+|    |     |   |       |
+|    |     |   |       +-- branch to push
+|    |     |   +---------- remote to push to (the name of the GitHub URL)
+|    |     +-------------- -u (--set-upstream): remember this pairing, so later just "git push"
+|    +-------------------- sub-command
++------------------------- program
+
+git  commit  -m "feat: add login"
+             |  |
+             |  +-- value: the commit message
+             +----- -m (--message): message given on the command line (no editor opens)
+```
+
+Help for any sub-command: `git commit --help` or `git commit -h` (short).
+
+### Special names
+
+| Name | Meaning |
+|---|---|
+| `.` | Current folder and everything below it (`git add .`) |
+| `HEAD` | The commit you are on now |
+| `HEAD~1` | One commit before HEAD (`HEAD~2` = two before) |
+| `origin` | Default name of the remote you cloned from |
+| `origin/main` | Your local copy of the `main` branch on the remote |
+| `main..feature` | Commits in `feature` that are not in `main` |
+| `a1b2c3d` | Short commit hash (first 7 characters are enough) |
+| `stash@{1}` | Second newest stash entry (0 = newest) |
+
+### Common flags
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `config` | `--global` | Setting for all repos of your user (without it: this repo only) |
+| `config` | `--list` | Show all settings |
+| `add` | `-p` (`--patch`) | Choose changes piece by piece |
+| `commit` | `-m` | Commit message |
+| `commit` | `-a` (`--all`) | Stage all modified / deleted tracked files first (not new files) |
+| `commit` | `--amend` | Replace the last commit (message and / or content) |
+| `commit` | `--no-edit` | Keep the existing message when amending |
+| `status` | `-s` (`--short`) | Short two-column output |
+| `diff` | `--staged` | Show staged changes instead of unstaged |
+| `diff` | `--stat` | Only files and number of changed lines |
+| `log` | `--oneline` | One line per commit: short hash + message |
+| `log` | `--graph` | Draw branch lines |
+| `log` | `--all` | Include all branches, not only the current one |
+| `log` | `-5` | Only the last 5 commits |
+| `log` | `-p` | Show the changes of each commit |
+| `log` | `--author`, `--since`, `--grep` | Filter by author, date or message text |
+| `log` | `--follow` | Keep following a file across renames |
+| `switch` | `-c` (`--create`) | Create the branch and switch to it |
+| `checkout` | `-b` | Same as `switch -c` (older command) |
+| `branch` | `-a` | List local and remote branches |
+| `branch` | `-d` / `-D` | Delete (only if merged) / force delete |
+| `branch` | `-m` | Rename |
+| `branch` | `-vv` | Show which remote branch each local branch tracks |
+| `remote` | `-v` | Show remote URLs |
+| `push` | `-u` | Set upstream (first push of a branch) |
+| `push` | `--delete` | Delete a branch on the remote |
+| `push` | `--tags` | Push all tags |
+| `pull` | `--rebase` | Rebase your commits on top instead of creating a merge commit |
+| `pull` | `--allow-unrelated-histories` | Allow merging two repos that started separately |
+| `merge` | `--squash` | Combine all branch changes into one staged change |
+| `merge` / `rebase` | `--abort` | Cancel and go back to the state before |
+| `rebase` | `--continue` | Continue after fixing a conflict |
+| `checkout` | `--ours` / `--theirs` | In a conflict, take your version / the incoming version |
+| `restore` | `--staged` | Unstage (keep the file changes) |
+| `restore` | `--source <hash>` | Take the file from that commit |
+| `reset` | `--soft` | Move branch back; keep changes staged |
+| `reset` | (no flag) / `--mixed` | Move branch back; keep changes unstaged |
+| `reset` | `--hard` | Move branch back; DELETE the changes |
+| `clean` | `-n` | Dry run: only show what would be deleted |
+| `clean` | `-f` / `-d` | Force (required to delete) / include folders |
+| `rm` | `--cached` | Stop tracking but keep the file on disk |
+| `rm` | `-r` | Recursive (folders) |
+| `stash` | `-u` | Include untracked files |
+| `stash push` | `-m` | Name for the stash |
+| `tag` | `-a` / `-m` | Annotated tag / its message |
+| `tag` | `-d` | Delete a local tag |
+| `shortlog` | `-sn` | `-s` counts only, `-n` sorted by number |
+
+### GitHub CLI and SSH
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `gh repo create` | `--private` / `--public` | Visibility of the new repo |
+| `gh repo create` | `--source .` | Use the current folder as the repo |
+| `gh repo create` | `--push` | Push existing commits right away |
+| `gh pr create` | `--fill` | Use commit messages as PR title and body |
+| `gh pr create` | `--title`, `--body` | Set title and description yourself |
+| `gh ... view` | `--web` | Open in the browser |
+| `gh pr merge` | `--squash` | Squash all PR commits into one |
+| `gh pr merge` | `--delete-branch` | Delete the branch after merging |
+| `ssh-keygen` | `-t ed25519` | Key type (ed25519 = modern and short) |
+| `ssh-keygen` | `-C "email"` | Comment stored in the key (to recognise it) |
+| `ssh` | `-T` | No terminal; used to test the GitHub login |
 
 ## 1. Concepts
 

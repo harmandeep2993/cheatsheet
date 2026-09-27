@@ -4,6 +4,7 @@ Quick reference for creating and managing Python virtual environments with `venv
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [What and Why](#1-what-and-why)
 2. [Check Python Installation](#2-check-python-installation)
 3. [Create](#3-create)
@@ -19,6 +20,52 @@ Quick reference for creating and managing Python virtual environments with `venv
 13. [Troubleshooting](#13-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of every flag and value in the Python / pip commands below.
+> - **How:** A command is split into program, module, action and options; the table lists each one.
+> - **When to use:** You see `python -m pip install --upgrade pip` and want to know what each part does.
+
+### How a command is built
+
+```text
+python  -m  venv  .venv
+|       |   |     |
+|       |   |     +-- argument: folder to create
+|       |   +-------- module to run (the built-in venv tool)
+|       +------------ -m: run a module as a program
++-------------------- the Python interpreter
+
+python  -m pip  install  --upgrade  pip
+                |        |          |
+                |        |          +-- package name
+                |        +------------- option: install the newest version even if one is installed
+                +---------------------- pip action
+```
+
+`python -m pip ...` is safer than plain `pip ...`: it guarantees pip belongs to the Python you are running.
+
+| Command | Flag / value | Meaning |
+|---|---|---|
+| `python` | `--version` | Print the version and exit |
+| `python` | `-m <module>` | Run a module as a program (`venv`, `pip`, `ipykernel`) |
+| `python` | `-c "code"` | Run the given code string |
+| `py` | `-0` | List installed Python versions (Windows launcher) |
+| `py` | `-3.12` | Use Python 3.12 specifically |
+| `venv` | `.venv` | Name / path of the environment folder |
+| `pip install` | `pkg==2.2.2` | Exact version |
+| `pip install` | `"pkg>=2.0"` | Minimum version (quotes stop the shell treating `>` as redirect) |
+| `pip install` | `--upgrade` (`-U`) | Upgrade to the newest version |
+| `pip install` | `-r requirements.txt` | Install every package listed in the file |
+| `pip uninstall` | `-y` | Do not ask for confirmation |
+| `pip list` | `--outdated` | Only packages with a newer version available |
+| `pip freeze` | `> requirements.txt` | Redirect the output (installed versions) into the file |
+| `Remove-Item` | `-Recurse -Force` | Delete folder with all contents, no questions |
+| `rmdir` (CMD) | `/s /q` | Subfolders too / quiet |
+| `rm` (Bash) | `-rf` | Recursive, force |
+| `Set-ExecutionPolicy` | `-Scope CurrentUser RemoteSigned` | Allow local scripts (like `Activate.ps1`) for your user |
+| `source` (Bash) | `.venv/bin/activate` | Run the activate script in the current shell |
 
 ## 1. What and Why
 

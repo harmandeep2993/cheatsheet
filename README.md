@@ -40,6 +40,7 @@ Personal quick-reference cheat sheets, numbered from basic to advanced.
 
 - File names: `NN_topic.md` (two-digit number, lowercase, hyphens).
 - Each guide starts with a numbered **Contents** list; sections are numbered to match.
+- Section **0. Flags and Parameters** breaks a sample command into its parts and explains every flag / parameter used in that guide.
 - Each section opens with **What** (what it is), **How** (how it works) and **When to use** (a real scenario).
 - Commands have a short comment on the right explaining what they do.
 - Most guides end with a **Troubleshooting** table of common errors and fixes.

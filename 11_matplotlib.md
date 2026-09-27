@@ -4,6 +4,7 @@ Quick reference for plotting with Matplotlib (the base plotting library; seaborn
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Install and Import](#1-install-and-import)
 2. [Two Ways to Plot](#2-two-ways-to-plot)
 3. [Figure Anatomy](#3-figure-anatomy)
@@ -26,6 +27,62 @@ Quick reference for plotting with Matplotlib (the base plotting library; seaborn
 20. [Troubleshooting](#20-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of the arguments and parameters used in the matplotlib calls below.
+> - **How:** Explains how a call is built, then lists each parameter with its meaning and example.
+> - **When to use:** You see `ax.hist(data, bins=20, alpha=0.7, edgecolor="black")` and want to know what each argument does.
+
+### How a function call is built
+
+```text
+ax.plot(x, y, color="red", linestyle="--", label="sales")
+|  |    |  |  |
+|  |    |  |  +-- keyword arguments: style options, any order
+|  |    |  +----- positional: y values
+|  |    +-------- positional: x values
+|  +------------- method: what to draw
++---------------- the Axes (chart) to draw on
+```
+
+- **Positional** arguments come first, in a fixed order. **Keyword** arguments use `name=value` and can be in any order.
+- Arguments you leave out use their **default** value (for example a solid line).
+- See all parameters and defaults: `help(plt.Axes.plot)`, or `Shift+Tab` inside the brackets in Jupyter.
+
+| Parameter | Used in | Meaning | Example |
+|---|---|---|---|
+| `nrows, ncols` | `plt.subplots(2, 2)` | Grid of charts: rows, columns | `plt.subplots(2, 2)` |
+| `figsize` | `subplots`, `figure` | Width, height in inches | `figsize=(10, 5)` |
+| `sharex`, `sharey` | `subplots` | Charts use the same axis range | `sharex=True` |
+| `label` | all plot methods | Name shown in the legend | `label="sales"` |
+| `color` | all plot methods | One colour: name, hex or `"C0"` | `color="tab:blue"` |
+| `c` | `scatter` | Colour per point (list or column of values) | `c=values` |
+| `s` | `scatter` | Marker size | `s=50` |
+| `cmap` | `scatter`, `imshow` | Colour map for values | `cmap="viridis"` |
+| `alpha` | all | Transparency, 0 (invisible) to 1 (solid) | `alpha=0.6` |
+| `marker` | `plot`, `scatter` | Point symbol | `marker="o"` |
+| `linestyle` | `plot` | Line style: `"-"`, `"--"`, `":"`, `"-."` | `linestyle="--"` |
+| `linewidth`, `markersize` | `plot` | Line thickness, point size | `linewidth=2` |
+| `"ro--"` | `plot` | Shorthand: colour `r`, marker `o`, style `--` | `ax.plot(x, y, "ro--")` |
+| `bins` | `hist` | Number of bars (or list of edges) | `bins=20` |
+| `density` | `hist` | Show proportions instead of counts | `density=True` |
+| `edgecolor` | `bar`, `hist` | Border colour of bars | `edgecolor="black"` |
+| `bottom` | `bar` | Start bars on top of these values (stacked) | `bottom=a` |
+| width (3rd argument) | `bar` | Bar width | `ax.bar(x, vals, 0.4)` |
+| `yerr` / `fmt` | `errorbar` | Error sizes / marker format | `yerr=err, fmt="o"` |
+| `vert` | `boxplot` | `False` = horizontal | `vert=False` |
+| `autopct` | `pie` | Label format for percentages | `autopct="%1.1f%%"` |
+| `startangle` | `pie` | Rotation of the first slice in degrees | `startangle=90` |
+| `loc` | `legend` | Legend position: `"best"`, `"upper left"`, ... | `loc="upper left"` |
+| `bbox_to_anchor` | `legend` | Exact legend position; `(1.05, 1)` = just outside right | `bbox_to_anchor=(1.05, 1)` |
+| `frameon` | `legend` | `False` = no box around the legend | `frameon=False` |
+| `fontsize`, `fontweight` | titles, text | Text size and weight | `fontsize=14, fontweight="bold"` |
+| `axis`, `rotation` | `tick_params` | Which axis, rotate tick labels (degrees) | `axis="x", rotation=45` |
+| `kind` | `df.plot` | Chart type: `"line"`, `"bar"`, `"hist"`, `"box"`, `"scatter"` ... | `kind="bar"` |
+| `dpi` | `savefig` | Resolution (dots per inch); 300 for print | `dpi=300` |
+| `bbox_inches` | `savefig` | `"tight"` = trim empty borders, keep labels | `bbox_inches="tight"` |
+| `transparent` | `savefig` | Transparent background | `transparent=True` |
 
 ## 1. Install and Import
 

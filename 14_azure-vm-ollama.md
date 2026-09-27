@@ -4,6 +4,7 @@ Quick reference for running Ollama on an Azure Ubuntu VM and using it from a loc
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Variables (PowerShell)](#1-variables-powershell)
 2. [Azure CLI](#2-azure-cli)
 3. [VM](#3-vm)
@@ -21,6 +22,89 @@ Quick reference for running Ollama on an Azure Ubuntu VM and using it from a loc
 15. [End of Session](#15-end-of-session)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of every flag and value used in the commands below.
+> - **How:** Each command is split into program, group, action, flags and values; tables list every flag.
+> - **When to use:** You see a command like `az vm list -d -o table` and want to know what each part does.
+
+### How a command is built
+
+```text
+az   vm   list   -d   -o table
+|    |    |      |    |  |
+|    |    |      |    |  +-- value given to -o: show the result as a readable table
+|    |    |      |    +----- -o (--output): choose the output format
+|    |    |      +---------- -d (--show-details): add power state and IP addresses
+|    |    +----------------- action: list
+|    +---------------------- command group: virtual machines
++--------------------------- program: Azure CLI
+```
+
+- **Short flag** = one dash + one letter (`-d`). **Long flag** = two dashes + word (`--show-details`). Both mean the same.
+- **Switch** flags are on / off and take no value (`-d`). Other flags need a **value** right after them (`-o table`, `-g $RG`).
+- Show every flag of any command: `az vm list --help`.
+
+### Azure CLI (az)
+
+| Flag | Long form | Meaning | Example |
+|---|---|---|---|
+| `-g` | `--resource-group` | Resource group the resource belongs to | `-g $RG` |
+| `-n` | `--name` | Name of the resource (VM, group, rule, provider namespace) | `-n $VM` |
+| `-d` | `--show-details` | Also fetch power state, public IP and private IP (makes extra calls, slower) | `az vm list -d` |
+| `-o` | `--output` | Output format: `json` (default), `jsonc` (coloured JSON), `table` (readable), `tsv` (plain values, for scripts), `yaml`, `none` | `-o table` |
+| `-l` | `--location` | Azure region | `-l swedencentral` |
+| `--query` | | Pick fields or filter the JSON result (JMESPath syntax) | `--query publicIps` |
+| `--subscription` | | Subscription to use / switch to | `--subscription "<id>"` |
+| `--nsg-name` | | Network security group to read or change | `--nsg-name $NSG` |
+| `--priority` | | Rule order; lower number is checked first (100 to 4096) | `--priority 1010` |
+| `--source-address-prefixes` | | Who may connect: IP or range in CIDR notation; `/32` = exactly one IP | `"$myip/32"` |
+| `--destination-port-ranges` | | Port(s) on the VM the rule applies to | `22` |
+| `--protocol` | | `Tcp`, `Udp` or `*` (any) | `Tcp` |
+| `--access` | | `Allow` or `Deny` | `Allow` |
+| `--include-default` | | Also list Azure's built-in default rules | |
+
+Same command, different `-o`:
+
+```text
+az vm list -d -o table                          readable table: Name, ResourceGroup, PowerState, PublicIps
+az vm list -d                                   full JSON (long, every property)
+az vm show -d -g $RG -n $VM --query publicIps -o tsv    only the value, e.g. 20.1.2.3 (good for $IP = ...)
+```
+
+### SSH and SCP
+
+| Flag | Meaning | Example |
+|---|---|---|
+| `-i <file>` | Identity file: the private key used to log in | `-i $KEY` |
+| `-N` | Run no remote command; only hold the connection open (used for tunnels) | `ssh -N -L ...` |
+| `-L local:host:remote` | Local port forward: laptop port `local` is sent to `host:remote` as seen from the VM | `-L 11435:localhost:11434` |
+| `user@ip` | Log in as `user` on machine `ip` | `azureuser@20.1.2.3` |
+| `user@ip:path` (scp) | A path on the remote machine; `~` = home folder | `"$USER@${IP}:~"` |
+| `-r` (scp) | Recursive: copy a whole folder | `scp -r .\folder ...` |
+
+### Other flags in this guide
+
+| Command | Flag | Meaning |
+|---|---|---|
+| `winget install` | `-e` (`--exact`) | Match the ID exactly, no fuzzy matching |
+| `winget install` | `--id` | Install by package ID instead of by name |
+| `icacls` | `/inheritance:r` | Remove permissions inherited from the parent folder |
+| `icacls` | `/grant:r "user:(R)"` | Replace existing grants with Read-only for this user |
+| `curl` | `-fsSL` | `-f` fail on HTTP errors, `-s` silent, `-S` still show errors, `-L` follow redirects |
+| `curl URL \| sh` | `\|` | Pipe: the downloaded install script is run by the shell |
+| `apt install` / `upgrade` | `-y` | Answer "yes" to all prompts automatically |
+| `cmd1 && cmd2` | `&&` | Run `cmd2` only if `cmd1` succeeded |
+| `journalctl` | `-u ollama` | Only logs of this unit (service) |
+| `journalctl` | `-f` | Follow: keep printing new log lines |
+| `free`, `df` | `-h` | Human-readable sizes (G, M) instead of bytes |
+| `ollama run` | `--verbose` | Print speed statistics (tokens per second) after the answer |
+| `python` | `-m venv .venv` | `-m` runs a module (`venv`) as a program; `.venv` is the folder to create |
+| `pip install` | `-r requirements.txt` | Install every package listed in the file |
+| `uvicorn` | `app:app` | `file:object`: the object named `app` inside `app.py` |
+| `uvicorn` | `--reload` | Restart automatically when code changes (development only) |
+| PowerShell | `` ` `` at line end | Continue the command on the next line |
 
 ## 1. Variables (PowerShell)
 

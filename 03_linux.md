@@ -4,6 +4,7 @@ Quick reference for everyday Linux commands (Ubuntu / Debian focus, works on mos
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Basics and Shortcuts](#1-basics-and-shortcuts)
 2. [Help](#2-help)
 3. [Filesystem Layout](#3-filesystem-layout)
@@ -33,6 +34,140 @@ Quick reference for everyday Linux commands (Ubuntu / Debian focus, works on mos
 27. [Troubleshooting](#27-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** How Linux command options are written, and what every option used below means.
+> - **How:** A command is split into program, options and arguments; tables list options per command.
+> - **When to use:** You see a command like `ls -lah /var/log` or `tar -czvf` and want to know what each letter does.
+
+### How a command is built
+
+```text
+ls  -lah  /var/log
+|   |     |
+|   |     +-- argument: which folder to list
+|   +-------- options: -l long format, -a all (hidden too), -h human sizes
++------------ program
+
+tar  -czvf  backup.tar.gz  folder/
+      ||||  |              |
+      ||||  |              +-- what to pack
+      ||||  +----------------- archive name (value of -f)
+      |||+-------------------- -f: file name follows
+      ||+--------------------- -v: verbose, list files
+      |+---------------------- -z: compress with gzip
+      +----------------------- -c: create
+```
+
+- **Short options**: one dash + one letter; they can be combined: `-lah` = `-l -a -h`.
+- **Long options**: two dashes + word: `--help`, `--all`. Often the same as a short one (`-a` = `--all`).
+- An option can take a **value**: `-n 20`, `-u nginx`, `--since "1 hour ago"`.
+- Everything is **case-sensitive**: `-r` and `-R` can mean different things.
+- Look up any option: `man ls` then type `/-h` to search.
+
+### Files, viewing and searching
+
+| Command | Option | Meaning |
+|---|---|---|
+| `ls` | `-l` | Long format: permissions, owner, size, date |
+| `ls` | `-a` | All files, including hidden (starting with `.`) |
+| `ls` | `-h` | Human-readable sizes (with `-l`) |
+| `ls` | `-t` | Sort by modification time, newest first |
+| `tree` | `-L 2` | Only 2 levels deep |
+| `mkdir` | `-p` | Create parent folders as needed, no error if it exists |
+| `cp` / `rm` / `chmod` / `scp` | `-r` (or `-R`) | Recursive: include folder contents |
+| `rm` | `-f` | Force: no questions, no error if missing |
+| `rm` | `-i` | Interactive: ask before each delete |
+| `ln` | `-s` | Symbolic link (shortcut) instead of hard link |
+| `head` / `tail` | `-n 20` | Number of lines |
+| `tail` | `-f` | Follow: keep printing new lines |
+| `wc` | `-l` | Count lines only |
+| `find` | `-name "*.csv"` / `-iname` | Match name / ignoring case |
+| `find` | `-type f` / `-type d` | Only files / only folders |
+| `find` | `-mtime -1` | Modified less than 1 day ago (`+7` = more than 7 days) |
+| `find` | `-size +100M` | Larger than 100 MB |
+| `find` | `-delete` | Delete what was found |
+| `grep` | `-i` | Ignore case |
+| `grep` | `-n` | Show line numbers |
+| `grep` | `-v` | Invert: lines that do NOT match |
+| `grep` | `-c` | Count matching lines |
+| `grep` | `-r` | Recursive: search all files in folders |
+| `grep` | `-l` | Only print file names |
+| `grep` | `-E` | Extended regex (`a\|b`, `+`, `?`) |
+| `grep` | `-A 3` / `-B 3` | Also show 3 lines After / Before each match |
+| `sort` | `-n` / `-r` / `-h` | Numeric / reverse / human sizes (`2K`, `1G`) |
+| `uniq` | `-c` | Prefix each line with its count |
+| `cut` | `-d ","` / `-f 1,3` | Delimiter / which fields (columns) |
+| `awk` | `-F ","` | Field separator; `$1` = first field |
+| `sed` | `-i` | Edit the file in place |
+| `sed` | `'s/old/new/g'` | `s` = substitute, `g` = every match on the line (not only first) |
+
+### Permissions, users and packages
+
+| Command | Option | Meaning |
+|---|---|---|
+| `chmod` | `+x` | Add execute permission |
+| `chmod` | `755` | Owner rwx (7=4+2+1), group r-x (5=4+1), others r-x |
+| `chown` | `user:group` | New owner and group |
+| `sudo` | `-i` | Open a root shell |
+| `su` | `- username` | Switch user with their full login environment |
+| `usermod` | `-aG docker user` | `-a` append (keep other groups), `-G` supplementary group |
+| `apt install` | `-y` | Answer yes to all prompts |
+
+### Processes, services, disk and network
+
+| Command | Option | Meaning |
+|---|---|---|
+| `ps` | `aux` | `a` all users, `u` user-friendly columns, `x` include background processes |
+| `pgrep` | `-a` | Show the full command line with the PID |
+| `kill` | `-9` | Force kill (SIGKILL); without it: polite stop (SIGTERM) |
+| `systemctl list-units` | `--type=service --state=running` | Only running services |
+| `journalctl` | `-u nginx` | Only this unit (service) |
+| `journalctl` | `-f` | Follow new lines |
+| `journalctl` | `--since "1 hour ago"` | Time filter |
+| `journalctl` | `-p err` | Only priority error and worse |
+| `journalctl` | `-b` | Only since the last boot |
+| `df` / `du` / `free` | `-h` | Human-readable sizes |
+| `du` | `-s` | Summary: one total per argument |
+| `uname` | `-a` | All kernel information |
+| `ping` | `-c 4` | Send 4 packets then stop |
+| `curl` | `-I` | Only response headers |
+| `curl` | `-O` | Save with the remote file name |
+| `ss` | `-tulpn` | `t` TCP, `u` UDP, `l` listening, `p` process, `n` numbers not names |
+| `lsof` | `-i :8000` | Open network connections on port 8000 |
+| `ufw allow` | `22/tcp` | Port and protocol to open |
+
+### SSH, transfer and archives
+
+| Command | Option | Meaning |
+|---|---|---|
+| `ssh` / `scp` | `-i key.pem` | Private key file to log in with |
+| `ssh` | `-p 2222` | Port (default 22); note `scp` uses `-P` |
+| `ssh` | `-N` | No remote command; only keep the connection (tunnels) |
+| `ssh` | `-L 8080:localhost:80` | Local port 8080 forwarded to port 80 on the server |
+| `ssh-keygen` | `-t ed25519` | Key type |
+| `rsync` | `-avz` | `a` archive (recursive, keep permissions / times), `v` verbose, `z` compress |
+| `tar` | `-c` / `-x` / `-t` | Create / extract / list contents |
+| `tar` | `-z` | gzip compression (`.tar.gz`) |
+| `tar` | `-v` | Verbose: print each file |
+| `tar` | `-f name` | Archive file name (must come right before the name) |
+| `tar` | `-C /target/` | Extract into this folder |
+| `zip` | `-r` | Include folder contents |
+| `unzip` | `-d target/` | Extract into this folder |
+
+### Symbols
+
+| Symbol | Meaning |
+|---|---|
+| `\|` | Pipe output into the next command |
+| `>` / `>>` | Write / append output to a file |
+| `2>&1` | Send errors (2) to the same place as normal output (1) |
+| `&` at the end | Run in the background |
+| `&&` | Run the next command only if this one succeeded |
+| `~` | Your home folder |
+| `*` | Any characters in a file name (`*.csv`) |
+| `$VAR` | Value of a variable |
 
 ## 1. Basics and Shortcuts
 

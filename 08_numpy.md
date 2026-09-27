@@ -4,6 +4,7 @@ Quick reference for numerical arrays with NumPy (the base library under pandas, 
 
 ## Contents
 
+0. [Flags and Parameters](#0-flags-and-parameters)
 1. [Install and Import](#1-install-and-import)
 2. [Create Arrays](#2-create-arrays)
 3. [Array Attributes](#3-array-attributes)
@@ -24,6 +25,53 @@ Quick reference for numerical arrays with NumPy (the base library under pandas, 
 18. [Troubleshooting](#18-troubleshooting)
 
 ---
+
+## 0. Flags and Parameters
+
+> - **What:** The meaning of the arguments and parameters used in the NumPy calls below.
+> - **How:** Explains how a call is built, then lists each parameter with its meaning and example.
+> - **When to use:** You see `a.sum(axis=0)` or `rng.normal(loc=0, scale=1, size=100)` and want to know what each argument does.
+
+### How a function call is built
+
+```text
+np.arange(0, 10, 2)
+          |  |   |
+          |  |   +-- step
+          |  +------ stop (excluded)
+          +--------- start
+positional arguments: meaning comes from the order
+
+rng.normal(loc=0, scale=1, size=100)
+           |      |        |
+           |      |        +-- size: how many values
+           |      +----------- scale: standard deviation
+           +------------------ loc: mean
+keyword arguments: name=value, any order
+```
+
+- **Positional** arguments come first, in a fixed order. **Keyword** arguments use `name=value` and can be in any order.
+- Arguments you leave out use their **default** value (for example `step=1` in `np.arange`).
+- See all parameters and defaults: `help(np.arange)`, or `Shift+Tab` inside the brackets in Jupyter.
+
+| Parameter | Used in | Meaning | Example |
+|---|---|---|---|
+| `start, stop, step` | `arange`, slices `a[start:stop:step]` | Begin, end (excluded), step size | `np.arange(0, 10, 2)` |
+| `num` (3rd argument) | `linspace` | How many evenly spaced values (end included) | `np.linspace(0, 1, 5)` |
+| shape `(rows, cols)` | `zeros`, `ones`, `full`, `reshape` | Size of each dimension as a tuple | `np.zeros((2, 3))` |
+| `-1` | `reshape` | "Work this dimension out for me" | `a.reshape(-1, 1)` |
+| `dtype` | `array`, `zeros`, `astype` | Element type | `dtype=float` |
+| `axis` | `sum`, `mean`, `concatenate`, `apply` | `0` = down the rows (per column), `1` = across columns (per row), none = everything | `m.sum(axis=0)` |
+| `size` | random methods | Number (or shape) of values to generate | `size=10` |
+| `loc`, `scale` | `rng.normal` | Mean and standard deviation | `loc=0, scale=1` |
+| `low, high` | `rng.integers`, `rng.uniform` | Range; `high` is excluded | `rng.integers(1, 7)` |
+| `replace` | `rng.choice` | `False` = never pick the same element twice | `replace=False` |
+| seed | `default_rng(42)` | Fixed start value so random results repeat | `42` |
+| `return_counts` | `np.unique` | Also return how often each value occurs | `return_counts=True` |
+| `nan` | `nan_to_num` | Value that replaces NaN | `nan=0` |
+| `delimiter` | `savetxt`, `loadtxt`, `genfromtxt` | Column separator in text files | `delimiter=","` |
+| `skip_header` | `genfromtxt` | Number of top lines to skip | `skip_header=1` |
+| list of positions | `a[[...]]` | Pick several elements by position (fancy indexing) | `a[[0, 2, 4]]` |
 
 ## 1. Install and Import
 
