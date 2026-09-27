@@ -1,8 +1,28 @@
-# Azure VM + Linux + Ollama Cheat Sheet
+# 14 - Azure VM + Linux + Ollama
 
 Quick reference for running Ollama on an Azure Ubuntu VM and using it from a local app via SSH tunnel.
 
-## Variables (PowerShell)
+## Contents
+
+1. [Variables (PowerShell)](#1-variables-powershell)
+2. [Azure CLI](#2-azure-cli)
+3. [VM](#3-vm)
+4. [Resources and Cleanup](#4-resources-and-cleanup)
+5. [NSG (Security Rules)](#5-nsg-security-rules)
+6. [SSH](#6-ssh)
+7. [Linux (Inside VM)](#7-linux-inside-vm)
+8. [Ollama (Inside VM)](#8-ollama-inside-vm)
+9. [GPU Driver (GPU VMs Only)](#9-gpu-driver-gpu-vms-only)
+10. [SSH Tunnel (Laptop to VM Ollama)](#10-ssh-tunnel-laptop-to-vm-ollama)
+11. [Local App Using VM Ollama](#11-local-app-using-vm-ollama)
+12. [Verify Requests Hit the VM](#12-verify-requests-hit-the-vm)
+13. [Laptop (PowerShell)](#13-laptop-powershell)
+14. [Troubleshooting](#14-troubleshooting)
+15. [End of Session](#15-end-of-session)
+
+---
+
+## 1. Variables (PowerShell)
 
 Set once per session, then copy commands as they are.
 
@@ -15,9 +35,7 @@ $USER = "azureuser"
 $IP   = az vm show -d -g $RG -n $VM --query publicIps -o tsv
 ```
 
----
-
-## Azure CLI
+## 2. Azure CLI
 
 ```powershell
 winget install -e --id Microsoft.AzureCLI   # install (Windows)
@@ -25,20 +43,23 @@ brew install azure-cli                      # install (Mac)
 az login                                    # log in
 az --version                                # check install
 az account show -o table                    # current subscription
+az account list -o table                    # all subscriptions
+az account set --subscription "<name-or-id>"   # switch subscription
 ```
 
-## VM
+## 3. VM
 
 ```powershell
 az vm list -d -o table                      # status + IP
 az vm start      -g $RG -n $VM              # start
 az vm deallocate -g $RG -n $VM              # stop, no compute cost
 az vm stop       -g $RG -n $VM              # OS off, STILL billed
+az vm restart    -g $RG -n $VM              # reboot
 az vm show -g $RG -n $VM --query hardwareProfile.vmSize -o tsv   # size
 az vm list-sizes -l swedencentral -o table  # sizes in a region
 ```
 
-## Resources and cleanup
+## 4. Resources and Cleanup
 
 ```powershell
 az group list -o table                      # resource groups
@@ -49,7 +70,7 @@ az provider register -n Microsoft.Compute   # register provider
 az provider list --query "[?registrationState=='Registered'].namespace" -o table
 ```
 
-## NSG (security rules)
+## 5. NSG (Security Rules)
 
 ```powershell
 az network nsg rule list -g $RG --nsg-name $NSG -o table                    # custom rules
@@ -70,7 +91,7 @@ az network nsg rule delete -g $RG --nsg-name $NSG -n AllowSSHMyIP          # rem
 
 Never open 22 or 11434 to `*`.
 
-## SSH
+## 6. SSH
 
 ```powershell
 ssh -i $KEY "$USER@$IP"                     # connect
@@ -83,13 +104,15 @@ icacls $KEY /grant:r "$($env:USERNAME):(R)"
 # Copy files
 scp -i $KEY .\file.zip "$USER@${IP}:~"     # laptop to VM
 scp -i $KEY "$USER@${IP}:~/file.txt" .     # VM to laptop
+scp -i $KEY -r .\folder "$USER@${IP}:~"    # whole folder
 ```
 
-Linux (Mac) key permissions: `chmod 400 key.pem`
+Linux / Mac key permissions: `chmod 400 key.pem`
 
-## Linux (inside VM)
+## 7. Linux (Inside VM)
 
 ```bash
+# System info
 whoami; hostname; uptime                    # who, where, load
 lscpu | grep "Model name"; nproc            # CPU, vCPUs
 free -h                                     # RAM
@@ -97,15 +120,28 @@ df -h /                                     # disk
 htop                                        # live monitor (q to quit)
 nvidia-smi                                  # GPU (GPU VMs only)
 
+# Files and folders
+pwd                                         # current folder
+ls -la                                      # list (with hidden files)
+cd ~ ; cd ..                                # home, up one level
+mkdir -p app/data                           # create folder
+cp a.txt b.txt ; mv a.txt dir/              # copy, move / rename
+rm file.txt ; rm -r folder                  # delete file, folder
+cat file.txt ; less file.txt                # show file (q to quit less)
+nano file.txt                               # edit (Ctrl+O save, Ctrl+X exit)
+unzip file.zip                              # extract
+
+# Packages
 sudo apt update && sudo apt upgrade -y      # update packages
 sudo apt install -y htop unzip git          # install tools
 
+# Services
 systemctl status ollama                     # service status (q to quit)
 sudo systemctl restart ollama               # restart service
 journalctl -u ollama -f                     # live logs (Ctrl+C to stop)
 ```
 
-## Ollama (inside VM)
+## 8. Ollama (Inside VM)
 
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh   # install
@@ -122,7 +158,7 @@ ollama rm mistral                               # delete model
 
 Model fit: 2 vCPU / 8 GB, use 3B to 4B. T4 GPU (16 GB), up to about 14B.
 
-## GPU driver (GPU VMs only)
+## 9. GPU Driver (GPU VMs Only)
 
 ```bash
 sudo apt install -y ubuntu-drivers-common
@@ -131,7 +167,7 @@ sudo reboot
 nvidia-smi                                      # check after reboot
 ```
 
-## SSH tunnel (laptop to VM Ollama)
+## 10. SSH Tunnel (Laptop to VM Ollama)
 
 ```powershell
 # Terminal 1: keep open (blank = working)
@@ -141,16 +177,18 @@ ssh -i $KEY -N -L 11435:localhost:11434 "$USER@$IP"
 curl.exe http://localhost:11435/api/tags
 ```
 
-## Local app using VM Ollama
+## 11. Local App Using VM Ollama
 
 `.env`
-```
+
+```text
 OLLAMA_HOST=http://localhost:11435
 LLM_MODEL=qwen3:4b
 EMBED_MODEL=bge-m3
 ```
 
 `app.py`
+
 ```python
 import os
 import ollama
@@ -164,7 +202,8 @@ client.chat(model=os.getenv("LLM_MODEL"), messages=[{"role": "user", "content": 
             think=False, keep_alive="30m")
 ```
 
-Run
+Run (see [06 - Python Virtual Environment](06_python-virtual-environment.md)):
+
 ```powershell
 python -m venv .venv
 .venv\Scripts\activate                      # Mac/Linux: source .venv/bin/activate
@@ -172,15 +211,16 @@ pip install -r requirements.txt
 uvicorn app:app --reload                    # http://localhost:8000
 ```
 
-## Verify requests hit the VM
+## 12. Verify Requests Hit the VM
 
 ```bash
 journalctl -u ollama -f                     # VM: see POST /api/embed and /api/chat
 ollama ps                                   # VM: model loaded
 ```
+
 Close the tunnel: the app must fail.
 
-## Laptop (PowerShell)
+## 13. Laptop (PowerShell)
 
 ```powershell
 Get-Service | Where-Object Status -eq Running                                   # services
@@ -190,7 +230,7 @@ echo $env:OLLAMA_HOST                                                           
 Invoke-RestMethod https://api.ipify.org                                         # my IPv4
 ```
 
-## Troubleshooting
+## 14. Troubleshooting
 
 | Error | Fix |
 |---|---|
@@ -204,7 +244,7 @@ Invoke-RestMethod https://api.ipify.org                                         
 | `Failed to connect to Ollama` | Tunnel closed or `OLLAMA_HOST` not loaded |
 | Slow answers | `think=False`, fewer chunks, `keep_alive`, GPU VM |
 
-## End of session
+## 15. End of Session
 
 ```powershell
 # Ctrl+C app and tunnel, exit VM, then:
