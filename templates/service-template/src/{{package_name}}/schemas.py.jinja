@@ -1,0 +1,18 @@
+"""Request and response models: the public contract of {{ service_name }}-service."""
+
+from pydantic import BaseModel, Field
+
+NAME_MAX_LENGTH = 200
+
+
+class ItemCreate(BaseModel):
+    """Body of POST /."""
+
+    name: str = Field(min_length=1, max_length=NAME_MAX_LENGTH)
+
+
+class ItemOut(BaseModel):
+    """An item as returned by the API."""
+
+    id: int
+    name: str

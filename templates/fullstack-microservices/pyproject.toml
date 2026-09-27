@@ -16,14 +16,14 @@ dev = ["pytest>=8", "ruff>=0.6", "httpx>=0.27"]
 [tool.pytest.ini_options]
 # importlib mode lets several services have test files with the same names
 addopts = "-q --import-mode=importlib"
-testpaths = ["libs/common/tests", "services/documents-service/tests", "services/chat-service/tests"]
+testpaths = ["libs/*/tests", "services/*/tests"]
 
 [tool.ruff]
 line-length = 120
+# Every package under these folders counts as first-party for import sorting, including new services
+src = ["libs/*/src", "services/*/src"]
 extend-exclude = ["frontend"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
 
-[tool.ruff.lint.isort]
-known-first-party = ["common", "documents_service", "chat_service"]

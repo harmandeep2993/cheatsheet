@@ -90,6 +90,7 @@ A complete pocket guide for data, AI and deployment work: from the terminal and 
 | 47 | [Azure](47_azure.md) | Concepts, CLI, resource groups, VMs, storage, ACR, Container Apps, App Service, Key Vault, databases, RBAC, Azure OpenAI, cost, Bicep |
 | 48 | [Azure VM + Linux + Ollama](48_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
 | 49 | [Project Structure](49_project-structure.md) | Monorepo for Python microservices in Docker + React frontend: layers, uv workspace, proxy, config, Compose, tests, CI, deploy (with a runnable starter) |
+| 50 | [Project Templates](50_project-templates.md) | When to make a template, GitHub template repos, Copier (questions, placeholders, update), Cookiecutter, testing templates in CI |
 
 ## Conventions
 

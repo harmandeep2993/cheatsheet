@@ -1,0 +1,28 @@
+"""App factory for {{ service_name }}-service. Run with: uvicorn --factory {{ package_name }}.main:create_app"""
+
+import logging
+
+from fastapi import FastAPI
+
+from common import RequestIdMiddleware, health_router, setup_logging
+from {{ package_name }}.api.routes import router
+from {{ package_name }}.config import Settings
+from {{ package_name }}.services.items import ItemService
+
+SERVICE_NAME = "{{ service_name }}-service"
+
+logger = logging.getLogger(__name__)
+
+
+def create_app(settings: Settings | None = None) -> FastAPI:
+    """Build the FastAPI app. Tests pass their own Settings."""
+    settings = settings or Settings()
+    setup_logging(SERVICE_NAME, settings.log_level)
+
+    app = FastAPI(title="{{ service_name | capitalize }} service")
+    app.state.item_service = ItemService(settings.max_items)
+    app.add_middleware(RequestIdMiddleware)
+    app.include_router(health_router(SERVICE_NAME))
+    app.include_router(router)
+    logger.info("%s configured", SERVICE_NAME)
+    return app

@@ -86,7 +86,7 @@ uv run --package documents-service uvicorn --factory documents_service.main:crea
 2. Update its `pyproject.toml` (name, dependencies) and Dockerfile (package name, paths).
 3. Run `uv lock` in the root so the new member is in `uv.lock`.
 4. Add the service to `compose.yaml` and a `location /api/<name>/` block to `proxy/nginx.conf`.
-5. Add its test folder to `testpaths` in the root `pyproject.toml` and to CI.
+5. Add it to the CI image matrix. Its tests run automatically (`testpaths` matches `services/*/tests`).
 
 ## Configuration
 

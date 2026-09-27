@@ -1,0 +1,28 @@
+"""Business logic for items. Starts with an in-memory store; copy the db / repository layer
+from documents-service when this service needs a real database."""
+
+from {{ package_name }}.schemas import ItemCreate, ItemOut
+
+
+class ItemLimitReachedError(Exception):
+    """Raised when the configured maximum number of items is stored."""
+
+
+class ItemService:
+    """Use cases of {{ service_name }}-service. Routes call these methods."""
+
+    def __init__(self, max_items: int):
+        self._max_items = max_items
+        self._items: list[ItemOut] = []
+
+    def create(self, payload: ItemCreate) -> ItemOut:
+        """Store a new item, refusing once the limit is reached."""
+        if len(self._items) >= self._max_items:
+            raise ItemLimitReachedError(self._max_items)
+        item = ItemOut(id=len(self._items) + 1, name=payload.name.strip())
+        self._items.append(item)
+        return item
+
+    def list_all(self) -> list[ItemOut]:
+        """All items, oldest first."""
+        return list(self._items)

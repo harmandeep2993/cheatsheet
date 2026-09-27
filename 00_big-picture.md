@@ -398,6 +398,7 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 | Deploy a container to Azure | [47 - Azure](47_azure.md), section 23 |
 | Run an LLM on a cloud GPU VM | [48 - Azure VM + Ollama](48_azure-vm-ollama.md) |
 | Organise several Python services and a frontend in one repo | [49 - Project Structure](49_project-structure.md) |
+| Start new projects or services from a reusable template | [50 - Project Templates](50_project-templates.md) |
 
 ## 12. Core Mental Models in One Page
 
@@ -476,6 +477,7 @@ Tips:
 | "Try It" section at the end of every guide | 3 to 5 exercises with hidden solutions |
 | [examples/](examples/README.md) | Runnable mini-projects: LLM basics, tool-using agent, RAG API, MCP server |
 | `templates/fullstack-microservices/` | Runnable starter: two FastAPI services, React frontend, Nginx proxy, Compose ([49 - Project Structure](49_project-structure.md)) |
+| `templates/service-template/` | Copier template that adds a new service to the starter ([50 - Project Templates](50_project-templates.md)) |
 | [97 - Capstone Project](97_capstone-project.md) | Build, test, containerise, automate and deploy a document chatbot, step by step |
 | [98 - Glossary](98_glossary.md) | Every key term A to Z, linked to its guide |
 | [99 - Quick Reference](99_quick-reference.md) | The most-used commands of every guide on one page |

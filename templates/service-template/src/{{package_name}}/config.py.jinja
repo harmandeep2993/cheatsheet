@@ -1,0 +1,13 @@
+"""Settings for {{ service_name }}-service, read from {{ env_prefix }}_* environment variables."""
+
+from pydantic_settings import SettingsConfigDict
+
+from common import ServiceSettings
+
+
+class Settings(ServiceSettings):
+    """{{ service_name }}-service configuration. Add fields here; set them as {{ env_prefix }}_<FIELD>."""
+
+    model_config = SettingsConfigDict(env_prefix="{{ env_prefix }}_")
+
+    max_items: int = 1000

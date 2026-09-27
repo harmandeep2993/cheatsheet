@@ -1,0 +1,33 @@
+"""Routes of {{ service_name }}-service. The proxy mounts them under /api/{{ service_name }}/."""
+
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+
+from {{ package_name }}.schemas import ItemCreate, ItemOut
+from {{ package_name }}.services.items import ItemLimitReachedError, ItemService
+
+router = APIRouter(tags=["{{ service_name }}"])
+
+
+def get_item_service(request: Request) -> ItemService:
+    """The ItemService created at startup; tests can override this dependency."""
+    return request.app.state.item_service
+
+
+ServiceDep = Annotated[ItemService, Depends(get_item_service)]
+
+
+@router.post("/", status_code=status.HTTP_201_CREATED)
+def create_item(payload: ItemCreate, service: ServiceDep) -> ItemOut:
+    """Store a new item."""
+    try:
+        return service.create(payload)
+    except ItemLimitReachedError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Item limit reached") from exc
+
+
+@router.get("/")
+def list_items(service: ServiceDep) -> list[ItemOut]:
+    """All items, oldest first."""
+    return service.list_all()

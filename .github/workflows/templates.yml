@@ -30,6 +30,22 @@ jobs:
       - run: uv run ruff format --check .
       - run: uv run pytest
 
+  service-template:
+    name: Generated service passes lint and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Generate a service into the starter
+        run: uvx copier copy --defaults --data service_name=feedback ../service-template services/feedback-service
+      - run: uv lock && uv sync --all-packages
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pytest services/feedback-service
+      - run: docker build -f services/feedback-service/Dockerfile -t feedback-service .
+
   frontend:
     name: Frontend type-check and build
     runs-on: ubuntu-latest

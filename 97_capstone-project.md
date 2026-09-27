@@ -1,7 +1,7 @@
 # 97 - Capstone Project: Document Chatbot
 
 <!-- nav:start -->
-**Previous:** [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) | **Index:** [All guides](README.md) | **Next:** [98 - Glossary](98_glossary.md)
+**Previous:** [50 - Project Templates](50_project-templates.md) | **Index:** [All guides](README.md) | **Next:** [98 - Glossary](98_glossary.md)
 <!-- nav:end -->
 
 Build a real AI application end to end: a chatbot that answers questions from your documents with citations, served as an API, tested, evaluated, containerised, automated with CI and deployed to Azure. The finished code is in `examples/docs_chatbot/` ([examples overview](examples/README.md)); this page explains every step and links each one to the guide behind it.
@@ -379,5 +379,5 @@ claude mcp add pocket-docs -- uv --directory "$(pwd)" run python -m mcp_server.s
 ---
 
 <!-- nav:start -->
-**Previous:** [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) | **Index:** [All guides](README.md) | **Next:** [98 - Glossary](98_glossary.md)
+**Previous:** [50 - Project Templates](50_project-templates.md) | **Index:** [All guides](README.md) | **Next:** [98 - Glossary](98_glossary.md)
 <!-- nav:end -->

@@ -20,6 +20,7 @@ ASCII_GLOBS = [
     "*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
     "templates/**/*.py", "templates/**/*.md", "templates/**/*.ts", "templates/**/*.tsx", "templates/**/*.css",
     "templates/**/*.yaml", "templates/**/*.conf", "templates/**/Dockerfile",
+    "templates/**/*.jinja", "templates/**/*.yml",
 ]
 # Installed packages and build output are not ours to check
 SKIP_DIRS = {".venv", "node_modules", "_site_src", "_site", "__pycache__"}

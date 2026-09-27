@@ -1,7 +1,7 @@
 # 49 - Project Structure: Python Microservices + Frontend
 
 <!-- nav:start -->
-**Previous:** [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md) | **Index:** [All guides](README.md) | **Next:** [97 - Capstone Project: Document Chatbot](97_capstone-project.md)
+**Previous:** [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md) | **Index:** [All guides](README.md) | **Next:** [50 - Project Templates](50_project-templates.md)
 <!-- nav:end -->
 
 How to lay out one repository that holds several Python backend services, each in its own Docker container, plus a separate React frontend: folders, shared code, configuration, Compose, proxy, tests, CI and deployment. Comes with a runnable starter in `templates/fullstack-microservices/`.
@@ -69,7 +69,7 @@ compose.yaml                 --->   wires the containers together on one private
 | Compose override file | A second Compose file whose settings are merged over the first (for example for development) |
 | Build context | The folder Docker sends to the builder; files outside it cannot be copied into the image |
 
-**Where it fits:** combines [39 - FastAPI](39_fastapi.md), [40 - Uvicorn](40_uvicorn.md), [11 - uv](11_uv.md), [12 - Pydantic](12_pydantic.md), [14 - pytest](14_pytest.md), [42 - Docker](42_docker.md), [44 - Nginx](44_nginx-https.md) and [43 - GitHub Actions](43_github-actions.md) into one project; deploy with [45 - Kubernetes](45_kubernetes.md), [46 - Terraform](46_terraform.md) or [47 - Azure](47_azure.md). A single-service version of the same ideas is the [97 - Capstone Project](97_capstone-project.md).
+**Where it fits:** combines [39 - FastAPI](39_fastapi.md), [40 - Uvicorn](40_uvicorn.md), [11 - uv](11_uv.md), [12 - Pydantic](12_pydantic.md), [14 - pytest](14_pytest.md), [42 - Docker](42_docker.md), [44 - Nginx](44_nginx-https.md) and [43 - GitHub Actions](43_github-actions.md) into one project; deploy with [45 - Kubernetes](45_kubernetes.md), [46 - Terraform](46_terraform.md) or [47 - Azure](47_azure.md). A single-service version of the same ideas is the [97 - Capstone Project](97_capstone-project.md). To stamp out new services from this layout automatically, see [50 - Project Templates](50_project-templates.md).
 
 ### Official docs
 
@@ -810,7 +810,7 @@ You want a `feedback-service` that stores thumbs up / down for answers. List the
 
 1. Copy `services/documents-service` to `services/feedback-service`, rename `src/documents_service` to `src/feedback_service`, update imports.
 2. Edit its `pyproject.toml` (`name = "feedback-service"`) and its Dockerfile (paths and `--package feedback-service`).
-3. `uv lock` at the root; add `services/feedback-service/tests` to `testpaths`.
+3. `uv lock` at the root (tests are found automatically: `testpaths` uses `services/*/tests`).
 4. `compose.yaml`: a `feedback-service` (context `.`) and its own `feedback-db`.
 5. `proxy/nginx.conf`: `location /api/feedback/ { proxy_pass http://feedback-service:8000/; }`.
 6. `frontend/src/api/client.ts`: `sendFeedback(...)` calling `/api/feedback/`.
@@ -832,5 +832,5 @@ chat-service logs `documents-service search failed: [Errno 111] Connection refus
 ---
 
 <!-- nav:start -->
-**Previous:** [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md) | **Index:** [All guides](README.md) | **Next:** [97 - Capstone Project: Document Chatbot](97_capstone-project.md)
+**Previous:** [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md) | **Index:** [All guides](README.md) | **Next:** [50 - Project Templates](50_project-templates.md)
 <!-- nav:end -->

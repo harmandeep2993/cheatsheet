@@ -22,6 +22,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Alias | Short name for a command (`ls` -> `Get-ChildItem`) | [02 - Terminal and PowerShell](02_terminal-powershell.md) |
 | Anchor | Link target created from a heading (`#1-headings`) | [01 - Markdown](01_markdown.md) |
 | ANN | Approximate nearest neighbour: fast, slightly inexact search | [29 - Embeddings and Vector Databases](29_embeddings-vector-db.md) |
+| Answers file | `.copier-answers.yml` in the generated project: template source, version and answers | [50 - Project Templates](50_project-templates.md) |
 | API | Interface that lets programs talk to each other | [39 - FastAPI](39_fastapi.md) |
 | API gateway | The single entry point that routes requests to services (here: the Nginx proxy) | [49 - Project Structure: Python Microservices + Frontend](49_project-structure.md) |
 | API key | Secret that identifies and bills you; keep in env vars | [26 - LLM APIs](26_llm-apis.md) |
@@ -99,6 +100,9 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Context length (`num_ctx`) | Max tokens per request the server allocates for | [35 - Local and Self-Hosted LLMs](35_local-llms.md) |
 | Context window | Max tokens the model can consider at once (prompt + output) | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
 | Continued pretraining | More next-token training on raw domain text | [36 - Fine-tuning](36_fine-tuning.md) |
+| Cookiecutter | Older, widely used Python templating tool; generates once, no built-in update | [50 - Project Templates](50_project-templates.md) |
+| Copier | Python tool that renders templates from questions and can update generated projects later | [50 - Project Templates](50_project-templates.md) |
+| `copier.yml` | Copier's configuration: questions, defaults, validators and settings | [50 - Project Templates](50_project-templates.md) |
 | Coroutine | What calling an `async def` function returns; it does nothing until awaited | [13 - Async Python](13_async-python.md) |
 | Corpus / knowledge base | All documents you can retrieve from | [30 - RAG (Retrieval-Augmented Generation)](30_rag.md) |
 | Cosine similarity | Similarity of direction between two vectors (-1 to 1; higher = more similar) | [29 - Embeddings and Vector Databases](29_embeddings-vector-db.md) |
@@ -181,6 +185,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Gated model | Needs you to accept a licence and log in (e.g. some Llama models) | [24 - Hugging Face](24_hugging-face.md) |
 | GFM | GitHub Flavored Markdown: standard Markdown plus tables, task lists, alerts | [01 - Markdown](01_markdown.md) |
 | GGUF | File format for quantized models used by llama.cpp and Ollama | [35 - Local and Self-Hosted LLMs](35_local-llms.md) |
+| GitHub template repository | A repository marked as a template so "Use this template" creates a copy with fresh history | [50 - Project Templates](50_project-templates.md) |
 | Graceful shutdown | Finish in-flight requests before exiting | [40 - Uvicorn (ASGI Server)](40_uvicorn.md) |
 | Grader / scorer | Function that scores an output | [34 - Evals and Observability](34_evals-observability.md) |
 | Gradient | Direction and size to change each weight to reduce loss | [23 - PyTorch](23_pytorch.md) |
@@ -240,6 +245,8 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Term | Meaning | Guide |
 |---|---|---|
 | Jailbreak | Tricking a model into ignoring its safety rules | [37 - AI Security and Responsible AI](37_ai-security.md) |
+| Jinja | The templating language behind `{{ variable }}`, `{% if %}` and filters like `upper` | [50 - Project Templates](50_project-templates.md) |
+| `.jinja` suffix | Marks files Copier must render; the suffix is removed in the output | [50 - Project Templates](50_project-templates.md) |
 | Job | A set of steps that runs on one runner; jobs run in parallel unless linked with `needs` | [43 - GitHub Actions (CI/CD)](43_github-actions.md) |
 | Job / task | One unit of background work | [41 - Redis, Caching and Task Queues](41_redis-queues.md) |
 | JOIN | Combine rows from tables by a key | [19 - SQL](19_sql.md) |
@@ -369,6 +376,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Pipeline | Preprocessing steps + model as one object | [22 - Scikit-learn](22_scikit-learn.md) |
 | Pipeline | One-line helper for a task | [24 - Hugging Face](24_hugging-face.md) |
 | pip / uv | Tools to install packages | [09 - Python Basics](09_python-basics.md) |
+| Placeholder | A `{{ ... }}` expression replaced by an answer when the template is rendered | [50 - Project Templates](50_project-templates.md) |
 | Plan / apply / destroy | Preview / execute / remove changes | [46 - Terraform](46_terraform.md) |
 | Planning | Making a step list before acting | [31 - AI Agents](31_ai-agents.md) |
 | Pod | Smallest unit: one (or a few tightly coupled) containers with shared network | [45 - Kubernetes](45_kubernetes.md) |
@@ -381,6 +389,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Probe | Health check (liveness, readiness, startup) | [45 - Kubernetes](45_kubernetes.md) |
 | Producer | Code that enqueues jobs (your API) | [41 - Redis, Caching and Task Queues](41_redis-queues.md) |
 | Projection pushdown | Reading only the needed columns | [18 - Polars and DuckDB](18_polars-duckdb.md) |
+| Project template | A reusable starting point for new projects or parts of projects | [50 - Project Templates](50_project-templates.md) |
 | Prompt | Everything you send: system instructions, messages, documents | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
 | Prompt | Reusable template (user-controlled, often shown as slash commands) | [33 - MCP (Model Context Protocol)](33_mcp.md) |
 | Prompt caching | Provider reuses a repeated prompt prefix: cheaper and faster | [26 - LLM APIs](26_llm-apis.md) |
@@ -456,6 +465,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Term | Meaning | Guide |
 |---|---|---|
 | safetensors | Safe, fast file format for weights | [24 - Hugging Face](24_hugging-face.md) |
+| Scaffolding | Generating the initial files and folders of a project from a template | [50 - Project Templates](50_project-templates.md) |
 | Schema | Rules describing valid structure (JSON Schema, Pydantic model) | [07 - YAML, JSON, TOML and .env](07_yaml-json.md) |
 | Script | A `.py` file you run | [09 - Python Basics](09_python-basics.md) |
 | Secret | Encrypted value (API key) available to workflows | [43 - GitHub Actions (CI/CD)](43_github-actions.md) |
@@ -507,6 +517,7 @@ Jump to: [A](#a) [B](#b) [C](#c) [D](#d) [E](#e) [F](#f) [G](#g) [H](#h) [I](#i)
 | Task | A coroutine scheduled to run concurrently (`asyncio.create_task`) | [13 - Async Python](13_async-python.md) |
 | Task | What a model does: `text-classification`, `summarization`, `text-generation` ... | [24 - Hugging Face](24_hugging-face.md) |
 | Temperature | Randomness of token choice | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
+| Template version | A Git tag on the template repository (for example `v1.2.0`) that `copier update` moves between | [50 - Project Templates](50_project-templates.md) |
 | Tenant | Your organisation's directory (Microsoft Entra ID) | [47 - Azure](47_azure.md) |
 | Tensor | N-dimensional array (like NumPy) that can live on CPU or GPU | [23 - PyTorch](23_pytorch.md) |
 | Test function | `def test_something():` with `assert` statements | [14 - pytest](14_pytest.md) |

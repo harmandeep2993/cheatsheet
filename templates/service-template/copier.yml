@@ -1,0 +1,52 @@
+# Copier template: generates one new FastAPI service for templates/fullstack-microservices.
+# From the root of the starter:
+#   uvx copier copy ../service-template services/feedback-service --data service_name=feedback
+# Guide: 50_project-templates.md
+
+_min_copier_version: "9.0"
+_templates_suffix: .jinja
+_answers_file: .copier-answers.yml
+# The template's own README and config are documentation, not part of the generated service
+_exclude:
+  - copier.yml
+  - README.md
+  - __pycache__
+  - .git
+
+_message_after_copy: |
+  Created {{ service_name }}-service. Next steps (from the repository root):
+    1. uv lock && uv sync --all-packages
+    2. uv run pytest services/{{ service_name }}-service
+    3. Add it to compose.yaml (build context ".", dockerfile services/{{ service_name }}-service/Dockerfile)
+    4. Add to proxy/nginx.conf:  location /api/{{ service_name }}/ { proxy_pass http://{{ service_name }}-service:8000/; }
+    5. Add it to the CI image matrix
+
+# === Questions ===
+service_name:
+  type: str
+  help: Short name, lowercase letters and digits only (feedback -> feedback-service)
+  validator: >-
+    {% if not (service_name.isalnum() and service_name.islower() and service_name[:1].isalpha()) %}
+    Use lowercase letters and digits, starting with a letter
+    {% endif %}
+
+description:
+  type: str
+  help: One sentence describing what the service does
+  default: "Stores and lists {{ service_name }} items"
+
+port:
+  type: int
+  help: Port the service listens on inside its container
+  default: 8000
+
+# === Derived values (never asked, not saved in the answers file) ===
+package_name:
+  type: str
+  default: "{{ service_name }}_service"
+  when: false
+
+env_prefix:
+  type: str
+  default: "{{ service_name | upper }}"
+  when: false
