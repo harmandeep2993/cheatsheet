@@ -1,0 +1,465 @@
+# 38 - AI User Interfaces (Streamlit, Gradio, Chainlit)
+
+Quick reference for building chat apps and AI demos in pure Python: Streamlit, Gradio and Chainlit, plus streaming, file upload, state, secrets and deployment.
+
+## Introduction
+
+### What are these tools?
+
+They let you build a **web interface for your AI app with only Python** (no HTML / JavaScript needed):
+
+- **Streamlit**: turns a Python script into a web app; great for dashboards, data apps and chat UIs.
+- **Gradio**: builds interfaces around a function (input -> output); famous for ML demos and Hugging Face Spaces.
+- **Chainlit**: built specifically for chat / agent apps, with streaming, steps, file uploads and feedback built in.
+
+For production products with custom design, teams usually build a separate frontend (React / Next.js) that calls a **FastAPI** backend ([39](39_fastapi.md)); these Python tools are ideal for prototypes, internal tools and demos.
+
+### Mental model
+
+```text
+Streamlit: the WHOLE SCRIPT re-runs top to bottom on every interaction.
+           State that must survive re-runs goes in st.session_state.
+
+   user types -> script runs again -> reads st.session_state.messages -> draws all messages
+                                   -> calls the LLM for the new one -> appends -> draws it
+
+Gradio:    you give it a FUNCTION; it builds inputs / outputs around it.
+   ChatInterface(fn): fn(message, history) -> reply (or yields chunks to stream)
+
+Chainlit:  EVENT HANDLERS for a chat app.
+   @cl.on_chat_start  -> set up the session
+   @cl.on_message     -> receive a message, stream back a reply
+```
+
+### Why use them?
+
+- **Ship a demo in minutes**: show your RAG / agent to colleagues or users.
+- **Internal tools** without a frontend team.
+- **Free hosting options** (Streamlit Community Cloud, Hugging Face Spaces).
+- **Iterate fast** on prompts with a real UI.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Rerun (Streamlit) | Script executes again after each user interaction |
+| Session state | Per-user memory that survives reruns |
+| Widget | UI element (button, text input, file uploader) |
+| Streaming | Showing tokens as they arrive |
+| Caching | Keep expensive objects (models, clients, indexes) between reruns |
+| Secrets | API keys provided to the app securely, not in code |
+
+**Where it fits:** fronts apps built with [26 - LLM APIs](26_llm-apis.md), [30 - RAG](30_rag.md), [31 - AI Agents](31_ai-agents.md); streaming concepts in [08 - HTTP](08_http-apis.md) and [13 - Async](13_async-python.md); deploy with [41 - Docker](41_docker.md), [46 - Azure](46_azure.md) or Hugging Face Spaces ([24](24_hugging-face.md)).
+
+---
+
+## Contents
+
+0. [Flags and Parameters](#0-flags-and-parameters)
+1. [Which Tool When](#1-which-tool-when)
+2. [Streamlit: Basics](#2-streamlit-basics)
+3. [Streamlit: Chat App with Streaming](#3-streamlit-chat-app-with-streaming)
+4. [Streamlit: Session State and Caching](#4-streamlit-session-state-and-caching)
+5. [Streamlit: Sidebar, Files and Layout](#5-streamlit-sidebar-files-and-layout)
+6. [Streamlit: Secrets](#6-streamlit-secrets)
+7. [Gradio: Basics](#7-gradio-basics)
+8. [Gradio: ChatInterface with Streaming](#8-gradio-chatinterface-with-streaming)
+9. [Chainlit: Chat and Agent UI](#9-chainlit-chat-and-agent-ui)
+10. [FastAPI Backend + Simple Web Frontend](#10-fastapi-backend--simple-web-frontend)
+11. [Showing Sources, Steps and Feedback](#11-showing-sources-steps-and-feedback)
+12. [Authentication](#12-authentication)
+13. [Deployment](#13-deployment)
+14. [Troubleshooting](#14-troubleshooting)
+
+---
+
+## 0. Flags and Parameters
+
+> - **What:** Commands to start each tool's development server.
+> - **How:** Each has a `run` command with options for port and auto-reload.
+> - **When to use:** Running apps locally and in containers.
+
+```text
+streamlit  run  app.py  --server.port 8501  --server.address 0.0.0.0
+|          |    |       |                   |
+|          |    |       |                   +-- listen on all interfaces (containers / VMs)
+|          |    |       +---------------------- port (default 8501)
+|          |    +------------------------------ your script
+|          +----------------------------------- start the app
++---------------------------------------------- CLI
+```
+
+| Command | Meaning |
+|---|---|
+| `streamlit run app.py` | Start Streamlit (auto-reloads on save) |
+| `--server.headless true` | Do not open a browser (servers) |
+| `python app.py` (Gradio) | `demo.launch()` starts on port 7860 |
+| `demo.launch(server_name="0.0.0.0", server_port=7860, share=True)` | Bind all interfaces / port / temporary public link |
+| `chainlit run app.py -w` | Start Chainlit with watch (auto-reload), port 8000 |
+| `chainlit run app.py --port 8080 --host 0.0.0.0` | Custom port / host |
+
+---
+
+## 1. Which Tool When
+
+| Need | Choose |
+|---|---|
+| Data app / dashboard with charts + a chat box | Streamlit |
+| Quick ML demo, image / audio inputs, HF Spaces | Gradio |
+| Chat / agent app with steps, streaming, file upload, feedback | Chainlit |
+| Production product with custom UX, many users | FastAPI backend + React / Next.js frontend |
+
+## 2. Streamlit: Basics
+
+> - **What:** Building a web page from a Python script.
+> - **How:** Each `st.` call adds an element; widgets return their current value; the script re-runs on each interaction.
+> - **When to use:** Data apps and simple AI tools.
+
+```powershell
+pip install streamlit
+streamlit run app.py
+```
+
+```python
+import pandas as pd
+import streamlit as st
+
+st.title("Sales Explorer")
+region = st.selectbox("Region", ["North", "South", "West"])
+min_amount = st.slider("Minimum amount", 0, 1000, 100)
+
+df = pd.read_csv("sales.csv")
+filtered = df[(df["region"] == region) & (df["amount"] >= min_amount)]
+st.metric("Total", f"{filtered['amount'].sum():,.0f} EUR")
+st.dataframe(filtered)
+st.bar_chart(filtered, x="month", y="amount")
+
+if st.button("Explain with AI"):
+    st.write(explain(filtered))            # your LLM function
+```
+
+## 3. Streamlit: Chat App with Streaming
+
+> - **What:** A ChatGPT-style interface for Claude.
+> - **How:** Store messages in `st.session_state`; redraw them each run; stream the new reply with `st.write_stream`.
+> - **When to use:** Chatbots, RAG assistants, prompt testing.
+
+```python
+import anthropic
+import streamlit as st
+
+MODEL = "claude-opus-5"
+st.title("Acme Assistant")
+
+
+@st.cache_resource                              # create the client once, reuse across reruns
+def get_client():
+    return anthropic.Anthropic()
+
+
+client = get_client()
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for msg in st.session_state.messages:           # redraw history
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
+
+
+def stream_reply(messages):
+    with client.messages.stream(
+        model=MODEL,
+        max_tokens=16000,
+        system="You are a helpful assistant for Acme employees. Be concise.",
+        messages=messages,
+    ) as stream:
+        yield from stream.text_stream
+
+
+if prompt := st.chat_input("Ask something"):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    with st.chat_message("assistant"):
+        reply = st.write_stream(stream_reply(st.session_state.messages))
+    st.session_state.messages.append({"role": "assistant", "content": reply})
+```
+
+## 4. Streamlit: Session State and Caching
+
+> - **What:** Keeping data between reruns and avoiding repeated expensive work.
+> - **How:** `st.session_state` = per-user variables; `@st.cache_resource` = shared objects (clients, models, DB connections); `@st.cache_data` = cached function results (DataFrames).
+> - **When to use:** Chat history, loaded models, vector indexes, slow queries.
+
+```python
+if "count" not in st.session_state:
+    st.session_state.count = 0
+st.session_state.count += 1
+
+
+@st.cache_resource
+def load_index():
+    return build_vector_index("docs/")          # built once for all users
+
+
+@st.cache_data(ttl=600)                         # re-run at most every 10 minutes
+def load_sales() -> pd.DataFrame:
+    return pd.read_parquet("sales.parquet")
+```
+
+## 5. Streamlit: Sidebar, Files and Layout
+
+> - **What:** Common layout and input elements.
+> - **How:** `st.sidebar`, columns, tabs, expanders, file uploader.
+> - **When to use:** Settings panels, document upload for RAG, multi-view apps.
+
+```python
+with st.sidebar:
+    temperature_note = st.radio("Style", ["Precise", "Creative"])
+    uploaded = st.file_uploader("Upload a PDF", type=["pdf"])
+    if st.button("Clear chat"):
+        st.session_state.messages = []
+
+if uploaded:
+    text = extract_pdf_text(uploaded.read())     # bytes -> your loader
+    st.success(f"Loaded {uploaded.name}")
+
+col1, col2 = st.columns(2)
+col1.metric("Docs", 42)
+tab_chat, tab_sources = st.tabs(["Chat", "Sources"])
+with st.expander("Show retrieved chunks"):
+    st.write(chunks)
+with st.spinner("Thinking..."):
+    answer = slow_call()
+```
+
+## 6. Streamlit: Secrets
+
+> - **What:** Giving the app API keys without putting them in code.
+> - **How:** `.streamlit/secrets.toml` locally (git-ignored) or the hosting platform's secrets UI; read with `st.secrets`. Environment variables also work.
+> - **When to use:** Every deployed Streamlit app.
+
+```toml
+# .streamlit/secrets.toml  (add to .gitignore!)
+ANTHROPIC_API_KEY = "sk-ant-..."
+```
+
+```python
+client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
+```
+
+## 7. Gradio: Basics
+
+> - **What:** Wrapping a Python function in a web UI.
+> - **How:** `gr.Interface(fn, inputs, outputs)`; `launch()` starts the server.
+> - **When to use:** ML model demos (text, image, audio), quick tools.
+
+```powershell
+pip install gradio
+```
+
+```python
+import gradio as gr
+
+
+def classify(text: str) -> dict:
+    """Return label probabilities for a review."""
+    return {"positive": 0.8, "negative": 0.2}          # your model here
+
+
+demo = gr.Interface(
+    fn=classify,
+    inputs=gr.Textbox(label="Review", lines=4),
+    outputs=gr.Label(label="Sentiment"),
+    title="Review Classifier",
+    examples=[["Great product!"], ["Broke after a day."]],
+)
+demo.launch()                                   # http://127.0.0.1:7860
+```
+
+## 8. Gradio: ChatInterface with Streaming
+
+> - **What:** A full chat UI from one function.
+> - **How:** `gr.ChatInterface(fn)`; `fn(message, history)` receives the history as a list of role / content dicts; `yield` partial text to stream.
+> - **When to use:** Chat demos, Hugging Face Spaces.
+
+```python
+import anthropic
+import gradio as gr
+
+client = anthropic.Anthropic()
+
+
+def respond(message: str, history: list[dict]):
+    messages = [{"role": m["role"], "content": m["content"]} for m in history]
+    messages.append({"role": "user", "content": message})
+    partial = ""
+    with client.messages.stream(model="claude-opus-5", max_tokens=16000, messages=messages) as stream:
+        for text in stream.text_stream:
+            partial += text
+            yield partial                          # Gradio shows the growing reply
+
+
+gr.ChatInterface(respond, type="messages", title="Claude Chat").launch()
+```
+
+## 9. Chainlit: Chat and Agent UI
+
+> - **What:** A chat-first framework with streaming, visible steps, file upload and feedback.
+> - **How:** Decorated async handlers; `cl.Message` to send / stream; `cl.Step` to show intermediate agent steps; `cl.user_session` for per-user state.
+> - **When to use:** Agent and RAG apps where users should see tool calls and sources.
+
+```powershell
+pip install chainlit
+chainlit run app.py -w
+```
+
+```python
+import anthropic
+import chainlit as cl
+
+client = anthropic.AsyncAnthropic()
+
+
+@cl.on_chat_start
+async def start():
+    cl.user_session.set("history", [])
+    await cl.Message(content="Hi! Ask me about our docs.").send()
+
+
+@cl.on_message
+async def on_message(message: cl.Message):
+    history = cl.user_session.get("history")
+    history.append({"role": "user", "content": message.content})
+
+    async with cl.Step(name="search_docs") as step:            # visible step in the UI
+        chunks = await search_docs(message.content)
+        step.output = f"{len(chunks)} chunks found"
+
+    reply = cl.Message(content="")
+    async with client.messages.stream(model="claude-opus-5", max_tokens=16000,
+                                      messages=history) as stream:
+        async for text in stream.text_stream:
+            await reply.stream_token(text)
+    await reply.send()
+    history.append({"role": "assistant", "content": reply.content})
+```
+
+## 10. FastAPI Backend + Simple Web Frontend
+
+> - **What:** Separating the AI logic (API) from the UI.
+> - **How:** FastAPI streams tokens with `StreamingResponse`; any frontend reads the stream with `fetch`.
+> - **When to use:** Production apps, multiple frontends (web, mobile, Slack), custom design.
+
+```python
+# api.py
+import anthropic
+from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+
+app = FastAPI()
+client = anthropic.AsyncAnthropic()
+
+
+class ChatRequest(BaseModel):
+    messages: list[dict]
+
+
+@app.post("/chat")
+async def chat(req: ChatRequest):
+    async def token_stream():
+        async with client.messages.stream(model="claude-opus-5", max_tokens=16000,
+                                          messages=req.messages) as stream:
+            async for text in stream.text_stream:
+                yield text
+    return StreamingResponse(token_stream(), media_type="text/plain")
+```
+
+```html
+<!-- index.html (minimal) -->
+<input id="q"><button onclick="ask()">Send</button><pre id="out"></pre>
+<script>
+async function ask() {
+  const res = await fetch("/chat", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({messages: [{role: "user", content: document.getElementById("q").value}]})});
+  const reader = res.body.getReader(); const dec = new TextDecoder();
+  const out = document.getElementById("out"); out.textContent = "";
+  for (;;) { const {done, value} = await reader.read(); if (done) break; out.textContent += dec.decode(value); }
+}
+</script>
+```
+
+More in [39 - FastAPI](39_fastapi.md). JavaScript frameworks (Next.js with an AI SDK, React chat components) are common for polished UIs.
+
+## 11. Showing Sources, Steps and Feedback
+
+> - **What:** UI patterns that build trust and collect quality signals.
+> - **How:** Show citations / retrieved documents, show agent steps, add thumbs up / down stored with a trace ID.
+> - **When to use:** RAG and agent apps.
+
+```python
+with st.chat_message("assistant"):
+    st.markdown(answer)
+    with st.expander("Sources"):
+        for s in sources:
+            st.markdown(f"- **{s['file']}**, page {s['page']}")
+    feedback = st.feedback("thumbs", key=f"fb_{len(st.session_state.messages)}")
+    if feedback is not None:
+        save_feedback(trace_id, feedback)          # send to your observability tool ([34])
+```
+
+## 12. Authentication
+
+> - **What:** Restricting who can use the app (and your API budget).
+> - **How:** Built-in auth options of the tool / platform, or put the app behind a login proxy.
+> - **When to use:** Anything beyond a local demo.
+
+| Tool | Options |
+|---|---|
+| Streamlit | Built-in OIDC login (`st.login`, configured in secrets), or platform auth |
+| Gradio | `demo.launch(auth=("user", "pass"))` for simple cases; HF Spaces private / OAuth |
+| Chainlit | Password / OAuth / header auth callbacks |
+| Any | Reverse proxy with auth (Azure App Service / Container Apps authentication, OAuth2 proxy) |
+
+Also add rate limits and spend caps ([37](37_ai-security.md)).
+
+## 13. Deployment
+
+> - **What:** Putting the UI online.
+> - **How:** Managed hosting for quick demos; Docker containers for your own infrastructure.
+> - **When to use:** Sharing with users.
+
+| Option | Good for |
+|---|---|
+| Streamlit Community Cloud | Free public / small Streamlit apps from a GitHub repo |
+| Hugging Face Spaces | Gradio / Streamlit / Docker demos; GPU hardware available |
+| Azure Container Apps / App Service | Company apps with auth, private networking ([46](46_azure.md)) |
+| Any VM / Kubernetes | Full control ([41](41_docker.md), [44](44_kubernetes.md)) |
+
+```dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8501
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true"]
+```
+
+Streaming behind a proxy: disable response buffering (Nginx `proxy_buffering off;`, [43](43_nginx-https.md)) and allow WebSockets (Streamlit, Chainlit use them).
+
+## 14. Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Streamlit chat history disappears | Store messages in `st.session_state`, not normal variables |
+| Model / index reloads on every message | `@st.cache_resource` |
+| Text appears all at once, not streamed | Use `st.write_stream` / `yield` in Gradio / `stream_token` in Chainlit; disable proxy buffering |
+| `StreamlitAPIException` about duplicate widget keys | Give widgets unique `key=` values |
+| App works locally, blank behind proxy | Enable WebSocket support in the proxy; set `--server.address 0.0.0.0` in containers |
+| `KeyError` on `st.secrets` | Create `.streamlit/secrets.toml` or set secrets in the platform UI |
+| Gradio history format errors | Use `type="messages"` and role / content dicts |
+| Slow first response | Model / client created per request; cache it; warm up at startup |
+| Costs rising from a public demo | Add authentication, rate limits and a spend cap |
