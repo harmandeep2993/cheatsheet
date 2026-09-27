@@ -17,6 +17,8 @@ exclude = [
   "\\.example\\.",
   "your-username",
   "<[a-z-]+>",
+  # Our own site is built from this repo; it cannot exist before the first Pages deploy
+  "^https://harmandeep2993\\.github\\.io/pocket-guide",
 ]
 
 exclude_path = ["_site_src", "_site", "node_modules"]
