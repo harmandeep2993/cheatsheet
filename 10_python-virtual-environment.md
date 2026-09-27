@@ -29,6 +29,17 @@ A **virtual environment** is a private folder (usually `.venv`) that contains it
 
 **Where it fits:** needed before installing any library. A faster modern alternative that does all of this and more: [11 - uv](11_uv.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| venv module | https://docs.python.org/3/library/venv.html |
+| pip documentation | https://pip.pypa.io/ |
+| Python Packaging User Guide | https://packaging.python.org/ |
+| PyPI (package index) | https://pypi.org/ |
+
 ---
 
 ## Contents

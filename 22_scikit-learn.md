@@ -40,6 +40,17 @@ Scikit-learn (`sklearn`) is the standard Python library for **classical machine 
 
 **Where it fits:** uses data prepared with [17 - Pandas](17_pandas.md); serve the trained model with [39 - FastAPI](39_fastapi.md). Deep learning and pretrained models: [23 - PyTorch](23_pytorch.md), [24 - Hugging Face](24_hugging-face.md); text features via [29 - Embeddings](29_embeddings-vector-db.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| scikit-learn documentation | https://scikit-learn.org/stable/ |
+| User guide | https://scikit-learn.org/stable/user_guide.html |
+| API reference | https://scikit-learn.org/stable/api/index.html |
+| Choosing the right estimator (map) | https://scikit-learn.org/stable/machine_learning_map.html |
+
 ---
 
 ## Contents

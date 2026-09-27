@@ -41,6 +41,17 @@ Docker packages an application together with everything it needs to run (Python 
 
 **Where it fits:** packages apps from [39 - FastAPI](39_fastapi.md); uses [03 - Linux](03_linux.md) inside containers; runs on VMs like [47 - Azure VM](47_azure-vm-ollama.md). Built and pushed by [42 - GitHub Actions](42_github-actions.md); orchestrated by [44 - Kubernetes](44_kubernetes.md) or [46 - Azure](46_azure.md) Container Apps; fronted by [43 - Nginx](43_nginx-https.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Docker documentation | https://docs.docker.com/ |
+| Dockerfile reference | https://docs.docker.com/reference/dockerfile/ |
+| Docker Compose | https://docs.docker.com/compose/ |
+| Docker Hub | https://hub.docker.com/ |
+
 ---
 
 ## Contents

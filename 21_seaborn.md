@@ -29,6 +29,16 @@ Seaborn is a statistical visualisation library built on Matplotlib. You pass a p
 
 **Where it fits:** needs [17 - Pandas](17_pandas.md) data; customise with [20 - Matplotlib](20_matplotlib.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| seaborn documentation | https://seaborn.pydata.org/ |
+| seaborn API reference | https://seaborn.pydata.org/api.html |
+| seaborn example gallery | https://seaborn.pydata.org/examples/index.html |
+
 ---
 
 ## Contents

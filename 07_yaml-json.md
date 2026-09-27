@@ -52,6 +52,22 @@ Once you see a file as "nested dicts and lists", every format is just different 
 
 **Where it fits:** used by [08 - HTTP and APIs](08_http-apis.md), [12 - Pydantic](12_pydantic.md), [11 - uv](11_uv.md) (`pyproject.toml`), [41 - Docker](41_docker.md) (Compose), [42 - GitHub Actions](42_github-actions.md) and [44 - Kubernetes](44_kubernetes.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| JSON | https://www.json.org/ |
+| JSON Schema | https://json-schema.org/ |
+| YAML | https://yaml.org/ |
+| TOML | https://toml.io/ |
+| Python json module | https://docs.python.org/3/library/json.html |
+| Python tomllib module | https://docs.python.org/3/library/tomllib.html |
+| PyYAML | https://pyyaml.org/ |
+| jq | https://jqlang.org/ |
+| python-dotenv | https://pypi.org/project/python-dotenv/ |
+
 ---
 
 ## Contents

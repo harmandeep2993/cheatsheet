@@ -30,6 +30,17 @@ Visual Studio Code is a free code editor from Microsoft. It is lightweight like 
 
 **Where it fits:** the editor for all other guides; pairs with [10 - venv](10_python-virtual-environment.md) / [11 - uv](11_uv.md) and [04 - Git](04_git.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| VS Code documentation | https://code.visualstudio.com/docs |
+| Python in VS Code | https://code.visualstudio.com/docs/python/python-tutorial |
+| Remote development (SSH, WSL, containers) | https://code.visualstudio.com/docs/remote/remote-overview |
+| Ruff (linter / formatter) | https://docs.astral.sh/ruff/ |
+
 ---
 
 ## Contents

@@ -49,6 +49,18 @@ Laptop                                         Azure VM (Ubuntu)
 
 **Where it fits:** a hands-on project on top of [46 - Azure](46_azure.md) (concepts and all other services); uses [02 - PowerShell](02_terminal-powershell.md), [03 - Linux](03_linux.md), [10 - venv](10_python-virtual-environment.md) and can be wrapped in an API with [39 - FastAPI](39_fastapi.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Azure Virtual Machines | https://learn.microsoft.com/en-us/azure/virtual-machines/ |
+| Network security groups | https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview |
+| Azure CLI | https://learn.microsoft.com/en-us/cli/azure/ |
+| Ollama documentation | https://docs.ollama.com/ |
+| OpenSSH on Windows | https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse |
+
 ---
 
 ## Contents

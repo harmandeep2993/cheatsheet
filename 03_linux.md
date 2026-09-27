@@ -30,6 +30,17 @@ Linux is a free, open-source operating system, like Windows or macOS. It comes i
 
 **Where it fits:** needed for [41 - Docker](41_docker.md) and [47 - Azure VM](47_azure-vm-ollama.md). Windows equivalents: [02 - Terminal and PowerShell](02_terminal-powershell.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Ubuntu Server documentation | https://documentation.ubuntu.com/server/ |
+| Linux man pages online | https://man7.org/linux/man-pages/ |
+| GNU Bash manual | https://www.gnu.org/software/bash/manual/ |
+| WSL (Linux on Windows) | https://learn.microsoft.com/en-us/windows/wsl/ |
+
 ---
 
 ## Contents

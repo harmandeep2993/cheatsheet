@@ -54,6 +54,15 @@ The **event loop** is the chef: a single loop that runs tasks until each hits an
 
 **Where it fits:** used with [08 - HTTP and APIs](08_http-apis.md) (httpx), [26 - LLM APIs](26_llm-apis.md) (async clients), [39 - FastAPI](39_fastapi.md), [31 - AI Agents](31_ai-agents.md); tested with [14 - pytest](14_pytest.md) (pytest-asyncio).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| asyncio documentation | https://docs.python.org/3/library/asyncio.html |
+| HTTPX async support | https://www.python-httpx.org/async/ |
+
 ---
 
 ## Contents

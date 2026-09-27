@@ -61,6 +61,22 @@ Keyword search (`LIKE '%password%'`) finds exact words; **semantic search** find
 
 **Where it fits:** concept in [25 - LLM Fundamentals](25_llm-fundamentals.md); models from [24 - Hugging Face](24_hugging-face.md) or Ollama ([35](35_local-llms.md)); used by [30 - RAG](30_rag.md) and agents' memory ([31](31_ai-agents.md)); pgvector builds on [19 - SQL](19_sql.md); databases run in [41 - Docker](41_docker.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Sentence Transformers | https://sbert.net/ |
+| MTEB embedding leaderboard | https://huggingface.co/spaces/mteb/leaderboard |
+| OpenAI embeddings guide | https://platform.openai.com/docs/guides/embeddings |
+| Voyage AI docs | https://docs.voyageai.com/ |
+| Chroma | https://docs.trychroma.com/ |
+| pgvector | https://github.com/pgvector/pgvector |
+| Qdrant | https://qdrant.tech/documentation/ |
+| FAISS | https://github.com/facebookresearch/faiss/wiki |
+| Azure AI Search | https://learn.microsoft.com/en-us/azure/search/ |
+
 ---
 
 ## Contents

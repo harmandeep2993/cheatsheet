@@ -31,6 +31,16 @@ pandas is the most popular Python library for working with **tabular data** (row
 
 **Where it fits:** built on [16 - NumPy](16_numpy.md); plots with [20 - Matplotlib](20_matplotlib.md) / [21 - Seaborn](21_seaborn.md); feeds [22 - Scikit-learn](22_scikit-learn.md). SQL equivalents: [19 - SQL](19_sql.md). Faster alternatives for big data: [18 - Polars and DuckDB](18_polars-duckdb.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| pandas documentation | https://pandas.pydata.org/docs/ |
+| 10 minutes to pandas | https://pandas.pydata.org/docs/user_guide/10min.html |
+| pandas user guide | https://pandas.pydata.org/docs/user_guide/index.html |
+
 ---
 
 ## Contents

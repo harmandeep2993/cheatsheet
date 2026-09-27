@@ -63,6 +63,21 @@ Evals tell you "is version B better than version A?" before you ship. Observabil
 
 **Where it fits:** tests prompts from [27](27_prompt-engineering.md), RAG from [30](30_rag.md), agents from [31](31_ai-agents.md); code-level tests in [14 - pytest](14_pytest.md); runs in CI with [42 - GitHub Actions](42_github-actions.md); logs from [39 - FastAPI](39_fastapi.md) apps.
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Langfuse | https://langfuse.com/docs |
+| LangSmith | https://docs.smith.langchain.com/ |
+| promptfoo | https://www.promptfoo.dev/docs/intro/ |
+| DeepEval | https://deepeval.com/docs/getting-started |
+| Ragas | https://docs.ragas.io/ |
+| Arize Phoenix | https://arize.com/docs/phoenix |
+| Inspect (UK AISI eval framework) | https://inspect.aisi.org.uk/ |
+| OpenTelemetry GenAI conventions | https://opentelemetry.io/docs/specs/semconv/gen-ai/ |
+
 ---
 
 ## Contents

@@ -62,6 +62,19 @@ effective weight W + B x A          -> adapter file of a few MB to a few hundred
 
 **Where it fits:** needs [23 - PyTorch](23_pytorch.md) and [24 - Hugging Face](24_hugging-face.md); decision context in [25 - LLM Fundamentals](25_llm-fundamentals.md) section 16; run the result with [35 - Local LLMs](35_local-llms.md); measure with [34 - Evals](34_evals-observability.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Hugging Face TRL | https://huggingface.co/docs/trl |
+| Hugging Face PEFT (LoRA) | https://huggingface.co/docs/peft |
+| Unsloth | https://docs.unsloth.ai/ |
+| Axolotl | https://docs.axolotl.ai/ |
+| LoRA paper | https://arxiv.org/abs/2106.09685 |
+| OpenAI fine-tuning guide | https://platform.openai.com/docs/guides/fine-tuning |
+
 ---
 
 ## Contents

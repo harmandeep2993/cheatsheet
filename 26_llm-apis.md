@@ -50,6 +50,25 @@ The API is **stateless**: each request must contain the full conversation you wa
 
 **Where it fits:** concepts in [25 - LLM Fundamentals](25_llm-fundamentals.md); HTTP basics in [08 - HTTP and APIs](08_http-apis.md); schemas via [12 - Pydantic](12_pydantic.md); prompting in [27](27_prompt-engineering.md); tools in [28](28_tool-use.md); serving your own API with [39 - FastAPI](39_fastapi.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Claude API documentation | https://platform.claude.com/docs |
+| Anthropic Python SDK | https://github.com/anthropics/anthropic-sdk-python |
+| Models overview | https://platform.claude.com/docs/en/about-claude/models/overview |
+| Streaming | https://platform.claude.com/docs/en/build-with-claude/streaming |
+| Structured outputs | https://platform.claude.com/docs/en/build-with-claude/structured-outputs |
+| Prompt caching | https://platform.claude.com/docs/en/build-with-claude/prompt-caching |
+| Adaptive thinking | https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking |
+| Batch processing | https://platform.claude.com/docs/en/build-with-claude/batch-processing |
+| Vision / PDF support | https://platform.claude.com/docs/en/build-with-claude/vision |
+| Errors and rate limits | https://platform.claude.com/docs/en/api/errors |
+| OpenAI API docs | https://platform.openai.com/docs |
+| OpenAI Python SDK | https://github.com/openai/openai-python |
+
 ---
 
 ## Contents

@@ -50,6 +50,17 @@ If a colleague would need to ask you a follow-up question, the prompt is missing
 
 **Where it fits:** applies to every call in [26 - LLM APIs](26_llm-apis.md); tool descriptions in [28 - Tool Use](28_tool-use.md); RAG prompts in [30 - RAG](30_rag.md); agent system prompts in [31 - AI Agents](31_ai-agents.md); measured with [34 - Evals](34_evals-observability.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Claude docs (Build with Claude > Prompt engineering) | https://platform.claude.com/docs |
+| Anthropic interactive prompt engineering tutorial | https://github.com/anthropics/prompt-eng-interactive-tutorial |
+| Anthropic cookbook (example notebooks) | https://github.com/anthropics/anthropic-cookbook |
+| OpenAI prompt engineering guide | https://platform.openai.com/docs/guides/prompt-engineering |
+
 ---
 
 ## Contents

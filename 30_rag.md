@@ -59,6 +59,19 @@ Two separate quality problems to keep in mind:
 
 **Where it fits:** built on [29 - Embeddings and Vector DBs](29_embeddings-vector-db.md), [26 - LLM APIs](26_llm-apis.md) and [27 - Prompt Engineering](27_prompt-engineering.md); agentic version with [28 - Tool Use](28_tool-use.md) / [31 - AI Agents](31_ai-agents.md); frameworks in [32](32_agent-frameworks.md); measured with [34 - Evals](34_evals-observability.md); served via [39 - FastAPI](39_fastapi.md) with a UI from [38](38_ai-ui.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Anthropic: contextual retrieval | https://www.anthropic.com/news/contextual-retrieval |
+| Claude citations | https://platform.claude.com/docs/en/build-with-claude/citations |
+| LlamaIndex | https://docs.llamaindex.ai/ |
+| Ragas (RAG evaluation) | https://docs.ragas.io/ |
+| Docling (document parsing) | https://docling-project.github.io/docling/ |
+| pypdf | https://pypdf.readthedocs.io/ |
+
 ---
 
 ## Contents

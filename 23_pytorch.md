@@ -58,6 +58,16 @@ A **gradient** says, for each weight, "if you increase this weight a tiny bit, t
 
 **Where it fits:** builds on [16 - NumPy](16_numpy.md) and [22 - Scikit-learn](22_scikit-learn.md) ideas; used by [24 - Hugging Face](24_hugging-face.md), [36 - Fine-tuning](36_fine-tuning.md) and [35 - Local LLMs](35_local-llms.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| PyTorch documentation | https://docs.pytorch.org/docs/stable/index.html |
+| PyTorch tutorials | https://docs.pytorch.org/tutorials/ |
+| Install command generator | https://pytorch.org/get-started/locally/ |
+
 ---
 
 ## Contents

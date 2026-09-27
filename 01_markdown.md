@@ -27,6 +27,16 @@ Markdown is a simple way to format plain text using a few symbols. You write `# 
 
 **Where it fits:** every guide in this repo is Markdown. Preview it in VS Code with `Ctrl+Shift+V` ([05 - VS Code](05_vscode.md)).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Markdown Guide (basic + extended syntax) | https://www.markdownguide.org/ |
+| GitHub: writing on GitHub | https://docs.github.com/en/get-started/writing-on-github |
+| GitHub Flavored Markdown spec | https://github.github.com/gfm/ |
+
 ---
 
 ## Contents

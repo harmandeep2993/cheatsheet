@@ -51,6 +51,17 @@ Chainlit:  EVENT HANDLERS for a chat app.
 
 **Where it fits:** fronts apps built with [26 - LLM APIs](26_llm-apis.md), [30 - RAG](30_rag.md), [31 - AI Agents](31_ai-agents.md); streaming concepts in [08 - HTTP](08_http-apis.md) and [13 - Async](13_async-python.md); deploy with [41 - Docker](41_docker.md), [46 - Azure](46_azure.md) or Hugging Face Spaces ([24](24_hugging-face.md)).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Streamlit | https://docs.streamlit.io/ |
+| Gradio | https://www.gradio.app/docs |
+| Chainlit | https://docs.chainlit.io/ |
+| Hugging Face Spaces | https://huggingface.co/docs/hub/spaces |
+
 ---
 
 ## Contents

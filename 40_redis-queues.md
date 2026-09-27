@@ -50,6 +50,18 @@ CACHE: check before doing expensive work
 
 **Where it fits:** used by [39 - FastAPI](39_fastapi.md) apps and [31 - AI Agents](31_ai-agents.md) deployments; runs in [41 - Docker](41_docker.md) / [44 - Kubernetes](44_kubernetes.md); protects against abuse in [37 - AI Security](37_ai-security.md); managed version on [46 - Azure](46_azure.md) (Azure Cache for Redis / Azure Managed Redis).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Redis documentation | https://redis.io/docs/latest/ |
+| redis-py | https://redis.readthedocs.io/ |
+| Celery | https://docs.celeryq.dev/ |
+| RQ | https://python-rq.org/ |
+| arq | https://arq-docs.helpmanual.io/ |
+
 ---
 
 ## Contents

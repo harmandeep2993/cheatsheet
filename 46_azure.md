@@ -53,6 +53,21 @@ Tenant (Microsoft Entra ID: users, groups, apps)
 
 **Where it fits:** deploy containers from [41 - Docker](41_docker.md) and APIs from [39 - FastAPI](39_fastapi.md); a full VM + LLM walkthrough is in [47 - Azure VM + Linux + Ollama](47_azure-vm-ollama.md). Automate it with [45 - Terraform](45_terraform.md) and [42 - GitHub Actions](42_github-actions.md); run Kubernetes on AKS with [44](44_kubernetes.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Azure documentation | https://learn.microsoft.com/en-us/azure/ |
+| Azure CLI | https://learn.microsoft.com/en-us/cli/azure/ |
+| Azure CLI command reference | https://learn.microsoft.com/en-us/cli/azure/reference-index |
+| Azure Container Apps | https://learn.microsoft.com/en-us/azure/container-apps/ |
+| Azure AI Foundry (incl. Azure OpenAI) | https://learn.microsoft.com/en-us/azure/ai-foundry/ |
+| Bicep | https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/ |
+| Pricing calculator | https://azure.microsoft.com/en-us/pricing/calculator/ |
+| Resource naming abbreviations | https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations |
+
 ---
 
 ## Contents

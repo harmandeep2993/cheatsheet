@@ -60,6 +60,21 @@ Frameworks change fast. The **concepts** in this guide are stable; check each pr
 
 **Where it fits:** built on [26 - LLM APIs](26_llm-apis.md), [28 - Tool Use](28_tool-use.md) and [12 - Pydantic](12_pydantic.md); implements patterns from [30 - RAG](30_rag.md) and [31 - AI Agents](31_ai-agents.md); tools via [33 - MCP](33_mcp.md); traced with [34](34_evals-observability.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Claude Agent SDK | https://code.claude.com/docs/en/agent-sdk |
+| OpenAI Agents SDK | https://openai.github.io/openai-agents-python/ |
+| LangChain and LangGraph | https://docs.langchain.com/ |
+| LlamaIndex | https://docs.llamaindex.ai/ |
+| PydanticAI | https://ai.pydantic.dev/ |
+| CrewAI | https://docs.crewai.com/ |
+| Microsoft Agent Framework | https://learn.microsoft.com/en-us/agent-framework/ |
+| LiteLLM | https://docs.litellm.ai/ |
+
 ---
 
 ## Contents

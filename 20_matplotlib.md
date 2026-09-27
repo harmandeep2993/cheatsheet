@@ -29,6 +29,16 @@ Matplotlib is Python's original and most widely used plotting library. It can dr
 
 **Where it fits:** plots data from [16 - NumPy](16_numpy.md) and [17 - Pandas](17_pandas.md); higher-level statistical plots in [21 - Seaborn](21_seaborn.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Matplotlib documentation | https://matplotlib.org/stable/ |
+| Matplotlib example gallery | https://matplotlib.org/stable/gallery/index.html |
+| Matplotlib cheatsheets | https://matplotlib.org/cheatsheets/ |
+
 ---
 
 ## Contents

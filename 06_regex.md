@@ -30,6 +30,17 @@ A **regular expression** (regex) is a pattern that describes text. Instead of se
 
 **Where it fits:** used inside [09 - Python](09_python-basics.md), [17 - Pandas](17_pandas.md), [19 - SQL](19_sql.md), [03 - Linux](03_linux.md) (grep) and [05 - VS Code](05_vscode.md) (search).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Python re module | https://docs.python.org/3/library/re.html |
+| Python Regular Expression HOWTO | https://docs.python.org/3/howto/regex.html |
+| regex101 (test and explain patterns) | https://regex101.com/ |
+| Regular-Expressions.info (tutorial) | https://www.regular-expressions.info/ |
+
 ---
 
 ## Contents

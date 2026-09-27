@@ -55,6 +55,17 @@ Each job gets a **clean machine**: nothing is installed unless your steps instal
 
 **Where it fits:** runs [14 - pytest](14_pytest.md) and [34 - Evals](34_evals-observability.md); builds images from [41 - Docker](41_docker.md); deploys to [46 - Azure](46_azure.md) / [44 - Kubernetes](44_kubernetes.md); lives in your [04 - Git](04_git.md) repo; YAML syntax in [07](07_yaml-json.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| GitHub Actions documentation | https://docs.github.com/en/actions |
+| GitHub Marketplace (actions) | https://github.com/marketplace?type=actions |
+| setup-uv action | https://github.com/astral-sh/setup-uv |
+| Azure login action | https://github.com/Azure/login |
+
 ---
 
 ## Contents

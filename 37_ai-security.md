@@ -41,6 +41,18 @@ Treat the LLM like a **very capable but gullible intern**: helpful, fast, and ea
 
 **Where it fits:** applies to [26 - LLM APIs](26_llm-apis.md), [28 - Tool Use](28_tool-use.md), [30 - RAG](30_rag.md), [31 - AI Agents](31_ai-agents.md) and [33 - MCP](33_mcp.md); secrets handling from [07 - .env](07_yaml-json.md) and [46 - Azure Key Vault](46_azure.md); tested with [34 - Evals](34_evals-observability.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| OWASP Top 10 for LLM Applications | https://genai.owasp.org/llm-top-10/ |
+| NIST AI Risk Management Framework | https://www.nist.gov/itl/ai-risk-management-framework |
+| MITRE ATLAS (AI threat matrix) | https://atlas.mitre.org/ |
+| EU AI Act (European Commission) | https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai |
+| Microsoft Presidio (PII detection) | https://microsoft.github.io/presidio/ |
+
 ---
 
 ## Contents

@@ -51,6 +51,20 @@ Trade-offs: the best hosted models are usually stronger than what fits on a lapt
 
 **Where it fits:** models from [24 - Hugging Face](24_hugging-face.md); concepts in [25 - LLM Fundamentals](25_llm-fundamentals.md); called like APIs in [26](26_llm-apis.md); embeddings for [29](29_embeddings-vector-db.md); GPU VM setup in [47 - Azure VM + Ollama](47_azure-vm-ollama.md); containers in [41 - Docker](41_docker.md); fine-tuned models from [36](36_fine-tuning.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Ollama documentation | https://docs.ollama.com/ |
+| Ollama model library | https://ollama.com/library |
+| Ollama on GitHub | https://github.com/ollama/ollama |
+| llama.cpp | https://github.com/ggml-org/llama.cpp |
+| vLLM | https://docs.vllm.ai/ |
+| LM Studio | https://lmstudio.ai/docs |
+| Open WebUI | https://docs.openwebui.com/ |
+
 ---
 
 ## Contents

@@ -77,6 +77,19 @@ Most of your engineering work happens in the middle two layers: **deciding what 
 
 **Where it fits:** the concepts behind [26 - LLM APIs](26_llm-apis.md), [27 - Prompt Engineering](27_prompt-engineering.md), [29 - Embeddings](29_embeddings-vector-db.md), [30 - RAG](30_rag.md), [31 - AI Agents](31_ai-agents.md). Implementation details: [23 - PyTorch](23_pytorch.md), [24 - Hugging Face](24_hugging-face.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Claude documentation | https://platform.claude.com/docs |
+| Claude models overview | https://platform.claude.com/docs/en/about-claude/models/overview |
+| Context windows | https://platform.claude.com/docs/en/build-with-claude/context-windows |
+| Claude pricing | https://platform.claude.com/docs/en/about-claude/pricing |
+| OpenAI platform docs | https://platform.openai.com/docs |
+| Hugging Face LLM course | https://huggingface.co/learn |
+
 ---
 
 ## Contents

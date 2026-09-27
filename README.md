@@ -86,9 +86,10 @@ A complete pocket guide for data, AI and deployment work: from the terminal and 
 
 - File names: `NN_topic.md` (two-digit number, lowercase, hyphens), ordered from basic to advanced.
 - Each guide opens with an **Introduction**: what the tool is, why we use it, a **mental model**, key terms and where it fits with the other guides.
+- Each Introduction ends with an **Official docs** table: the tool's home page and key reference pages for the latest information.
 - Then a numbered **Contents** list; sections are numbered to match.
 - Section **0. Flags and Parameters** breaks a sample command into its parts and explains every flag / parameter used in that guide.
 - Each section opens with **What** (what it is), **How** (how it works) and **When to use** (a real scenario).
 - Commands have a short comment on the right explaining what they do.
 - Most guides end with a **Troubleshooting** table of common errors and fixes.
-- Fast-moving tools (LLM models, agent frameworks, cloud services) change often: the concepts are stable, but check the official docs for exact current versions and names.
+- Fast-moving tools (LLM models, agent frameworks, cloud services) change often: the concepts are stable, but check the **Official docs** links in each guide for exact current versions and names.

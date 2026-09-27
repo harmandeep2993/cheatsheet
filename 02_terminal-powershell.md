@@ -30,6 +30,17 @@ A **terminal** is a text window where you type commands instead of clicking. The
 
 **Where it fits:** the foundation for every other guide. Linux servers use Bash instead: see [03 - Linux](03_linux.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| PowerShell documentation | https://learn.microsoft.com/en-us/powershell/ |
+| Windows Terminal | https://learn.microsoft.com/en-us/windows/terminal/ |
+| winget (Windows Package Manager) | https://learn.microsoft.com/en-us/windows/package-manager/winget/ |
+| Windows commands (CMD) reference | https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands |
+
 ---
 
 ## Contents

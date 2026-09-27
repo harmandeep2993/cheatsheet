@@ -45,6 +45,16 @@ Validate **once at the boundary**, then trust the object everywhere inside. The 
 
 **Where it fits:** used in [39 - FastAPI](39_fastapi.md), [26 - LLM APIs](26_llm-apis.md) (structured outputs), [28 - Tool Use](28_tool-use.md), [32 - Agent Frameworks](32_agent-frameworks.md); builds on [09 - Python Basics](09_python-basics.md) type hints and [07 - JSON](07_yaml-json.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Pydantic documentation | https://docs.pydantic.dev/latest/ |
+| pydantic-settings | https://docs.pydantic.dev/latest/concepts/pydantic_settings/ |
+| Migration guide (v1 to v2) | https://docs.pydantic.dev/latest/migration/ |
+
 ---
 
 ## Contents

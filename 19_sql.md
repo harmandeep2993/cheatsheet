@@ -31,6 +31,17 @@ SQL (Structured Query Language) is the standard language for working with **rela
 
 **Where it fits:** load query results into [17 - Pandas](17_pandas.md); run databases with [41 - Docker](41_docker.md). Vector search in Postgres: [29 - pgvector](29_embeddings-vector-db.md); SQL on files: [18 - DuckDB](18_polars-duckdb.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| PostgreSQL documentation | https://www.postgresql.org/docs/ |
+| SQLite documentation | https://www.sqlite.org/docs.html |
+| MySQL documentation | https://dev.mysql.com/doc/ |
+| SQLAlchemy | https://docs.sqlalchemy.org/ |
+
 ---
 
 ## Contents

@@ -61,6 +61,19 @@ A **checkpoint** on the Hub (like `distilbert-base-uncased-finetuned-sst-2-engli
 
 **Where it fits:** runs on [23 - PyTorch](23_pytorch.md); embeddings for [29 - Embeddings and Vector DBs](29_embeddings-vector-db.md); open LLMs also via [35 - Local LLMs](35_local-llms.md); training in [36 - Fine-tuning](36_fine-tuning.md); demos in [38 - AI UIs](38_ai-ui.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Hugging Face documentation | https://huggingface.co/docs |
+| Transformers | https://huggingface.co/docs/transformers |
+| Hub (models, datasets, Spaces) | https://huggingface.co/docs/hub |
+| Datasets | https://huggingface.co/docs/datasets |
+| Sentence Transformers | https://sbert.net/ |
+| Hugging Face Learn (free courses) | https://huggingface.co/learn |
+
 ---
 
 ## Contents

@@ -58,6 +58,18 @@ The model still does tool use exactly as before; MCP standardises **how tools ar
 
 **Where it fits:** a standard way to provide the tools from [28 - Tool Use](28_tool-use.md) to agents ([31](31_ai-agents.md), [32](32_agent-frameworks.md)); secured per [37 - AI Security](37_ai-security.md); remote servers deployed like any web service ([39](39_fastapi.md), [41](41_docker.md)).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Model Context Protocol (docs and spec) | https://modelcontextprotocol.io/ |
+| MCP Python SDK | https://github.com/modelcontextprotocol/python-sdk |
+| Official / reference MCP servers | https://github.com/modelcontextprotocol/servers |
+| MCP Inspector | https://github.com/modelcontextprotocol/inspector |
+| MCP in Claude Code | https://code.claude.com/docs/en/mcp |
+
 ---
 
 ## Contents

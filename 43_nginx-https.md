@@ -51,6 +51,17 @@ Only ports 80 and 443 are open to the internet; apps listen on 127.0.0.1 only.
 
 **Where it fits:** fronts [39 - FastAPI](39_fastapi.md), [38 - AI UIs](38_ai-ui.md) and [35 - Local LLMs](35_local-llms.md) on a Linux VM ([03 - Linux](03_linux.md), [47 - Azure VM](47_azure-vm-ollama.md)); HTTP concepts in [08](08_http-apis.md); managed alternatives in [46 - Azure](46_azure.md) (Container Apps / App Service give HTTPS automatically).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| nginx documentation | https://nginx.org/en/docs/ |
+| Certbot | https://certbot.eff.org/ |
+| Let's Encrypt | https://letsencrypt.org/docs/ |
+| Caddy | https://caddyserver.com/docs/ |
+
 ---
 
 ## Contents

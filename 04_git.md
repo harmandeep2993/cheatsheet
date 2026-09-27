@@ -33,6 +33,18 @@ Git is a **version control system**: it records the history of your project as a
 
 **Where it fits:** use it for every project, including this one. VS Code has Git built in: [05 - VS Code](05_vscode.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Git documentation | https://git-scm.com/doc |
+| Pro Git book (free) | https://git-scm.com/book/en/v2 |
+| GitHub Docs | https://docs.github.com/ |
+| GitHub CLI manual | https://cli.github.com/manual/ |
+| Conventional Commits | https://www.conventionalcommits.org/ |
+
 ---
 
 ## Contents

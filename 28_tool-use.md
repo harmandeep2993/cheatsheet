@@ -54,6 +54,17 @@ The model only sees each tool's **name, description and input schema**. Those th
 
 **Where it fits:** built on [26 - LLM APIs](26_llm-apis.md) and schemas from [12 - Pydantic](12_pydantic.md) / [07 - JSON Schema](07_yaml-json.md); the core of [31 - AI Agents](31_ai-agents.md); tools can be shared across apps with [33 - MCP](33_mcp.md); safety in [37 - AI Security](37_ai-security.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Claude tool use overview | https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview |
+| Structured outputs / strict tools | https://platform.claude.com/docs/en/build-with-claude/structured-outputs |
+| Code execution tool | https://platform.claude.com/docs/en/agents-and-tools/tool-use/code-execution-tool |
+| OpenAI function calling | https://platform.openai.com/docs/guides/function-calling |
+
 ---
 
 ## Contents

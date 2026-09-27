@@ -30,6 +30,7 @@ Every guide follows the same layout:
 ```text
 # NN - Topic
 Introduction      what it is, WHY it exists, a mental model diagram, key terms, where it fits
+  Official docs   links to the official home pages for the latest, authoritative information
 Contents          numbered sections
 0. Flags and Parameters   how commands / calls are built, every flag explained (where relevant)
 1..N. Sections    each opens with What / How / When to use, then commands with comments
@@ -41,6 +42,7 @@ Reading strategy:
 - **Learning a topic**: read the Introduction and mental model first, then skim section titles, then try the examples.
 - **Looking something up**: use the Contents list or section 11 of this page.
 - **Debugging**: jump to the Troubleshooting table at the end of the relevant guide.
+- **Need the very latest details** (new versions, changed APIs, current model names): open the **Official docs** table at the end of each guide's Introduction.
 
 ## 2. The Map: Layers of the Stack
 

@@ -43,6 +43,17 @@ Uvicorn (server) -> FastAPI (routing) -> validation (Pydantic) -> your function
 
 **Where it fits:** serves models from [22 - Scikit-learn](22_scikit-learn.md) or Ollama ([47 - Azure VM](47_azure-vm-ollama.md)); ship it with [41 - Docker](41_docker.md). Builds on [12 - Pydantic](12_pydantic.md), [13 - Async](13_async-python.md) and [08 - HTTP](08_http-apis.md); tested with [14 - pytest](14_pytest.md); background jobs and caching with [40 - Redis](40_redis-queues.md); LLM endpoints with [26 - LLM APIs](26_llm-apis.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| FastAPI documentation | https://fastapi.tiangolo.com/ |
+| Uvicorn | https://uvicorn.dev/ |
+| Starlette | https://starlette.dev/ |
+| Pydantic | https://docs.pydantic.dev/latest/ |
+
 ---
 
 ## Contents

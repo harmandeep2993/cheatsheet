@@ -53,6 +53,17 @@ For AI apps, deterministic tests check your **code** (parsing, tool routing, pro
 
 **Where it fits:** tests code from [09 - Python Basics](09_python-basics.md) to [39 - FastAPI](39_fastapi.md); runs in CI via [42 - GitHub Actions](42_github-actions.md); LLM quality is measured with [34 - Evals](34_evals-observability.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| pytest documentation | https://docs.pytest.org/ |
+| unittest.mock | https://docs.python.org/3/library/unittest.mock.html |
+| pytest-asyncio | https://pytest-asyncio.readthedocs.io/ |
+| pytest-cov | https://pytest-cov.readthedocs.io/ |
+
 ---
 
 ## Contents

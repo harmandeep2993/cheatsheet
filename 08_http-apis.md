@@ -59,6 +59,17 @@ Every API call you ever make, whatever library you use, is this: **method + URL 
 
 **Where it fits:** the foundation for [26 - LLM APIs](26_llm-apis.md) and [39 - FastAPI](39_fastapi.md); data formats in [07 - YAML and JSON](07_yaml-json.md); HTTPS and proxies in [43 - Nginx and HTTPS](43_nginx-https.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| MDN: HTTP (methods, headers, status codes) | https://developer.mozilla.org/en-US/docs/Web/HTTP |
+| requests | https://requests.readthedocs.io/ |
+| HTTPX | https://www.python-httpx.org/ |
+| curl documentation | https://curl.se/docs/ |
+
 ---
 
 ## Contents

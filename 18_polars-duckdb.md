@@ -50,6 +50,16 @@ DuckDB (SQL)     SELECT region, SUM(amount) FROM 'sales/*.parquet' WHERE year = 
 
 **Where it fits:** alternatives to [17 - Pandas](17_pandas.md); SQL skills from [19 - SQL](19_sql.md); outputs feed [22 - Scikit-learn](22_scikit-learn.md) and [20 - Matplotlib](20_matplotlib.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Polars user guide | https://docs.pola.rs/ |
+| DuckDB documentation | https://duckdb.org/docs/ |
+| Apache Parquet | https://parquet.apache.org/docs/ |
+
 ---
 
 ## Contents

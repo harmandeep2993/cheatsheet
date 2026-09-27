@@ -53,6 +53,18 @@ Terraform vs Bicep: Bicep is Azure-only and native to Azure ([46](46_azure.md) s
 
 **Where it fits:** creates the Azure resources from [46 - Azure](46_azure.md) and clusters for [44 - Kubernetes](44_kubernetes.md); runs in [42 - GitHub Actions](42_github-actions.md); code in [04 - Git](04_git.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Terraform documentation | https://developer.hashicorp.com/terraform/docs |
+| Terraform Registry (providers, modules) | https://registry.terraform.io/ |
+| AzureRM provider | https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs |
+| OpenTofu | https://opentofu.org/docs/ |
+| Azure Verified Modules | https://azure.github.io/Azure-Verified-Modules/ |
+
 ---
 
 ## Contents

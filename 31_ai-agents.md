@@ -66,6 +66,17 @@ Rule: **start with the simplest thing that works** (single call -> workflow -> a
 
 **Where it fits:** built from [26 - LLM APIs](26_llm-apis.md) and [28 - Tool Use](28_tool-use.md); frameworks in [32](32_agent-frameworks.md); tools shared via [33 - MCP](33_mcp.md); tested with [34 - Evals](34_evals-observability.md); secured with [37 - AI Security](37_ai-security.md); deployed with [39](39_fastapi.md), [40](40_redis-queues.md), [41](41_docker.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Anthropic: Building effective agents | https://www.anthropic.com/engineering/building-effective-agents |
+| Anthropic engineering blog (agents, tools, evals) | https://www.anthropic.com/engineering |
+| Claude tool use | https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview |
+| Claude Agent SDK | https://code.claude.com/docs/en/agent-sdk |
+
 ---
 
 ## Contents

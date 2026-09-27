@@ -63,6 +63,18 @@ For a single FastAPI app, start with [46 - Azure](46_azure.md) Container Apps (w
 
 **Where it fits:** runs images from [41 - Docker](41_docker.md); YAML from [07](07_yaml-json.md); deployed by [42 - GitHub Actions](42_github-actions.md); managed clusters on [46 - Azure](46_azure.md) (AKS); infrastructure created with [45 - Terraform](45_terraform.md); serves apps like [39 - FastAPI](39_fastapi.md) and model servers from [35 - Local LLMs](35_local-llms.md).
 
+### Official docs
+
+Where to read the latest, authoritative documentation:
+
+| Resource | Link |
+|---|---|
+| Kubernetes documentation | https://kubernetes.io/docs/home/ |
+| kubectl reference | https://kubernetes.io/docs/reference/kubectl/ |
+| Helm | https://helm.sh/docs/ |
+| kind (local clusters) | https://kind.sigs.k8s.io/ |
+| Azure Kubernetes Service (AKS) | https://learn.microsoft.com/en-us/azure/aks/ |
+
 ---
 
 ## Contents
