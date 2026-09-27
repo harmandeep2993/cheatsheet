@@ -83,6 +83,49 @@ Reading strategy:
 >
 > Use it for understanding how all the pieces work together in one system.
 
+### Diagram
+
+GitHub and the website draw this automatically (the number in each box is the guide that explains it):
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 360, "nodeSpacing": 40, "rankSpacing": 45}}}%%
+flowchart TD
+    Q("User asks: What is the refund policy for jackets,<br/>and has order A-1042 shipped?")
+    UI["1. Chat UI sends HTTPS POST /chat<br/>38 AI UIs, 08 HTTP"]
+    EDGE["2. Nginx / cloud ingress<br/>TLS, routing, rate limit<br/>44 Nginx, 47 Azure, 45 Kubernetes"]
+    SRV["3. Uvicorn receives the request<br/>40 Uvicorn"]
+    API["4. FastAPI endpoint: auth,<br/>Pydantic validation of the JSON body<br/>39 FastAPI, 12 Pydantic"]
+    CACHE["5. Redis: per-user rate limit,<br/>cache check for identical questions<br/>41 Redis"]
+    ORCH{"6. Orchestration decides<br/>what context is needed<br/>31 Agents, 32 Frameworks"}
+    RAG["7a. RAG: embed question, search vector DB,<br/>rerank, keep top 5 allowed chunks<br/>29 Embeddings, 30 RAG"]
+    TOOL["7b. Tool: get_order_status A-1042<br/>via SQL / internal API<br/>28 Tool Use, 19 SQL, 33 MCP"]
+    PROMPT["8. Build prompt: system + chunks<br/>+ tool result + question<br/>27 Prompting"]
+    LLM["9. Streamed LLM call: Claude API<br/>or self-hosted Ollama / vLLM<br/>26 LLM APIs, 35 Local LLMs"]
+    CHECK["10. Output checks: validation,<br/>guardrails, citations<br/>37 Security, 12 Pydantic"]
+    STREAM["11. Stream tokens back (SSE)<br/>08 HTTP, 39 FastAPI"]
+    LOG["12. Log trace: prompt version, chunks,<br/>tools, tokens, cost, latency, feedback<br/>34 Evals / Observability"]
+    A("User sees: Jackets can be returned within 30 days [1].<br/>Order A-1042 shipped, arriving Sept 30.")
+
+    Q --> UI --> EDGE --> SRV --> API --> CACHE --> ORCH
+    ORCH --> RAG --> PROMPT
+    ORCH --> TOOL --> PROMPT
+    PROMPT --> LLM --> CHECK --> STREAM --> A
+    STREAM -.-> LOG
+
+    subgraph BEHIND ["Behind the scenes"]
+        direction TB
+        IDX["Background worker indexed the documents<br/>41 Queues, 30 RAG"]
+        DOCK["Everything runs in Docker containers<br/>42 Docker"]
+        CICD["Built and deployed on every merge<br/>43 GitHub Actions, 04 Git"]
+        IAC["Cloud resources defined as code<br/>46 Terraform, 47 Azure"]
+        EVAL["Nightly evals catch regressions<br/>34 Evals, 14 pytest"]
+    end
+    IDX ~~~ DOCK ~~~ CICD ~~~ IAC ~~~ EVAL
+    IDX -.-> RAG
+```
+
+### Step by step (text)
+
 ```text
  USER: "What is our refund policy for jackets, and has my order A-1042 shipped?"
    |
@@ -92,28 +135,28 @@ Reading strategy:
    v
  3. Uvicorn (ASGI server) receives the HTTP request, hands it to the app [40 Uvicorn]
    v
-    FastAPI endpoint: auth, Pydantic validation of the JSON body      [39 FastAPI] [12 Pydantic]
+ 4. FastAPI endpoint: auth, Pydantic validation of the JSON body      [39 FastAPI] [12 Pydantic]
    v
- 4. Redis: rate limit per user, check cache for identical question    [41 Redis]
+ 5. Redis: rate limit per user, check cache for identical question    [41 Redis]
    v
- 5. Agent / orchestration code decides what context is needed          [31 Agents] [32 Frameworks]
+ 6. Agent / orchestration code decides what context is needed          [31 Agents] [32 Frameworks]
    |
-   +--> 6a. RAG: embed the question, search the vector DB for policy chunks,
+   +--> 7a. RAG: embed the question, search the vector DB for policy chunks,
    |        rerank, keep top 5 (filtered by the user's permissions)   [29 Embeddings] [30 RAG]
    |
-   +--> 6b. Tool: get_order_status("A-1042") -> SQL / internal API    [28 Tool Use] [19 SQL] [33 MCP]
+   +--> 7b. Tool: get_order_status("A-1042") -> SQL / internal API    [28 Tool Use] [19 SQL] [33 MCP]
    v
- 7. Prompt built: system prompt + policy chunks + tool result + question
+ 8. Prompt built: system prompt + policy chunks + tool result + question
                                                                       [27 Prompting]
    v
- 8. LLM API call (streamed), e.g. Claude via the anthropic SDK        [26 LLM APIs] [25 Fundamentals]
+ 9. LLM API call (streamed), e.g. Claude via the anthropic SDK        [26 LLM APIs] [25 Fundamentals]
     (or a self-hosted model on a GPU VM via Ollama / vLLM)            [35 Local LLMs] [48 Azure VM]
    v
- 9. Output checks: structured output validation, guardrails, citations [37 Security] [12 Pydantic]
+10. Output checks: structured output validation, guardrails, citations [37 Security] [12 Pydantic]
    v
-10. Stream tokens back to the browser (SSE)                           [08 HTTP] [39 FastAPI] [38 UIs]
+11. Stream tokens back to the browser (SSE)                           [08 HTTP] [39 FastAPI] [38 UIs]
    v
-11. Log trace: prompt version, chunks, tool calls, tokens, cost, latency; user feedback
+12. Log trace: prompt version, chunks, tool calls, tokens, cost, latency; user feedback
                                                                       [34 Evals/Observability]
    v
  USER sees: "Jackets can be returned within 30 days [1]. Your order A-1042 shipped and
