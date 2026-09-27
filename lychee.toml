@@ -1,0 +1,22 @@
+# Link checker config (https://lychee.cli.rs). Used by .github/workflows/link-check.yml.
+
+# Some documentation sites block automated requests (403) or rate limit (429); the pages exist.
+accept = ["200..=299", "403", "429"]
+
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
+max_concurrency = 8
+
+# Placeholder and local addresses used in examples are not real links
+exclude = [
+  "^https?://localhost",
+  "^https?://127\\.0\\.0\\.1",
+  "^https?://0\\.0\\.0\\.0",
+  "example\\.com",
+  "\\.example\\.",
+  "your-username",
+  "<[a-z-]+>",
+]
+
+exclude_path = ["_site_src", "_site", "node_modules"]

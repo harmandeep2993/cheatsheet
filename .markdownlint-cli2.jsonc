@@ -1,0 +1,16 @@
+{
+  // Style rules for the pocket guide. Cheat sheets use long table rows and aligned comments,
+  // so line length and table column alignment are not enforced.
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD060": false,
+    // Official docs tables list bare URLs on purpose (GitHub and MkDocs auto-link them)
+    "MD034": false,
+    // Numbered sections repeat headings like "Key terms" in different guides
+    "MD024": { "siblings_only": true },
+    "MD033": { "allowed_elements": ["details", "summary", "br", "sub", "sup", "img"] }
+  },
+  "globs": ["*.md", "examples/**/*.md"],
+  "ignores": ["_site_src/**", "_site/**", "node_modules/**", "**/.venv/**"]
+}

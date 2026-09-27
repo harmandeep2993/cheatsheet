@@ -1,0 +1,126 @@
+site_name: Pocket Guide
+site_description: Complete pocket guide for data, AI engineering and deployment
+site_url: https://harmandeep2993.github.io/pocket-guide/
+repo_url: https://github.com/harmandeep2993/pocket-guide
+repo_name: harmandeep2993/pocket-guide
+edit_uri: edit/main/
+
+# Guides live in the repo root; tools/prepare_site.py copies them here before building
+docs_dir: _site_src
+site_dir: _site
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.magiclink
+  - toc:
+      permalink: true
+      # GitHub-style anchors so the Contents links work on GitHub and on the site
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+validation:
+  links:
+    anchors: warn
+
+nav:
+  - Home: index.md
+  - Start:
+      - 00_big-picture.md
+      - 97_capstone-project.md
+      - 98_glossary.md
+      - 99_quick-reference.md
+  - Foundations:
+      - 01_markdown.md
+      - 02_terminal-powershell.md
+      - 03_linux.md
+      - 04_git.md
+      - 05_vscode.md
+      - 06_regex.md
+      - 07_yaml-json.md
+      - 08_http-apis.md
+  - Python:
+      - 09_python-basics.md
+      - 10_python-virtual-environment.md
+      - 11_uv.md
+      - 12_pydantic.md
+      - 13_async-python.md
+      - 14_pytest.md
+      - 15_jupyter.md
+  - Data and Machine Learning:
+      - 16_numpy.md
+      - 17_pandas.md
+      - 18_polars-duckdb.md
+      - 19_sql.md
+      - 20_matplotlib.md
+      - 21_seaborn.md
+      - 22_scikit-learn.md
+      - 23_pytorch.md
+      - 24_hugging-face.md
+  - AI Engineering:
+      - 25_llm-fundamentals.md
+      - 26_llm-apis.md
+      - 27_prompt-engineering.md
+      - 28_tool-use.md
+      - 29_embeddings-vector-db.md
+      - 30_rag.md
+      - 31_ai-agents.md
+      - 32_agent-frameworks.md
+      - 33_mcp.md
+      - 34_evals-observability.md
+      - 35_local-llms.md
+      - 36_fine-tuning.md
+      - 37_ai-security.md
+      - 38_ai-ui.md
+  - APIs and Deployment:
+      - 39_fastapi.md
+      - 40_uvicorn.md
+      - 41_redis-queues.md
+      - 42_docker.md
+      - 43_github-actions.md
+      - 44_nginx-https.md
+      - 45_kubernetes.md
+      - 46_terraform.md
+      - 47_azure.md
+      - 48_azure-vm-ollama.md
