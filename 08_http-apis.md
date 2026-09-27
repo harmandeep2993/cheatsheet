@@ -57,7 +57,7 @@ Every API call you ever make, whatever library you use, is this: **method + URL 
 | SSE | Server-Sent Events: server streams chunks over one response (LLM streaming) |
 | Webhook | The server calls YOUR URL when something happens |
 
-**Where it fits:** the foundation for [26 - LLM APIs](26_llm-apis.md) and [39 - FastAPI](39_fastapi.md); data formats in [07 - YAML and JSON](07_yaml-json.md); HTTPS and proxies in [43 - Nginx and HTTPS](43_nginx-https.md).
+**Where it fits:** the foundation for [26 - LLM APIs](26_llm-apis.md) and [39 - FastAPI](39_fastapi.md); data formats in [07 - YAML and JSON](07_yaml-json.md); HTTPS and proxies in [44 - Nginx and HTTPS](44_nginx-https.md).
 
 ### Official docs
 
@@ -420,7 +420,7 @@ LLM SDKs (`anthropic`, `openai`) already retry 429 / 5xx automatically (`max_ret
 - Read the limit headers (`x-ratelimit-remaining-requests`, `...-tokens`) and slow down before hitting 0.
 - Limit concurrency: `asyncio.Semaphore(5)` allows only 5 requests at once.
 - Use batch APIs for large offline jobs (cheaper, separate limits).
-- Cache identical requests (see [40 - Redis](40_redis-queues.md)).
+- Cache identical requests (see [41 - Redis](41_redis-queues.md)).
 
 ## 14. Pagination
 
@@ -471,7 +471,7 @@ In practice use the SDK's streaming helper (see [26 - LLM APIs](26_llm-apis.md))
 > - **When to use:** Payment confirmations, GitHub push events, finished batch jobs.
 
 - Verify the signature header (HMAC with a shared secret) before trusting the payload.
-- Respond fast (200) and do heavy work in a background job ([40 - Redis and Queues](40_redis-queues.md)).
+- Respond fast (200) and do heavy work in a background job ([41 - Redis and Queues](41_redis-queues.md)).
 - Make handlers idempotent: the same event may arrive twice.
 - Local testing: expose your dev server with a tunnel (`ngrok http 8000`, VS Code port forwarding).
 
@@ -487,7 +487,7 @@ CORS only affects browsers; curl and Python are never blocked. Fix it on the **s
 
 > - **What:** HTTP encrypted with TLS so nobody in between can read or change the data.
 > - **How:** The server presents a certificate proving its identity; client and server agree on encryption keys.
-> - **When to use:** Always for anything public or carrying secrets. Setup: [43 - Nginx and HTTPS](43_nginx-https.md).
+> - **When to use:** Always for anything public or carrying secrets. Setup: [44 - Nginx and HTTPS](44_nginx-https.md).
 
 `SSL: CERTIFICATE_VERIFY_FAILED` means the certificate is not trusted (self-signed, corporate proxy, expired). Fix the certificate / CA bundle; do not disable verification (`verify=False`) in production.
 

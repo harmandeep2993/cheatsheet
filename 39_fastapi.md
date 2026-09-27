@@ -41,7 +41,7 @@ Uvicorn (server) -> FastAPI (routing) -> validation (Pydantic) -> your function
 | ASGI server (Uvicorn) | The program that runs your app and handles connections |
 | Dependency injection | FastAPI passes shared things (DB, settings) into endpoints via `Depends` |
 
-**Where it fits:** serves models from [22 - Scikit-learn](22_scikit-learn.md) or Ollama ([47 - Azure VM](47_azure-vm-ollama.md)); ship it with [41 - Docker](41_docker.md). Builds on [12 - Pydantic](12_pydantic.md), [13 - Async](13_async-python.md) and [08 - HTTP](08_http-apis.md); tested with [14 - pytest](14_pytest.md); background jobs and caching with [40 - Redis](40_redis-queues.md); LLM endpoints with [26 - LLM APIs](26_llm-apis.md).
+**Where it fits:** serves models from [22 - Scikit-learn](22_scikit-learn.md) or Ollama ([48 - Azure VM](48_azure-vm-ollama.md)); ship it with [42 - Docker](42_docker.md). Builds on [12 - Pydantic](12_pydantic.md), [13 - Async](13_async-python.md) and [08 - HTTP](08_http-apis.md); tested with [14 - pytest](14_pytest.md); background jobs and caching with [41 - Redis](41_redis-queues.md); LLM endpoints with [26 - LLM APIs](26_llm-apis.md). Runs on the ASGI server [40 - Uvicorn](40_uvicorn.md) (workers, proxy headers, timeouts, production settings).
 
 ### Official docs
 
@@ -769,7 +769,7 @@ def predict(customer: Customer):
 
 > - **What:** An API endpoint that forwards a prompt to an Ollama model.
 > - **How:** Read `OLLAMA_HOST` from settings; call Ollama's chat API with the async client.
-> - **When to use:** Putting your own API (auth, logging, prompt templates) in front of a local or VM-hosted LLM. VM setup: [47 - Azure VM + Linux + Ollama](47_azure-vm-ollama.md).
+> - **When to use:** Putting your own API (auth, logging, prompt templates) in front of a local or VM-hosted LLM. VM setup: [48 - Azure VM + Linux + Ollama](48_azure-vm-ollama.md).
 
 ```python
 import os
@@ -800,7 +800,7 @@ async def ask(body: Ask):
 
 > - **What:** Packaging the API as a container for any server or cloud.
 > - **How:** Dockerfile installs dependencies, copies code, runs uvicorn on `0.0.0.0`.
-> - **When to use:** Deploying to a VM, Azure Container Apps, App Service or Kubernetes. Details: [41 - Docker](41_docker.md).
+> - **When to use:** Deploying to a VM, Azure Container Apps, App Service or Kubernetes. Details: [42 - Docker](42_docker.md).
 
 ```dockerfile
 FROM python:3.12-slim

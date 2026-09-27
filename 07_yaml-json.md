@@ -50,7 +50,7 @@ Once you see a file as "nested dicts and lists", every format is just different 
 | Nesting | Objects / lists inside other objects / lists |
 | Indentation | Leading spaces that define structure in YAML |
 
-**Where it fits:** used by [08 - HTTP and APIs](08_http-apis.md), [12 - Pydantic](12_pydantic.md), [11 - uv](11_uv.md) (`pyproject.toml`), [41 - Docker](41_docker.md) (Compose), [42 - GitHub Actions](42_github-actions.md) and [44 - Kubernetes](44_kubernetes.md).
+**Where it fits:** used by [08 - HTTP and APIs](08_http-apis.md), [12 - Pydantic](12_pydantic.md), [11 - uv](11_uv.md) (`pyproject.toml`), [42 - Docker](42_docker.md) (Compose), [43 - GitHub Actions](43_github-actions.md) and [45 - Kubernetes](45_kubernetes.md).
 
 ### Official docs
 

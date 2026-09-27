@@ -56,7 +56,7 @@ The model still does tool use exactly as before; MCP standardises **how tools ar
 | JSON-RPC | The message format MCP uses |
 | MCP Inspector | Developer tool to test servers interactively |
 
-**Where it fits:** a standard way to provide the tools from [28 - Tool Use](28_tool-use.md) to agents ([31](31_ai-agents.md), [32](32_agent-frameworks.md)); secured per [37 - AI Security](37_ai-security.md); remote servers deployed like any web service ([39](39_fastapi.md), [41](41_docker.md)).
+**Where it fits:** a standard way to provide the tools from [28 - Tool Use](28_tool-use.md) to agents ([31](31_ai-agents.md), [32](32_agent-frameworks.md)); secured per [37 - AI Security](37_ai-security.md); remote servers deployed like any web service ([39](39_fastapi.md), [42](42_docker.md)).
 
 ### Official docs
 
@@ -394,7 +394,7 @@ if __name__ == "__main__":
     mcp.run(transport="streamable-http")      # serves on http://127.0.0.1:8000/mcp by default
 ```
 
-Production: put it behind HTTPS ([43](43_nginx-https.md)), add authentication (OAuth / tokens), rate limits and logging; containerise with [41 - Docker](41_docker.md).
+Production: put it behind HTTPS ([44](44_nginx-https.md)), add authentication (OAuth / tokens), rate limits and logging; containerise with [42 - Docker](42_docker.md).
 
 ## 14. MCP with the Claude API
 

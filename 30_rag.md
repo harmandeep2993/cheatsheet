@@ -480,7 +480,7 @@ Generation quality is often graded with an LLM-as-judge and a rubric. Tools: Rag
 
 - Store a hash of each document; re-process only changed files.
 - Delete all chunks of a document (by `source` metadata) before re-adding its new version.
-- Schedule re-indexing (cron / GitHub Actions / queue workers, [40](40_redis-queues.md), [42](42_github-actions.md)).
+- Schedule re-indexing (cron / GitHub Actions / queue workers, [41](41_redis-queues.md), [43](43_github-actions.md)).
 - Record the embedding model version; re-embed everything when it changes.
 
 ## 19. Security and Permissions

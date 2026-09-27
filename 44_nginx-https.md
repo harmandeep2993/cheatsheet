@@ -1,4 +1,4 @@
-# 43 - Nginx, Reverse Proxy and HTTPS
+# 44 - Nginx, Reverse Proxy and HTTPS
 
 Quick reference for putting apps (FastAPI, Streamlit, Ollama) behind Nginx on a Linux server: reverse proxy, HTTPS with Let's Encrypt, streaming, WebSockets, basic auth, rate limiting and running apps as services.
 
@@ -49,7 +49,7 @@ Only ports 80 and 443 are open to the internet; apps listen on 127.0.0.1 only.
 | systemd service | Keeps your app running and restarts it on failure / reboot |
 | Buffering | Proxy collects the response before sending (breaks streaming if on) |
 
-**Where it fits:** fronts [39 - FastAPI](39_fastapi.md), [38 - AI UIs](38_ai-ui.md) and [35 - Local LLMs](35_local-llms.md) on a Linux VM ([03 - Linux](03_linux.md), [47 - Azure VM](47_azure-vm-ollama.md)); HTTP concepts in [08](08_http-apis.md); managed alternatives in [46 - Azure](46_azure.md) (Container Apps / App Service give HTTPS automatically).
+**Where it fits:** fronts [39 - FastAPI](39_fastapi.md), [38 - AI UIs](38_ai-ui.md) and [35 - Local LLMs](35_local-llms.md) on a Linux VM ([03 - Linux](03_linux.md), [48 - Azure VM](48_azure-vm-ollama.md)); HTTP concepts in [08](08_http-apis.md); managed alternatives in [47 - Azure](47_azure.md) (Container Apps / App Service give HTTPS automatically).
 
 ### Official docs
 
@@ -129,7 +129,7 @@ sudo  certbot  --nginx  -d api.example.com  -d www.example.com
 | App on a single Linux VM (e.g. Ollama + FastAPI on a GPU VM) | Nginx or Caddy |
 | Docker Compose stack on a VM | Nginx / Caddy / Traefik container |
 | Azure Container Apps / App Service | Built-in HTTPS; no Nginx needed |
-| Kubernetes | Ingress controller (often Nginx-based) ([44](44_kubernetes.md)) |
+| Kubernetes | Ingress controller (often Nginx-based) ([45](45_kubernetes.md)) |
 
 ## 2. Install Nginx
 
@@ -272,7 +272,7 @@ server {
 
 > - **What:** Requiring a username and password in front of an app that has no auth of its own.
 > - **How:** Create a password file with `htpasswd`; add `auth_basic` to the location. Always combine with HTTPS.
-> - **When to use:** Exposing Ollama, admin dashboards, internal demos. (For Ollama from your laptop, an SSH tunnel is simpler, [47](47_azure-vm-ollama.md).)
+> - **When to use:** Exposing Ollama, admin dashboards, internal demos. (For Ollama from your laptop, an SSH tunnel is simpler, [48](48_azure-vm-ollama.md).)
 
 ```bash
 sudo apt install -y apache2-utils
@@ -313,7 +313,7 @@ server {
 }
 ```
 
-Per-user / per-API-key limits belong in the app (Redis, [40](40_redis-queues.md)).
+Per-user / per-API-key limits belong in the app (Redis, [41](41_redis-queues.md)).
 
 ## 11. Load Balancing
 
@@ -369,7 +369,7 @@ journalctl -u api -f
 ## 13. Firewall
 
 > - **What:** Allowing only the ports you need.
-> - **How:** `ufw` on the server, plus NSG rules in Azure ([47](47_azure-vm-ollama.md)).
+> - **How:** `ufw` on the server, plus NSG rules in Azure ([48](48_azure-vm-ollama.md)).
 > - **When to use:** Every internet-facing server.
 
 ```bash
@@ -419,7 +419,7 @@ curl -vk https://api.example.com/          # full TLS / header details from outs
 | Problem | Fix |
 |---|---|
 | `502 Bad Gateway` | Backend not running / wrong port; `systemctl status api`; `curl 127.0.0.1:8000` |
-| `504 Gateway Timeout` | Slow LLM responses; raise `proxy_read_timeout`; move long work to background jobs ([40](40_redis-queues.md)) |
+| `504 Gateway Timeout` | Slow LLM responses; raise `proxy_read_timeout`; move long work to background jobs ([41](41_redis-queues.md)) |
 | Streaming arrives all at once | `proxy_buffering off;` and HTTP/1.1 for that location |
 | Streamlit / Chainlit stuck loading | WebSocket headers (`Upgrade`, `Connection "upgrade"`) missing |
 | certbot fails | DNS not pointing to the server yet; port 80 blocked by firewall / NSG |

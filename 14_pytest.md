@@ -35,7 +35,7 @@ For AI apps, deterministic tests check your **code** (parsing, tool routing, pro
 - **Change code without fear**: tests tell you instantly if you broke something.
 - **Faster debugging**: a failing test points to the exact function and input.
 - **Living documentation**: tests show how code is meant to be used.
-- **Required in teams and CI**: pull requests run tests automatically ([42 - GitHub Actions](42_github-actions.md)).
+- **Required in teams and CI**: pull requests run tests automatically ([43 - GitHub Actions](43_github-actions.md)).
 
 ### Key terms
 
@@ -51,7 +51,7 @@ For AI apps, deterministic tests check your **code** (parsing, tool routing, pro
 | Regression test | Test that reproduces a fixed bug so it never returns |
 | Flaky test | Sometimes passes, sometimes fails (timing, randomness, network) |
 
-**Where it fits:** tests code from [09 - Python Basics](09_python-basics.md) to [39 - FastAPI](39_fastapi.md); runs in CI via [42 - GitHub Actions](42_github-actions.md); LLM quality is measured with [34 - Evals](34_evals-observability.md).
+**Where it fits:** tests code from [09 - Python Basics](09_python-basics.md) to [39 - FastAPI](39_fastapi.md); runs in CI via [43 - GitHub Actions](43_github-actions.md); LLM quality is measured with [34 - Evals](34_evals-observability.md).
 
 ### Official docs
 

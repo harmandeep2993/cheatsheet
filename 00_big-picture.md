@@ -52,10 +52,10 @@ Reading strategy:
 
 ```text
 +--------------------------------------------------------------------------------------------+
-|  CLOUD & OPERATIONS     46 Azure  47 Azure VM+Ollama  45 Terraform  44 Kubernetes           |
-|                         43 Nginx/HTTPS  42 GitHub Actions (CI/CD)                           |
+|  CLOUD & OPERATIONS     47 Azure  48 Azure VM+Ollama  46 Terraform  45 Kubernetes           |
+|                         44 Nginx/HTTPS  43 GitHub Actions (CI/CD)                           |
 +--------------------------------------------------------------------------------------------+
-|  PACKAGING & SERVING    41 Docker  40 Redis/Queues  39 FastAPI  38 AI UIs                   |
+|  PACKAGING & SERVING    42 Docker  41 Redis/Queues  40 Uvicorn  39 FastAPI  38 AI UIs       |
 +--------------------------------------------------------------------------------------------+
 |  AI ENGINEERING         31 Agents  32 Frameworks  33 MCP  34 Evals/Observability  37 Security|
 |                         30 RAG  29 Embeddings/Vector DBs  28 Tool Use  27 Prompting         |
@@ -82,11 +82,13 @@ Reading strategy:
    |
    | 1. Browser / chat UI sends HTTPS POST /chat                      [38 AI UIs] [08 HTTP]
    v
- 2. Nginx / cloud ingress: TLS, routing, rate limit                   [43 Nginx] [46 Azure] [44 K8s]
+ 2. Nginx / cloud ingress: TLS, routing, rate limit                   [44 Nginx] [47 Azure] [45 K8s]
    v
- 3. FastAPI endpoint: auth, Pydantic validation of the JSON body      [39 FastAPI] [12 Pydantic]
+ 3. Uvicorn (ASGI server) receives the HTTP request, hands it to the app [40 Uvicorn]
    v
- 4. Redis: rate limit per user, check cache for identical question    [40 Redis]
+    FastAPI endpoint: auth, Pydantic validation of the JSON body      [39 FastAPI] [12 Pydantic]
+   v
+ 4. Redis: rate limit per user, check cache for identical question    [41 Redis]
    v
  5. Agent / orchestration code decides what context is needed          [31 Agents] [32 Frameworks]
    |
@@ -99,7 +101,7 @@ Reading strategy:
                                                                       [27 Prompting]
    v
  8. LLM API call (streamed), e.g. Claude via the anthropic SDK        [26 LLM APIs] [25 Fundamentals]
-    (or a self-hosted model on a GPU VM via Ollama / vLLM)            [35 Local LLMs] [47 Azure VM]
+    (or a self-hosted model on a GPU VM via Ollama / vLLM)            [35 Local LLMs] [48 Azure VM]
    v
  9. Output checks: structured output validation, guardrails, citations [37 Security] [12 Pydantic]
    v
@@ -112,10 +114,10 @@ Reading strategy:
              should arrive on Sept 30."
 
  Behind the scenes:
-  - Documents were indexed earlier by a background worker            [40 Queues] [30 RAG]
-  - Everything runs in Docker containers                              [41 Docker]
-  - Built and deployed automatically on every merge                   [42 GitHub Actions] [04 Git]
-  - Cloud resources defined as code                                   [45 Terraform] [46 Azure]
+  - Documents were indexed earlier by a background worker            [41 Queues] [30 RAG]
+  - Everything runs in Docker containers                              [42 Docker]
+  - Built and deployed automatically on every merge                   [43 GitHub Actions] [04 Git]
+  - Cloud resources defined as code                                   [46 Terraform] [47 Azure]
   - Nightly evals check quality didn't regress                        [34 Evals] [14 pytest]
 ```
 
@@ -134,14 +136,14 @@ Reading strategy:
       |
  4. QUALITY        Type hints + Pydantic, pytest, Ruff, evals            [12] [14] [34]
       |
- 5. SERVICE        FastAPI API, async, settings from env, background jobs [39] [13] [40]
+ 5. SERVICE        FastAPI API on Uvicorn, async, settings from env, jobs  [39] [40] [13] [41]
       |
- 6. CONTAINER      Dockerfile, Compose (app + DB + Redis)                [41]
+ 6. CONTAINER      Dockerfile, Compose (app + DB + Redis)                [42]
       |
- 7. AUTOMATE       GitHub Actions: test, eval, build image on every push  [42]
+ 7. AUTOMATE       GitHub Actions: test, eval, build image on every push  [43]
       |
- 8. DEPLOY         Azure Container Apps / App Service / VM + Nginx / AKS  [46] [43] [44] [47]
-      |            Infrastructure as code                                 [45]
+ 8. DEPLOY         Azure Container Apps / App Service / VM + Nginx / AKS  [47] [44] [45] [48]
+      |            Infrastructure as code                                 [46]
       |
  9. OPERATE        Tracing, cost dashboards, alerts, feedback -> new evals [34] [37]
       |
@@ -167,9 +169,9 @@ Reading strategy:
     v
  EVALUATE   cross-validation, metrics, error analysis          [22] [34]
     v
- SERVE      save model -> FastAPI endpoint -> Docker -> cloud   [22] [39] [41] [46]
+ SERVE      save model -> FastAPI endpoint -> Docker -> cloud   [22] [39] [42] [47]
     v
- MONITOR    data drift, performance, retraining schedule        [34] [42] [40]
+ MONITOR    data drift, performance, retraining schedule        [34] [43] [41]
 ```
 
 ## 6. The AI Application Ladder
@@ -202,7 +204,7 @@ Reading strategy:
  python app.py      Azure VM + SSH        Docker on a VM            AKS cluster          Container Apps,
  Jupyter            systemd + Nginx       Compose stacks            pods, services,      App Service,
  Ollama locally     GPU for LLMs          Container Apps            autoscaling          Functions
- [09][15][35]       [03][43][47]          [41][46]                  [44]                 [46]
+ [09][15][35]       [03][44][48]          [42][47]                  [45]                 [47]
  ------------------------------------------------------------------------------------------------>
  full control, you manage everything                               less to manage, less control
 ```
@@ -235,13 +237,14 @@ Reading strategy:
 | Evals / tracing | pytest + scripts, Langfuse | promptfoo, LangSmith, Phoenix | [34](34_evals-observability.md) |
 | Demo UI | Streamlit | Gradio, Chainlit | [38](38_ai-ui.md) |
 | API | FastAPI | Flask, Django | [39](39_fastapi.md) |
-| Cache / queue | Redis + RQ / Celery / arq | RabbitMQ | [40](40_redis-queues.md) |
-| Containers | Docker + Compose | Podman | [41](41_docker.md) |
-| CI/CD | GitHub Actions | Azure DevOps, GitLab CI | [42](42_github-actions.md) |
-| HTTPS / reverse proxy | Nginx + certbot | Caddy, Traefik | [43](43_nginx-https.md) |
-| Orchestration | Azure Container Apps | Kubernetes (AKS) | [46](46_azure.md), [44](44_kubernetes.md) |
-| Infrastructure as code | Terraform | Bicep, Pulumi | [45](45_terraform.md) |
-| Cloud | Azure | AWS, GCP | [46](46_azure.md) |
+| ASGI server (runs the API) | Uvicorn | Gunicorn + Uvicorn workers, Hypercorn, Granian | [40](40_uvicorn.md) |
+| Cache / queue | Redis + RQ / Celery / arq | RabbitMQ | [41](41_redis-queues.md) |
+| Containers | Docker + Compose | Podman | [42](42_docker.md) |
+| CI/CD | GitHub Actions | Azure DevOps, GitLab CI | [43](43_github-actions.md) |
+| HTTPS / reverse proxy | Nginx + certbot | Caddy, Traefik | [44](44_nginx-https.md) |
+| Orchestration | Azure Container Apps | Kubernetes (AKS) | [47](47_azure.md), [45](45_kubernetes.md) |
+| Infrastructure as code | Terraform | Bicep, Pulumi | [46](46_terraform.md) |
+| Cloud | Azure | AWS, GCP | [47](47_azure.md) |
 
 ## 9. How the Pieces Talk to Each Other
 
@@ -253,15 +256,15 @@ Reading strategy:
  WHAT FLOWS BETWEEN COMPONENTS          HOW                          GUIDE
  ----------------------------------     --------------------------   ----------------
  Requests / responses                   HTTP(S) + JSON               [08] [07]
- Streaming tokens                       SSE / WebSockets             [08] [38] [43]
+ Streaming tokens                       SSE / WebSockets             [08] [38] [44]
  Data shapes and validation             JSON Schema / Pydantic       [07] [12]
  Configuration                          env vars, .env, YAML, TOML   [07] [11]
- Secrets                                env vars -> Key Vault        [07] [46] [37]
+ Secrets                                env vars -> Key Vault        [07] [47] [37]
  Tools for AI                           tool schemas / MCP           [28] [33]
- Background work                        Redis queues                 [40]
- Code and infra changes                 Git commits -> CI pipelines  [04] [42]
- Packaged apps                          Docker images in a registry  [41] [46]
- Infrastructure                         Terraform / Bicep files      [45] [46]
+ Background work                        Redis queues                 [41]
+ Code and infra changes                 Git commits -> CI pipelines  [04] [43]
+ Packaged apps                          Docker images in a registry  [42] [47]
+ Infrastructure                         Terraform / Bicep files      [46] [47]
 ```
 
 ## 10. Learning Paths
@@ -287,7 +290,7 @@ Project: analyse a public dataset, publish a notebook + charts
 ### Path C: Machine Learning
 
 ```text
-Path B -> 22 Scikit-learn -> 12 Pydantic -> 14 pytest -> 39 FastAPI -> 41 Docker -> 23 PyTorch -> 24 Hugging Face
+Path B -> 22 Scikit-learn -> 12 Pydantic -> 14 pytest -> 39 FastAPI -> 40 Uvicorn -> 42 Docker -> 23 PyTorch -> 24 Hugging Face
 Project: train a model, serve it with FastAPI in Docker
 ```
 
@@ -303,8 +306,8 @@ Project: RAG chatbot over your own documents with citations, evals and a Streaml
 ### Path E: Deployment and MLOps / LLMOps
 
 ```text
-Path A -> 03 Linux -> 39 FastAPI -> 40 Redis/Queues -> 41 Docker -> 42 GitHub Actions
-       -> 46 Azure -> 43 Nginx/HTTPS -> 47 Azure VM + Ollama -> 45 Terraform -> 44 Kubernetes
+Path A -> 03 Linux -> 39 FastAPI -> 40 Uvicorn -> 41 Redis/Queues -> 42 Docker -> 43 GitHub Actions
+       -> 47 Azure -> 44 Nginx/HTTPS -> 48 Azure VM + Ollama -> 46 Terraform -> 45 Kubernetes
 Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraform
 ```
 
@@ -338,12 +341,13 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 | Protect my app from prompt injection | [37 - AI Security](37_ai-security.md), sections 2-3 |
 | Make a chat UI quickly | [38 - AI UIs](38_ai-ui.md), section 3 |
 | Build an API for my model | [39 - FastAPI](39_fastapi.md) |
-| Run slow jobs in the background | [40 - Redis and Queues](40_redis-queues.md) |
-| Package my app in a container | [41 - Docker](41_docker.md) |
-| Run tests automatically on every push | [42 - GitHub Actions](42_github-actions.md) |
-| Put my app on a domain with HTTPS | [43 - Nginx and HTTPS](43_nginx-https.md) |
-| Deploy a container to Azure | [46 - Azure](46_azure.md), section 23 |
-| Run an LLM on a cloud GPU VM | [47 - Azure VM + Ollama](47_azure-vm-ollama.md) |
+| Run my API in production (workers, proxy headers, timeouts) | [40 - Uvicorn](40_uvicorn.md) |
+| Run slow jobs in the background | [41 - Redis and Queues](41_redis-queues.md) |
+| Package my app in a container | [42 - Docker](42_docker.md) |
+| Run tests automatically on every push | [43 - GitHub Actions](43_github-actions.md) |
+| Put my app on a domain with HTTPS | [44 - Nginx and HTTPS](44_nginx-https.md) |
+| Deploy a container to Azure | [47 - Azure](47_azure.md), section 23 |
+| Run an LLM on a cloud GPU VM | [48 - Azure VM + Ollama](48_azure-vm-ollama.md) |
 
 ## 12. Core Mental Models in One Page
 
@@ -372,9 +376,10 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 | MCP | USB-C for AI: one standard plug between AI apps and tools | [33](33_mcp.md) |
 | Evals | Unit tests for AI behaviour, scored instead of exact | [34](34_evals-observability.md) |
 | Prompt injection | Untrusted text is read like instructions; limit what damage it can do | [37](37_ai-security.md) |
-| Container | App + everything it needs, runs the same everywhere | [41](41_docker.md) |
-| CI/CD | Every push triggers automatic checks, builds and deployments | [42](42_github-actions.md) |
-| Reverse proxy | A doorman in front of your apps handling HTTPS and routing | [43](43_nginx-https.md) |
-| Kubernetes | Declare the desired state; controllers keep reality matching it | [44](44_kubernetes.md) |
-| Infrastructure as code | Cloud resources described in files, planned then applied | [45](45_terraform.md) |
-| Cloud | Rent computers and services by the hour; pay for what runs | [46](46_azure.md) |
+| ASGI server | The engine that speaks HTTP and hands each request to your async app | [40](40_uvicorn.md) |
+| Container | App + everything it needs, runs the same everywhere | [42](42_docker.md) |
+| CI/CD | Every push triggers automatic checks, builds and deployments | [43](43_github-actions.md) |
+| Reverse proxy | A doorman in front of your apps handling HTTPS and routing | [44](44_nginx-https.md) |
+| Kubernetes | Declare the desired state; controllers keep reality matching it | [45](45_kubernetes.md) |
+| Infrastructure as code | Cloud resources described in files, planned then applied | [46](46_terraform.md) |
+| Cloud | Rent computers and services by the hour; pay for what runs | [47](47_azure.md) |

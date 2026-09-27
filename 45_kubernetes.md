@@ -1,4 +1,4 @@
-# 44 - Kubernetes
+# 45 - Kubernetes
 
 Quick reference for Kubernetes (K8s): core concepts, kubectl, Pods, Deployments, Services, Ingress, ConfigMaps / Secrets, scaling, GPUs, Helm, local clusters and Azure Kubernetes Service.
 
@@ -39,7 +39,7 @@ Key idea: you never "start a container" directly. You describe objects; controll
 | Mixed workloads: APIs, workers, GPU model servers | You have no one to operate a cluster |
 | Portability across clouds / on-prem | A managed PaaS (Container Apps, App Service) is enough |
 
-For a single FastAPI app, start with [46 - Azure](46_azure.md) Container Apps (which runs on Kubernetes under the hood, without you managing it).
+For a single FastAPI app, start with [47 - Azure](47_azure.md) Container Apps (which runs on Kubernetes under the hood, without you managing it).
 
 ### Key terms
 
@@ -61,7 +61,7 @@ For a single FastAPI app, start with [46 - Azure](46_azure.md) Container Apps (w
 | Helm | Package manager for Kubernetes apps (charts) |
 | kubectl | The command-line tool to talk to the cluster |
 
-**Where it fits:** runs images from [41 - Docker](41_docker.md); YAML from [07](07_yaml-json.md); deployed by [42 - GitHub Actions](42_github-actions.md); managed clusters on [46 - Azure](46_azure.md) (AKS); infrastructure created with [45 - Terraform](45_terraform.md); serves apps like [39 - FastAPI](39_fastapi.md) and model servers from [35 - Local LLMs](35_local-llms.md).
+**Where it fits:** runs images from [42 - Docker](42_docker.md); YAML from [07](07_yaml-json.md); deployed by [43 - GitHub Actions](43_github-actions.md); managed clusters on [47 - Azure](47_azure.md) (AKS); infrastructure created with [46 - Terraform](46_terraform.md); serves apps like [39 - FastAPI](39_fastapi.md) and model servers from [35 - Local LLMs](35_local-llms.md).
 
 ### Official docs
 
@@ -349,7 +349,7 @@ Kubernetes Secrets are only base64-encoded: restrict access with RBAC, enable en
 
 > - **What:** Changing the number of pod replicas.
 > - **How:** `kubectl scale` manually; a HorizontalPodAutoscaler adjusts replicas based on CPU / memory / custom metrics; KEDA scales on events (queue length).
-> - **When to use:** Variable traffic; background workers driven by queue depth ([40](40_redis-queues.md)).
+> - **When to use:** Variable traffic; background workers driven by queue depth ([41](41_redis-queues.md)).
 
 ```bash
 kubectl scale deploy/api --replicas=5
@@ -487,7 +487,7 @@ helm create my-app                        # scaffold your own chart
 
 > - **What:** Managed Kubernetes on Azure: Microsoft runs the control plane; you manage node pools and workloads.
 > - **How:** Create a cluster with `az aks`, get credentials for kubectl, attach your container registry.
-> - **When to use:** Production Kubernetes on Azure. Details on the rest of Azure: [46](46_azure.md).
+> - **When to use:** Production Kubernetes on Azure. Details on the rest of Azure: [47](47_azure.md).
 
 ```bash
 az aks create -g rg-demo -n aks-demo --node-count 2 --node-vm-size Standard_D4s_v5 \

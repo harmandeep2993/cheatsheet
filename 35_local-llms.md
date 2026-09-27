@@ -49,7 +49,7 @@ Trade-offs: the best hosted models are usually stronger than what fits on a lapt
 | Inference server | Program serving a model over HTTP (Ollama, vLLM, llama-server, TGI) |
 | OpenAI-compatible API | Same endpoints as OpenAI (`/v1/chat/completions`), so OpenAI clients work |
 
-**Where it fits:** models from [24 - Hugging Face](24_hugging-face.md); concepts in [25 - LLM Fundamentals](25_llm-fundamentals.md); called like APIs in [26](26_llm-apis.md); embeddings for [29](29_embeddings-vector-db.md); GPU VM setup in [47 - Azure VM + Ollama](47_azure-vm-ollama.md); containers in [41 - Docker](41_docker.md); fine-tuned models from [36](36_fine-tuning.md).
+**Where it fits:** models from [24 - Hugging Face](24_hugging-face.md); concepts in [25 - LLM Fundamentals](25_llm-fundamentals.md); called like APIs in [26](26_llm-apis.md); embeddings for [29](29_embeddings-vector-db.md); GPU VM setup in [48 - Azure VM + Ollama](48_azure-vm-ollama.md); containers in [42 - Docker](42_docker.md); fine-tuned models from [36](36_fine-tuning.md).
 
 ### Official docs
 
@@ -249,7 +249,7 @@ for chunk in ollama.chat(model="qwen3:4b", messages=msgs, stream=True):    # str
 
 emb = ollama.embed(model="bge-m3", input=["text one", "text two"])["embeddings"]
 
-client = ollama.Client(host="http://localhost:11435")      # e.g. via SSH tunnel to a VM ([47])
+client = ollama.Client(host="http://localhost:11435")      # e.g. via SSH tunnel to a VM ([48])
 ```
 
 Structured output with a schema:
@@ -329,7 +329,7 @@ Import a local GGUF: `FROM ./my-finetune-Q4_K_M.gguf` in the Modelfile.
 | `OLLAMA_CONTEXT_LENGTH` | Default context length |
 | `OLLAMA_ORIGINS` | Allowed browser origins (CORS) |
 
-Ollama has no built-in authentication: never expose port 11434 to the internet. Use an SSH tunnel ([47](47_azure-vm-ollama.md)) or a reverse proxy with auth ([43](43_nginx-https.md)).
+Ollama has no built-in authentication: never expose port 11434 to the internet. Use an SSH tunnel ([48](48_azure-vm-ollama.md)) or a reverse proxy with auth ([44](44_nginx-https.md)).
 
 ## 10. llama.cpp and GGUF
 

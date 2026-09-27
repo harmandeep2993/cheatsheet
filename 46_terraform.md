@@ -1,4 +1,4 @@
-# 45 - Terraform
+# 46 - Terraform
 
 Quick reference for Terraform: infrastructure as code for Azure and other clouds. Providers, resources, variables, state, modules, the plan / apply workflow and CI/CD.
 
@@ -23,7 +23,7 @@ Quick reference for Terraform: infrastructure as code for Azure and other clouds
 - **Plan before apply**: always see exactly what will change before it happens.
 - **State** is Terraform's memory; it must be stored safely (remote backend) and never edited by hand.
 
-Compared with the Azure CLI ([46](46_azure.md)): CLI commands are **imperative** ("create this now"); running them twice may fail or duplicate. Terraform is **idempotent**: applying the same files again changes nothing.
+Compared with the Azure CLI ([47](47_azure.md)): CLI commands are **imperative** ("create this now"); running them twice may fail or duplicate. Terraform is **idempotent**: applying the same files again changes nothing.
 
 ### Why use it?
 
@@ -33,7 +33,7 @@ Compared with the Azure CLI ([46](46_azure.md)): CLI commands are **imperative**
 - **Multi-cloud / multi-service**: one tool for Azure, AWS, GCP, GitHub, Cloudflare, Kubernetes, Datadog ...
 - **Safe teardown**: `terraform destroy` removes exactly what was created.
 
-Terraform vs Bicep: Bicep is Azure-only and native to Azure ([46](46_azure.md) section 22); Terraform works across many providers and is common in multi-cloud teams.
+Terraform vs Bicep: Bicep is Azure-only and native to Azure ([47](47_azure.md) section 22); Terraform works across many providers and is common in multi-cloud teams.
 
 ### Key terms
 
@@ -51,7 +51,7 @@ Terraform vs Bicep: Bicep is Azure-only and native to Azure ([46](46_azure.md) s
 | Plan / apply / destroy | Preview / execute / remove changes |
 | Drift | Real infrastructure changed outside Terraform |
 
-**Where it fits:** creates the Azure resources from [46 - Azure](46_azure.md) and clusters for [44 - Kubernetes](44_kubernetes.md); runs in [42 - GitHub Actions](42_github-actions.md); code in [04 - Git](04_git.md).
+**Where it fits:** creates the Azure resources from [47 - Azure](47_azure.md) and clusters for [45 - Kubernetes](45_kubernetes.md); runs in [43 - GitHub Actions](43_github-actions.md); code in [04 - Git](04_git.md).
 
 ### Official docs
 
@@ -431,7 +431,7 @@ output "api_url" {
 
 > - **What:** A realistic small stack: resource group, container registry, Log Analytics, Container Apps environment and an API container app.
 > - **How:** Resources referencing each other; image and model name as variables.
-> - **When to use:** Template for deploying a FastAPI / LLM app ([39](39_fastapi.md), [46](46_azure.md)).
+> - **When to use:** Template for deploying a FastAPI / LLM app ([39](39_fastapi.md), [47](47_azure.md)).
 
 ```hcl
 resource "azurerm_resource_group" "main" {
@@ -526,7 +526,7 @@ terraform plan -generate-config-out=generated.tf     # let Terraform draft the r
 
 > - **What:** Planning on pull requests and applying on merge.
 > - **How:** GitHub Actions with OIDC login to Azure; plan output posted for review; apply on `main` with environment approval.
-> - **When to use:** Team projects ([42 - GitHub Actions](42_github-actions.md)).
+> - **When to use:** Team projects ([43 - GitHub Actions](43_github-actions.md)).
 
 ```yaml
 name: Terraform

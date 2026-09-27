@@ -59,7 +59,7 @@ Keyword search (`LIKE '%password%'`) finds exact words; **semantic search** find
 | Hybrid search | Combining vector similarity with keyword (BM25) search |
 | Normalisation | Scaling vectors to length 1 (then dot product = cosine) |
 
-**Where it fits:** concept in [25 - LLM Fundamentals](25_llm-fundamentals.md); models from [24 - Hugging Face](24_hugging-face.md) or Ollama ([35](35_local-llms.md)); used by [30 - RAG](30_rag.md) and agents' memory ([31](31_ai-agents.md)); pgvector builds on [19 - SQL](19_sql.md); databases run in [41 - Docker](41_docker.md).
+**Where it fits:** concept in [25 - LLM Fundamentals](25_llm-fundamentals.md); models from [24 - Hugging Face](24_hugging-face.md) or Ollama ([35](35_local-llms.md)); used by [30 - RAG](30_rag.md) and agents' memory ([31](31_ai-agents.md)); pgvector builds on [19 - SQL](19_sql.md); databases run in [42 - Docker](42_docker.md).
 
 ### Official docs
 
@@ -318,7 +318,7 @@ rows = conn.execute(
 ).fetchall()
 ```
 
-Available as a managed option on Azure Database for PostgreSQL ([46 - Azure](46_azure.md)).
+Available as a managed option on Azure Database for PostgreSQL ([47 - Azure](47_azure.md)).
 
 ## 9. Qdrant (Vector DB Server)
 
@@ -360,7 +360,7 @@ hits = client.query_points(
 
 | Service | Notes |
 |---|---|
-| Azure AI Search | Hybrid (vector + BM25) + semantic ranker, integrates with Azure OpenAI and Blob Storage ([46](46_azure.md)) |
+| Azure AI Search | Hybrid (vector + BM25) + semantic ranker, integrates with Azure OpenAI and Blob Storage ([47](47_azure.md)) |
 | Pinecone | Fully managed, serverless vector DB |
 | Qdrant Cloud, Weaviate Cloud, Zilliz (Milvus) | Managed versions of open-source DBs |
 | Elasticsearch / OpenSearch | Mature keyword search with vector support |

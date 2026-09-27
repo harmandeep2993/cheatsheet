@@ -210,7 +210,7 @@ train, val, test = splits["train"], val_test["train"], val_test["test"]
 | 7B to 8B | LoRA (bf16) | 24 to 48 GB (L4, A10, A6000) |
 | 70B | QLoRA | 48 to 80 GB (A100 / H100) |
 
-Options: Google Colab / Kaggle, cloud GPU VMs ([46 - Azure](46_azure.md), [47](47_azure-vm-ollama.md)), GPU rental platforms, managed services (section 15). Always stop / delete GPU machines after training.
+Options: Google Colab / Kaggle, cloud GPU VMs ([47 - Azure](47_azure.md), [48](48_azure-vm-ollama.md)), GPU rental platforms, managed services (section 15). Always stop / delete GPU machines after training.
 
 ## 8. SFT with LoRA using TRL
 

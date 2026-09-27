@@ -73,14 +73,15 @@ A complete pocket guide for data, AI and deployment work: from the terminal and 
 | # | Guide | Covers |
 |---|---|---|
 | 39 | [FastAPI](39_fastapi.md) | Routes, Pydantic validation, dependencies, settings, routers, testing, ML model API, Docker |
-| 40 | [Redis and Task Queues](40_redis-queues.md) | Caching, LLM response cache, rate limiting, sessions, RQ, Celery, arq, job status pattern |
-| 41 | [Docker](41_docker.md) | Images, containers, run options, Dockerfile, volumes, networks, Compose, cleanup, registry |
-| 42 | [GitHub Actions](42_github-actions.md) | Workflows, triggers, Python CI with uv, secrets, caching, evals in CI, Docker builds, Azure OIDC deploy |
-| 43 | [Nginx and HTTPS](43_nginx-https.md) | Reverse proxy, Let's Encrypt, streaming/WebSockets, basic auth, rate limits, systemd, Caddy |
-| 44 | [Kubernetes](44_kubernetes.md) | Pods, Deployments, Services, Ingress, config, probes, scaling, rollouts, GPUs, Helm, AKS |
-| 45 | [Terraform](45_terraform.md) | HCL, providers, resources, variables, state, modules, environments, Azure example, CI/CD |
-| 46 | [Azure](46_azure.md) | Concepts, CLI, resource groups, VMs, storage, ACR, Container Apps, App Service, Key Vault, databases, RBAC, Azure OpenAI, cost, Bicep |
-| 47 | [Azure VM + Linux + Ollama](47_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
+| 40 | [Uvicorn](40_uvicorn.md) | ASGI server: running apps, reload, workers, Gunicorn, proxy headers, HTTPS, timeouts, logging, Docker, systemd |
+| 41 | [Redis and Task Queues](41_redis-queues.md) | Caching, LLM response cache, rate limiting, sessions, RQ, Celery, arq, job status pattern |
+| 42 | [Docker](42_docker.md) | Images, containers, run options, Dockerfile, volumes, networks, Compose, cleanup, registry |
+| 43 | [GitHub Actions](43_github-actions.md) | Workflows, triggers, Python CI with uv, secrets, caching, evals in CI, Docker builds, Azure OIDC deploy |
+| 44 | [Nginx and HTTPS](44_nginx-https.md) | Reverse proxy, Let's Encrypt, streaming/WebSockets, basic auth, rate limits, systemd, Caddy |
+| 45 | [Kubernetes](45_kubernetes.md) | Pods, Deployments, Services, Ingress, config, probes, scaling, rollouts, GPUs, Helm, AKS |
+| 46 | [Terraform](46_terraform.md) | HCL, providers, resources, variables, state, modules, environments, Azure example, CI/CD |
+| 47 | [Azure](47_azure.md) | Concepts, CLI, resource groups, VMs, storage, ACR, Container Apps, App Service, Key Vault, databases, RBAC, Azure OpenAI, cost, Bicep |
+| 48 | [Azure VM + Linux + Ollama](48_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
 
 ## Conventions
 

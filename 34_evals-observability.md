@@ -61,7 +61,7 @@ Evals tell you "is version B better than version A?" before you ship. Observabil
 | Latency, TTFT | Total response time / time to first token |
 | Pass@k | Share of tasks solved in at least one of k attempts |
 
-**Where it fits:** tests prompts from [27](27_prompt-engineering.md), RAG from [30](30_rag.md), agents from [31](31_ai-agents.md); code-level tests in [14 - pytest](14_pytest.md); runs in CI with [42 - GitHub Actions](42_github-actions.md); logs from [39 - FastAPI](39_fastapi.md) apps.
+**Where it fits:** tests prompts from [27](27_prompt-engineering.md), RAG from [30](30_rag.md), agents from [31](31_ai-agents.md); code-level tests in [14 - pytest](14_pytest.md); runs in CI with [43 - GitHub Actions](43_github-actions.md); logs from [39 - FastAPI](39_fastapi.md) apps.
 
 ### Official docs
 
@@ -335,7 +335,7 @@ def test_classifier_accuracy():
     assert df["correct"].mean() >= MIN_ACCURACY
 ```
 
-Store API keys as CI secrets; see [42 - GitHub Actions](42_github-actions.md). Watch cost: keep the CI subset small.
+Store API keys as CI secrets; see [43 - GitHub Actions](43_github-actions.md). Watch cost: keep the CI subset small.
 
 ## 11. Eval Tools
 
@@ -427,7 +427,7 @@ Standards: **OpenTelemetry** (vendor-neutral traces) with GenAI semantic convent
 | Arize Phoenix | Open source, OpenTelemetry-based tracing and evals |
 | Logfire | From Pydantic; OpenTelemetry-based, integrates with PydanticAI |
 | Helicone | Proxy-based logging and cost tracking |
-| Azure Monitor / Application Insights | App telemetry on Azure ([46](46_azure.md)) |
+| Azure Monitor / Application Insights | App telemetry on Azure ([47](47_azure.md)) |
 | Datadog, Grafana, New Relic | General observability with LLM features |
 
 ```python

@@ -1,4 +1,4 @@
-# 40 - Redis, Caching and Task Queues
+# 41 - Redis, Caching and Task Queues
 
 Quick reference for Redis (in-memory data store) and background job queues: caching LLM responses, rate limiting, sessions, pub/sub, and running slow work with Celery, RQ or arq.
 
@@ -48,7 +48,7 @@ CACHE: check before doing expensive work
 | Idempotent | Running a job twice has the same effect as once (safe retries) |
 | Pub/Sub | Publish messages to channels; subscribers receive them live |
 
-**Where it fits:** used by [39 - FastAPI](39_fastapi.md) apps and [31 - AI Agents](31_ai-agents.md) deployments; runs in [41 - Docker](41_docker.md) / [44 - Kubernetes](44_kubernetes.md); protects against abuse in [37 - AI Security](37_ai-security.md); managed version on [46 - Azure](46_azure.md) (Azure Cache for Redis / Azure Managed Redis).
+**Where it fits:** used by [39 - FastAPI](39_fastapi.md) apps and [31 - AI Agents](31_ai-agents.md) deployments; runs in [42 - Docker](42_docker.md) / [45 - Kubernetes](45_kubernetes.md); protects against abuse in [37 - AI Security](37_ai-security.md); managed version on [47 - Azure](47_azure.md) (Azure Cache for Redis / Azure Managed Redis).
 
 ### Official docs
 
@@ -523,8 +523,8 @@ Workers update progress with `job.meta["progress"] = 40; job.save_meta()` (RQ) o
 - Never expose Redis to the internet without auth / network rules.
 - Decide persistence: pure cache (no persistence needed) vs queues / sessions (enable AOF / snapshots or use a durable broker).
 - Set `maxmemory` and an eviction policy (`allkeys-lru` for pure caches).
-- Monitor queue length, job failures, worker count, memory; scale workers on queue depth (KEDA on Kubernetes, [44](44_kubernetes.md)).
-- Run workers as separate containers / services from the API ([41](41_docker.md)).
+- Monitor queue length, job failures, worker count, memory; scale workers on queue depth (KEDA on Kubernetes, [45](45_kubernetes.md)).
+- Run workers as separate containers / services from the API ([42](42_docker.md)).
 
 ## 18. Troubleshooting
 

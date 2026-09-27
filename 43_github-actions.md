@@ -1,4 +1,4 @@
-# 42 - GitHub Actions (CI/CD)
+# 43 - GitHub Actions (CI/CD)
 
 Quick reference for automating tests, linting, evals, Docker builds and deployments with GitHub Actions.
 
@@ -53,7 +53,7 @@ Each job gets a **clean machine**: nothing is installed unless your steps instal
 | Environment | Deployment target with its own secrets and protection rules |
 | OIDC | Keyless login from GitHub to a cloud (no stored cloud passwords) |
 
-**Where it fits:** runs [14 - pytest](14_pytest.md) and [34 - Evals](34_evals-observability.md); builds images from [41 - Docker](41_docker.md); deploys to [46 - Azure](46_azure.md) / [44 - Kubernetes](44_kubernetes.md); lives in your [04 - Git](04_git.md) repo; YAML syntax in [07](07_yaml-json.md).
+**Where it fits:** runs [14 - pytest](14_pytest.md) and [34 - Evals](34_evals-observability.md); builds images from [42 - Docker](42_docker.md); deploys to [47 - Azure](47_azure.md) / [45 - Kubernetes](45_kubernetes.md); lives in your [04 - Git](04_git.md) repo; YAML syntax in [07](07_yaml-json.md).
 
 ### Official docs
 
@@ -314,7 +314,7 @@ Keep the PR set small to control cost and time; fail the job when the score drop
 
 > - **What:** Building your app image in CI and pushing it to a registry.
 > - **How:** Log in to the registry, then `docker/build-push-action` with tags (commit SHA + `latest`) and layer caching.
-> - **When to use:** Every deployable app ([41 - Docker](41_docker.md)).
+> - **When to use:** Every deployable app ([42 - Docker](42_docker.md)).
 
 ```yaml
 name: Build image
@@ -355,7 +355,7 @@ For Azure Container Registry, log in with `azure/login` (section 11) and `az acr
 
 > - **What:** Deploying without storing Azure passwords in GitHub.
 > - **How:** Create an Entra ID app / managed identity with a **federated credential** trusting your repo; the workflow gets a short-lived token via OIDC.
-> - **When to use:** Any deployment from GitHub to Azure ([46](46_azure.md)).
+> - **When to use:** Any deployment from GitHub to Azure ([47](47_azure.md)).
 
 ```yaml
 name: Deploy

@@ -64,7 +64,7 @@ Rule: **start with the simplest thing that works** (single call -> workflow -> a
 | Guardrails | Limits and checks on inputs, actions and outputs |
 | Computer use | Agent operates a GUI (screenshots, clicks, typing) |
 
-**Where it fits:** built from [26 - LLM APIs](26_llm-apis.md) and [28 - Tool Use](28_tool-use.md); frameworks in [32](32_agent-frameworks.md); tools shared via [33 - MCP](33_mcp.md); tested with [34 - Evals](34_evals-observability.md); secured with [37 - AI Security](37_ai-security.md); deployed with [39](39_fastapi.md), [40](40_redis-queues.md), [41](41_docker.md).
+**Where it fits:** built from [26 - LLM APIs](26_llm-apis.md) and [28 - Tool Use](28_tool-use.md); frameworks in [32](32_agent-frameworks.md); tools shared via [33 - MCP](33_mcp.md); tested with [34 - Evals](34_evals-observability.md); secured with [37 - AI Security](37_ai-security.md); deployed with [39](39_fastapi.md), [41](41_redis-queues.md), [42](42_docker.md).
 
 ### Official docs
 
@@ -408,7 +408,7 @@ User -> FastAPI endpoint -> enqueue job (Redis) -> worker runs agent loop in a s
 - Timeouts, retries and idempotent tools; persist state so a crash can resume.
 - One container / sandbox per session for code-running agents.
 - Log every step with tracing ([34](34_evals-observability.md)).
-- See [39 - FastAPI](39_fastapi.md), [40 - Redis and Queues](40_redis-queues.md), [41 - Docker](41_docker.md).
+- See [39 - FastAPI](39_fastapi.md), [41 - Redis and Queues](41_redis-queues.md), [42 - Docker](42_docker.md).
 
 ## 17. Evaluating Agents
 

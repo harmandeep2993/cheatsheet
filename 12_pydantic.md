@@ -43,7 +43,7 @@ Validate **once at the boundary**, then trust the object everywhere inside. The 
 | Coercion | Converting compatible values (`"1"` -> `1`) |
 | Strict mode | No coercion: types must match exactly |
 
-**Where it fits:** used in [39 - FastAPI](39_fastapi.md), [26 - LLM APIs](26_llm-apis.md) (structured outputs), [28 - Tool Use](28_tool-use.md), [32 - Agent Frameworks](32_agent-frameworks.md); builds on [09 - Python Basics](09_python-basics.md) type hints and [07 - JSON](07_yaml-json.md).
+**Where it fits:** used in [39 - FastAPI](39_fastapi.md), [26 - LLM APIs](26_llm-apis.md) (structured outputs), [28 - Tool Use](28_tool-use.md), [32 - Agent Frameworks](32_agent-frameworks.md); builds on [09 - Python Basics](09_python-basics.md) type hints and [07 - JSON](07_yaml-json.md). In a web API the flow is: [40 - Uvicorn](40_uvicorn.md) receives the request -> [39 - FastAPI](39_fastapi.md) routes it -> Pydantic validates it.
 
 ### Official docs
 

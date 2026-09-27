@@ -49,7 +49,7 @@ Chainlit:  EVENT HANDLERS for a chat app.
 | Caching | Keep expensive objects (models, clients, indexes) between reruns |
 | Secrets | API keys provided to the app securely, not in code |
 
-**Where it fits:** fronts apps built with [26 - LLM APIs](26_llm-apis.md), [30 - RAG](30_rag.md), [31 - AI Agents](31_ai-agents.md); streaming concepts in [08 - HTTP](08_http-apis.md) and [13 - Async](13_async-python.md); deploy with [41 - Docker](41_docker.md), [46 - Azure](46_azure.md) or Hugging Face Spaces ([24](24_hugging-face.md)).
+**Where it fits:** fronts apps built with [26 - LLM APIs](26_llm-apis.md), [30 - RAG](30_rag.md), [31 - AI Agents](31_ai-agents.md); streaming concepts in [08 - HTTP](08_http-apis.md) and [13 - Async](13_async-python.md); deploy with [42 - Docker](42_docker.md), [47 - Azure](47_azure.md) or Hugging Face Spaces ([24](24_hugging-face.md)).
 
 ### Official docs
 
@@ -446,8 +446,8 @@ Also add rate limits and spend caps ([37](37_ai-security.md)).
 |---|---|
 | Streamlit Community Cloud | Free public / small Streamlit apps from a GitHub repo |
 | Hugging Face Spaces | Gradio / Streamlit / Docker demos; GPU hardware available |
-| Azure Container Apps / App Service | Company apps with auth, private networking ([46](46_azure.md)) |
-| Any VM / Kubernetes | Full control ([41](41_docker.md), [44](44_kubernetes.md)) |
+| Azure Container Apps / App Service | Company apps with auth, private networking ([47](47_azure.md)) |
+| Any VM / Kubernetes | Full control ([42](42_docker.md), [45](45_kubernetes.md)) |
 
 ```dockerfile
 FROM python:3.12-slim
@@ -459,7 +459,7 @@ EXPOSE 8501
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true"]
 ```
 
-Streaming behind a proxy: disable response buffering (Nginx `proxy_buffering off;`, [43](43_nginx-https.md)) and allow WebSockets (Streamlit, Chainlit use them).
+Streaming behind a proxy: disable response buffering (Nginx `proxy_buffering off;`, [44](44_nginx-https.md)) and allow WebSockets (Streamlit, Chainlit use them).
 
 ## 14. Troubleshooting
 
