@@ -64,7 +64,7 @@ Where to read the latest, authoritative documentation:
 | Ollama on GitHub | https://github.com/ollama/ollama |
 | llama.cpp | https://github.com/ggml-org/llama.cpp |
 | vLLM | https://docs.vllm.ai/ |
-| LM Studio | https://lmstudio.ai/docs |
+| LM Studio | https://lmstudio.ai/docs/app |
 | Open WebUI | https://docs.openwebui.com/ |
 
 ---
