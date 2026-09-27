@@ -2,6 +2,8 @@
 
 Quick reference for PyTorch: tensors, GPUs, automatic gradients, building and training neural networks, and saving models.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is PyTorch?
@@ -90,6 +92,7 @@ Where to read the latest, authoritative documentation:
 16. [Speed and Memory Tips](#16-speed-and-memory-tips)
 17. [PyTorch vs scikit-learn](#17-pytorch-vs-scikit-learn)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -477,3 +480,55 @@ Out of memory: lower `batch_size`, use mixed precision, gradient accumulation (s
 | Loss does not go down | Forgot `optimizer.zero_grad()` / `step()`, lr too low, labels wrong, data not shuffled |
 | Validation worse than expected | Forgot `model.eval()`; data leakage in the other direction; overfitting |
 | `Can't call numpy() on Tensor that requires grad` | `.detach().cpu().numpy()` |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Device-agnostic tensor
+
+Create a random 3x3 tensor on the best available device and compute its mean.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+device = "cuda" if torch.cuda.is_available() else "cpu"
+x = torch.rand(3, 3, device=device)
+x.mean().item()
+```
+
+</details>
+
+### Exercise 2: Find the bug
+
+This loop never learns. Why?
+`for X, y in loader: loss = loss_fn(model(X), y); loss.backward(); optimizer.step()`
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Gradients accumulate across batches because `optimizer.zero_grad()` is never called. Correct order:
+
+```python
+for X, y in loader:
+    loss = loss_fn(model(X), y)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+```
+
+</details>
+
+### Exercise 3: Eval mode
+
+Why call both `model.eval()` and `torch.no_grad()` before predicting?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+`model.eval()` switches layers like dropout and batch norm to inference behaviour (otherwise predictions are random / wrong). `torch.no_grad()` stops gradient tracking, saving memory and time. They do different jobs, so use both.
+
+</details>

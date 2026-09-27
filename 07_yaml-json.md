@@ -2,6 +2,8 @@
 
 Quick reference for the text formats used for data exchange and configuration: JSON, YAML, TOML and `.env` files.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What are these formats?
@@ -85,6 +87,7 @@ Where to read the latest, authoritative documentation:
 11. [.env Files](#11-env-files)
 12. [Which Format When](#12-which-format-when)
 13. [Troubleshooting](#13-troubleshooting)
+14. [Try It](#14-try-it)
 
 ---
 
@@ -237,7 +240,7 @@ version_string: "3.10"            # without quotes 3.10 becomes the number 3.1
 | Tabs | Not allowed; use spaces |
 | `yes`, `no`, `on`, `off` | May be read as booleans by some parsers; quote them |
 | `3.10` | Becomes float 3.1; quote versions |
-| `: ` inside values | Quote strings containing `: ` or starting with `*`, `&`, `!`, `@`, `` ` `` |
+| Colon + space inside values | Quote strings containing a colon followed by a space, or starting with `*`, `&`, `!`, `@`, `` ` `` |
 | Indentation | Children must be indented more than their parent, consistently |
 
 ## 7. YAML Multi-line Strings, Anchors, Multiple Documents
@@ -379,8 +382,59 @@ Commit a `.env.example` with the key names and fake values so others know what t
 | `json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes` | Single quotes or trailing comma; use valid JSON (`json.dumps`, not `str(dict)`) |
 | `Object of type datetime is not JSON serializable` | `json.dumps(obj, default=str)` or convert first |
 | LLM returns JSON wrapped in text / code fences | Use structured outputs (see [26 - LLM APIs](26_llm-apis.md)) or strip the fences before `json.loads` |
-| `yaml.scanner.ScannerError: mapping values are not allowed here` | A value contains `: `; quote it |
+| `yaml.scanner.ScannerError: mapping values are not allowed here` | A value contains a colon followed by a space; quote it |
 | `found character '\t' that cannot start any token` | Tabs in YAML; replace with spaces |
 | YAML value is a bool / float instead of string | Quote it: `"yes"`, `"3.10"` |
 | `TypeError: File must be opened in binary mode` (tomllib) | `open(path, "rb")` |
 | `os.getenv` returns `None` | `.env` not loaded, wrong working directory, or typo in the key |
+
+## 14. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: JSON to YAML
+
+Convert `config.json` to `config.yaml` in Python.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import json
+import yaml
+
+with open("config.json", encoding="utf-8") as f:
+    data = json.load(f)
+with open("config.yaml", "w", encoding="utf-8") as f:
+    yaml.safe_dump(data, f, sort_keys=False, allow_unicode=True)
+```
+
+</details>
+
+### Exercise 2: Fix invalid JSON
+
+Make this valid JSON: `{'name': 'x', 'tags': ['a',],}`
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```json
+{"name": "x", "tags": ["a"]}
+```
+
+Double quotes only, no trailing commas.
+
+</details>
+
+### Exercise 3: The 3.10 surprise
+
+Why does `python: 3.10` in YAML load as `3.1`, and how do you fix it?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Unquoted `3.10` is parsed as the number 3.10, which equals 3.1. Quote it: `python: "3.10"`. Same for `yes` / `no` / `on` / `off` when you mean strings.
+
+</details>

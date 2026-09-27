@@ -2,6 +2,8 @@
 
 Quick reference for running Ollama on an Azure Ubuntu VM and using it from a local app via SSH tunnel.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is this setup?
@@ -81,6 +83,7 @@ Where to read the latest, authoritative documentation:
 13. [Laptop (PowerShell)](#13-laptop-powershell)
 14. [Troubleshooting](#14-troubleshooting)
 15. [End of Session](#15-end-of-session)
+16. [Try It](#16-try-it)
 
 ---
 
@@ -454,3 +457,52 @@ az vm list -d -o table                      # expect "VM deallocated"
 ```
 
 Deallocated VMs still bill for disk and static IP. Delete the resource group when done.
+
+## 16. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Connect
+
+Start the VM, store its public IP in `$IP` and connect with SSH.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+az vm start -g $RG -n $VM
+$IP = az vm show -d -g $RG -n $VM --query publicIps -o tsv
+ssh -i $KEY "$USER@$IP"
+```
+
+</details>
+
+### Exercise 2: New home IP
+
+SSH times out after your internet provider changed your IP. Fix the NSG rule.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+$myip = Invoke-RestMethod https://api.ipify.org
+az network nsg rule update -g $RG --nsg-name $NSG -n AllowSSHMyIP --source-address-prefixes "$myip/32"
+```
+
+</details>
+
+### Exercise 3: End of session
+
+What are the two commands you always run when you finish?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+az vm deallocate -g $RG -n $VM
+az vm list -d -o table          # PowerState must say "VM deallocated"
+```
+
+</details>

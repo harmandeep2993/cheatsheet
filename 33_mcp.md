@@ -2,6 +2,8 @@
 
 Quick reference for the Model Context Protocol: what it is, its architecture, building MCP servers in Python, connecting them to Claude Code, Claude Desktop, VS Code and your own apps, and security.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is MCP?
@@ -93,6 +95,7 @@ Where to read the latest, authoritative documentation:
 16. [Designing a Good MCP Server](#16-designing-a-good-mcp-server)
 17. [Security](#17-security)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -166,7 +169,7 @@ With stdio, **never print to stdout** in your server (it corrupts the protocol);
 
 ## 3. Install the Python SDK
 
-> - **What:** The official Python SDK with the FastMCP helper.
+> - **What:** The official Python SDK with the high-level `MCPServer` class (called `FastMCP` in SDK v1).
 > - **How:** Install with uv or pip; `mcp[cli]` adds the dev tools.
 > - **When to use:** Building servers or clients in Python.
 
@@ -176,10 +179,12 @@ cd mcp-weather
 uv add "mcp[cli]" httpx
 ```
 
+SDK versions: v2 renamed `FastMCP` to `MCPServer` (`from mcp.server.mcpserver import MCPServer`); decorators and `run()` work the same. Many tutorials still show v1 code (`from mcp.server.fastmcp import FastMCP`): either switch to the v2 import or pin `"mcp<2"`. Check the SDK migration guide when upgrading.
+
 ## 4. Your First Server (Tools)
 
 > - **What:** A minimal MCP server exposing two tools.
-> - **How:** Create a `FastMCP` instance; decorate functions with `@mcp.tool()`; type hints and docstrings become the tool schema and description.
+> - **How:** Create an `MCPServer` instance; decorate functions with `@mcp.tool()`; type hints and docstrings become the tool schema and description.
 > - **When to use:** Wrapping any Python function / API for AI apps.
 
 ```python
@@ -187,10 +192,10 @@ uv add "mcp[cli]" httpx
 import logging
 
 import httpx
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 logging.basicConfig(level=logging.INFO, filename="server.log")   # never log to stdout with stdio
-mcp = FastMCP("weather")
+mcp = MCPServer("weather")
 
 GEOCODE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
@@ -259,7 +264,7 @@ def review_sql(query: str) -> str:
 ## 7. Structured and Rich Tool Results
 
 > - **What:** Returning typed data instead of plain strings.
-> - **How:** Return a Pydantic model / dict / list; FastMCP converts it to structured content with an output schema.
+> - **How:** Return a Pydantic model / dict / list; the server converts it to structured content with an output schema.
 > - **When to use:** Results that other tools or code will use.
 
 ```python
@@ -386,7 +391,7 @@ The Anthropic Python SDK has helpers to pass MCP tools straight to its tool runn
 ## 13. Remote MCP Servers (HTTP)
 
 > - **What:** Running a server as a web service many users can reach.
-> - **How:** Start FastMCP with the Streamable HTTP transport; deploy like any web app (container, HTTPS, auth).
+> - **How:** Start the server with the Streamable HTTP transport; deploy like any web app (container, HTTPS, auth).
 > - **When to use:** Team-wide or company-wide tools, SaaS integrations.
 
 ```python
@@ -463,6 +468,7 @@ Only install servers from sources you trust: they run code with your permissions
 
 | Problem | Fix |
 |---|---|
+| `No module named 'mcp.server.fastmcp'` | You have MCP SDK v2: use `from mcp.server.mcpserver import MCPServer`, or pin `"mcp<2"` for v1 code |
 | Server not showing in the host | Restart the host; check config JSON syntax and absolute paths; `claude mcp list` / `/mcp` |
 | "Connection closed" immediately | Server crashed on start; run the command manually to see the error; check `server.log` |
 | Garbled protocol / parse errors (stdio) | Something prints to stdout; log to stderr / file instead |
@@ -471,3 +477,52 @@ Only install servers from sources you trust: they run code with your permissions
 | Tool errors not visible | Return helpful error strings; check host logs (Claude Desktop: logs folder, Claude Code: `/mcp`) |
 | Works in Inspector, not in host | Different working directory / env vars; set `--directory` and `env` |
 | Remote server 401 | Configure auth header / complete OAuth via `/mcp` |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Inspect the example server
+
+Open `examples/mcp_server/server.py` in the MCP Inspector and call `search_docs`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+cd examples
+uv run mcp dev mcp_server/server.py
+```
+
+In the Inspector: Tools -> `search_docs` -> query "reset password" -> Run.
+
+</details>
+
+### Exercise 2: Register it with Claude Code
+
+Make the server available in Claude Code and check it is connected.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+claude mcp add pocket-docs -- uv --directory D:/Projects/pocket-guide/examples run python -m mcp_server.server
+claude mcp list
+```
+
+Then ask Claude Code: "Using pocket-docs, what is the refund window for jackets?"
+
+</details>
+
+### Exercise 3: stdout rule
+
+Why must a stdio MCP server never `print()` to stdout?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+With stdio transport, stdout carries the JSON-RPC protocol messages; any extra output corrupts them and the host disconnects. Log to stderr or a file instead.
+
+</details>

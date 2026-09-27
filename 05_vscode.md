@@ -2,6 +2,8 @@
 
 Quick reference for Visual Studio Code on Windows (on Mac use `Cmd` instead of `Ctrl`, `Option` instead of `Alt`).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is VS Code?
@@ -65,6 +67,7 @@ Where to read the latest, authoritative documentation:
 17. [Workspace Files and Tasks](#17-workspace-files-and-tasks)
 18. [Remote Development (SSH, WSL, Containers)](#18-remote-development-ssh-wsl-containers)
 19. [Troubleshooting](#19-troubleshooting)
+20. [Try It](#20-try-it)
 
 ---
 
@@ -476,3 +479,49 @@ The green / blue button at the bottom left shows the current remote and opens th
 | VS Code slow / high CPU | `F1` -> **Developer: Show Running Extensions**; disable heavy ones, exclude big folders in `files.watcherExclude` |
 | Shortcut does nothing | Another extension or app uses it; check `Ctrl+K Ctrl+S` |
 | Settings seem ignored | Workspace settings override user settings; check `.vscode/settings.json` |
+
+## 20. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Rename safely
+
+What is the difference between renaming a variable with `Ctrl+D` multi-cursor and with `F2`?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+`Ctrl+D` selects the next text match in the current file only, so it can also change unrelated words (a comment, another variable with the same name). `F2` (Rename Symbol) uses the language server: it renames exactly that symbol everywhere it is used, across files. Prefer `F2` for code.
+
+</details>
+
+### Exercise 2: Regex replace across files
+
+Replace every `print(...)` in `.py` files with `logger.info(...)` keeping the arguments.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+`Ctrl+Shift+H`, turn on regex (`Alt+R`), files to include: `*.py`
+
+```text
+Find:     print\((.*)\)
+Replace:  logger.info($1)
+```
+
+Review the preview before clicking Replace All.
+
+</details>
+
+### Exercise 3: Pick the interpreter
+
+Your imports are underlined red although `pip list` shows the package. Fix it.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+`Ctrl+Shift+P` -> **Python: Select Interpreter** -> choose the one inside the project's `.venv`, then open a new terminal. The editor was using a different Python than the one you installed into.
+
+</details>

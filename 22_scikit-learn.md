@@ -2,6 +2,8 @@
 
 Quick reference for machine learning with scikit-learn: preprocessing, models, evaluation, tuning and saving.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Scikit-learn?
@@ -79,6 +81,7 @@ Where to read the latest, authoritative documentation:
 21. [Full Example](#21-full-example)
 22. [Which Model to Use](#22-which-model-to-use)
 23. [Troubleshooting](#23-troubleshooting)
+24. [Try It](#24-try-it)
 
 ---
 
@@ -642,3 +645,58 @@ Official chooser: search "scikit-learn choosing the right estimator".
 | Feature names mismatch warning | Predict with a DataFrame with the same columns as training |
 | `InconsistentVersionWarning` when loading model | Use the same scikit-learn version as when saving, or retrain |
 | Grid search is slow | `n_jobs=-1`, `RandomizedSearchCV`, fewer values, smaller `cv` |
+
+## 24. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: First pipeline
+
+On the iris dataset, split stratified, train a scaled logistic regression in a pipeline and print test accuracy.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+X, y = load_iris(return_X_y=True)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+pipe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)
+print(pipe.score(X_te, y_te))
+```
+
+</details>
+
+### Exercise 2: Mixed columns
+
+Preprocess numeric columns (median impute + scale) and categorical columns (most frequent + one-hot) together.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+prep = ColumnTransformer([
+    ("num", make_pipeline(SimpleImputer(strategy="median"), StandardScaler()), num_cols),
+    ("cat", make_pipeline(SimpleImputer(strategy="most_frequent"),
+                          OneHotEncoder(handle_unknown="ignore")), cat_cols),
+])
+```
+
+</details>
+
+### Exercise 3: Cross-validation and tuning
+
+5-fold F1 score for the pipeline, then grid-search `C` in [0.1, 1, 10].
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+cross_val_score(pipe, X_tr, y_tr, cv=5, scoring="f1_macro").mean()
+search = GridSearchCV(pipe, {"logisticregression__C": [0.1, 1, 10]}, cv=5, scoring="f1_macro")
+search.fit(X_tr, y_tr)
+search.best_params_
+```
+
+</details>

@@ -2,6 +2,8 @@
 
 Quick reference for building RAG systems: loading documents, chunking, embedding, retrieval, reranking, prompting with citations, evaluating and improving answer quality.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is RAG?
@@ -97,6 +99,7 @@ Where to read the latest, authoritative documentation:
 19. [Security and Permissions](#19-security-and-permissions)
 20. [RAG Frameworks](#20-rag-frameworks)
 21. [Common Failures and Fixes](#21-common-failures-and-fixes)
+22. [Try It](#22-try-it)
 
 ---
 
@@ -522,3 +525,47 @@ More in [32 - Agent Frameworks](32_agent-frameworks.md).
 | Costs high | Huge prompts | Fewer chunks, prompt caching of stable parts, smaller model for rewriting |
 | Works in tests, fails for users | Test questions unlike real ones | Build eval set from real user questions |
 | Follow-up questions fail | No query rewriting | Conversational rewrite step (section 15) |
+
+## 22. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Run the retrieval eval
+
+In `examples/`, run the retrieval eval, then add a question phrased with different words ("When do I get my money back?") and run it again.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+cd examples
+uv run python -m docs_chatbot.evals
+```
+
+The paraphrase fails with the offline hashing embedder (it matches spelling, not meaning). Switching to `SentenceTransformerEmbedder` fixes it: that is exactly why real RAG uses semantic embeddings.
+
+</details>
+
+### Exercise 2: System prompt
+
+Write a RAG system prompt that requires citations and defines what to say when the answer is missing.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+See `SYSTEM_PROMPT` in `examples/docs_chatbot/answer.py`: answer only from numbered sources, cite `[n]` after each claim, reply with an exact fallback sentence when the sources do not contain the answer, no outside knowledge.
+
+</details>
+
+### Exercise 3: Debug a wrong answer
+
+The document contains the answer but the bot says it cannot find it. What do you check, in order?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+1. Retrieval: is the right chunk in the top-k (print hits and scores)? 2. Chunking: is the answer split across chunks? 3. Wording: add hybrid search or query rewriting. 4. Thresholds: `min_score` too high? 5. Only then the prompt / model.
+
+</details>

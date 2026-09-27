@@ -2,6 +2,8 @@
 
 Quick reference for how large language models work: tokens, next-token prediction, training, context windows, sampling, reasoning, limitations, costs and how to choose a model. No code needed to understand this guide; it is the mental foundation for every other AI guide.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is an LLM?
@@ -113,6 +115,7 @@ Where to read the latest, authoritative documentation:
 17. [LLM Application Patterns](#17-llm-application-patterns)
 18. [Glossary of AI Buzzwords](#18-glossary-of-ai-buzzwords)
 19. [Common Misconceptions](#19-common-misconceptions)
+20. [Try It](#20-try-it)
 
 ---
 
@@ -450,3 +453,43 @@ effort / cost  ->
 | "Fine-tuning teaches it our documents" | Fine-tuning shapes behaviour; RAG is better for facts that change |
 | "It says it's sure, so it's right" | Confidence in text is not reliability; verify |
 | "Agents are always better" | They are slower, costlier and less predictable; use the simplest pattern that works |
+
+## 20. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Estimate a bill
+
+A 2,000-word document goes in and a 300-word answer comes out at $5 / $25 per million tokens. Roughly what does one call cost?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Tokens ~ words / 0.75: input ~ 2,700 tokens, output ~ 400 tokens.
+Cost ~ 2,700 x 5 / 1,000,000 + 400 x 25 / 1,000,000 = $0.0135 + $0.01 = **about $0.024 per call**, so about $23.50 per day at 1,000 calls. Do this estimate before launch.
+
+</details>
+
+### Exercise 2: Pick the technique
+
+Prompting, RAG, tools or fine-tuning? (a) answer from 5,000 policy PDFs, (b) show today's order status, (c) always reply in a strict JSON format, (d) cheap high-volume classification in a fixed style.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+(a) RAG, (b) tools (live data), (c) structured outputs / prompting, (d) prompting first; fine-tune a small model only if volume and cost justify it.
+
+</details>
+
+### Exercise 3: The forgetful chatbot
+
+Your chatbot forgets what the user said two messages ago. Why?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+The API is stateless: the model only sees what you send in `messages`. Your app must store the history and send it with every request (and trim or summarise it when it gets long).
+
+</details>

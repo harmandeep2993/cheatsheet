@@ -2,6 +2,8 @@
 
 Quick reference for Terraform: infrastructure as code for Azure and other clouds. Providers, resources, variables, state, modules, the plan / apply workflow and CI/CD.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Terraform?
@@ -88,6 +90,7 @@ Where to read the latest, authoritative documentation:
 16. [Terraform in CI/CD](#16-terraform-in-cicd)
 17. [Best Practices](#17-best-practices)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -596,3 +599,64 @@ Protect the apply step with a GitHub environment that requires approval for prod
 | Storage account name invalid | 3 to 24 lowercase letters / digits, globally unique |
 | Secrets visible in state | Expected: state stores values; secure the backend; prefer Key Vault references |
 | Different results on each machine | Different provider versions; commit the lock file |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: First apply
+
+Create a resource group with Terraform, preview it, apply it and destroy it.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```hcl
+resource "azurerm_resource_group" "demo" {
+  name     = "rg-tf-demo"
+  location = "swedencentral"
+}
+```
+
+```bash
+terraform init
+terraform plan -out=tfplan
+terraform apply tfplan
+terraform destroy
+```
+
+</details>
+
+### Exercise 2: Validated variable
+
+Add an `env` variable that only accepts `dev` or `prod`, with a value in `dev.tfvars`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```hcl
+variable "env" {
+  type = string
+  validation {
+    condition     = contains(["dev", "prod"], var.env)
+    error_message = "env must be dev or prod."
+  }
+}
+```
+
+`dev.tfvars`: `env = "dev"`, then `terraform plan -var-file=dev.tfvars`.
+
+</details>
+
+### Exercise 3: Read the plan
+
+The plan shows `-/+ azurerm_storage_account.data (forces replacement)`. What does it mean?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Terraform will delete and recreate the resource because an argument that cannot change in place (name, location, some SKUs) changed. For storage or databases that can mean data loss: stop and check whether the change is intended.
+
+</details>

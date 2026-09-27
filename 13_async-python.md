@@ -2,6 +2,8 @@
 
 Quick reference for asynchronous programming in Python with `async` / `await` and `asyncio`: running many slow I/O tasks (API calls, LLM requests, database queries) at the same time.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is async programming?
@@ -84,6 +86,7 @@ Where to read the latest, authoritative documentation:
 15. [Async in Jupyter and FastAPI](#15-async-in-jupyter-and-fastapi)
 16. [Threads vs Processes vs Async](#16-threads-vs-processes-vs-async)
 17. [Troubleshooting](#17-troubleshooting)
+18. [Try It](#18-try-it)
 
 ---
 
@@ -423,3 +426,72 @@ In FastAPI use plain `def` for blocking code (FastAPI runs it in a thread for yo
 | One failure cancels everything | `gather(..., return_exceptions=True)` |
 | `Task was destroyed but it is pending` | Program exited before tasks finished; await or cancel them properly |
 | `Event loop is closed` (Windows) | Close clients inside the loop (`async with`), avoid reusing clients across `asyncio.run` calls |
+
+## 18. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Concurrency proof
+
+Run three tasks that each sleep 1 second so the total takes about 1 second.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import asyncio
+import time
+
+
+async def work(i: int) -> int:
+    await asyncio.sleep(1)
+    return i
+
+
+async def main():
+    start = time.perf_counter()
+    print(await asyncio.gather(work(1), work(2), work(3)), round(time.perf_counter() - start, 1))
+
+asyncio.run(main())      # [1, 2, 3] 1.0
+```
+
+</details>
+
+### Exercise 2: At most 5 at once
+
+Call an async function for 100 items with at most 5 running at the same time.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+sem = asyncio.Semaphore(5)
+
+
+async def limited(item):
+    async with sem:
+        return await call(item)
+
+results = await asyncio.gather(*(limited(i) for i in items))
+```
+
+</details>
+
+### Exercise 3: Timeout
+
+Give `slow_call()` at most 2 seconds and fall back to `None`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+try:
+    async with asyncio.timeout(2):
+        result = await slow_call()
+except TimeoutError:
+    result = None
+```
+
+</details>

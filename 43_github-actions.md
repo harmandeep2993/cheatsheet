@@ -2,6 +2,8 @@
 
 Quick reference for automating tests, linting, evals, Docker builds and deployments with GitHub Actions.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is CI/CD and GitHub Actions?
@@ -88,6 +90,7 @@ Where to read the latest, authoritative documentation:
 16. [gh CLI for Actions](#16-gh-cli-for-actions)
 17. [Security Best Practices](#17-security-best-practices)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -497,3 +500,62 @@ gh run rerun <run-id> --failed
 | Azure login fails with OIDC | Federated credential subject must match repo / branch / environment exactly |
 | Slow runs | Enable caching, run only affected paths, split jobs, parallel matrix |
 | Eval job too expensive | Smaller smoke set on PRs; full set nightly; cache LLM results for unchanged inputs |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: CI for a uv project
+
+Run Ruff and pytest on every push and pull request.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```yaml
+name: CI
+on: {push: {branches: [main]}, pull_request: {}}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run pytest -q
+```
+
+</details>
+
+### Exercise 2: Use a secret
+
+Pass `ANTHROPIC_API_KEY` to an integration-test step.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+gh secret set ANTHROPIC_API_KEY
+```
+
+```yaml
+      - run: uv run pytest -m integration
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+</details>
+
+### Exercise 3: Read this repo's CI
+
+Open `.github/workflows/` in this repo: which workflow catches a library API change, and when does it run?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+`examples.yml`, job `latest-deps`: it upgrades all dependencies (ignoring the lock file) and runs the tests every Monday, so breaking changes like MCP SDK v2 show up as a failing check.
+
+</details>

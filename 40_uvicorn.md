@@ -2,6 +2,8 @@
 
 Quick reference for Uvicorn, the server that runs FastAPI and other async Python web apps: ASGI, running in development and production, workers, Gunicorn, proxies, HTTPS, timeouts, logging, Docker and systemd.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Uvicorn?
@@ -96,6 +98,7 @@ Where to read the latest, authoritative documentation:
 21. [Other ASGI Servers](#21-other-asgi-servers)
 22. [Production Checklist](#22-production-checklist)
 23. [Troubleshooting](#23-troubleshooting)
+24. [Try It](#24-try-it)
 
 ---
 
@@ -597,3 +600,47 @@ FastAPI builds on Starlette, which turns these events into `Request` / `Response
 | Memory grows with `--workers` | Each worker loads the app / models; fewer workers or share models via a separate model server |
 | Requests cut off during deploys | Add `--timeout-graceful-shutdown`; use exec-form `CMD` so signals reach Uvicorn |
 | `uvloop` install fails on Windows | Expected; uvloop is Linux / macOS only; Uvicorn falls back to asyncio |
+
+## 24. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Focused reload
+
+Run an app with auto-reload that only watches the `app/` folder.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+uvicorn app.main:app --reload --reload-dir app
+```
+
+</details>
+
+### Exercise 2: Production command
+
+Write the command for 4 workers behind a local Nginx, with real client IPs and 30 seconds of graceful shutdown.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 4 \
+  --proxy-headers --forwarded-allow-ips="127.0.0.1" --timeout-graceful-shutdown 30
+```
+
+</details>
+
+### Exercise 3: Shared state surprise
+
+A counter stored in a global dict shows different values on each request with `--workers 4`. Why, and what is the fix?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Each worker is a separate process with its own memory, so each has its own dict. Store shared state in Redis or a database ([41](41_redis-queues.md)).
+
+</details>

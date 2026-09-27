@@ -2,6 +2,8 @@
 
 Quick reference for regular expressions (patterns that match text) in Python, pandas, grep, PowerShell, VS Code and SQL.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Regex?
@@ -63,6 +65,7 @@ Where to read the latest, authoritative documentation:
 15. [Regex in SQL](#15-regex-in-sql)
 16. [Build and Test a Pattern](#16-build-and-test-a-pattern)
 17. [Troubleshooting](#17-troubleshooting)
+18. [Try It](#18-try-it)
 
 ---
 
@@ -432,3 +435,65 @@ DATE = re.compile(r"""
 | pandas `FutureWarning` about `regex` | Pass `regex=True` or `regex=False` explicitly |
 | grep ignores `\d` or `+` | Use `grep -E` (and `[0-9]` instead of `\d`) or `grep -P` |
 | `look-behind requires fixed-width pattern` | Python lookbehind cannot use `*`, `+`; restructure or use the `regex` package |
+
+## 18. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Reformat dates
+
+Convert all dates written `DD.MM.YYYY` in a text to `YYYY-MM-DD`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import re
+re.sub(r"\b(\d{2})\.(\d{2})\.(\d{4})\b", r"\3-\2-\1", "Due 27.09.2026 and 01.10.2026")
+# 'Due 2026-09-27 and 2026-10-01'
+```
+
+</details>
+
+### Exercise 2: Hashtags
+
+Extract all hashtags from `"Loving #python and #AI-tools today"`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+re.findall(r"#\w+", "Loving #python and #AI-tools today")     # ['#python', '#AI']
+re.findall(r"#[\w-]+", "Loving #python and #AI-tools today")  # ['#python', '#AI-tools']
+```
+
+</details>
+
+### Exercise 3: Order IDs in pandas
+
+A column `note` contains text like `refund for A-1042 please`. Put the order ID into a new column.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+df["order_id"] = df["note"].str.extract(r"\b([A-Z]-\d{4})\b", expand=False)
+```
+
+</details>
+
+### Exercise 4: Whole-string validation
+
+Check that a string is exactly a 5-digit German postcode.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+bool(re.fullmatch(r"\d{5}", "10115"))     # True
+bool(re.fullmatch(r"\d{5}", "10115 X"))   # False  (fullmatch = whole string)
+```
+
+</details>

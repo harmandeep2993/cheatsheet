@@ -2,6 +2,8 @@
 
 Quick reference for statistical plots with Seaborn (built on matplotlib, works directly with pandas DataFrames).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Seaborn?
@@ -61,6 +63,7 @@ Where to read the latest, authoritative documentation:
 15. [Save a Figure](#15-save-a-figure)
 16. [Which Plot to Use](#16-which-plot-to-use)
 17. [Troubleshooting](#17-troubleshooting)
+18. [Try It](#18-try-it)
 
 ---
 
@@ -440,3 +443,49 @@ g.savefig("pairplot.png", dpi=300)
 | Plots stack on top of each other | Call `plt.figure()` or `plt.subplots()` before each new plot |
 | `load_dataset` fails | Needs internet; use your own DataFrame |
 | Categories in wrong order | `order=["Thur", "Fri", "Sat", "Sun"]` |
+
+## 18. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Distribution by group
+
+Histogram of `total_bill` from the tips dataset, coloured by `time`, with a density curve.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+tips = sns.load_dataset("tips")
+sns.histplot(data=tips, x="total_bill", hue="time", kde=True)
+```
+
+</details>
+
+### Exercise 2: Ordered boxplot
+
+Box plot of `tip` per `day` in the order Thur, Fri, Sat, Sun.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+sns.boxplot(data=tips, x="day", y="tip", order=["Thur", "Fri", "Sat", "Sun"])
+```
+
+</details>
+
+### Exercise 3: Correlation heatmap
+
+Annotated heatmap of the correlations of the numeric tips columns.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+sns.heatmap(tips.corr(numeric_only=True), annot=True, fmt=".2f", cmap="coolwarm", vmin=-1, vmax=1)
+```
+
+</details>

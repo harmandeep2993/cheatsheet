@@ -2,6 +2,8 @@
 
 Quick reference for two fast modern tools for data too big or too slow for pandas: Polars (DataFrames) and DuckDB (SQL on files and DataFrames).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What are Polars and DuckDB?
@@ -81,6 +83,7 @@ Where to read the latest, authoritative documentation:
 15. [Converting Between Tools](#15-converting-between-tools)
 16. [Which Tool When](#16-which-tool-when)
 17. [Troubleshooting](#17-troubleshooting)
+18. [Try It](#18-try-it)
 
 ---
 
@@ -381,3 +384,57 @@ pl_df = duckdb.sql("SELECT ...").pl()
 | Out of memory | Use `scan_*` + lazy, `engine="streaming"`, or DuckDB |
 | DuckDB `Catalog Error: Table ... does not exist` | Variable not in scope, or quote file paths: `FROM 'file.parquet'` |
 | pandas code with `apply` is slow in Polars too | Rewrite as expressions; avoid `map_elements` |
+
+## 18. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: CSV to Parquet
+
+Convert `big.csv` to `big.parquet` with one DuckDB statement.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import duckdb
+duckdb.sql("COPY (SELECT * FROM 'big.csv') TO 'big.parquet' (FORMAT parquet)")
+```
+
+</details>
+
+### Exercise 2: Lazy Polars
+
+From all Parquet files in `sales/`, sum `amount` per `region` for 2025, reading as little as possible.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+(pl.scan_parquet("sales/*.parquet")
+   .filter(pl.col("year") == 2025)
+   .group_by("region")
+   .agg(pl.col("amount").sum())
+   .collect())
+```
+
+</details>
+
+### Exercise 3: SQL on DataFrames
+
+Join two pandas DataFrames `orders` and `customers` with DuckDB SQL and get the result as pandas.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+duckdb.sql('''
+    SELECT c.country, SUM(o.amount) AS revenue
+    FROM orders o JOIN customers c ON o.customer_id = c.id
+    GROUP BY c.country ORDER BY revenue DESC
+''').df()
+```
+
+</details>

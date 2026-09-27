@@ -2,6 +2,8 @@
 
 Quick reference for AI agents: what they are, the agent loop, workflows vs agents, design patterns, memory, planning, multi-agent systems, human oversight, and building a small agent from scratch.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is an AI agent?
@@ -100,6 +102,7 @@ Where to read the latest, authoritative documentation:
 17. [Evaluating Agents](#17-evaluating-agents)
 18. [Failure Modes](#18-failure-modes)
 19. [Agent Design Checklist](#19-agent-design-checklist)
+20. [Try It](#20-try-it)
 
 ---
 
@@ -450,3 +453,49 @@ Run each task several times: agents are non-deterministic. More in [34](34_evals
 - [ ] Context management for long runs
 - [ ] Tracing of every step; eval suite with success criteria
 - [ ] Prompt-injection defences for any external content
+
+## 20. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Workflow or agent?
+
+(a) translate product descriptions, (b) investigate why a nightly job failed, (c) route tickets to 4 teams.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+(a) workflow (fixed steps), (b) agent (steps unknown in advance, needs to explore logs), (c) routing workflow (classify, then hand off).
+
+</details>
+
+### Exercise 2: Budgets
+
+Add a cost cap to the agent loop in section 1 (stop after $0.50).
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+MAX_COST_USD = 0.50
+spent = 0.0
+# inside the loop, after each response:
+spent += response.usage.input_tokens * IN_PRICE / 1e6 + response.usage.output_tokens * OUT_PRICE / 1e6
+if spent > MAX_COST_USD:
+    return "Stopped: cost limit reached."
+```
+
+</details>
+
+### Exercise 3: Approval for risky tools
+
+Make `send_email` require human approval (see section 11) and explain what the model should receive if the user declines.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Return a `tool_result` with `is_error: true` and a message like "The user declined this action. Propose an alternative or stop." so the model adapts instead of assuming it was sent.
+
+</details>

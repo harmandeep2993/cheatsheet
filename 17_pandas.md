@@ -2,6 +2,8 @@
 
 Quick reference for data analysis with pandas.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is pandas?
@@ -67,6 +69,7 @@ Where to read the latest, authoritative documentation:
 19. [Crosstab](#19-crosstab)
 20. [Merge, Join and Concat](#20-merge-join-and-concat)
 21. [Index Operations](#21-index-operations)
+22. [Try It](#22-try-it)
 
 ---
 
@@ -510,3 +513,66 @@ df = df.set_index("id")                 # column -> index
 df = df.reset_index()                   # index -> column
 df = df.reset_index(drop=True)          # discard old index
 ```
+
+## 22. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Missing values
+
+Load `sales.csv`, show missing values per column, and fill missing numbers in `amount` with the median.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+df = pd.read_csv("sales.csv")
+df.isna().sum()
+df["amount"] = df["amount"].fillna(df["amount"].median())
+```
+
+</details>
+
+### Exercise 2: Group and sort
+
+Total and average `amount` per `region`, largest total first.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+(df.groupby("region")["amount"]
+   .agg(total="sum", average="mean")
+   .sort_values("total", ascending=False))
+```
+
+</details>
+
+### Exercise 3: Orphan orders
+
+Keep all orders when merging with customers, then find orders whose customer does not exist.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+merged = orders.merge(customers, left_on="customer_id", right_on="id", how="left", indicator=True)
+orphans = merged[merged["_merge"] == "left_only"]
+```
+
+</details>
+
+### Exercise 4: Pivot
+
+Regions as rows, months as columns, summed amount, empty cells as 0.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+df.pivot_table(values="amount", index="region", columns="month", aggfunc="sum", fill_value=0)
+```
+
+</details>

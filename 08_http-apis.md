@@ -2,6 +2,8 @@
 
 Quick reference for how the web and APIs work: HTTP requests and responses, REST design, authentication, streaming, and calling APIs from the terminal and Python.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is HTTP and what is an API?
@@ -95,6 +97,7 @@ Where to read the latest, authoritative documentation:
 18. [HTTPS and TLS](#18-https-and-tls)
 19. [REST vs GraphQL vs gRPC vs WebSocket](#19-rest-vs-graphql-vs-grpc-vs-websocket)
 20. [Troubleshooting](#20-troubleshooting)
+21. [Try It](#21-try-it)
 
 ---
 
@@ -522,3 +525,56 @@ CORS only affects browsers; curl and Python are never blocked. Fix it on the **s
 | `SSL: CERTIFICATE_VERIFY_FAILED` | Update `certifi`, set corporate CA bundle (`REQUESTS_CA_BUNDLE`) |
 | Works in curl, fails in browser | CORS; allow the origin on the server |
 | JSON quotes break in PowerShell curl | Use `Invoke-RestMethod` with `ConvertTo-Json`, or `curl.exe` with escaped quotes |
+
+## 21. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Status code only
+
+Call `https://httpbin.org/status/404` with curl and print only the status code.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" https://httpbin.org/status/404
+```
+
+</details>
+
+### Exercise 2: POST JSON in Python
+
+Send `{"name": "Lamp"}` to `https://httpbin.org/post` with a timeout, fail on HTTP errors and print the echoed JSON.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import requests
+
+r = requests.post("https://httpbin.org/post", json={"name": "Lamp"}, timeout=10)
+r.raise_for_status()
+print(r.json()["json"])
+```
+
+</details>
+
+### Exercise 3: Read the status
+
+What does each code mean and what should your code do: 401, 404, 422, 429, 503?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+| Code | Meaning | Do |
+|---|---|---|
+| 401 | Missing / wrong credentials | Fix the API key / header; do not retry |
+| 404 | Wrong URL, ID or model name | Fix the request |
+| 422 | Body failed validation | Read `detail`, fix the payload |
+| 429 | Rate limited | Wait (`retry-after`), back off, reduce concurrency |
+| 503 | Server unavailable | Retry with exponential backoff |
+
+</details>

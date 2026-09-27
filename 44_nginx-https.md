@@ -2,6 +2,8 @@
 
 Quick reference for putting apps (FastAPI, Streamlit, Ollama) behind Nginx on a Linux server: reverse proxy, HTTPS with Let's Encrypt, streaming, WebSockets, basic auth, rate limiting and running apps as services.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is a reverse proxy and why HTTPS?
@@ -83,6 +85,7 @@ Where to read the latest, authoritative documentation:
 14. [Caddy (Simpler Alternative)](#14-caddy-simpler-alternative)
 15. [Logs and Debugging](#15-logs-and-debugging)
 16. [Troubleshooting](#16-troubleshooting)
+17. [Try It](#17-try-it)
 
 ---
 
@@ -428,3 +431,56 @@ curl -vk https://api.example.com/          # full TLS / header details from outs
 | App sees 127.0.0.1 as client IP / wrong scheme | Forward headers + uvicorn `--proxy-headers` |
 | Redirect loops | Both app and Nginx redirect to HTTPS; let Nginx handle redirects |
 | Certificate expired | `sudo certbot renew`; check the renewal timer `systemctl list-timers` |
+
+## 17. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Reverse proxy
+
+Proxy `api.example.com` to a FastAPI app on `127.0.0.1:8000`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```nginx
+server {
+    listen 80;
+    server_name api.example.com;
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+</details>
+
+### Exercise 2: HTTPS
+
+Add a free certificate and an automatic HTTP -> HTTPS redirect.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+sudo certbot --nginx -d api.example.com
+sudo certbot renew --dry-run
+```
+
+</details>
+
+### Exercise 3: Debug a 502
+
+The site shows `502 Bad Gateway`. What do you check?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+1. Is the app running? `systemctl status api` / `docker ps`. 2. Does it answer locally? `curl 127.0.0.1:8000/health`. 3. Right port in `proxy_pass`? 4. `sudo tail -f /var/log/nginx/error.log` for the exact reason.
+
+</details>

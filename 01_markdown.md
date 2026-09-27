@@ -2,6 +2,8 @@
 
 Quick reference for writing Markdown (README files, notes, GitHub docs).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Markdown?
@@ -55,6 +57,7 @@ Where to read the latest, authoritative documentation:
 12. [Escaping Characters](#12-escaping-characters)
 13. [Table of Contents (Anchor Links)](#13-table-of-contents-anchor-links)
 14. [Collapsible Section (GitHub)](#14-collapsible-section-github)
+15. [Try It](#15-try-it)
 
 ---
 
@@ -310,3 +313,63 @@ Hidden content here (leave a blank line after summary).
 
 </details>
 ```
+
+## 15. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Setup section
+
+Write a README section with an H2 heading `Setup`, a numbered list of three steps, and a code block containing `uv sync`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+````markdown
+## Setup
+
+1. Install uv.
+2. Clone the repository.
+3. Install dependencies:
+
+```bash
+uv sync
+```
+````
+
+</details>
+
+### Exercise 2: Table
+
+Create a table of three tools with the columns Tool and Purpose, with the Purpose column centred.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```markdown
+| Tool | Purpose |
+|---|:---:|
+| Git | Version control |
+| uv | Environments and packages |
+| Docker | Containers |
+```
+
+</details>
+
+### Exercise 3: Links
+
+Link to the heading `## 4. Lists` in the same file, and to the file `02_terminal-powershell.md`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```markdown
+[Lists](#4-lists)
+[Terminal guide](02_terminal-powershell.md)
+```
+
+Anchors: lowercase, spaces become `-`, punctuation removed.
+
+</details>

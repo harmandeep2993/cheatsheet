@@ -2,6 +2,8 @@
 
 Quick reference for plotting with Matplotlib (the base plotting library; seaborn and pandas `.plot()` build on it).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Matplotlib?
@@ -64,6 +66,7 @@ Where to read the latest, authoritative documentation:
 18. [Save a Figure](#18-save-a-figure)
 19. [Jupyter Notes](#19-jupyter-notes)
 20. [Troubleshooting](#20-troubleshooting)
+21. [Try It](#21-try-it)
 
 ---
 
@@ -459,3 +462,59 @@ End a cell with `plt.show()` or `;` to hide the `[<matplotlib...>]` text output.
 | `'numpy.ndarray' object has no attribute 'plot'` | `axes` is a grid; use `axes[0, 0]` or `axes.flat` |
 | Legend is empty | Add `label=` to each plot call |
 | Too many open figures warning | `plt.close(fig)` after saving in loops |
+
+## 21. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Two lines
+
+Plot two series on one chart with title, axis labels and legend, saved at 300 dpi.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+fig, ax = plt.subplots(figsize=(10, 5))
+ax.plot(months, sales_2025, label="2025")
+ax.plot(months, sales_2026, label="2026", linestyle="--")
+ax.set_title("Monthly sales") ; ax.set_xlabel("Month") ; ax.set_ylabel("EUR")
+ax.legend()
+fig.savefig("sales.png", dpi=300, bbox_inches="tight")
+```
+
+</details>
+
+### Exercise 2: Dashboard grid
+
+Make a 2x2 figure with a histogram, a bar chart, a scatter plot and a box plot.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+axes[0, 0].hist(df["amount"], bins=20)
+axes[0, 1].bar(totals.index, totals.values)
+axes[1, 0].scatter(df["size"], df["price"], alpha=0.5)
+axes[1, 1].boxplot(df["amount"])
+fig.tight_layout()
+```
+
+</details>
+
+### Exercise 3: Clean look
+
+Rotate x tick labels by 45 degrees and remove the top and right borders.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+ax.tick_params(axis="x", rotation=45)
+ax.spines[["top", "right"]].set_visible(False)
+```
+
+</details>

@@ -2,6 +2,8 @@
 
 Quick reference for the Hugging Face ecosystem: the Model Hub, `transformers` pipelines, tokenizers, running open models, embeddings, datasets and sharing models.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Hugging Face?
@@ -96,6 +98,7 @@ Where to read the latest, authoritative documentation:
 15. [Spaces](#15-spaces)
 16. [Licences](#16-licences)
 17. [Troubleshooting](#17-troubleshooting)
+18. [Try It](#18-try-it)
 
 ---
 
@@ -458,3 +461,61 @@ Availability of specific models on serverless providers changes; check the model
 | `trust_remote_code` required | The repo has custom code; read it and only enable for trusted sources |
 | `bitsandbytes` errors on Windows / CPU | 4-bit bitsandbytes needs an NVIDIA GPU; use GGUF via Ollama instead |
 | Different results each run | Sampling is on; set `do_sample=False` or a seed (`transformers.set_seed(42)`) |
+
+## 18. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Sentiment
+
+Classify three sentences with a sentiment pipeline.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from transformers import pipeline
+
+clf = pipeline("sentiment-analysis", model="distilbert/distilbert-base-uncased-finetuned-sst-2-english")
+clf(["Great service!", "Terrible delay.", "It was okay."])
+```
+
+</details>
+
+### Exercise 2: Count tokens
+
+How many tokens does `"Tokenization is surprisingly useful!"` have for `bert-base-uncased`?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from transformers import AutoTokenizer
+
+tok = AutoTokenizer.from_pretrained("bert-base-uncased")
+len(tok.tokenize("Tokenization is surprisingly useful!"))
+```
+
+</details>
+
+### Exercise 3: Most similar pair
+
+Embed three sentences and find the most similar pair.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+emb = model.encode(sentences, normalize_embeddings=True)
+sim = model.similarity(emb, emb)
+sim.fill_diagonal_(-1)
+i, j = divmod(int(sim.argmax()), len(sentences))
+sentences[i], sentences[j]
+```
+
+</details>

@@ -2,6 +2,8 @@
 
 Quick reference for Pydantic v2: data validation with Python type hints, used by FastAPI, LLM structured outputs, agent frameworks and settings management.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Pydantic?
@@ -79,6 +81,7 @@ Where to read the latest, authoritative documentation:
 18. [Pydantic vs dataclass vs TypedDict](#18-pydantic-vs-dataclass-vs-typeddict)
 19. [v1 to v2 Cheat Sheet](#19-v1-to-v2-cheat-sheet)
 20. [Troubleshooting](#20-troubleshooting)
+21. [Try It](#21-try-it)
 
 ---
 
@@ -535,3 +538,76 @@ More in [26 - LLM APIs](26_llm-apis.md) and [27 - Prompt Engineering](27_prompt-
 | `datetime` not JSON serializable | Use `model_dump_json()` or `model_dump(mode="json")` |
 | Secret printed in logs | Use `SecretStr` and `.get_secret_value()` only where needed |
 | Mutable default shared between instances (dataclass) | Pydantic copies defaults; for dataclasses use `field(default_factory=list)` |
+
+## 21. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Validate an order
+
+Create `Order` with `id` (int > 0), `items` (list of str, at least 1) and `total` (float >= 0). Validate `{"id": 0, "items": [], "total": -1}` and print each error.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from pydantic import BaseModel, Field, ValidationError
+
+
+class Order(BaseModel):
+    id: int = Field(gt=0)
+    items: list[str] = Field(min_length=1)
+    total: float = Field(ge=0)
+
+
+try:
+    Order.model_validate({"id": 0, "items": [], "total": -1})
+except ValidationError as e:
+    for err in e.errors():
+        print(err["loc"], err["msg"])
+```
+
+</details>
+
+### Exercise 2: Normalise a field
+
+Add a validator that strips and title-cases a `name` field.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from pydantic import field_validator
+
+
+class Customer(BaseModel):
+    name: str
+
+    @field_validator("name")
+    @classmethod
+    def clean_name(cls, v: str) -> str:
+        return v.strip().title()
+```
+
+</details>
+
+### Exercise 3: Settings from env
+
+Read `APP_DEBUG` (bool) and `APP_MODEL` (default `claude-opus-5`) from the environment.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="APP_")
+    debug: bool = False
+    model: str = "claude-opus-5"
+```
+
+</details>

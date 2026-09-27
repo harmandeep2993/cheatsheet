@@ -2,6 +2,8 @@
 
 Quick reference for Kubernetes (K8s): core concepts, kubectl, Pods, Deployments, Services, Ingress, ConfigMaps / Secrets, scaling, GPUs, Helm, local clusters and Azure Kubernetes Service.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Kubernetes?
@@ -99,6 +101,7 @@ Where to read the latest, authoritative documentation:
 17. [Azure Kubernetes Service (AKS)](#17-azure-kubernetes-service-aks)
 18. [Complete Example: FastAPI on Kubernetes](#18-complete-example-fastapi-on-kubernetes)
 19. [Troubleshooting](#19-troubleshooting)
+20. [Try It](#20-try-it)
 
 ---
 
@@ -590,3 +593,56 @@ kubectl get pods,svc,ingress -n prod
 | Changes not applied | Same image tag reused | Use a new tag (commit SHA) or `rollout restart` |
 | `kubectl` talks to wrong cluster | Wrong context | `kubectl config current-context`; `use-context` |
 | `Forbidden` errors | RBAC permissions | Ask for a role binding; check namespace |
+
+## 20. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Deploy and expose
+
+Run 2 replicas of nginx, expose them as a Service and open it locally.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+kubectl create deployment web --image=nginx:1.27 --replicas=2
+kubectl expose deployment web --port=80
+kubectl port-forward svc/web 8080:80       # open http://localhost:8080
+```
+
+</details>
+
+### Exercise 2: Update and roll back
+
+Scale to 5 replicas, change the image, then undo the change.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+kubectl scale deploy/web --replicas=5
+kubectl set image deploy/web nginx=nginx:1.28
+kubectl rollout status deploy/web
+kubectl rollout undo deploy/web
+```
+
+</details>
+
+### Exercise 3: CrashLoopBackOff
+
+A pod keeps restarting. Which commands show why?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+kubectl describe pod <pod>              # Events at the bottom
+kubectl logs <pod> --previous           # logs of the crashed container
+```
+
+Common causes: missing env var / secret, wrong command, app crashes on start, failing liveness probe.
+
+</details>

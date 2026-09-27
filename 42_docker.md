@@ -2,6 +2,8 @@
 
 Quick reference for building and running containers with Docker and Docker Compose.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Docker?
@@ -77,6 +79,7 @@ Where to read the latest, authoritative documentation:
 18. [Cleanup](#18-cleanup)
 19. [Useful Ready-Made Containers](#19-useful-ready-made-containers)
 20. [Troubleshooting](#20-troubleshooting)
+21. [Try It](#21-try-it)
 
 ---
 
@@ -581,3 +584,64 @@ docker run -it --rm -p 8888:8888 jupyter/scipy-notebook
 | `exec format error` | Image built for another CPU; use `--platform linux/amd64` |
 | `no space left on device` | `docker system df`, then `docker system prune` |
 | Bind mount path fails in PowerShell | Use `${PWD}` (not `$(pwd)`), or the full path `D:\Projects\app:/app` |
+
+## 21. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Build and run the capstone
+
+Build the chatbot image from `examples/` and call its health endpoint.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+cd examples
+docker build -f docs_chatbot/Dockerfile -t docs-chatbot .
+docker run -d --name bot -p 8000:8000 -e ANTHROPIC_API_KEY docs-chatbot
+curl http://127.0.0.1:8000/health
+docker logs -f bot
+```
+
+</details>
+
+### Exercise 2: Compose
+
+Write a `compose.yaml` with an `api` built from the current folder and a `redis` service.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```yaml
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
+  redis:
+    image: redis:7
+```
+
+</details>
+
+### Exercise 3: Free disk space
+
+Docker uses 40 GB. Find out where and clean safely.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+docker system df
+docker image prune -a        # unused images
+docker builder prune         # build cache
+```
+
+Only run `docker volume prune` if you are sure the data is not needed.
+
+</details>

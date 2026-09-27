@@ -2,6 +2,8 @@
 
 Quick reference for version control with Git and working with GitHub (including the `gh` CLI).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Git?
@@ -71,6 +73,7 @@ Where to read the latest, authoritative documentation:
 19. [SSH Key for GitHub](#19-ssh-key-for-github)
 20. [Useful Extras](#20-useful-extras)
 21. [Troubleshooting](#21-troubleshooting)
+22. [Try It](#22-try-it)
 
 ---
 
@@ -600,3 +603,62 @@ git archive -o release.zip HEAD             # export without .git
 | `LF will be replaced by CRLF` warning | Harmless on Windows; set `core.autocrlf true` |
 | Accidentally committed to main instead of a branch | `git switch -c new-branch`, then `git switch main` and `git reset --hard origin/main` |
 | Large file rejected by GitHub (>100 MB) | Remove it, add to `.gitignore`, or use Git LFS |
+
+## 22. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Feature branch to PR
+
+Create a branch `feature/readme`, commit a change, push it and open a pull request from the terminal.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+git switch -c feature/readme
+# edit README.md
+git add README.md
+git commit -m "docs: improve readme"
+git push -u origin feature/readme
+gh pr create --fill
+```
+
+</details>
+
+### Exercise 2: Committed a secret (not pushed)
+
+You just committed `.env` by mistake and have not pushed. Remove it from the commit but keep the file locally.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+git rm --cached .env
+echo ".env" >> .gitignore
+git add .gitignore
+git commit --amend --no-edit
+```
+
+If the key was ever pushed, **rotate it first**: deleting it from Git does not make it secret again.
+
+</details>
+
+### Exercise 3: Undo a pushed commit
+
+A commit that is already on GitHub broke something. Undo it safely.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+git log --oneline -5          # find the hash
+git revert a1b2c3d            # new commit that reverses it
+git push
+```
+
+Use `revert` for pushed history; `reset` rewrites history others may already have.
+
+</details>

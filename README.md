@@ -9,6 +9,13 @@ A complete pocket guide for data, AI and deployment work: from the terminal and 
 | # | Guide | Covers |
 |---|---|---|
 | 00 | [Big Picture](00_big-picture.md) | Map of the stack, request journey, dev lifecycle, learning paths, "I want to..." finder |
+| 97 | [Capstone Project](97_capstone-project.md) | Build, test, evaluate, containerise, automate and deploy a document chatbot, step by step |
+| 98 | [Glossary](98_glossary.md) | Every key term from all guides, A to Z, linked to its guide |
+| 99 | [Quick Reference](99_quick-reference.md) | The most-used commands of every guide on one page |
+
+**Practice:** every guide ends with a **Try It** section (exercises with hidden solutions), and [examples/](examples/README.md) has runnable, tested mini-projects: LLM basics, a tool-using agent, a RAG chatbot API and an MCP server.
+
+**Website:** the same content as a searchable site with dark mode: https://harmandeep2993.github.io/pocket-guide/
 
 ## Foundations
 
@@ -93,4 +100,6 @@ A complete pocket guide for data, AI and deployment work: from the terminal and 
 - Each section opens with **What** (what it is), **How** (how it works) and **When to use** (a real scenario).
 - Commands have a short comment on the right explaining what they do.
 - Most guides end with a **Troubleshooting** table of common errors and fixes.
+- Each guide shows a **Last verified** date and ends with a **Try It** exercise section.
+- Quality checks run in CI: `tools/check_docs.py` (structure, links between guides, anchors), markdownlint, a weekly external link check, the site build and the example tests.
 - Fast-moving tools (LLM models, agent frameworks, cloud services) change often: the concepts are stable, but check the **Official docs** links in each guide for exact current versions and names.

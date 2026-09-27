@@ -2,6 +2,8 @@
 
 Quick reference for building chat apps and AI demos in pure Python: Streamlit, Gradio and Chainlit, plus streaming, file upload, state, secrets and deployment.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What are these tools?
@@ -81,6 +83,7 @@ Where to read the latest, authoritative documentation:
 12. [Authentication](#12-authentication)
 13. [Deployment](#13-deployment)
 14. [Troubleshooting](#14-troubleshooting)
+15. [Try It](#15-try-it)
 
 ---
 
@@ -474,3 +477,57 @@ Streaming behind a proxy: disable response buffering (Nginx `proxy_buffering off
 | Gradio history format errors | Use `type="messages"` and role / content dicts |
 | Slow first response | Model / client created per request; cache it; warm up at startup |
 | Costs rising from a public demo | Add authentication, rate limits and a spend cap |
+
+## 15. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Echo chat
+
+Build a Streamlit chat that keeps history and echoes the user (no LLM).
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import streamlit as st
+
+st.session_state.setdefault("messages", [])
+for m in st.session_state.messages:
+    st.chat_message(m["role"]).write(m["content"])
+if prompt := st.chat_input("Say something"):
+    for role, text in (("user", prompt), ("assistant", f"You said: {prompt}")):
+        st.session_state.messages.append({"role": role, "content": text})
+        st.chat_message(role).write(text)
+```
+
+</details>
+
+### Exercise 2: Clear button
+
+Add a sidebar button that clears the chat.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+with st.sidebar:
+    if st.button("Clear chat"):
+        st.session_state.messages = []
+        st.rerun()
+```
+
+</details>
+
+### Exercise 3: UI for the capstone
+
+Run the chatbot API from `examples/` and the Streamlit UI from the capstone guide against it.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Terminal 1: `cd examples; uv run uvicorn docs_chatbot.api:app --reload`. Terminal 2: save the `ui.py` from [97 - Capstone](97_capstone-project.md) section 14, `uv add streamlit httpx`, `uv run streamlit run ui.py`.
+
+</details>

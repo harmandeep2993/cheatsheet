@@ -2,6 +2,8 @@
 
 Quick reference for Microsoft Azure with the Azure CLI: core concepts, the most used services, security, cost and infrastructure as code.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Azure?
@@ -99,6 +101,7 @@ Where to read the latest, authoritative documentation:
 24. [Which Service to Use](#24-which-service-to-use)
 25. [Naming Conventions](#25-naming-conventions)
 26. [Troubleshooting](#26-troubleshooting)
+27. [Try It](#27-try-it)
 
 ---
 
@@ -756,3 +759,47 @@ For production, prefer a managed identity with the `AcrPull` role over registry 
 | `az containerapp` not recognized | `az extension add --name containerapp --upgrade` |
 | Unexpected bill | Cost analysis by resource group; deallocate VMs, delete unused RGs, set a budget |
 | Command hangs or unclear error | Re-run with `--debug`; check the Activity log in the Portal |
+
+## 27. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Inventory
+
+List all resources of a resource group as a table with only name and type.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+az resource list -g rg-demo --query "[].{Name:name, Type:type}" -o table
+```
+
+</details>
+
+### Exercise 2: Secret round trip
+
+Store a secret in Key Vault and read only its value.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+az keyvault secret set --vault-name kv-demo -n api-key --value "s3cret"
+az keyvault secret show --vault-name kv-demo -n api-key --query value -o tsv
+```
+
+</details>
+
+### Exercise 3: Deploy the capstone
+
+Deploy the chatbot container to Azure Container Apps and delete everything afterwards.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Follow [97 - Capstone Project](97_capstone-project.md) section 13, then `az group delete -n rg-docs-chatbot --yes --no-wait`.
+
+</details>

@@ -2,6 +2,8 @@
 
 Quick reference for Redis (in-memory data store) and background job queues: caching LLM responses, rate limiting, sessions, pub/sub, and running slow work with Celery, RQ or arq.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What are Redis and task queues?
@@ -85,6 +87,7 @@ Where to read the latest, authoritative documentation:
 16. [Retries, Idempotency and Timeouts](#16-retries-idempotency-and-timeouts)
 17. [Production Notes](#17-production-notes)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -540,3 +543,58 @@ Workers update progress with `job.meta["progress"] = 40; job.save_meta()` (RQ) o
 | Job lost when worker crashed | Celery `task_acks_late=True`; idempotent jobs; durable broker settings |
 | Memory keeps growing | Keys without TTL; set expiry, `maxmemory` + eviction policy |
 | `Can't pickle` / serialisation errors | Pass simple JSON-able arguments (IDs, strings), not clients or open files |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Keys with expiry
+
+Start Redis in Docker, store a key that expires after 60 seconds and check the remaining time.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+docker run -d --name redis -p 6379:6379 redis:7
+docker exec -it redis redis-cli SET greeting hello EX 60
+docker exec -it redis redis-cli TTL greeting
+```
+
+</details>
+
+### Exercise 2: Rate limit
+
+Allow at most 10 requests per user per minute.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+key = f"rate:{user_id}:{int(time.time() // 60)}"
+count = r.incr(key)
+if count == 1:
+    r.expire(key, 60)
+if count > 10:
+    raise HTTPException(429, "Too many requests")
+```
+
+</details>
+
+### Exercise 3: Background job
+
+Enqueue `summarize_document("doc-42")` with RQ and check its status.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+job = Queue(connection=Redis()).enqueue(summarize_document, "doc-42", job_timeout=600)
+job.get_status()          # queued -> started -> finished
+```
+
+Start a worker with `rq worker`.
+
+</details>

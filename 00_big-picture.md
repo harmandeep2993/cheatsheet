@@ -16,6 +16,8 @@ Start here. This guide is the map of the whole pocket guide: how the tools fit t
 10. [Learning Paths](#10-learning-paths)
 11. ["I Want To..." Quick Finder](#11-i-want-to-quick-finder)
 12. [Core Mental Models in One Page](#12-core-mental-models-in-one-page)
+13. [Windows, macOS and Linux Differences](#13-windows-macos-and-linux-differences)
+14. [Practice and Extras](#14-practice-and-extras)
 
 ---
 
@@ -383,3 +385,48 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 | Kubernetes | Declare the desired state; controllers keep reality matching it | [45](45_kubernetes.md) |
 | Infrastructure as code | Cloud resources described in files, planned then applied | [46](46_terraform.md) |
 | Cloud | Rent computers and services by the hour; pay for what runs | [47](47_azure.md) |
+
+## 13. Windows, macOS and Linux Differences
+
+> - **What:** The places where commands in these guides differ between operating systems.
+> - **How:** Most guides show Windows (PowerShell) and Linux / macOS (Bash) side by side; this table collects the differences you meet most.
+> - **When to use:** A command from a guide or tutorial fails on your machine.
+
+| Topic | Windows (PowerShell) | macOS | Linux (Ubuntu) |
+|---|---|---|---|
+| Shell | PowerShell (also CMD, Git Bash, WSL) | zsh (Bash-like) | Bash |
+| Path separator | `D:\Projects\app` (Python also accepts `/`) | `/Users/me/app` | `/home/me/app` |
+| Home folder | `$HOME` = `C:\Users\me` | `~` = `/Users/me` | `~` = `/home/me` |
+| Activate venv | `.venv\Scripts\Activate.ps1` | `source .venv/bin/activate` | `source .venv/bin/activate` |
+| Python command | `python` / `py` | `python3` | `python3` |
+| Set env var (session) | `$env:KEY = "v"` | `export KEY=v` | `export KEY=v` |
+| Install software | `winget install ...` | `brew install ...` | `sudo apt install ...` |
+| Line endings | CRLF (`\r\n`) | LF | LF |
+| Script permission error | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` | `chmod +x script.sh` | `chmod +x script.sh` |
+| Find what uses a port | `Get-NetTCPConnection -LocalPort 8000` | `lsof -i :8000` | `ss -tulpn` / `lsof -i :8000` |
+| curl | Use `curl.exe` (in PS 5.1 `curl` is an alias) | `curl` | `curl` |
+| Docker | Docker Desktop (WSL 2 backend) | Docker Desktop | Docker Engine |
+| NVIDIA GPU / CUDA | Supported (drivers + CUDA build of PyTorch) | No CUDA; Apple GPU via `mps` | Supported (best for servers) |
+| uvloop / Gunicorn | Not available (Uvicorn falls back to asyncio) | Available | Available |
+| Celery workers | Development only with `--pool=solo` | Available | Available |
+| Redis server | Docker or WSL | Docker / `brew install redis` | `apt install redis-server` / Docker |
+
+Tips:
+
+- **WSL** (Windows Subsystem for Linux) gives you a real Ubuntu on Windows; Linux-only tools (Gunicorn, uvloop, vLLM) work there ([03 - Linux](03_linux.md)).
+- Git on Windows: `git config --global core.autocrlf true` handles line endings; shell scripts for Linux must keep LF endings.
+- Quoting JSON in commands differs: in PowerShell prefer `Invoke-RestMethod` with `ConvertTo-Json` ([08 - HTTP and APIs](08_http-apis.md) section 9).
+
+## 14. Practice and Extras
+
+> - **What:** Pages that help you practise and look things up.
+> - **How:** Exercises at the end of every guide, runnable examples, a capstone project, a glossary and a one-page command summary.
+> - **When to use:** After reading a guide (practise), when building your portfolio (capstone), when you only need a command (quick reference).
+
+| Resource | What it gives you |
+|---|---|
+| "Try It" section at the end of every guide | 3 to 5 exercises with hidden solutions |
+| [examples/](examples/README.md) | Runnable mini-projects: LLM basics, tool-using agent, RAG API, MCP server |
+| [97 - Capstone Project](97_capstone-project.md) | Build, test, containerise, automate and deploy a document chatbot, step by step |
+| [98 - Glossary](98_glossary.md) | Every key term A to Z, linked to its guide |
+| [99 - Quick Reference](99_quick-reference.md) | The most-used commands of every guide on one page |

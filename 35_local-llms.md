@@ -2,6 +2,8 @@
 
 Quick reference for running open-weight LLMs on your own hardware or servers: Ollama in depth, llama.cpp and GGUF, LM Studio, vLLM for production serving, quantization, hardware sizing and performance.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What does "running an LLM locally" mean?
@@ -86,6 +88,7 @@ Where to read the latest, authoritative documentation:
 14. [Performance Tuning](#14-performance-tuning)
 15. [Local vs Hosted: Decision Guide](#15-local-vs-hosted-decision-guide)
 16. [Troubleshooting](#16-troubleshooting)
+17. [Try It](#17-try-it)
 
 ---
 
@@ -448,3 +451,51 @@ Common hybrid: local models for embeddings, classification or sensitive steps; h
 | JSON output invalid | Use `format` with a JSON schema; lower temperature |
 | vLLM `CUDA out of memory` at start | Lower `--max-model-len`, `--gpu-memory-utilization`, use a quantized model |
 | Disk full | Models are large; move `OLLAMA_MODELS` / `HF_HOME`; `ollama rm` unused models |
+
+## 17. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Run and inspect
+
+Pull a small model, ask it a question, and check whether it runs on the GPU.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+ollama pull qwen3:4b
+ollama run qwen3:4b "Explain RAG in one sentence."
+ollama ps          # PROCESSOR column: 100% GPU is ideal
+```
+
+</details>
+
+### Exercise 2: Will it fit?
+
+Estimate the memory for a 14B model at 4-bit quantization.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+14 x 4 / 8 = 7 GB for the weights, plus context and overhead: plan for about 9 to 10 GB. A 12 GB GPU is tight; 16 GB is comfortable.
+
+</details>
+
+### Exercise 3: Reuse OpenAI code
+
+Call your local Ollama model with the OpenAI Python SDK.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+client.chat.completions.create(model="qwen3:4b", messages=[{"role": "user", "content": "Hi"}]).choices[0].message.content
+```
+
+</details>

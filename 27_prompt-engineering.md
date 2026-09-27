@@ -2,6 +2,8 @@
 
 Quick reference for writing prompts that get reliable, high-quality results from LLMs: structure, examples, context, output formats, reasoning, templates, chaining and iteration.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is prompt engineering?
@@ -84,6 +86,7 @@ Where to read the latest, authoritative documentation:
 17. [Anti-Patterns](#17-anti-patterns)
 18. [Iterating on Prompts](#18-iterating-on-prompts)
 19. [Prompt Checklist](#19-prompt-checklist)
+20. [Try It](#20-try-it)
 
 ---
 
@@ -455,3 +458,52 @@ Tools and techniques: [34 - Evals and Observability](34_evals-observability.md).
 - [ ] Stable content first, variable content last (caching)
 - [ ] Untrusted content cannot override instructions ([37](37_ai-security.md))
 - [ ] Tested on an eval set, results recorded
+
+## 20. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Rewrite a vague prompt
+
+Improve: `Summarize this call.`
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```text
+You summarise sales calls for our account managers, who read them on their phones before
+calling the customer back.
+
+<transcript>
+{transcript}
+</transcript>
+
+Write exactly 3 bullet points: the customer's need, their budget, and the agreed next step.
+Max 60 words in total. If the budget is not mentioned, write "budget: unknown".
+```
+
+</details>
+
+### Exercise 2: Few-shot labels
+
+Write a prompt that classifies messages as billing, technical or shipping with three examples.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Use `<examples>` with one diverse example per label (including one tricky message), then the new message in `<message>` tags and "Answer with the label only." See section 5 for a full template.
+
+</details>
+
+### Exercise 3: Spot the anti-patterns
+
+What is wrong with: `NEVER EVER use bullets!!! Be good. Here is data: ...long email... summarize`?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+All caps without a reason, a negative-only instruction (say what to do instead, e.g. "write flowing paragraphs"), the vague "be good", data not separated by tags, and no audience, length or format.
+
+</details>

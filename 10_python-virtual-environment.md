@@ -2,6 +2,8 @@
 
 Quick reference for creating and managing Python virtual environments with `venv` and `pip`. For a faster all-in-one tool, see [11 - uv](11_uv.md).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is a virtual environment?
@@ -58,6 +60,7 @@ Where to read the latest, authoritative documentation:
 11. [Git: Ignore the Environment](#11-git-ignore-the-environment)
 12. [Typical Workflow](#12-typical-workflow)
 13. [Troubleshooting](#13-troubleshooting)
+14. [Try It](#14-try-it)
 
 ---
 
@@ -288,3 +291,55 @@ pip install -r requirements.txt
 | `pip` installs into the wrong Python | Use `python -m pip install ...` |
 | `ModuleNotFoundError` after install | Environment not activated, or wrong interpreter selected in VS Code |
 | Moved or renamed the project folder | Delete `.venv` and recreate it (paths inside are absolute) |
+
+## 14. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Round trip
+
+Create a venv, install `requests`, save the requirements, and recreate the same environment in another folder.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+python -m venv .venv ; .venv\Scripts\Activate.ps1
+pip install requests
+pip freeze > requirements.txt
+deactivate
+# in the other folder:
+python -m venv .venv ; .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+</details>
+
+### Exercise 2: Scripts are disabled
+
+Activating fails with `running scripts is disabled on this system`. Fix it for your user only.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+</details>
+
+### Exercise 3: Which Python?
+
+Prove that the active Python is the one in `.venv`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+python -c "import sys; print(sys.executable)"      # path should end in .venv\Scripts\python.exe
+where.exe python                                   # first entry should be inside .venv
+```
+
+</details>

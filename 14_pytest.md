@@ -2,6 +2,8 @@
 
 Quick reference for testing Python code with pytest: writing tests, fixtures, parametrising, mocking APIs and LLM calls, testing FastAPI, and coverage.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is testing and what is pytest?
@@ -88,6 +90,7 @@ Where to read the latest, authoritative documentation:
 17. [Configuration (pyproject.toml)](#17-configuration-pyprojecttoml)
 18. [Good Testing Habits](#18-good-testing-habits)
 19. [Troubleshooting](#19-troubleshooting)
+20. [Try It](#20-try-it)
 
 ---
 
@@ -572,3 +575,64 @@ filterwarnings = ["error::DeprecationWarning"]
 | Tests pass alone, fail together | Shared state between tests; use fresh fixtures, reset globals, `dependency_overrides.clear()` |
 | Flaky test | Remove time / network / randomness dependencies; mock them |
 | `print` output not shown | `pytest -s` |
+
+## 20. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Parametrize
+
+Test `add_tax(price, rate)` for (100, 0.19) -> 119.0, (0, 0.19) -> 0.0 and (9.99, 0.07) -> 10.69 in one test.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import pytest
+
+
+@pytest.mark.parametrize(("price", "rate", "expected"), [(100, 0.19, 119.0), (0, 0.19, 0.0), (9.99, 0.07, 10.69)])
+def test_add_tax(price, rate, expected):
+    assert add_tax(price, rate) == pytest.approx(expected)
+```
+
+</details>
+
+### Exercise 2: Temp file fixture
+
+Write a fixture that creates a small CSV in a temporary folder.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+@pytest.fixture
+def sales_csv(tmp_path):
+    path = tmp_path / "sales.csv"
+    path.write_text("region,amount\nN,10\nS,20\n", encoding="utf-8")
+    return path
+
+
+def test_total(sales_csv):
+    assert total_sales(sales_csv) == 30
+```
+
+</details>
+
+### Exercise 3: Mock the LLM
+
+Run the tests of `examples/tool_agent` and read how `fake_tool_use_message` drives the agent loop without an API key.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+cd examples
+uv run pytest tool_agent -v
+```
+
+`client.messages.create.side_effect = [tool_use_message, text_message]` returns a different fake response on each call, so the test walks through the loop step by step.
+
+</details>

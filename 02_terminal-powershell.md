@@ -2,6 +2,8 @@
 
 Quick reference for everyday terminal work on Windows (PowerShell, CMD) with Bash equivalents (Linux, Mac, Git Bash).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is a terminal and what is PowerShell?
@@ -66,6 +68,7 @@ Where to read the latest, authoritative documentation:
 18. [PowerShell Profile and Aliases](#18-powershell-profile-and-aliases)
 19. [Command Equivalents Table](#19-command-equivalents-table)
 20. [Troubleshooting](#20-troubleshooting)
+21. [Try It](#21-try-it)
 
 ---
 
@@ -580,3 +583,54 @@ Get-History                             # command history this session
 | `curl` behaves oddly in PowerShell | Use `curl.exe` (5.1 maps `curl` to `Invoke-WebRequest`) |
 | Weird characters in saved files | Use `Out-File -Encoding utf8` / `Set-Content -Encoding utf8` |
 | Command stuck | `Ctrl+C` |
+
+## 21. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Biggest CSV files
+
+List the 5 largest `.csv` files anywhere under `D:\Projects`, with name and size.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+Get-ChildItem D:\Projects -Recurse -Filter *.csv |
+  Sort-Object Length -Descending |
+  Select-Object -First 5 Name, @{n="MB"; e={[math]::Round($_.Length / 1MB, 1)}}
+```
+
+</details>
+
+### Exercise 2: Port already in use
+
+Find which process is using port 8000 and stop it.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+$conn = Get-NetTCPConnection -LocalPort 8000 -State Listen
+Get-Process -Id $conn.OwningProcess
+Stop-Process -Id $conn.OwningProcess
+```
+
+</details>
+
+### Exercise 3: Environment variables
+
+Set `LLM_MODEL` for this session only, print it, and show `PATH` one entry per line.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+$env:LLM_MODEL = "claude-opus-5"
+$env:LLM_MODEL
+$env:PATH -split ";"
+```
+
+</details>

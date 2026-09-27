@@ -2,6 +2,8 @@
 
 Quick reference for SQL queries (standard SQL, notes for PostgreSQL / SQLite / MySQL where they differ) plus using SQL from Python and pandas.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is SQL?
@@ -71,6 +73,7 @@ Where to read the latest, authoritative documentation:
 23. [SQL from Python and Pandas](#23-sql-from-python-and-pandas)
 24. [SQL vs Pandas](#24-sql-vs-pandas)
 25. [Troubleshooting](#25-troubleshooting)
+26. [Try It](#26-try-it)
 
 ---
 
@@ -657,3 +660,73 @@ See [17 - Pandas](17_pandas.md).
 | Text with `'` breaks the query | Double it: `'O''Brien'` (better: use parameters) |
 | `relation "table" does not exist` | Wrong database / schema, or name case: PostgreSQL lowercases unquoted names |
 | Query is slow | `EXPLAIN`, add an index on filter / join columns, avoid `SELECT *` |
+
+## 26. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Top 3 per department
+
+Return the three highest-paid employees in every department.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```sql
+WITH ranked AS (
+    SELECT name, department_id, salary,
+           ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn
+    FROM employees
+)
+SELECT * FROM ranked WHERE rn <= 3;
+```
+
+</details>
+
+### Exercise 2: Filter groups
+
+List departments whose average salary is above 50,000.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```sql
+SELECT department_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department_id
+HAVING AVG(salary) > 50000;
+```
+
+</details>
+
+### Exercise 3: Missing matches
+
+Find employees whose `department_id` has no matching department.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```sql
+SELECT e.name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id
+WHERE d.id IS NULL;
+```
+
+</details>
+
+### Exercise 4: Running total
+
+Show daily sales with a running total ordered by date.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```sql
+SELECT day, amount, SUM(amount) OVER (ORDER BY day) AS running_total
+FROM daily_sales;
+```
+
+</details>

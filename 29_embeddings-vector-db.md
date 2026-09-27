@@ -2,6 +2,8 @@
 
 Quick reference for turning text into vectors (embeddings), measuring similarity, and storing / searching vectors with NumPy, FAISS, Chroma, pgvector, Qdrant and Azure AI Search.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What are embeddings and vector databases?
@@ -97,6 +99,7 @@ Where to read the latest, authoritative documentation:
 14. [Which Vector Store When](#14-which-vector-store-when)
 15. [Performance and Cost Tips](#15-performance-and-cost-tips)
 16. [Troubleshooting](#16-troubleshooting)
+17. [Try It](#17-try-it)
 
 ---
 
@@ -150,6 +153,7 @@ Anthropic does not offer its own embedding model; Voyage AI models are a common 
 | Voyage models | Voyage API | varies | Strong retrieval quality, domain variants (code, finance, law) |
 
 Rules:
+
 - **Same model for documents and queries.** Vectors from different models are not comparable.
 - Store the model name with your index so you know when to re-embed.
 - Multilingual data -> multilingual model.
@@ -463,3 +467,49 @@ clf = LogisticRegression(max_iter=1000).fit(train_vectors, train_labels)   # fas
 | `faiss` install fails on Windows | `pip install faiss-cpu` (or use Chroma / Qdrant) |
 | Users see other users' docs | Enforce metadata filters (tenant / permissions) in code on every query |
 | Chroma / DB lost data on restart | Use `PersistentClient(path=...)` / Docker volumes |
+
+## 17. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Cosine by hand
+
+Embed three sentences and print the similarity matrix.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+emb = model.encode(sentences, normalize_embeddings=True)
+emb @ emb.T          # cosine similarity for normalised vectors
+```
+
+</details>
+
+### Exercise 2: Chroma with a filter
+
+Add three documents with a `topic` metadata field and query only the `account` topic.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+col = chromadb.PersistentClient("./db").get_or_create_collection("kb", metadata={"hnsw:space": "cosine"})
+col.add(ids=["1", "2", "3"], documents=docs, metadatas=[{"topic": "account"}, {"topic": "shipping"}, {"topic": "account"}])
+col.query(query_texts=["can't log in"], n_results=2, where={"topic": "account"})
+```
+
+</details>
+
+### Exercise 3: Same model rule
+
+Why must documents and queries use the same embedding model?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Each model has its own vector space: dimensions and meaning differ, so distances between vectors from two different models are meaningless. Changing the model means re-embedding everything.
+
+</details>

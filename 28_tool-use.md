@@ -2,6 +2,8 @@
 
 Quick reference for letting LLMs call your functions: defining tools, the tool-call loop, the SDK tool runner, parallel calls, errors, server-side tools, and designing good tools.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is tool use?
@@ -85,6 +87,7 @@ Where to read the latest, authoritative documentation:
 14. [Tool Use in OpenAI (Comparison)](#14-tool-use-in-openai-comparison)
 15. [Debugging Tool Calls](#15-debugging-tool-calls)
 16. [Troubleshooting](#16-troubleshooting)
+17. [Try It](#17-try-it)
 
 ---
 
@@ -423,3 +426,62 @@ Strong:  "Retrieve a customer's profile (name, email, plan, signup date, open ti
 | Tool output too large (context full) | Summarise / paginate results; return only needed fields |
 | JSON parsing of tool input fails | Use `block.input` (already a dict) or `json.loads`, never string matching |
 | Server tool answer truncated | Handle `stop_reason == "pause_turn"` by sending the response back |
+
+## 17. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Define a tool
+
+Write a tool definition for `get_weather(city, unit)` where unit is celsius or fahrenheit.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+{
+    "name": "get_weather",
+    "description": "Get the current weather for a city. Use when the user asks about weather now.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "city": {"type": "string", "description": "City name, e.g. Berlin"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+        },
+        "required": ["city"],
+    },
+}
+```
+
+</details>
+
+### Exercise 2: Loop rules
+
+Why must all `tool_result` blocks go back in one user message, and what is `is_error` for?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+One message per turn keeps the pairing with the `tool_use` blocks clear and keeps parallel tool calling working; splitting results teaches the model to stop calling tools in parallel. `is_error: true` tells the model a call failed (with a helpful message) so it can correct its input or try something else instead of trusting a bad result.
+
+</details>
+
+### Exercise 3: Add a tool to the example agent
+
+In `examples/tool_agent/tools.py`, add a `get_delivery_cost(country)` tool and a test for it.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Add the function, its schema to `TOOLS` and its entry to `HANDLERS`; then in `test_agent.py`:
+
+```python
+def test_delivery_cost():
+    assert get_delivery_cost("AT") == "9.95 EUR"
+```
+
+Run `uv run pytest tool_agent`.
+
+</details>

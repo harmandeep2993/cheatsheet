@@ -2,6 +2,8 @@
 
 Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebooks in VS Code).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Jupyter?
@@ -63,6 +65,7 @@ Where to read the latest, authoritative documentation:
 15. [Notebooks and Git](#15-notebooks-and-git)
 16. [Good Practices](#16-good-practices)
 17. [Troubleshooting](#17-troubleshooting)
+18. [Try It](#18-try-it)
 
 ---
 
@@ -186,7 +189,7 @@ Interactive window alternative: put `# %%` in a normal `.py` file to create runn
 > - **How:** Command mode for cell actions, edit mode for typing.
 > - **When to use:** All the time; `Shift+Enter`, `A`, `B`, `D D` save a lot of clicking.
 
-**Both modes**
+### Both modes
 
 | Keys | Action |
 |---|---|
@@ -194,7 +197,7 @@ Interactive window alternative: put `# %%` in a normal `.py` file to create runn
 | `Ctrl+Enter` | Run cell, stay |
 | `Alt+Enter` | Run cell, insert new below |
 
-**Command mode** (press `Esc` first)
+### Command mode (press `Esc` first)
 
 | Keys | Action |
 |---|---|
@@ -212,7 +215,7 @@ Interactive window alternative: put `# %%` in a normal `.py` file to create runn
 | `0`, `0` | Restart kernel |
 | `H` | Show all shortcuts |
 
-**Edit mode**
+### Edit mode
 
 | Keys | Action |
 |---|---|
@@ -436,3 +439,58 @@ Add `.ipynb_checkpoints/` to `.gitignore`.
 | Asks for a token / password | `jupyter server list` shows the URL with token |
 | Notebook is huge / slow | Clear outputs (large images or DataFrames stored in the file) |
 | Plot not showing | Add `%matplotlib inline` or `plt.show()` |
+
+## 18. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Venv as kernel
+
+Make your project's `.venv` selectable as a Jupyter kernel.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```powershell
+.venv\Scripts\Activate.ps1
+pip install ipykernel
+python -m ipykernel install --user --name myproject --display-name "Python (myproject)"
+```
+
+</details>
+
+### Exercise 2: Timing
+
+Measure a one-line expression and a whole cell.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+%timeit sum(range(10_000))
+```
+
+```python
+%%time
+df = pd.read_csv("big.csv")
+summary = df.groupby("region")["amount"].sum()
+```
+
+</details>
+
+### Exercise 3: Edit modules live
+
+Make the notebook pick up changes you save in `utils.py` without restarting.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+%load_ext autoreload
+%autoreload 2
+from utils import clean_data
+```
+
+</details>

@@ -2,6 +2,8 @@
 
 Quick reference for core Python syntax (Python 3.10+).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Python?
@@ -72,6 +74,7 @@ Where to read the latest, authoritative documentation:
 25. [Logging](#25-logging)
 26. [Script Entry Point and Arguments](#26-script-entry-point-and-arguments)
 27. [Common Errors](#27-common-errors)
+28. [Try It](#28-try-it)
 
 ---
 
@@ -686,3 +689,58 @@ python script.py data.csv --limit 5
 | `ZeroDivisionError` | Check the divisor before dividing |
 | `UnicodeDecodeError` | Open with `encoding="utf-8"` |
 | `RecursionError` | Function calls itself without an end condition |
+
+## 28. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Word counts
+
+Print the 3 most common words in a text (case-insensitive).
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from collections import Counter
+
+words = text.lower().split()
+Counter(words).most_common(3)
+```
+
+</details>
+
+### Exercise 2: Filter CSV rows
+
+Write a typed, documented function that returns rows of a CSV whose `amount` is above a threshold.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import csv
+from pathlib import Path
+
+
+def rows_above(path: Path, threshold: float) -> list[dict]:
+    """Return CSV rows whose 'amount' column is greater than threshold."""
+    with path.open(newline="", encoding="utf-8") as f:
+        return [row for row in csv.DictReader(f) if float(row["amount"]) > threshold]
+```
+
+</details>
+
+### Exercise 3: Dict comprehension
+
+From `names = ["Ana", "Bo", "Carla", "Dmitri"]` build `{name: length}` for names longer than 3 characters.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+{name: len(name) for name in names if len(name) > 3}     # {'Carla': 5, 'Dmitri': 6}
+```
+
+</details>

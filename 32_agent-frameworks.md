@@ -2,6 +2,8 @@
 
 Quick reference for the main libraries used to build LLM apps and agents: Claude Agent SDK, OpenAI Agents SDK, LangChain / LangGraph, LlamaIndex, PydanticAI, CrewAI, Microsoft Agent Framework, plus how to choose between them.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is an agent framework?
@@ -94,6 +96,7 @@ Where to read the latest, authoritative documentation:
 13. [How to Choose](#13-how-to-choose)
 14. [Framework Hygiene](#14-framework-hygiene)
 15. [Troubleshooting](#15-troubleshooting)
+16. [Try It](#16-try-it)
 
 ---
 
@@ -478,3 +481,42 @@ Examples: Anthropic's Managed Agents (beta), OpenAI's hosted agent tools, Azure 
 | Dependency conflicts | Use a fresh venv / uv project; pin compatible versions |
 | Claude Agent SDK tool not allowed | Add it to `allowed_tools` (MCP tools: `mcp__<server>__<tool>`) |
 | State lost between runs (LangGraph) | Use a checkpointer and the same `thread_id` |
+
+## 16. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Choose
+
+(a) coding agent that edits files and runs tests, (b) support flow with approval steps that must survive restarts, (c) RAG over 10,000 mixed documents.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+(a) Claude Agent SDK, (b) LangGraph (checkpoints + human-in-the-loop), (c) LlamaIndex (or raw code + a vector DB).
+
+</details>
+
+### Exercise 2: Minimal OpenAI Agents SDK agent
+
+Create an agent with one function tool and run it synchronously.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from agents import Agent, Runner, function_tool
+
+
+@function_tool
+def add(a: int, b: int) -> int:
+    """Add two numbers."""
+    return a + b
+
+
+print(Runner.run_sync(Agent(name="Calc", instructions="Use tools for maths.", tools=[add]), "What is 2+40?").final_output)
+```
+
+</details>

@@ -2,6 +2,8 @@
 
 Quick reference for everyday Linux commands (Ubuntu / Debian focus, works on most distros, WSL and Mac for the basics).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is Linux?
@@ -73,6 +75,7 @@ Where to read the latest, authoritative documentation:
 25. [Scheduled Jobs (cron)](#25-scheduled-jobs-cron)
 26. [Long-Running Jobs](#26-long-running-jobs)
 27. [Troubleshooting](#27-troubleshooting)
+28. [Try It](#28-try-it)
 
 ---
 
@@ -761,3 +764,66 @@ tmux attach                             # reattach
 | `WARNING: UNPROTECTED PRIVATE KEY FILE` | `chmod 400 key.pem` |
 | Stuck in vim | `Esc` then `:q!` |
 | Terminal frozen after `Ctrl+S` | Press `Ctrl+Q` |
+
+## 28. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Disk hogs
+
+Show the 5 largest folders inside `/var`.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+sudo du -sh /var/* 2>/dev/null | sort -h | tail -5
+```
+
+</details>
+
+### Exercise 2: Search a log
+
+Count the lines containing `error` (any case) in `app.log`, then show the last 20 of them with line numbers.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+grep -ic "error" app.log
+grep -in "error" app.log | tail -20
+```
+
+</details>
+
+### Exercise 3: Scheduled backup
+
+Make `backup.sh` executable and run it every day at 02:00 with cron.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+chmod +x ~/backup.sh
+crontab -e
+# add this line:
+0 2 * * * /home/azureuser/backup.sh >> /home/azureuser/backup.log 2>&1
+```
+
+</details>
+
+### Exercise 4: Archive without the venv
+
+Create `projects.tar.gz` of `~/projects` but leave out every `.venv` folder.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+tar --exclude=".venv" -czvf projects.tar.gz ~/projects
+tar -tzvf projects.tar.gz | head        # check the contents
+```
+
+</details>

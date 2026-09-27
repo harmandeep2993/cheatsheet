@@ -2,6 +2,8 @@
 
 Quick reference for fine-tuning language models: when it is worth it, types of fine-tuning, LoRA / QLoRA, preparing data, training with Hugging Face TRL, hosted fine-tuning, evaluation, and exporting the result.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is fine-tuning?
@@ -97,6 +99,7 @@ Where to read the latest, authoritative documentation:
 16. [Tools: Unsloth, Axolotl, LLaMA-Factory](#16-tools-unsloth-axolotl-llama-factory)
 17. [Fine-tuning Classic Models (BERT-style)](#17-fine-tuning-classic-models-bert-style)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -438,3 +441,52 @@ trainer.train()
 | Lost general abilities | Too narrow data / too many epochs; mix in general examples; lower lr / rank |
 | Fine-tune worse than prompting | Data quality issues; compare fairly with the same eval; maybe fine-tuning is not the right tool |
 | GGUF conversion fails | Merge the adapter first; update llama.cpp; check the architecture is supported |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Should you fine-tune?
+
+(a) the bot must know our 300-page handbook, (b) 2 million support emails per month must be tagged cheaply in a fixed format, (c) outputs must follow a JSON schema.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+(a) No: use RAG. (b) Possibly: first try a small model with a good prompt; fine-tune a small model if cost / latency require it. (c) No: use structured outputs.
+
+</details>
+
+### Exercise 2: Build training data
+
+Convert a CSV with columns `email,label` into chat-format JSONL.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+import csv, json
+
+with open("labels.csv", newline="", encoding="utf-8") as src, open("train.jsonl", "w", encoding="utf-8") as out:
+    for row in csv.DictReader(src):
+        out.write(json.dumps({"messages": [
+            {"role": "system", "content": "Label the support email."},
+            {"role": "user", "content": row["email"]},
+            {"role": "assistant", "content": row["label"]},
+        ]}) + "\n")
+```
+
+</details>
+
+### Exercise 3: Read the curves
+
+Train loss: 1.2 -> 0.6 -> 0.2. Validation loss: 1.1 -> 0.8 -> 1.0. What happened and what do you do?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Overfitting after epoch 2: the model memorises the training data. Keep the epoch-2 checkpoint, train fewer epochs, lower the learning rate, or add more varied data.
+
+</details>

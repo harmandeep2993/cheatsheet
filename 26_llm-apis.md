@@ -2,6 +2,8 @@
 
 Quick reference for calling hosted LLMs from Python: the Anthropic (Claude) SDK in depth, the OpenAI SDK, streaming, structured outputs, vision and PDFs, thinking, caching, batches, token counting, errors and cost.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is an LLM API?
@@ -96,6 +98,7 @@ Where to read the latest, authoritative documentation:
 20. [Claude on Cloud Platforms](#20-claude-on-cloud-platforms)
 21. [Production Checklist](#21-production-checklist)
 22. [Troubleshooting](#22-troubleshooting)
+23. [Try It](#23-try-it)
 
 ---
 
@@ -707,3 +710,56 @@ Feature availability can differ per platform; check the platform docs.
 | Cache never hits (`cache_read_input_tokens == 0`) | Prefix changes every call (timestamps, unsorted JSON, different tools); prefix too short |
 | 400 about `temperature` / `budget_tokens` / prefill on new models | Newest models removed these; use effort / adaptive thinking / structured outputs |
 | Costs higher than expected | Log `usage`; history growing each turn; large `max_tokens` on reasoning; use caching and smaller models for easy steps |
+
+## 23. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: First call with usage
+
+Call Claude with a system prompt and print the text and the token usage. (Or run `uv run python -m llm_basics.basics` in `examples/`.)
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+r = client.messages.create(model="claude-opus-5", max_tokens=16000, system="Be concise.",
+                           messages=[{"role": "user", "content": "What is an embedding?"}])
+print("".join(b.text for b in r.content if b.type == "text"))
+print(r.usage.input_tokens, r.usage.output_tokens)
+```
+
+</details>
+
+### Exercise 2: Structured extraction
+
+Extract name, email and company from free text into a Pydantic model.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+class Contact(BaseModel):
+    name: str
+    email: str
+    company: str | None = None
+
+r = client.messages.parse(model="claude-opus-5", max_tokens=1024, output_format=Contact,
+                          messages=[{"role": "user", "content": f"Extract the contact:\n{text}"}])
+contact = r.parsed_output
+```
+
+</details>
+
+### Exercise 3: Handle the edges
+
+What should your code do for `stop_reason == "max_tokens"` and for `anthropic.RateLimitError`?
+
+<details markdown="1">
+<summary>Solution</summary>
+
+`max_tokens`: the answer is cut off; raise `max_tokens`, stream, or ask the model to continue. `RateLimitError` (after the SDK's automatic retries): back off using the `retry-after` header, reduce concurrency, or move bulk work to the batch API.
+
+</details>

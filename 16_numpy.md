@@ -2,6 +2,8 @@
 
 Quick reference for numerical arrays with NumPy (the base library under pandas, matplotlib and scikit-learn).
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is NumPy?
@@ -61,6 +63,7 @@ Where to read the latest, authoritative documentation:
 16. [Copies vs Views](#16-copies-vs-views)
 17. [Save and Load](#17-save-and-load)
 18. [Troubleshooting](#18-troubleshooting)
+19. [Try It](#19-try-it)
 
 ---
 
@@ -426,3 +429,50 @@ a = np.genfromtxt("data.csv", delimiter=",", skip_header=1)   # handles missing
 | Result is `nan` | NaN in the data; use `np.nanmean` etc. |
 | Original array changed unexpectedly | Slice was a view; use `.copy()` |
 | `Expected 2D array, got 1D array` (sklearn) | `a.reshape(-1, 1)` |
+
+## 19. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: Random matrix stats
+
+With seed 42, create a 3x4 array of random integers 0 to 9; print column means and row sums.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+rng = np.random.default_rng(42)
+m = rng.integers(0, 10, size=(3, 4))
+m.mean(axis=0), m.sum(axis=1)
+```
+
+</details>
+
+### Exercise 2: Clip negatives
+
+Replace negative values in an array with 0 using a boolean mask.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+a[a < 0] = 0            # or: np.clip(a, 0, None)
+```
+
+</details>
+
+### Exercise 3: Standardise columns
+
+Scale each column to mean 0 and standard deviation 1 with broadcasting.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+z = (m - m.mean(axis=0)) / m.std(axis=0)
+```
+
+</details>

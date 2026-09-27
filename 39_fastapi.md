@@ -2,6 +2,8 @@
 
 Quick reference for building Python web APIs with FastAPI: routes, validation, dependencies, testing and deployment.
 
+> **Last verified:** 2026-09-27. For newer changes, check the Official docs links in the Introduction.
+
 ## Introduction
 
 ### What is FastAPI?
@@ -85,6 +87,7 @@ Where to read the latest, authoritative documentation:
 24. [Example: Proxy to Ollama](#24-example-proxy-to-ollama)
 25. [Deploy (Docker)](#25-deploy-docker)
 26. [Troubleshooting](#26-troubleshooting)
+27. [Try It](#27-try-it)
 
 ---
 
@@ -837,3 +840,68 @@ Production checklist: no `--reload`, secrets from environment, `--workers` or se
 | `Form data requires "python-multipart"` | `pip install python-multipart` (or `fastapi[standard]`) |
 | Settings / `.env` not loaded | Check `env_file` path and variable names; restart the server |
 | Model loaded on every request (slow) | Load it once in `lifespan` |
+
+## 27. Try It
+
+> - **What:** Short exercises to practise this guide.
+> - **How:** Try each task yourself first, then open the solution.
+> - **When to use:** Right after reading the guide, or later as a quick self-test.
+
+### Exercise 1: 404 handling
+
+Write `GET /items/{item_id}` that returns 404 when the item does not exist.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+@app.get("/items/{item_id}")
+def get_item(item_id: int):
+    if item_id not in ITEMS:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return ITEMS[item_id]
+```
+
+</details>
+
+### Exercise 2: API key dependency
+
+Protect a route with an `X-API-Key` header check.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```python
+from fastapi import Depends, HTTPException, Security
+from fastapi.security import APIKeyHeader
+
+api_key = APIKeyHeader(name="X-API-Key")
+
+
+def check_key(key: str = Security(api_key)):
+    if key != settings.api_key:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
+
+@app.get("/secure", dependencies=[Depends(check_key)])
+def secure():
+    return {"ok": True}
+```
+
+</details>
+
+### Exercise 3: Test the API
+
+Run the chatbot API tests in `examples/` and find how the real LLM is replaced.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+```bash
+cd examples
+uv run pytest docs_chatbot -k api -v
+```
+
+`app.dependency_overrides[get_service] = lambda: service` injects a service whose client is a `MagicMock`.
+
+</details>
