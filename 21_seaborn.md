@@ -1,4 +1,4 @@
-# 15 - Seaborn
+# 21 - Seaborn
 
 Quick reference for statistical plots with Seaborn (built on matplotlib, works directly with pandas DataFrames).
 
@@ -27,7 +27,7 @@ Seaborn is a statistical visualisation library built on Matplotlib. You pass a p
 | Palette | Set of colours |
 | KDE | Smooth estimate of a distribution |
 
-**Where it fits:** needs [12 - Pandas](12_pandas.md) data; customise with [14 - Matplotlib](14_matplotlib.md).
+**Where it fits:** needs [17 - Pandas](17_pandas.md) data; customise with [20 - Matplotlib](20_matplotlib.md).
 
 ---
 
@@ -383,7 +383,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-See [14 - Matplotlib](14_matplotlib.md) for more options.
+See [20 - Matplotlib](20_matplotlib.md) for more options.
 
 ## 15. Save a Figure
 

@@ -1,4 +1,4 @@
-# 13 - SQL
+# 19 - SQL
 
 Quick reference for SQL queries (standard SQL, notes for PostgreSQL / SQLite / MySQL where they differ) plus using SQL from Python and pandas.
 
@@ -29,7 +29,7 @@ SQL (Structured Query Language) is the standard language for working with **rela
 | Index | Structure that makes lookups on a column faster |
 | DDL / DML | Statements that define structure (CREATE) / change data (INSERT) |
 
-**Where it fits:** load query results into [12 - Pandas](12_pandas.md); run databases with [18 - Docker](18_docker.md).
+**Where it fits:** load query results into [17 - Pandas](17_pandas.md); run databases with [41 - Docker](41_docker.md).
 
 ---
 
@@ -569,7 +569,7 @@ psql -h localhost -U postgres -d mydb     connect
 \q                              quit
 ```
 
-Postgres in Docker: see [18 - Docker](18_docker.md), section "Useful Ready-Made Containers".
+Postgres in Docker: see [41 - Docker](41_docker.md), section "Useful Ready-Made Containers".
 
 ## 23. SQL from Python and Pandas
 
@@ -629,7 +629,7 @@ Keep connection strings (with passwords) in environment variables, not in code.
 | `ROW_NUMBER() OVER (PARTITION BY a ORDER BY b)` | `df.groupby("a")["b"].rank(method="first")` |
 | `SUM(b) OVER (ORDER BY d)` | `df.sort_values("d")["b"].cumsum()` |
 
-See [12 - Pandas](12_pandas.md).
+See [17 - Pandas](17_pandas.md).
 
 ## 25. Troubleshooting
 

@@ -1,4 +1,4 @@
-# 12 - Pandas
+# 17 - Pandas
 
 Quick reference for data analysis with pandas.
 
@@ -29,7 +29,7 @@ pandas is the most popular Python library for working with **tabular data** (row
 | Vectorised operation | Works on a whole column at once, no loop |
 | groupby | Split rows into groups, then aggregate each |
 
-**Where it fits:** built on [11 - NumPy](11_numpy.md); plots with [14 - Matplotlib](14_matplotlib.md) / [15 - Seaborn](15_seaborn.md); feeds [16 - Scikit-learn](16_scikit-learn.md). SQL equivalents: [13 - SQL](13_sql.md).
+**Where it fits:** built on [16 - NumPy](16_numpy.md); plots with [20 - Matplotlib](20_matplotlib.md) / [21 - Seaborn](21_seaborn.md); feeds [22 - Scikit-learn](22_scikit-learn.md). SQL equivalents: [19 - SQL](19_sql.md).
 
 ---
 

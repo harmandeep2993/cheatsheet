@@ -1,4 +1,4 @@
-# 18 - Docker
+# 41 - Docker
 
 Quick reference for building and running containers with Docker and Docker Compose.
 
@@ -39,7 +39,7 @@ Docker packages an application together with everything it needs to run (Python 
 | Port mapping | Connect a host port to a container port (`-p 8000:8000`) |
 | Compose | Tool to run several containers from one YAML file |
 
-**Where it fits:** packages apps from [17 - FastAPI](17_fastapi.md); uses [03 - Linux](03_linux.md) inside containers; runs on VMs like [20 - Azure VM](20_azure-vm-ollama.md).
+**Where it fits:** packages apps from [39 - FastAPI](39_fastapi.md); uses [03 - Linux](03_linux.md) inside containers; runs on VMs like [47 - Azure VM](47_azure-vm-ollama.md).
 
 ---
 

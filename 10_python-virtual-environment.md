@@ -1,6 +1,6 @@
-# 08 - Python Virtual Environment
+# 10 - Python Virtual Environment
 
-Quick reference for creating and managing Python virtual environments with `venv` and `pip`. For a faster all-in-one tool, see [09 - uv](09_uv.md).
+Quick reference for creating and managing Python virtual environments with `venv` and `pip`. For a faster all-in-one tool, see [11 - uv](11_uv.md).
 
 ## Introduction
 
@@ -27,7 +27,7 @@ A **virtual environment** is a private folder (usually `.venv`) that contains it
 | requirements.txt | Text file listing the project's packages and versions |
 | Interpreter | The `python` executable that runs your code |
 
-**Where it fits:** needed before installing any library. A faster modern alternative that does all of this and more: [09 - uv](09_uv.md).
+**Where it fits:** needed before installing any library. A faster modern alternative that does all of this and more: [11 - uv](11_uv.md).
 
 ---
 

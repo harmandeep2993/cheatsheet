@@ -1,4 +1,4 @@
-# 10 - Jupyter
+# 15 - Jupyter
 
 Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebooks in VS Code).
 
@@ -28,7 +28,7 @@ Notebooks are less suited for production code: move stable code into `.py` modul
 | Magic command | Jupyter helper starting with `%` or `%%` (`%timeit`) |
 | Execution count | The number `[5]` showing the order cells ran |
 
-**Where it fits:** the usual place to work with [11 - NumPy](11_numpy.md), [12 - Pandas](12_pandas.md), [14 - Matplotlib](14_matplotlib.md) and [16 - Scikit-learn](16_scikit-learn.md).
+**Where it fits:** the usual place to work with [16 - NumPy](16_numpy.md), [17 - Pandas](17_pandas.md), [20 - Matplotlib](20_matplotlib.md) and [22 - Scikit-learn](22_scikit-learn.md).
 
 ---
 
@@ -326,7 +326,7 @@ import matplotlib.pyplot as plt
 plt.plot([1, 2, 3]);                # ; hides the "[<Line2D ...>]" text
 ```
 
-See [14 - Matplotlib](14_matplotlib.md) and [15 - Seaborn](15_seaborn.md).
+See [20 - Matplotlib](20_matplotlib.md) and [21 - Seaborn](21_seaborn.md).
 
 ## 12. Auto-reload Your Own Modules
 

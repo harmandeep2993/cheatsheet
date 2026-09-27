@@ -1,4 +1,4 @@
-# 07 - Python Basics
+# 09 - Python Basics
 
 Quick reference for core Python syntax (Python 3.10+).
 
@@ -28,7 +28,7 @@ Python is a general-purpose programming language known for readable, almost Engl
 | pip / uv | Tools to install packages |
 | Indentation | Spaces at the start of a line that define code blocks |
 
-**Where it fits:** the base for [08 - venv](08_python-virtual-environment.md), [11 - NumPy](11_numpy.md), [12 - Pandas](12_pandas.md), [16 - Scikit-learn](16_scikit-learn.md) and [17 - FastAPI](17_fastapi.md).
+**Where it fits:** the base for [10 - venv](10_python-virtual-environment.md), [16 - NumPy](16_numpy.md), [17 - Pandas](17_pandas.md), [22 - Scikit-learn](22_scikit-learn.md) and [39 - FastAPI](39_fastapi.md).
 
 ---
 
@@ -470,7 +470,7 @@ with open("data.csv", newline="", encoding="utf-8") as f:
         print(row["name"])
 ```
 
-For real data work, use pandas (see [12 - Pandas](12_pandas.md)).
+For real data work, use pandas (see [17 - Pandas](17_pandas.md)).
 
 ## 19. Modules and Imports
 
@@ -671,7 +671,7 @@ python script.py data.csv --limit 5
 | `KeyError: 'x'` | Key missing; use `d.get("x")` |
 | `AttributeError: 'list' object has no attribute 'x'` | Wrong type or method name; check `type(obj)` |
 | `ValueError: invalid literal for int()` | Converting text that is not a number |
-| `ModuleNotFoundError` | Not installed, or wrong venv active (see [08 - Python Virtual Environment](08_python-virtual-environment.md)) |
+| `ModuleNotFoundError` | Not installed, or wrong venv active (see [10 - Python Virtual Environment](10_python-virtual-environment.md)) |
 | `ZeroDivisionError` | Check the divisor before dividing |
 | `UnicodeDecodeError` | Open with `encoding="utf-8"` |
 | `RecursionError` | Function calls itself without an end condition |

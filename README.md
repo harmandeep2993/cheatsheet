@@ -17,30 +17,30 @@ Personal quick-reference cheat sheets, numbered from basic to advanced.
 
 | # | Guide | Covers |
 |---|---|---|
-| 07 | [Python Basics](07_python-basics.md) | Types, strings, f-strings, lists, dicts, loops, comprehensions, functions, errors, files, classes, logging |
-| 08 | [Python Virtual Environment](08_python-virtual-environment.md) | venv create/activate, pip, requirements.txt, VS Code, troubleshooting |
-| 09 | [uv](09_uv.md) | Projects, add/remove, run, lock/sync, Python versions, pip interface, uvx tools, Docker |
-| 10 | [Jupyter](10_jupyter.md) | Kernels from venv, shortcuts, magics, display options, autoreload, export, notebooks in Git |
+| 07 | [Python Basics](09_python-basics.md) | Types, strings, f-strings, lists, dicts, loops, comprehensions, functions, errors, files, classes, logging |
+| 08 | [Python Virtual Environment](10_python-virtual-environment.md) | venv create/activate, pip, requirements.txt, VS Code, troubleshooting |
+| 09 | [uv](11_uv.md) | Projects, add/remove, run, lock/sync, Python versions, pip interface, uvx tools, Docker |
+| 10 | [Jupyter](15_jupyter.md) | Kernels from venv, shortcuts, magics, display options, autoreload, export, notebooks in Git |
 
 ## Data and Machine Learning
 
 | # | Guide | Covers |
 |---|---|---|
-| 11 | [NumPy](11_numpy.md) | Create arrays, indexing, filtering, reshape, math, broadcasting, axis, random, linear algebra |
-| 12 | [Pandas](12_pandas.md) | Read/write, inspect, select, filter, clean, groupby, pivot, merge |
-| 13 | [SQL](13_sql.md) | SELECT, WHERE, GROUP BY, JOINs, CTEs, window functions, DDL/DML, psql/sqlite3, SQL from pandas |
-| 14 | [Matplotlib](14_matplotlib.md) | Line, scatter, bar, hist, box, pie, labels, legend, subplots, styles, save |
-| 15 | [Seaborn](15_seaborn.md) | Distribution, categorical, relationship, regression, heatmap, pairplot, facets, palettes |
-| 16 | [Scikit-learn](16_scikit-learn.md) | Split, preprocessing, pipelines, models, metrics, cross-validation, tuning, saving models |
+| 11 | [NumPy](16_numpy.md) | Create arrays, indexing, filtering, reshape, math, broadcasting, axis, random, linear algebra |
+| 12 | [Pandas](17_pandas.md) | Read/write, inspect, select, filter, clean, groupby, pivot, merge |
+| 13 | [SQL](19_sql.md) | SELECT, WHERE, GROUP BY, JOINs, CTEs, window functions, DDL/DML, psql/sqlite3, SQL from pandas |
+| 14 | [Matplotlib](20_matplotlib.md) | Line, scatter, bar, hist, box, pie, labels, legend, subplots, styles, save |
+| 15 | [Seaborn](21_seaborn.md) | Distribution, categorical, relationship, regression, heatmap, pairplot, facets, palettes |
+| 16 | [Scikit-learn](22_scikit-learn.md) | Split, preprocessing, pipelines, models, metrics, cross-validation, tuning, saving models |
 
 ## APIs and Deployment
 
 | # | Guide | Covers |
 |---|---|---|
-| 17 | [FastAPI](17_fastapi.md) | Routes, Pydantic validation, dependencies, settings, routers, testing, ML model API, Docker |
-| 18 | [Docker](18_docker.md) | Images, containers, run options, Dockerfile, volumes, networks, Compose, cleanup, registry |
-| 19 | [Azure](19_azure.md) | Concepts, CLI, resource groups, VMs, storage, ACR, Container Apps, App Service, Key Vault, databases, RBAC, Azure OpenAI, cost, Bicep |
-| 20 | [Azure VM + Linux + Ollama](20_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
+| 17 | [FastAPI](39_fastapi.md) | Routes, Pydantic validation, dependencies, settings, routers, testing, ML model API, Docker |
+| 18 | [Docker](41_docker.md) | Images, containers, run options, Dockerfile, volumes, networks, Compose, cleanup, registry |
+| 19 | [Azure](46_azure.md) | Concepts, CLI, resource groups, VMs, storage, ACR, Container Apps, App Service, Key Vault, databases, RBAC, Azure OpenAI, cost, Bicep |
+| 20 | [Azure VM + Linux + Ollama](47_azure-vm-ollama.md) | Azure CLI, VM, NSG, SSH, Linux basics, Ollama, SSH tunnel |
 
 ## Conventions
 

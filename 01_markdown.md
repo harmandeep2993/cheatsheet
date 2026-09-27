@@ -148,7 +148,7 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 ```markdown
 [Link text](https://example.com)
 [Link with hover title](https://example.com "Title")
-[Link to another file](08_python-virtual-environment.md)
+[Link to another file](10_python-virtual-environment.md)
 [Link to a heading](#5-links)
 <https://example.com>                   <!-- auto link -->
 ```

@@ -28,7 +28,7 @@ Visual Studio Code is a free code editor from Microsoft. It is lightweight like 
 | IntelliSense | Autocomplete and code understanding |
 | Breakpoint | A line where the debugger pauses |
 
-**Where it fits:** the editor for all other guides; pairs with [08 - venv](08_python-virtual-environment.md) / [09 - uv](09_uv.md) and [04 - Git](04_git.md).
+**Where it fits:** the editor for all other guides; pairs with [10 - venv](10_python-virtual-environment.md) / [11 - uv](11_uv.md) and [04 - Git](04_git.md).
 
 ---
 
@@ -265,7 +265,7 @@ Change the default shell: `Ctrl+Shift+P` -> **Terminal: Select Default Profile**
 > - **When to use:** Every new project; red squiggles on imports usually mean the wrong interpreter.
 
 1. Install the **Python** extension (includes Pylance and the debugger).
-2. Create the venv: see [08 - Python Virtual Environment](08_python-virtual-environment.md) or [09 - uv](09_uv.md).
+2. Create the venv: see [10 - Python Virtual Environment](10_python-virtual-environment.md) or [11 - uv](11_uv.md).
 3. `Ctrl+Shift+P` -> **Python: Select Interpreter** -> pick `.venv`.
 4. New terminals activate the venv automatically; the status bar shows the version.
 

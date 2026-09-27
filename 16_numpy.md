@@ -1,4 +1,4 @@
-# 11 - NumPy
+# 16 - NumPy
 
 Quick reference for numerical arrays with NumPy (the base library under pandas, matplotlib and scikit-learn).
 
@@ -27,7 +27,7 @@ NumPy (Numerical Python) is the core library for numbers in Python. Its main obj
 | Vectorisation | Applying an operation to a whole array at once |
 | Broadcasting | Automatic stretching of arrays with different shapes |
 
-**Where it fits:** the base under [12 - Pandas](12_pandas.md), [14 - Matplotlib](14_matplotlib.md) and [16 - Scikit-learn](16_scikit-learn.md).
+**Where it fits:** the base under [17 - Pandas](17_pandas.md), [20 - Matplotlib](20_matplotlib.md) and [22 - Scikit-learn](22_scikit-learn.md).
 
 ---
 

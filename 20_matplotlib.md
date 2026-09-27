@@ -1,4 +1,4 @@
-# 14 - Matplotlib
+# 20 - Matplotlib
 
 Quick reference for plotting with Matplotlib (the base plotting library; seaborn and pandas `.plot()` build on it).
 
@@ -27,7 +27,7 @@ Matplotlib is Python's original and most widely used plotting library. It can dr
 | Colormap (`cmap`) | Mapping from values to colours |
 | DPI | Resolution of saved images |
 
-**Where it fits:** plots data from [11 - NumPy](11_numpy.md) and [12 - Pandas](12_pandas.md); higher-level statistical plots in [15 - Seaborn](15_seaborn.md).
+**Where it fits:** plots data from [16 - NumPy](16_numpy.md) and [17 - Pandas](17_pandas.md); higher-level statistical plots in [21 - Seaborn](21_seaborn.md).
 
 ---
 

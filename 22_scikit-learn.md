@@ -1,4 +1,4 @@
-# 16 - Scikit-learn
+# 22 - Scikit-learn
 
 Quick reference for machine learning with scikit-learn: preprocessing, models, evaluation, tuning and saving.
 
@@ -38,7 +38,7 @@ Scikit-learn (`sklearn`) is the standard Python library for **classical machine 
 | Data leakage | Information from the test data or the answer sneaks into training |
 | Pipeline | Preprocessing steps + model as one object |
 
-**Where it fits:** uses data prepared with [12 - Pandas](12_pandas.md); serve the trained model with [17 - FastAPI](17_fastapi.md).
+**Where it fits:** uses data prepared with [17 - Pandas](17_pandas.md); serve the trained model with [39 - FastAPI](39_fastapi.md).
 
 ---
 
@@ -551,7 +551,7 @@ pipe = joblib.load("model.joblib")
 pipe.predict(new_df)                     # new_df needs the same columns as training X
 ```
 
-Load with the same scikit-learn version you saved with. Never load model files from untrusted sources (they can run code). Serving: see [17 - FastAPI](17_fastapi.md).
+Load with the same scikit-learn version you saved with. Never load model files from untrusted sources (they can run code). Serving: see [39 - FastAPI](39_fastapi.md).
 
 ## 21. Full Example
 

@@ -28,7 +28,7 @@ Linux is a free, open-source operating system, like Windows or macOS. It comes i
 | Permissions | Who may read, write or execute each file |
 | SSH | Secure remote login to another machine |
 
-**Where it fits:** needed for [18 - Docker](18_docker.md) and [20 - Azure VM](20_azure-vm-ollama.md). Windows equivalents: [02 - Terminal and PowerShell](02_terminal-powershell.md).
+**Where it fits:** needed for [41 - Docker](41_docker.md) and [47 - Azure VM](47_azure-vm-ollama.md). Windows equivalents: [02 - Terminal and PowerShell](02_terminal-powershell.md).
 
 ---
 

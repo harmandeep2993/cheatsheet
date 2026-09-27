@@ -1,4 +1,4 @@
-# 19 - Azure
+# 46 - Azure
 
 Quick reference for Microsoft Azure with the Azure CLI: core concepts, the most used services, security, cost and infrastructure as code.
 
@@ -51,7 +51,7 @@ Tenant (Microsoft Entra ID: users, groups, apps)
 | Managed identity | An identity Azure gives your app so it can access other resources without passwords |
 | Service principal | An identity for automation / CI pipelines |
 
-**Where it fits:** deploy containers from [18 - Docker](18_docker.md) and APIs from [17 - FastAPI](17_fastapi.md); a full VM + LLM walkthrough is in [20 - Azure VM + Linux + Ollama](20_azure-vm-ollama.md).
+**Where it fits:** deploy containers from [41 - Docker](41_docker.md) and APIs from [39 - FastAPI](39_fastapi.md); a full VM + LLM walkthrough is in [47 - Azure VM + Linux + Ollama](47_azure-vm-ollama.md).
 
 ---
 
@@ -249,7 +249,7 @@ az vm list -d --query "[].{Name:name, State:powerState, IP:publicIps}" -o table
 
 > - **What:** Full computers in the cloud where you control the OS (IaaS).
 > - **How:** Pick an image, size and login method; Azure creates disk, network card, public IP and NSG with it.
-> - **When to use:** Custom software, GPU workloads, LLM hosting, anything needing full OS control. Full walkthrough: [20 - Azure VM + Linux + Ollama](20_azure-vm-ollama.md).
+> - **When to use:** Custom software, GPU workloads, LLM hosting, anything needing full OS control. Full walkthrough: [47 - Azure VM + Linux + Ollama](47_azure-vm-ollama.md).
 
 ```bash
 az vm create -g rg-demo -n myvm \
@@ -301,7 +301,7 @@ Storage account names: 3 to 24 lowercase letters and digits, globally unique. Ro
 
 > - **What:** Private Docker image storage in Azure.
 > - **How:** Push images with Docker, or let ACR build them in the cloud with `az acr build`.
-> - **When to use:** Storing images for Container Apps, App Service or VMs. Docker basics: [18 - Docker](18_docker.md).
+> - **When to use:** Storing images for Container Apps, App Service or VMs. Docker basics: [41 - Docker](41_docker.md).
 
 ```bash
 az acr create -g rg-demo -n acrsalesdev --sku Basic
@@ -413,7 +413,7 @@ Key Vault names are globally unique (3 to 24 characters). Soft delete keeps dele
 
 > - **What:** Managed databases: PostgreSQL, MySQL, Azure SQL, Cosmos DB.
 > - **How:** Azure runs the server (backups, patching, HA); you connect with normal tools (psql, SQLAlchemy).
-> - **When to use:** App data that must persist. SQL basics: [13 - SQL](13_sql.md).
+> - **When to use:** App data that must persist. SQL basics: [19 - SQL](19_sql.md).
 
 ```bash
 # PostgreSQL Flexible Server (password from an environment variable, not typed in the command)
@@ -452,7 +452,7 @@ az network public-ip list -o table
 az vm open-port -g rg-demo -n myvm --port 80 --priority 900   # opens to the internet: web servers only
 ```
 
-Never open SSH (22), RDP (3389) or database ports to `*`. Limit to your IP (see [20 - Azure VM](20_azure-vm-ollama.md)) or use Azure Bastion / private endpoints.
+Never open SSH (22), RDP (3389) or database ports to `*`. Limit to your IP (see [47 - Azure VM](47_azure-vm-ollama.md)) or use Azure Bastion / private endpoints.
 
 ## 15. Identity and Access (RBAC)
 
@@ -525,7 +525,7 @@ data = blobs.get_blob_client("data", "sales.csv").download_blob().readall()
 
 > - **What:** OpenAI models (GPT family, embeddings) hosted in Azure, with Azure security and regions.
 > - **How:** Create an Azure OpenAI resource, deploy a model under a deployment name, call it with the `openai` Python package.
-> - **When to use:** LLM features where data must stay in Azure / EU, or enterprise requirements. For self-hosted open models, see [20 - Azure VM + Ollama](20_azure-vm-ollama.md).
+> - **When to use:** LLM features where data must stay in Azure / EU, or enterprise requirements. For self-hosted open models, see [47 - Azure VM + Ollama](47_azure-vm-ollama.md).
 
 ```bash
 az cognitiveservices account create -n aoai-sales -g rg-demo -l swedencentral --kind OpenAI --sku S0
@@ -656,7 +656,7 @@ Terraform is a popular multi-cloud alternative; the Azure Developer CLI (`azd up
 
 > - **What:** The full path from local FastAPI project to a public HTTPS API.
 > - **How:** Resource group -> registry build -> container app -> test URL -> clean up.
-> - **When to use:** Shipping an API from [17 - FastAPI](17_fastapi.md) with the Dockerfile from [18 - Docker](18_docker.md).
+> - **When to use:** Shipping an API from [39 - FastAPI](39_fastapi.md) with the Dockerfile from [41 - Docker](41_docker.md).
 
 ```bash
 RG=rg-sales-api; LOC=swedencentral; ACR=acrsalesapi$RANDOM; APP=sales-api

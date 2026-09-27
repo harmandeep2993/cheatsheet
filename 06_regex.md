@@ -28,7 +28,7 @@ A **regular expression** (regex) is a pattern that describes text. Instead of se
 | Group | Part of a pattern in `( )` you can extract separately |
 | Flag | Option that changes matching, e.g. ignore case |
 
-**Where it fits:** used inside [07 - Python](07_python-basics.md), [12 - Pandas](12_pandas.md), [13 - SQL](13_sql.md), [03 - Linux](03_linux.md) (grep) and [05 - VS Code](05_vscode.md) (search).
+**Where it fits:** used inside [09 - Python](09_python-basics.md), [17 - Pandas](17_pandas.md), [19 - SQL](19_sql.md), [03 - Linux](03_linux.md) (grep) and [05 - VS Code](05_vscode.md) (search).
 
 ---
 
@@ -337,7 +337,7 @@ df.filter(regex=r"^sales_")                                         # select col
 df.replace(r"^\s*$", np.nan, regex=True)                            # empty strings -> NaN
 ```
 
-See [12 - Pandas](12_pandas.md).
+See [17 - Pandas](17_pandas.md).
 
 ## 14. Regex in grep, sed, PowerShell, VS Code
 
@@ -384,7 +384,7 @@ SELECT REGEXP_REPLACE(phone, '[^0-9]', '') FROM users;
 -- SQLite: no built-in REGEXP function; use LIKE / GLOB or do it in Python / pandas
 ```
 
-See [13 - SQL](13_sql.md).
+See [19 - SQL](19_sql.md).
 
 ## 16. Build and Test a Pattern
 
