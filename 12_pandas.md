@@ -1,4 +1,4 @@
-# 09 - Pandas
+# 12 - Pandas
 
 Quick reference for data analysis with pandas.
 

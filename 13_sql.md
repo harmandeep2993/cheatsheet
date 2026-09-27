@@ -1,4 +1,4 @@
-# 10 - SQL
+# 13 - SQL
 
 Quick reference for SQL queries (standard SQL, notes for PostgreSQL / SQLite / MySQL where they differ) plus using SQL from Python and pandas.
 
@@ -538,7 +538,7 @@ psql -h localhost -U postgres -d mydb     connect
 \q                              quit
 ```
 
-Postgres in Docker: see [13 - Docker](13_docker.md), section "Useful Ready-Made Containers".
+Postgres in Docker: see [18 - Docker](18_docker.md), section "Useful Ready-Made Containers".
 
 ## 23. SQL from Python and Pandas
 
@@ -598,7 +598,7 @@ Keep connection strings (with passwords) in environment variables, not in code.
 | `ROW_NUMBER() OVER (PARTITION BY a ORDER BY b)` | `df.groupby("a")["b"].rank(method="first")` |
 | `SUM(b) OVER (ORDER BY d)` | `df.sort_values("d")["b"].cumsum()` |
 
-See [09 - Pandas](09_pandas.md).
+See [12 - Pandas](12_pandas.md).
 
 ## 25. Troubleshooting
 

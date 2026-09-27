@@ -1,4 +1,4 @@
-# 11 - Matplotlib
+# 14 - Matplotlib
 
 Quick reference for plotting with Matplotlib (the base plotting library; seaborn and pandas `.plot()` build on it).
 

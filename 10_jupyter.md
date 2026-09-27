@@ -1,4 +1,4 @@
-# 07 - Jupyter
+# 10 - Jupyter
 
 Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebooks in VS Code).
 
@@ -296,7 +296,7 @@ import matplotlib.pyplot as plt
 plt.plot([1, 2, 3]);                # ; hides the "[<Line2D ...>]" text
 ```
 
-See [11 - Matplotlib](11_matplotlib.md) and [12 - Seaborn](12_seaborn.md).
+See [14 - Matplotlib](14_matplotlib.md) and [15 - Seaborn](15_seaborn.md).
 
 ## 12. Auto-reload Your Own Modules
 

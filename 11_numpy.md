@@ -1,4 +1,4 @@
-# 08 - NumPy
+# 11 - NumPy
 
 Quick reference for numerical arrays with NumPy (the base library under pandas, matplotlib and scikit-learn).
 

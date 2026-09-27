@@ -1,4 +1,4 @@
-# 12 - Seaborn
+# 15 - Seaborn
 
 Quick reference for statistical plots with Seaborn (built on matplotlib, works directly with pandas DataFrames).
 
@@ -354,7 +354,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-See [11 - Matplotlib](11_matplotlib.md) for more options.
+See [14 - Matplotlib](14_matplotlib.md) for more options.
 
 ## 15. Save a Figure
 

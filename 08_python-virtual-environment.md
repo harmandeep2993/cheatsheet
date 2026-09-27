@@ -1,6 +1,6 @@
-# 06 - Python Virtual Environment
+# 08 - Python Virtual Environment
 
-Quick reference for creating and managing Python virtual environments with `venv` and `pip`.
+Quick reference for creating and managing Python virtual environments with `venv` and `pip`. For a faster all-in-one tool, see [09 - uv](09_uv.md).
 
 ## Contents
 

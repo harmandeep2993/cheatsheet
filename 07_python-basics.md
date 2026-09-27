@@ -1,4 +1,4 @@
-# 05 - Python Basics
+# 07 - Python Basics
 
 Quick reference for core Python syntax (Python 3.10+).
 
@@ -440,7 +440,7 @@ with open("data.csv", newline="", encoding="utf-8") as f:
         print(row["name"])
 ```
 
-For real data work, use pandas (see [09 - Pandas](09_pandas.md)).
+For real data work, use pandas (see [12 - Pandas](12_pandas.md)).
 
 ## 19. Modules and Imports
 
@@ -641,7 +641,7 @@ python script.py data.csv --limit 5
 | `KeyError: 'x'` | Key missing; use `d.get("x")` |
 | `AttributeError: 'list' object has no attribute 'x'` | Wrong type or method name; check `type(obj)` |
 | `ValueError: invalid literal for int()` | Converting text that is not a number |
-| `ModuleNotFoundError` | Not installed, or wrong venv active (see [06 - Python Virtual Environment](06_python-virtual-environment.md)) |
+| `ModuleNotFoundError` | Not installed, or wrong venv active (see [08 - Python Virtual Environment](08_python-virtual-environment.md)) |
 | `ZeroDivisionError` | Check the divisor before dividing |
 | `UnicodeDecodeError` | Open with `encoding="utf-8"` |
 | `RecursionError` | Function calls itself without an end condition |

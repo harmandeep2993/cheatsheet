@@ -1,4 +1,4 @@
-# 14 - Azure VM + Linux + Ollama
+# 19 - Azure VM + Linux + Ollama
 
 Quick reference for running Ollama on an Azure Ubuntu VM and using it from a local app via SSH tunnel.
 
@@ -330,7 +330,7 @@ client.chat(model=os.getenv("LLM_MODEL"), messages=[{"role": "user", "content": 
             think=False, keep_alive="30m")
 ```
 
-Run (see [06 - Python Virtual Environment](06_python-virtual-environment.md)):
+Run (see [08 - Python Virtual Environment](08_python-virtual-environment.md)):
 
 ```powershell
 python -m venv .venv
