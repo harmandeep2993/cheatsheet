@@ -1,2 +1,2 @@
 # dsml_cheatsheet
-This repo contains cheatsheet 
+This repo contains cheatsheet
