@@ -27,6 +27,10 @@ Quick reference for numerical arrays with NumPy (the base library under pandas, 
 
 ## 1. Install and Import
 
+> - **What:** Installing and importing NumPy.
+> - **How:** `pip install numpy`, then `import numpy as np` by convention.
+> - **When to use:** Any numeric work; pandas, matplotlib and scikit-learn already depend on it.
+
 ```powershell
 pip install numpy
 ```
@@ -37,6 +41,10 @@ np.__version__
 ```
 
 ## 2. Create Arrays
+
+> - **What:** Ways to create arrays.
+> - **How:** From lists with `np.array`, or generated with `zeros`, `ones`, `arange`, `linspace`.
+> - **When to use:** Test data, placeholders to fill later, evenly spaced x-values for plots.
 
 ```python
 np.array([1, 2, 3])                     # 1D from list
@@ -54,6 +62,10 @@ np.zeros_like(a)                        # same shape as a, filled with 0
 
 ## 3. Array Attributes
 
+> - **What:** Checking an array's shape, dimensions, size and type.
+> - **How:** Attributes on every array: `.shape`, `.ndim`, `.size`, `.dtype`.
+> - **When to use:** Debugging shape errors, or checking data before feeding a model.
+
 ```python
 a = np.array([[1, 2, 3], [4, 5, 6]])
 
@@ -66,6 +78,10 @@ len(a)                  # 2       length of first dimension
 
 ## 4. Data Types
 
+> - **What:** The single type all elements in an array share.
+> - **How:** Set with `dtype=` or convert with `.astype()`.
+> - **When to use:** Saving memory (float32), or fixing numbers loaded as strings.
+
 ```python
 np.array([1, 2], dtype=float)           # set type on creation
 a.astype(int)                           # convert (returns new array)
@@ -75,6 +91,10 @@ a.astype("float32")
 Common types: `int64`, `float64`, `bool`, `str_`, `object`. An array holds ONE type for all elements.
 
 ## 5. Indexing and Slicing
+
+> - **What:** Getting single values, ranges, rows and columns.
+> - **How:** `[row, col]` with numbers, slices `start:stop:step`, or lists of positions.
+> - **When to use:** Picking a feature column, the first N rows, or a sub-matrix.
 
 ```python
 a = np.array([10, 20, 30, 40, 50])
@@ -94,6 +114,10 @@ m[0:2, 1:]              # [[2 3] [5 6]]  sub-matrix
 
 ## 6. Boolean Filtering
 
+> - **What:** Selecting elements that match a condition.
+> - **How:** A comparison gives a True / False mask; `a[mask]` keeps the True ones.
+> - **When to use:** Removing outliers, replacing negative values, counting matches.
+
 ```python
 a = np.array([5, 12, 3, 20, 8])
 a > 6                               # [False True False True True]
@@ -107,6 +131,10 @@ a[a > 6] = 0                        # replace matching values
 ```
 
 ## 7. Reshape and Combine
+
+> - **What:** Changing an array's shape or joining arrays.
+> - **How:** `reshape` keeps the data in a new layout; `concatenate` / `stack` join arrays.
+> - **When to use:** Preparing input for a model (`reshape(-1, 1)`), combining features.
 
 ```python
 a = np.arange(12)
@@ -127,6 +155,10 @@ np.split(a, 3)                      # split into 3 equal parts
 
 ## 8. Math Operations
 
+> - **What:** Element-wise arithmetic and math functions.
+> - **How:** Operators and `np.` functions apply to every element at once (no loops).
+> - **When to use:** Scaling, normalising, transforming data fast.
+
 Operations apply **element by element** (no loops needed).
 
 ```python
@@ -146,6 +178,10 @@ np.clip(a, 0, 2)        # limit values to range [0, 2]
 
 ## 9. Broadcasting
 
+> - **What:** Operations between arrays of different shapes.
+> - **How:** NumPy stretches dimensions of size 1 to match the other array.
+> - **When to use:** Subtracting the column means from every row, adding a bias to every sample.
+
 Arrays of different shapes are stretched automatically when sizes match or one of them is 1.
 
 ```python
@@ -156,6 +192,10 @@ m - m.mean(axis=0)                      # center each column
 ```
 
 ## 10. Aggregations and Statistics
+
+> - **What:** Summaries: sum, mean, min, max, std, percentiles.
+> - **How:** Methods on arrays; with `axis=` they work per row or column.
+> - **When to use:** Descriptive statistics, finding the position of the maximum.
 
 ```python
 a.sum() ; a.mean() ; np.median(a)
@@ -171,6 +211,10 @@ np.round(a.mean(), 2)
 ```
 
 ## 11. The axis Parameter
+
+> - **What:** Choosing whether an operation works down rows or across columns.
+> - **How:** `axis=0` collapses rows (result per column); `axis=1` collapses columns (per row).
+> - **When to use:** Any aggregation on a 2D array; same idea in pandas.
 
 ```text
 m = [[1, 2, 3],
@@ -188,6 +232,10 @@ m.sum(axis=1)           # [6 15]    per row
 
 ## 12. Sorting and Searching
 
+> - **What:** Sorting values and testing membership / conditions.
+> - **How:** `np.sort`, `argsort` for sort order, `isin`, `any`, `all`.
+> - **When to use:** Ranking, top-N, checking whether any value breaks a rule.
+
 ```python
 np.sort(a)                      # sorted copy
 np.sort(a)[::-1]                # descending
@@ -200,6 +248,10 @@ np.count_nonzero(a > 5)         # how many True
 
 ## 13. Missing Values (NaN)
 
+> - **What:** Dealing with missing numbers (NaN).
+> - **How:** NaN spreads through normal math; `nan*` functions skip it, `isnan` finds it.
+> - **When to use:** Real-world data with gaps, when `mean()` suddenly returns `nan`.
+
 ```python
 a = np.array([1, np.nan, 3])
 np.isnan(a)                     # [False True False]
@@ -211,6 +263,10 @@ np.nan_to_num(a, nan=0)         # replace NaN with 0
 ```
 
 ## 14. Random Numbers
+
+> - **What:** Generating random numbers reproducibly.
+> - **How:** Create a `default_rng(seed)` generator and call its methods.
+> - **When to use:** Simulations, sampling, shuffling, reproducible train / test splits.
 
 ```python
 rng = np.random.default_rng(42)         # seeded generator (reproducible)
@@ -228,6 +284,10 @@ Older style (still common in tutorials): `np.random.seed(42)`, `np.random.rand(3
 
 ## 15. Linear Algebra
 
+> - **What:** Matrix operations.
+> - **How:** `@` for matrix multiply, `np.linalg` for inverse, determinant, solving equations.
+> - **When to use:** Linear regression by hand, geometry, understanding ML maths.
+
 ```python
 A @ B                           # matrix multiplication
 np.dot(a, b)                    # dot product
@@ -243,6 +303,10 @@ np.linalg.eig(A)                # eigenvalues, eigenvectors
 
 ## 16. Copies vs Views
 
+> - **What:** Whether a new variable shares data with the original.
+> - **How:** Slices are views (shared data); `.copy()` makes an independent array.
+> - **When to use:** The original array changed unexpectedly after editing a slice.
+
 ```python
 b = a[0:3]              # slice = VIEW: changing b changes a
 b = a[0:3].copy()       # independent copy
@@ -250,6 +314,10 @@ b = a[a > 2]            # boolean / fancy indexing = copy
 ```
 
 ## 17. Save and Load
+
+> - **What:** Saving arrays to disk and loading them back.
+> - **How:** `.npy` / `.npz` binary formats keep type and shape; `savetxt` for CSV.
+> - **When to use:** Caching expensive results, sharing arrays between scripts.
 
 ```python
 np.save("data.npy", a)                  # binary, one array

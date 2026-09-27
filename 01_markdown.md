@@ -23,6 +23,10 @@ Quick reference for writing Markdown (README files, notes, GitHub docs).
 
 ## 1. Headings
 
+> - **What:** Titles that structure a document into levels, from H1 (page title) to H6.
+> - **How:** Start a line with 1 to 6 `#` characters followed by a space.
+> - **When to use:** Every README or note: one H1 for the title, H2 for main sections, H3 for sub-sections.
+
 ### ATX style (`#`) - recommended
 
 ```markdown
@@ -53,6 +57,10 @@ Heading 2
 
 ## 2. Paragraphs and Line Breaks
 
+> - **What:** Blocks of text and how Markdown decides where a new line starts.
+> - **How:** Separate paragraphs with an empty line; force a line break inside a paragraph with `<br>`.
+> - **When to use:** Your text shows up as one long line on GitHub even though you pressed Enter.
+
 ```markdown
 First paragraph.
 
@@ -66,6 +74,10 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 
 ## 3. Text Formatting
 
+> - **What:** Inline styles such as bold, italic, strikethrough and inline code.
+> - **How:** Wrap words in `**`, `*`, `~~` or backticks.
+> - **When to use:** Highlight a key word, a warning, or a command name inside a sentence.
+
 | Result | Syntax |
 |---|---|
 | **Bold** | `**Bold**` |
@@ -77,6 +89,10 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 | <sup>Superscript</sup> | `<sup>Superscript</sup>` |
 
 ## 4. Lists
+
+> - **What:** Bullet lists and numbered lists, optionally nested.
+> - **How:** Start lines with `-` (bullets) or `1.` (numbers); indent to nest.
+> - **When to use:** Steps to follow (numbered) or a set of features / requirements (bullets).
 
 ### Unordered
 
@@ -98,6 +114,10 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 
 ## 5. Links
 
+> - **What:** Clickable references to websites, other files or headings in the same file.
+> - **How:** `[text](target)` where target is a URL, a relative file path or `#heading-anchor`.
+> - **When to use:** Point to official docs, link between your guides, or build a contents list.
+
 ```markdown
 [Link text](https://example.com)
 [Link with hover title](https://example.com "Title")
@@ -107,6 +127,10 @@ A single newline without a blank line does NOT start a new line. Use a blank lin
 ```
 
 ## 6. Images
+
+> - **What:** Pictures shown inside the document.
+> - **How:** Same as a link with `!` in front: `![alt](path)`; use HTML `<img>` to resize.
+> - **When to use:** Screenshots in a README, architecture diagrams, chart results.
 
 ```markdown
 ![Alt text](path/to/image.png)
@@ -120,6 +144,10 @@ Resize (HTML):
 ```
 
 ## 7. Code
+
+> - **What:** Text shown in a monospace font without formatting, with syntax highlighting.
+> - **How:** Single backticks for inline code; triple backticks plus a language name for blocks.
+> - **When to use:** Any command, file name or code snippet someone might copy.
 
 ### Inline
 
@@ -141,6 +169,10 @@ Common language names: `python`, `bash`, `powershell`, `json`, `sql`, `html`, `c
 
 ## 8. Blockquotes
 
+> - **What:** Indented quote block, plus GitHub coloured alert boxes.
+> - **How:** Start lines with `>`; add `[!NOTE]`, `[!WARNING]` etc. on the first line for alerts.
+> - **When to use:** Quoting someone, or making an important note / warning stand out.
+
 ```markdown
 > This is a quote.
 >
@@ -161,6 +193,10 @@ Other types: `[!TIP]`, `[!IMPORTANT]`, `[!CAUTION]`.
 
 ## 9. Tables
 
+> - **What:** Rows and columns of data.
+> - **How:** Separate cells with `|` and put a `|---|` line under the header row.
+> - **When to use:** Comparisons, option lists, command-vs-meaning references (like this guide).
+
 ```markdown
 | Left | Center | Right |
 |:-----|:------:|------:|
@@ -173,6 +209,10 @@ Other types: `[!TIP]`, `[!IMPORTANT]`, `[!CAUTION]`.
 
 ## 10. Horizontal Rule
 
+> - **What:** A horizontal divider line.
+> - **How:** Three dashes `---` on their own line with a blank line above.
+> - **When to use:** Visually separate the contents list from the body, or big parts of a document.
+
 ```markdown
 ---
 ```
@@ -181,12 +221,20 @@ Put a blank line above it, otherwise the text above becomes an H2 (Setext style)
 
 ## 11. Task Lists
 
+> - **What:** Checkboxes that render as ticked / unticked on GitHub.
+> - **How:** `- [ ]` for open, `- [x]` for done.
+> - **When to use:** To-do lists in a README, PR description or issue.
+
 ```markdown
 - [x] Done
 - [ ] Not done
 ```
 
 ## 12. Escaping Characters
+
+> - **What:** Showing a Markdown symbol literally instead of it formatting text.
+> - **How:** Put a backslash `\` before the symbol.
+> - **When to use:** You need a literal `*`, `#` or `_` (for example in a file name) and it keeps turning into formatting.
 
 Put a backslash before a special character to show it literally:
 
@@ -199,6 +247,10 @@ Characters that can be escaped: `` \ ` * _ { } [ ] ( ) # + - . ! | ``
 
 ## 13. Table of Contents (Anchor Links)
 
+> - **What:** Links that jump to a heading in the same document.
+> - **How:** GitHub creates an anchor from each heading: lowercase, spaces to `-`, punctuation removed.
+> - **When to use:** Long documents: a clickable contents list at the top (every guide here uses one).
+
 Heading anchors are built from the heading text: lowercase, spaces become `-`, punctuation is removed.
 
 ```markdown
@@ -208,6 +260,10 @@ Heading anchors are built from the heading text: lowercase, spaces become `-`, p
 ```
 
 ## 14. Collapsible Section (GitHub)
+
+> - **What:** A section that is hidden until the reader clicks it.
+> - **How:** HTML `<details>` with a `<summary>` title; leave a blank line before the content.
+> - **When to use:** Long logs, optional details, or FAQ answers that would clutter the page.
 
 ```html
 <details>

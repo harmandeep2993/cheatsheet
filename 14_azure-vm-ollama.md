@@ -24,6 +24,10 @@ Quick reference for running Ollama on an Azure Ubuntu VM and using it from a loc
 
 ## 1. Variables (PowerShell)
 
+> - **What:** Session variables used by every command in this guide.
+> - **How:** Set them once in PowerShell; later commands reuse `$RG`, `$VM`, `$IP`.
+> - **When to use:** Start of every session, so you can copy commands without editing them.
+
 Set once per session, then copy commands as they are.
 
 ```powershell
@@ -37,6 +41,10 @@ $IP   = az vm show -d -g $RG -n $VM --query publicIps -o tsv
 
 ## 2. Azure CLI
 
+> - **What:** Installing and logging in to the Azure command line.
+> - **How:** `az login` opens the browser; `az account` selects the subscription.
+> - **When to use:** First-time setup, or when commands target the wrong subscription.
+
 ```powershell
 winget install -e --id Microsoft.AzureCLI   # install (Windows)
 brew install azure-cli                      # install (Mac)
@@ -48,6 +56,10 @@ az account set --subscription "<name-or-id>"   # switch subscription
 ```
 
 ## 3. VM
+
+> - **What:** Starting, stopping and checking the VM.
+> - **How:** `az vm` commands; `deallocate` stops compute billing, `stop` does not.
+> - **When to use:** Start before work, deallocate after work to save money.
 
 ```powershell
 az vm list -d -o table                      # status + IP
@@ -61,6 +73,10 @@ az vm list-sizes -l swedencentral -o table  # sizes in a region
 
 ## 4. Resources and Cleanup
 
+> - **What:** Seeing and deleting Azure resources.
+> - **How:** Resources live in resource groups; deleting the group deletes everything in it.
+> - **When to use:** Checking what costs money, cleaning up after a project.
+
 ```powershell
 az group list -o table                      # resource groups
 az resource list -o table                   # all resources
@@ -71,6 +87,10 @@ az provider list --query "[?registrationState=='Registered'].namespace" -o table
 ```
 
 ## 5. NSG (Security Rules)
+
+> - **What:** Firewall rules that decide who can reach the VM.
+> - **How:** Network Security Group rules allow a port from a source IP.
+> - **When to use:** Allowing SSH only from your home IP, or updating the rule when your IP changes.
 
 ```powershell
 az network nsg rule list -g $RG --nsg-name $NSG -o table                    # custom rules
@@ -93,6 +113,10 @@ Never open 22 or 11434 to `*`.
 
 ## 6. SSH
 
+> - **What:** Connecting to the VM and copying files.
+> - **How:** `ssh -i key user@ip` with the private key; `scp` copies over the same connection.
+> - **When to use:** Every time you work on the VM or upload project files.
+
 ```powershell
 ssh -i $KEY "$USER@$IP"                     # connect
 exit                                        # back to laptop
@@ -110,6 +134,10 @@ scp -i $KEY -r .\folder "$USER@${IP}:~"    # whole folder
 Linux / Mac key permissions: `chmod 400 key.pem`
 
 ## 7. Linux (Inside VM)
+
+> - **What:** Commands you run on the VM once connected.
+> - **How:** Standard Ubuntu commands (see [03 - Linux](03_linux.md) for the full list).
+> - **When to use:** Checking resources, installing tools, managing the Ollama service.
 
 ```bash
 # System info
@@ -143,6 +171,10 @@ journalctl -u ollama -f                     # live logs (Ctrl+C to stop)
 
 ## 8. Ollama (Inside VM)
 
+> - **What:** Installing Ollama and managing models.
+> - **How:** Install script sets up a service on port 11434; `ollama pull / run / ps` manage models.
+> - **When to use:** Setting up the LLM server and choosing a model that fits the VM.
+
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh   # install
 curl http://localhost:11434                     # "Ollama is running"
@@ -160,6 +192,10 @@ Model fit: 2 vCPU / 8 GB, use 3B to 4B. T4 GPU (16 GB), up to about 14B.
 
 ## 9. GPU Driver (GPU VMs Only)
 
+> - **What:** NVIDIA drivers for GPU VMs.
+> - **How:** `ubuntu-drivers install` picks the right driver; reboot, then check with `nvidia-smi`.
+> - **When to use:** Only on GPU VM sizes, before Ollama can use the GPU.
+
 ```bash
 sudo apt install -y ubuntu-drivers-common
 sudo ubuntu-drivers install
@@ -168,6 +204,10 @@ nvidia-smi                                      # check after reboot
 ```
 
 ## 10. SSH Tunnel (Laptop to VM Ollama)
+
+> - **What:** Secure access to the VM's Ollama from your laptop.
+> - **How:** SSH port forwarding: laptop port 11435 -> VM localhost:11434 through the encrypted SSH connection.
+> - **When to use:** Using the remote model without opening port 11434 to the internet.
 
 ```powershell
 # Terminal 1: keep open (blank = working)
@@ -178,6 +218,10 @@ curl.exe http://localhost:11435/api/tags
 ```
 
 ## 11. Local App Using VM Ollama
+
+> - **What:** Pointing a local Python app at the VM's Ollama.
+> - **How:** Set `OLLAMA_HOST` to the tunnel address; the Ollama client uses it.
+> - **When to use:** Developing locally while the heavy model runs on the VM.
 
 `.env`
 
@@ -213,6 +257,10 @@ uvicorn app:app --reload                    # http://localhost:8000
 
 ## 12. Verify Requests Hit the VM
 
+> - **What:** Proving the app really uses the VM.
+> - **How:** Watch the VM's Ollama logs while the app runs; close the tunnel and the app should fail.
+> - **When to use:** After setup, or when you suspect the app uses a local Ollama instead.
+
 ```bash
 journalctl -u ollama -f                     # VM: see POST /api/embed and /api/chat
 ollama ps                                   # VM: model loaded
@@ -221,6 +269,10 @@ ollama ps                                   # VM: model loaded
 Close the tunnel: the app must fail.
 
 ## 13. Laptop (PowerShell)
+
+> - **What:** Checking your laptop's side: services, ports, env vars, IP.
+> - **How:** PowerShell cmdlets (see [02 - Terminal and PowerShell](02_terminal-powershell.md)).
+> - **When to use:** Something on the laptop blocks the tunnel port, or `OLLAMA_HOST` is not set.
 
 ```powershell
 Get-Service | Where-Object Status -eq Running                                   # services
@@ -245,6 +297,10 @@ Invoke-RestMethod https://api.ipify.org                                         
 | Slow answers | `think=False`, fewer chunks, `keep_alive`, GPU VM |
 
 ## 15. End of Session
+
+> - **What:** Shutting everything down so you are not billed.
+> - **How:** Stop the app and tunnel, then deallocate the VM and confirm its state.
+> - **When to use:** Always, at the end of every working session.
 
 ```powershell
 # Ctrl+C app and tunnel, exit VM, then:

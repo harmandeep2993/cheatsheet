@@ -36,6 +36,10 @@ Quick reference for everyday Linux commands (Ubuntu / Debian focus, works on mos
 
 ## 1. Basics and Shortcuts
 
+> - **What:** Everyday shell tricks: history, repeat, clear, and key shortcuts.
+> - **How:** Bash keeps a history; `!!` repeats the last command, shortcuts edit the current line.
+> - **When to use:** You forgot `sudo` (`sudo !!`), or want to re-run a long command from earlier.
+
 ```bash
 clear                           # clear screen (or Ctrl+L)
 history                         # previous commands
@@ -61,6 +65,10 @@ Linux is **case-sensitive**: `File.txt` and `file.txt` are different files.
 
 ## 2. Help
 
+> - **What:** Documentation built into Linux.
+> - **How:** `man` shows the full manual; `--help` shows a short summary.
+> - **When to use:** Unsure about a flag, for example what `-h` means for `df`.
+
 ```bash
 man ls                          # manual (q to quit, / to search)
 ls --help                       # short help
@@ -70,6 +78,10 @@ which python3                   # path of a command
 ```
 
 ## 3. Filesystem Layout
+
+> - **What:** Where Linux keeps configs, logs, programs and your files.
+> - **How:** One tree starting at `/`; everything (disks too) is a folder in it.
+> - **When to use:** Finding a config file (`/etc`), a log (`/var/log`), or your Windows drive in WSL (`/mnt/c`).
 
 | Path | Contains |
 |---|---|
@@ -88,6 +100,10 @@ Paths: `/` = root, `~` = home, `.` = current folder, `..` = parent folder. Files
 
 ## 4. Navigation
 
+> - **What:** Moving around folders and listing their contents.
+> - **How:** `cd` changes folder, `ls -la` lists with details and hidden files.
+> - **When to use:** Every session, especially after SSH into a server.
+
 ```bash
 pwd                             # current folder
 ls                              # list
@@ -104,6 +120,10 @@ cd -                            # previous folder
 ```
 
 ## 5. Files and Folders
+
+> - **What:** Creating, copying, moving and deleting files and folders.
+> - **How:** `touch`, `mkdir -p`, `cp -r`, `mv`, `rm -r`.
+> - **When to use:** Organising project files on a VM; there is no recycle bin, so double-check `rm`.
 
 ```bash
 touch file.txt                  # create empty file / update timestamp
@@ -123,6 +143,10 @@ ln -s /path/to/target link      # symbolic link (shortcut)
 
 ## 6. View Files
 
+> - **What:** Reading files from the terminal.
+> - **How:** `cat` for short files, `less` to scroll, `head` / `tail` for start / end, `tail -f` to follow.
+> - **When to use:** Reading a config, checking the last errors in a log, watching a log while testing.
+
 ```bash
 cat file.txt                    # whole file
 less file.txt                   # scroll (Space next page, / search, q quit)
@@ -136,6 +160,10 @@ diff a.txt b.txt                # differences
 ```
 
 ## 7. Edit Files (nano, vim)
+
+> - **What:** Editing text files directly on a server with no GUI.
+> - **How:** `nano` shows its shortcuts on screen; `vim` uses modes (insert and command).
+> - **When to use:** Changing a config file over SSH; use nano unless you already know vim.
 
 **nano** (easiest):
 
@@ -162,6 +190,10 @@ diff a.txt b.txt                # differences
 
 ## 8. Find Files
 
+> - **What:** Searching for files by name, age or size.
+> - **How:** `find <folder> <conditions>` walks the folder tree; `locate` uses a fast index.
+> - **When to use:** "Where did that .env / config / log end up?", "which files are over 100 MB?"
+
 ```bash
 find . -name "*.csv"                    # by name, from current folder
 find . -iname "readme*"                 # case-insensitive
@@ -172,6 +204,10 @@ locate nginx.conf                       # fast search (apt install plocate)
 ```
 
 ## 9. Search Text (grep)
+
+> - **What:** Searching for text inside files.
+> - **How:** `grep pattern file`; `-r` for a whole folder, `-i` ignore case, `-n` line numbers.
+> - **When to use:** Finding an error in logs, or every file that uses a function or setting.
 
 ```bash
 grep "error" app.log                    # lines containing text
@@ -186,6 +222,10 @@ grep -A 3 -B 3 "error" app.log          # 3 lines after / before
 ```
 
 ## 10. Text Processing
+
+> - **What:** Transforming text: sort, count, cut columns, replace.
+> - **How:** Small tools chained with pipes: `sort`, `uniq`, `cut`, `awk`, `sed`.
+> - **When to use:** Quick analysis of logs or CSVs on a server ("top 10 IPs in the access log").
 
 ```bash
 sort file.txt                           # sort lines
@@ -202,6 +242,10 @@ tr 'a-z' 'A-Z' < file.txt               # uppercase
 ```
 
 ## 11. Redirection and Pipes
+
+> - **What:** Sending output to files or into other commands.
+> - **How:** `>` overwrite, `>>` append, `2>&1` include errors, `|` pipe, `tee` screen + file.
+> - **When to use:** Saving command output, silencing noisy commands, building one-line pipelines.
 
 | Syntax | Meaning |
 |---|---|
@@ -222,6 +266,10 @@ cat a.txt b.txt > both.txt
 ```
 
 ## 12. Permissions
+
+> - **What:** Who may read, write or execute a file.
+> - **How:** Three groups (owner, group, others) x three rights (r=4, w=2, x=1); change with `chmod` / `chown`.
+> - **When to use:** "Permission denied" on a script, protecting SSH keys (`chmod 400`), fixing files owned by root.
 
 ```text
 -rwxr-xr--  1  user  group  1234  Jan 1 12:00  script.sh
@@ -250,6 +298,10 @@ sudo chown -R $USER:$USER folder/       # take ownership of folder
 
 ## 13. Users and sudo
 
+> - **What:** User accounts and running commands as administrator.
+> - **How:** `sudo` runs one command as root; groups grant extra rights (for example `docker`).
+> - **When to use:** Installing software, editing system configs, giving a user access to Docker.
+
 ```bash
 whoami                                  # current user
 id                                      # user id and groups
@@ -264,6 +316,10 @@ groups                                  # your groups
 ```
 
 ## 14. Packages (apt)
+
+> - **What:** Installing and updating software on Ubuntu / Debian.
+> - **How:** `apt` downloads packages from Ubuntu's repositories; always `apt update` first.
+> - **When to use:** Setting up a fresh VM, installing tools like git, htop, unzip.
 
 ```bash
 sudo apt update                         # refresh package list (do first)
@@ -282,6 +338,10 @@ Other distros: Fedora/RHEL `sudo dnf install <pkg>`, Arch `sudo pacman -S <pkg>`
 
 ## 15. Processes
 
+> - **What:** Running programs and how to stop them.
+> - **How:** `ps` / `top` / `htop` to see them, `kill` / `pkill` to stop by PID or name.
+> - **When to use:** A script hangs, a server uses 100% CPU, or a port is still taken by an old process.
+
 ```bash
 ps aux                                  # all processes
 ps aux | grep python                    # find one
@@ -295,6 +355,10 @@ killall python                          # kill all by name
 ```
 
 ## 16. Services (systemd) and Logs
+
+> - **What:** Background services (web servers, databases, Ollama) and their logs.
+> - **How:** `systemctl` starts / stops / enables services; `journalctl` reads their logs.
+> - **When to use:** A service is down after reboot, you changed its config, or need to see why it crashed.
 
 ```bash
 systemctl status nginx                  # status (q to quit)
@@ -314,6 +378,10 @@ sudo tail -f /var/log/syslog            # system log
 
 ## 17. Disk and Memory
 
+> - **What:** Disk space and memory usage.
+> - **How:** `df` per disk, `du` per folder, `free` for RAM.
+> - **When to use:** "No space left on device", or checking if a model fits in RAM.
+
 ```bash
 df -h                                   # free space per disk
 du -sh folder/                          # size of folder
@@ -323,6 +391,10 @@ lsblk                                   # disks and partitions
 ```
 
 ## 18. System Info
+
+> - **What:** Details about the OS, CPU and hardware.
+> - **How:** Read-only info commands like `uname`, `lscpu`, `/etc/os-release`.
+> - **When to use:** Checking the Ubuntu version before following a guide, or CPU / GPU of a VM.
 
 ```bash
 uname -a                                # kernel info
@@ -336,6 +408,10 @@ nvidia-smi                              # GPU (NVIDIA only)
 ```
 
 ## 19. Network
+
+> - **What:** IP addresses, connectivity, open ports and the firewall.
+> - **How:** `ip`, `ping`, `curl`, `ss` for listening ports, `ufw` for the firewall.
+> - **When to use:** "Is my app listening?", "can the VM reach the internet?", opening a port.
 
 ```bash
 ip a                                    # IP addresses
@@ -353,6 +429,10 @@ sudo ufw allow 22/tcp                   # open port
 ```
 
 ## 20. SSH and File Transfer
+
+> - **What:** Secure remote login and copying files between machines.
+> - **How:** SSH encrypts the connection; keys replace passwords; `scp` / `rsync` copy files over SSH.
+> - **When to use:** Working on a cloud VM, deploying files, or tunnelling a remote port to your laptop.
 
 ```bash
 ssh user@host                           # connect
@@ -380,6 +460,10 @@ Host myvm
 
 ## 21. Archives (tar, zip)
 
+> - **What:** Packing many files into one compressed file and unpacking it.
+> - **How:** `tar -czf` / `tar -xzf` for .tar.gz, `zip` / `unzip` for .zip.
+> - **When to use:** Backups, moving a project folder to a server, downloading release archives.
+
 ```bash
 tar -czvf archive.tar.gz folder/        # create .tar.gz
 tar -xzvf archive.tar.gz                # extract
@@ -394,6 +478,10 @@ Mnemonic: **c**reate / e**x**tract, **z** = gzip, **v** = verbose, **f** = file 
 
 ## 22. Environment Variables and PATH
 
+> - **What:** Variables that programs read, including PATH (where commands are found).
+> - **How:** `export NAME=value` for the session; add to `~/.bashrc` to keep it.
+> - **When to use:** "command not found" after installing to `~/.local/bin`, or configuring an app.
+
 ```bash
 echo $HOME                              # show one
 env                                     # show all
@@ -406,6 +494,10 @@ To keep it permanently, add the `export` line to `~/.bashrc`, then run `source ~
 
 ## 23. Aliases and .bashrc
 
+> - **What:** Short names for long commands, loaded at every login.
+> - **How:** `alias` defines one; `~/.bashrc` runs at each new shell so aliases persist.
+> - **When to use:** You type the same long command often (`ll`, `gs` for git status).
+
 ```bash
 alias ll='ls -la'                       # create alias (session)
 alias                                   # list aliases
@@ -415,6 +507,10 @@ source ~/.bashrc                        # reload without logging out
 ```
 
 ## 24. Shell Scripts
+
+> - **What:** A file of commands that runs as a program.
+> - **How:** Start with `#!/bin/bash`, `chmod +x`, run with `./script.sh`.
+> - **When to use:** Repeating the same multi-step task: backups, deploys, setup of a new server.
 
 ```bash
 #!/bin/bash
@@ -441,6 +537,10 @@ bash backup.sh                          # run without chmod
 
 ## 25. Scheduled Jobs (cron)
 
+> - **What:** Running commands automatically on a schedule.
+> - **How:** `crontab -e`; each line = minute hour day month weekday command.
+> - **When to use:** Nightly backups, hourly data pulls, cleaning old logs.
+
 ```bash
 crontab -e                              # edit your jobs
 crontab -l                              # list jobs
@@ -454,6 +554,10 @@ crontab -l                              # list jobs
 ```
 
 ## 26. Long-Running Jobs
+
+> - **What:** Keeping a command running after you close the terminal or SSH.
+> - **How:** `nohup` / `&` for simple cases, `tmux` for a session you can re-attach to.
+> - **When to use:** Training a model or running a server on a VM while you disconnect.
 
 ```bash
 command &                               # run in background

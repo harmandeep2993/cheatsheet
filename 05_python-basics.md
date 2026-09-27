@@ -36,6 +36,10 @@ Quick reference for core Python syntax (Python 3.10+).
 
 ## 1. Run Python
 
+> - **What:** Ways to start Python code.
+> - **How:** Interactive shell for experiments, `python file.py` for scripts, `-m` for modules.
+> - **When to use:** Quick test in the shell; real work in files.
+
 ```powershell
 python                          # interactive shell (exit() or Ctrl+Z Enter to leave)
 python script.py                # run a file
@@ -44,6 +48,10 @@ python -c "print(1 + 1)"        # run one line
 ```
 
 ## 2. Variables and Data Types
+
+> - **What:** Names that hold values, and the basic value types.
+> - **How:** Assign with `=`; Python figures out the type (str, int, float, bool, None).
+> - **When to use:** Everywhere; know the types to avoid errors like adding text to a number.
 
 ```python
 name = "Harman"                 # str
@@ -64,6 +72,10 @@ Falsy values: `False`, `None`, `0`, `0.0`, `""`, `[]`, `{}`, `set()`. Everything
 
 ## 3. Numbers and Operators
 
+> - **What:** Arithmetic and comparison.
+> - **How:** Operators `+ - * / // % **`, comparisons return True / False.
+> - **When to use:** Calculations, conditions, loop counters.
+
 ```python
 7 + 2 ; 7 - 2 ; 7 * 2           # 9, 5, 14
 7 / 2                           # 3.5   (always float)
@@ -79,6 +91,10 @@ x += 1                          # x = x + 1 (also -=, *=, /=)
 Comparison: `==  !=  >  <  >=  <=`. Logic: `and  or  not`. Identity: `is`, `is not` (use for `None`).
 
 ## 4. Strings
+
+> - **What:** Working with text.
+> - **How:** Strings are sequences: index / slice them and use methods like `split`, `replace`, `strip`.
+> - **When to use:** Cleaning input, parsing file names, building messages.
 
 ```python
 s = "Hello World"
@@ -106,6 +122,10 @@ path = r"C:\new\folder"         # raw string: backslashes kept
 
 ## 5. f-Strings and Formatting
 
+> - **What:** Putting values into text with formatting.
+> - **How:** Prefix with `f` and put expressions in `{}`; add `:` format codes.
+> - **When to use:** Printing results, log messages, reports (decimals, percent, thousands separators).
+
 ```python
 name, score = "Ana", 0.8765
 f"Hello {name}"                 # 'Hello Ana'
@@ -119,6 +139,10 @@ f"{2 + 3}"                      # expressions allowed
 ```
 
 ## 6. Lists
+
+> - **What:** Ordered, changeable collections.
+> - **How:** `[a, b, c]`; add with `append`, remove with `remove` / `pop`, access by index.
+> - **When to use:** Any sequence of items: rows, file names, results you collect in a loop.
 
 Ordered, changeable, allows duplicates.
 
@@ -147,6 +171,10 @@ first, *rest = [1, 2, 3]        # unpacking: first=1, rest=[2, 3]
 
 ## 7. Tuples
 
+> - **What:** Ordered collections that cannot change.
+> - **How:** `(a, b)`; often unpacked into variables.
+> - **When to use:** Fixed groups like coordinates, or returning several values from a function.
+
 Ordered, **unchangeable**.
 
 ```python
@@ -156,6 +184,10 @@ single = (5,)                   # one-element tuple needs a comma
 ```
 
 ## 8. Dictionaries
+
+> - **What:** Key-value lookup tables.
+> - **How:** `{"key": value}`; access by key, `.get()` for a safe default.
+> - **When to use:** Config settings, JSON data, counting items, mapping codes to names.
 
 Key-value pairs.
 
@@ -181,6 +213,10 @@ counts[word] = counts.get(word, 0) + 1   # counting pattern
 
 ## 9. Sets
 
+> - **What:** Collections of unique values.
+> - **How:** `{a, b}` or `set(list)`; supports union, intersection, difference.
+> - **When to use:** Removing duplicates, fast "is x in here?" checks, comparing two lists.
+
 Unordered, unique values.
 
 ```python
@@ -194,6 +230,10 @@ empty = set()                   # {} is an empty dict, not a set
 ```
 
 ## 10. Conditions
+
+> - **What:** Running code only when a condition is true.
+> - **How:** `if` / `elif` / `else`; `match` for many fixed cases.
+> - **When to use:** Validating input, choosing behaviour based on a value.
 
 ```python
 if age >= 18:
@@ -219,6 +259,10 @@ match command:                                  # Python 3.10+
 ```
 
 ## 11. Loops
+
+> - **What:** Repeating code.
+> - **How:** `for` over any collection; `while` until a condition changes; `break` / `continue` to control it.
+> - **When to use:** Processing each file, row or item; retrying until something succeeds.
 
 ```python
 for item in ["a", "b", "c"]:
@@ -247,6 +291,10 @@ for x in nums:
 
 ## 12. Comprehensions
 
+> - **What:** One-line way to build lists, dicts and sets.
+> - **How:** `[expression for item in items if condition]`.
+> - **When to use:** Transforming or filtering a collection; replaces a 3-line loop with `append`.
+
 ```python
 [x * 2 for x in nums]                       # list
 [x for x in nums if x > 0]                  # with filter
@@ -258,6 +306,10 @@ sum(x * x for x in nums)                    # generator (no list created)
 ```
 
 ## 13. Functions
+
+> - **What:** Reusable, named blocks of code.
+> - **How:** `def name(params):` with `return`; defaults, `*args` and `**kwargs` for flexible input.
+> - **When to use:** Whenever you repeat code or a block does one clear job.
 
 ```python
 def greet(name, greeting="Hello"):
@@ -284,6 +336,10 @@ Never use a mutable default: `def f(items=[])` is shared between calls. Use `ite
 
 ## 14. Lambda, map, filter, sorted
 
+> - **What:** Small anonymous functions and functional helpers.
+> - **How:** `lambda x: ...` passed to `sorted`, `map`, `filter`, `max`.
+> - **When to use:** Sort by a field, pick the max by a key; short one-off logic.
+
 ```python
 square = lambda x: x ** 2
 list(map(str.upper, ["a", "b"]))                # ['A', 'B']
@@ -295,6 +351,10 @@ any(x > 10 for x in nums) ; all(x > 0 for x in nums)
 ```
 
 ## 15. Error Handling
+
+> - **What:** Handling errors without crashing.
+> - **How:** `try` risky code, `except` specific errors, `finally` for cleanup; `raise` your own.
+> - **When to use:** Reading files, parsing user input, calling APIs: things that can fail at runtime.
 
 ```python
 try:
@@ -318,6 +378,10 @@ Always catch a specific exception type, never a bare `except:`.
 
 ## 16. Files
 
+> - **What:** Reading and writing text files.
+> - **How:** `with open(...) as f:` closes the file automatically.
+> - **When to use:** Reading config / data files, writing results or logs.
+
 ```python
 with open("notes.txt", "r", encoding="utf-8") as f:
     text = f.read()             # whole file as string
@@ -335,6 +399,10 @@ with open("out.txt", "w", encoding="utf-8") as f:   # "w" overwrite, "a" append
 
 ## 17. Paths (pathlib)
 
+> - **What:** Working with file paths in a way that works on Windows and Linux.
+> - **How:** `Path` objects joined with `/`; methods to read, write, list and check files.
+> - **When to use:** Any file handling; avoids hard-coded `\` vs `/` problems.
+
 ```python
 from pathlib import Path
 
@@ -351,6 +419,10 @@ Path(__file__).parent                   # folder of the current script
 ```
 
 ## 18. JSON and CSV
+
+> - **What:** Reading and writing JSON and CSV with the standard library.
+> - **How:** `json.load` / `json.dump`; `csv.DictReader` for rows as dicts.
+> - **When to use:** API responses and config (JSON), small tabular files when pandas is not needed (CSV).
 
 ```python
 import json
@@ -372,6 +444,10 @@ For real data work, use pandas (see [09 - Pandas](09_pandas.md)).
 
 ## 19. Modules and Imports
 
+> - **What:** Using code from other files and libraries.
+> - **How:** `import module` or `from module import name`; folders with `__init__.py` are packages.
+> - **When to use:** Splitting a project into files, using libraries like pandas.
+
 ```python
 import math
 from math import sqrt, pi
@@ -390,6 +466,10 @@ project/
 ```
 
 ## 20. Classes
+
+> - **What:** Custom types that bundle data and behaviour.
+> - **How:** `class` with `__init__` for data and methods for behaviour; inheritance to extend.
+> - **When to use:** Modelling things with state and actions (an account, an API client, a game object).
 
 ```python
 class Account:
@@ -426,6 +506,10 @@ print(acc)                                  # Account('Ana', 150)
 
 ## 21. Dataclasses
 
+> - **What:** Classes for holding data with almost no boilerplate.
+> - **How:** `@dataclass` generates `__init__`, `__repr__` and comparison from type-annotated fields.
+> - **When to use:** Records like a product, config or API result where you mainly store fields.
+
 Less boilerplate for classes that mainly hold data.
 
 ```python
@@ -443,6 +527,10 @@ p                               # Product(name='Pen', price=1.5, tags=[])
 
 ## 22. Type Hints
 
+> - **What:** Declaring expected types for variables and functions.
+> - **How:** `name: type` and `-> return_type`; checked by editors and mypy, not at runtime.
+> - **When to use:** Any code you will maintain; catches bugs early and improves autocomplete.
+
 ```python
 def average(values: list[float]) -> float:
     return sum(values) / len(values)
@@ -455,6 +543,10 @@ maybe: int | None = None        # Python 3.10+ (older: Optional[int])
 Hints are not enforced at runtime; tools like VS Code (Pylance) and mypy use them to catch bugs.
 
 ## 23. Useful Built-ins
+
+> - **What:** Functions available without importing, plus a few standard helpers.
+> - **How:** Built-ins like `len`, `zip`, `enumerate`; `Counter` / `defaultdict` from collections.
+> - **When to use:** Counting, pairing lists, looping with an index.
 
 ```python
 len() ; sum() ; min() ; max() ; abs() ; round()
@@ -471,6 +563,10 @@ groups = defaultdict(list)                # missing key -> empty list
 
 ## 24. Dates and Times
 
+> - **What:** Dates, times and time differences.
+> - **How:** `datetime` objects; `strftime` to text, `strptime` from text, `timedelta` for arithmetic.
+> - **When to use:** Timestamps in logs, date filters, "days until" calculations.
+
 ```python
 from datetime import datetime, date, timedelta
 
@@ -485,6 +581,10 @@ tomorrow = today + timedelta(days=1)
 Format codes: `%Y` year, `%m` month, `%d` day, `%H` hour, `%M` minute, `%S` second, `%A` weekday name.
 
 ## 25. Logging
+
+> - **What:** Recording what a program does, with levels and timestamps.
+> - **How:** `logging.getLogger(__name__)`, then `.info()`, `.warning()`, `.error()`.
+> - **When to use:** Any script or app beyond a quick test, instead of `print()`.
 
 Use logging instead of `print()` in real programs.
 
@@ -502,6 +602,10 @@ logger.exception("crash")       # inside except: includes traceback
 ```
 
 ## 26. Script Entry Point and Arguments
+
+> - **What:** Making a file runnable as a script with command-line options.
+> - **How:** `if __name__ == "__main__":` runs only when executed directly; `argparse` reads options.
+> - **When to use:** Tools you run with different inputs (`python clean.py data.csv --limit 5`).
 
 ```python
 import argparse

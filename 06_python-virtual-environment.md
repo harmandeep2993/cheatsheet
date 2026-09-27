@@ -22,6 +22,10 @@ Quick reference for creating and managing Python virtual environments with `venv
 
 ## 1. What and Why
 
+> - **What:** An isolated Python setup per project.
+> - **How:** A folder (`.venv`) holding its own Python and packages, separate from the system.
+> - **When to use:** Every Python project, so package versions never clash between projects.
+
 A virtual environment is an isolated folder with its own Python interpreter and its own installed packages.
 
 - Each project gets its own package versions, so projects do not conflict.
@@ -32,6 +36,10 @@ Common folder names: `.venv` (recommended), `venv`, `env`.
 
 ## 2. Check Python Installation
 
+> - **What:** Checking Python is installed and which version.
+> - **How:** `python --version`; on Windows `py -0` lists all installed versions.
+> - **When to use:** Before creating a venv, or when a project needs a specific Python version.
+
 ```powershell
 python --version        # Windows
 py --version            # Windows launcher
@@ -41,6 +49,10 @@ python3 --version       # Mac / Linux
 
 ## 3. Create
 
+> - **What:** Creating the environment folder.
+> - **How:** `python -m venv .venv` copies / links a Python interpreter into `.venv`.
+> - **When to use:** Once per project, right after creating or cloning it.
+
 ```powershell
 python -m venv .venv            # Windows
 python3 -m venv .venv           # Mac / Linux
@@ -48,6 +60,10 @@ py -3.12 -m venv .venv          # specific Python version (Windows)
 ```
 
 ## 4. Activate
+
+> - **What:** Switching the terminal to use the venv's Python and pip.
+> - **How:** Run the activate script for your shell; the prompt then shows `(.venv)`.
+> - **When to use:** Every new terminal before running or installing anything for the project.
 
 | Shell | Command |
 |---|---|
@@ -72,11 +88,19 @@ python -c "import sys; print(sys.prefix)"
 
 ## 5. Deactivate
 
+> - **What:** Switching back to the system Python.
+> - **How:** `deactivate` undoes the activation in the current terminal.
+> - **When to use:** Moving to another project in the same terminal.
+
 ```powershell
 deactivate
 ```
 
 ## 6. Install and Manage Packages
+
+> - **What:** Adding, upgrading, removing and inspecting packages.
+> - **How:** `pip` installs from PyPI into the active environment.
+> - **When to use:** Whenever the project needs a new library or a different version.
 
 ```powershell
 pip install pandas                  # install latest
@@ -91,6 +115,10 @@ pip show pandas                     # details of one package
 
 ## 7. requirements.txt
 
+> - **What:** A file listing the exact packages the project needs.
+> - **How:** `pip freeze` writes installed versions; `pip install -r` reinstalls them.
+> - **When to use:** Sharing a project, deploying it, or rebuilding the venv on another machine.
+
 ```powershell
 pip freeze > requirements.txt       # save current packages
 pip install -r requirements.txt     # install from file
@@ -98,11 +126,19 @@ pip install -r requirements.txt     # install from file
 
 ## 8. Upgrade pip
 
+> - **What:** Updating pip itself.
+> - **How:** `python -m pip install --upgrade pip` inside the venv.
+> - **When to use:** Right after creating a venv, or when pip warns it is outdated.
+
 ```powershell
 python -m pip install --upgrade pip
 ```
 
 ## 9. Delete
+
+> - **What:** Removing an environment completely.
+> - **How:** Delete the `.venv` folder; nothing else is installed system-wide.
+> - **When to use:** The venv is broken, the project moved, or you want a clean reinstall.
 
 Deactivate first, then delete the folder:
 
@@ -114,11 +150,19 @@ rm -rf .venv                        # Mac / Linux
 
 ## 10. Use in VS Code
 
+> - **What:** Making VS Code use the project venv.
+> - **How:** Select the interpreter inside `.venv`; VS Code then activates it in new terminals.
+> - **When to use:** Imports show red squiggles, or Run uses the wrong Python.
+
 1. `Ctrl+Shift+P` -> **Python: Select Interpreter**
 2. Choose the one inside `.venv`
 3. New terminals will activate it automatically
 
 ## 11. Git: Ignore the Environment
+
+> - **What:** Keeping the venv out of Git.
+> - **How:** Add the venv folder to `.gitignore`; commit only `requirements.txt`.
+> - **When to use:** Every project; venvs are large and machine-specific.
 
 Add to `.gitignore` (commit `requirements.txt`, never the environment folder):
 
@@ -129,6 +173,10 @@ env/
 ```
 
 ## 12. Typical Workflow
+
+> - **What:** The full step-by-step flow for new and cloned projects.
+> - **How:** Create, activate, upgrade pip, install, freeze.
+> - **When to use:** Starting any project; copy the block as a checklist.
 
 ```powershell
 # New project
