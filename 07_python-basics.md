@@ -2,6 +2,36 @@
 
 Quick reference for core Python syntax (Python 3.10+).
 
+## Introduction
+
+### What is Python?
+
+Python is a general-purpose programming language known for readable, almost English-like code. It is **interpreted** (you run the code directly, no compile step) and **dynamically typed** (you do not declare types). A huge ecosystem of free libraries makes it the leading language for data analysis, machine learning, automation, web APIs and scripting.
+
+### Why use it?
+
+- **Easy to read and learn**: less syntax noise, indentation instead of braces.
+- **Libraries for everything**: NumPy, pandas, scikit-learn, FastAPI, requests, and 500,000+ more on PyPI.
+- **Data and AI standard**: most data science and ML work is done in Python.
+- **Automation**: scripts to rename files, call APIs, process spreadsheets.
+- **Runs everywhere**: Windows, macOS, Linux, servers, notebooks.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Interpreter | The program that runs Python code (`python`) |
+| Script | A `.py` file you run |
+| Module / package | A `.py` file / a folder of modules you can import |
+| Library | A package made by others (pandas, requests) |
+| PyPI | The Python Package Index where libraries are published |
+| pip / uv | Tools to install packages |
+| Indentation | Spaces at the start of a line that define code blocks |
+
+**Where it fits:** the base for [08 - venv](08_python-virtual-environment.md), [11 - NumPy](11_numpy.md), [12 - Pandas](12_pandas.md), [16 - Scikit-learn](16_scikit-learn.md) and [17 - FastAPI](17_fastapi.md).
+
+---
+
 ## Contents
 
 1. [Run Python](#1-run-python)

@@ -2,6 +2,37 @@
 
 Quick reference for data analysis with pandas.
 
+## Introduction
+
+### What is pandas?
+
+pandas is the most popular Python library for working with **tabular data** (rows and columns, like Excel or a SQL table). Its main object is the **DataFrame**: a table with named columns, where each column can have its own type (numbers, text, dates). pandas can read and write CSV, Excel, JSON and SQL, and gives you tools to clean, filter, transform, group, merge and summarise data with a few lines of code.
+
+### Why use it?
+
+- **Read almost any data source** into one consistent structure.
+- **Clean messy data**: missing values, duplicates, wrong types, inconsistent text.
+- **Analyse quickly**: filter rows, group and aggregate, pivot tables, statistics.
+- **Combine datasets** like SQL joins.
+- **Handles more data than Excel** and every step is repeatable as code.
+- **Works with everything**: plots (matplotlib / seaborn), ML (scikit-learn), APIs, databases.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| DataFrame | A table: rows and named columns |
+| Series | One column (or row) with an index |
+| Index | Row labels (default 0, 1, 2, ...) |
+| dtype | Data type of a column (`int64`, `float64`, `object`, `datetime64`) |
+| NaN | Missing value |
+| Vectorised operation | Works on a whole column at once, no loop |
+| groupby | Split rows into groups, then aggregate each |
+
+**Where it fits:** built on [11 - NumPy](11_numpy.md); plots with [14 - Matplotlib](14_matplotlib.md) / [15 - Seaborn](15_seaborn.md); feeds [16 - Scikit-learn](16_scikit-learn.md). SQL equivalents: [13 - SQL](13_sql.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

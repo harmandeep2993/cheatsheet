@@ -2,6 +2,35 @@
 
 Quick reference for numerical arrays with NumPy (the base library under pandas, matplotlib and scikit-learn).
 
+## Introduction
+
+### What is NumPy?
+
+NumPy (Numerical Python) is the core library for numbers in Python. Its main object is the **ndarray**: a grid of values (1D vector, 2D matrix, or more dimensions) that all have the same type. Operations on arrays run in fast compiled C code and apply to all elements at once, so you rarely need Python loops. pandas, matplotlib, scikit-learn and most scientific libraries are built on top of NumPy.
+
+### Why use it?
+
+- **Speed**: array maths is often 10 to 100 times faster than Python lists and loops.
+- **Less code**: `a * 2` doubles a million numbers; no loop needed (vectorisation).
+- **Maths toolbox**: statistics, linear algebra, random numbers, rounding, trigonometry.
+- **Memory efficient**: compact storage of large numeric data.
+- **Foundation**: understanding arrays, shapes and `axis` makes pandas and ML much easier.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| ndarray | NumPy's N-dimensional array |
+| Shape | Size of each dimension, e.g. `(3, 4)` = 3 rows, 4 columns |
+| dtype | The single data type of all elements (`int64`, `float64`) |
+| Axis | A dimension: `axis=0` rows direction, `axis=1` columns direction |
+| Vectorisation | Applying an operation to a whole array at once |
+| Broadcasting | Automatic stretching of arrays with different shapes |
+
+**Where it fits:** the base under [12 - Pandas](12_pandas.md), [14 - Matplotlib](14_matplotlib.md) and [16 - Scikit-learn](16_scikit-learn.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

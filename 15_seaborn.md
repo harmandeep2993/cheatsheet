@@ -2,6 +2,35 @@
 
 Quick reference for statistical plots with Seaborn (built on matplotlib, works directly with pandas DataFrames).
 
+## Introduction
+
+### What is Seaborn?
+
+Seaborn is a statistical visualisation library built on Matplotlib. You pass a pandas DataFrame and column names, and it creates attractive, informative charts in one line: distributions, comparisons between categories, relationships, regression lines and correlation heatmaps. It automatically handles grouping (`hue`), colours, legends and confidence intervals.
+
+### Why use it?
+
+- **Less code**: one call replaces many lines of Matplotlib.
+- **Built for DataFrames**: refer to columns by name.
+- **Statistics included**: averages with error bars, density curves, fitted regression lines.
+- **Good defaults**: nice themes and colour palettes out of the box.
+- **Fast exploration**: `pairplot` or `heatmap` of correlations gives a quick overview of a dataset.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| hue | Column used to colour groups |
+| Axes-level function | Draws one plot into a Matplotlib Axes (`boxplot`) |
+| Figure-level function | Creates a whole figure, can split into facets (`catplot`) |
+| Facet | One small plot per category value (`col=`, `row=`) |
+| Palette | Set of colours |
+| KDE | Smooth estimate of a distribution |
+
+**Where it fits:** needs [12 - Pandas](12_pandas.md) data; customise with [14 - Matplotlib](14_matplotlib.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

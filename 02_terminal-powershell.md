@@ -2,6 +2,36 @@
 
 Quick reference for everyday terminal work on Windows (PowerShell, CMD) with Bash equivalents (Linux, Mac, Git Bash).
 
+## Introduction
+
+### What is a terminal and what is PowerShell?
+
+A **terminal** is a text window where you type commands instead of clicking. The program that reads and runs those commands is the **shell**. Windows has two built-in shells: the old **CMD** (Command Prompt) and **PowerShell**, a modern shell from Microsoft. PowerShell commands are named `Verb-Noun` (`Get-Process`, `Remove-Item`) and pass **objects** (with properties like Name, CPU, Size) between commands instead of plain text, which makes filtering and sorting very powerful.
+
+### Why use it?
+
+- **Speed**: one command can do what takes many clicks (rename 100 files, find every CSV on a drive).
+- **Required by dev tools**: git, python, pip, uv, docker, az and ssh all run in a terminal.
+- **Automation**: save commands in a `.ps1` script and run them again anytime.
+- **Remote work**: servers and cloud VMs usually have no desktop, only a shell.
+- **Precision**: exact, repeatable steps you can copy into docs (like these guides).
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Shell | Program that interprets commands (PowerShell, CMD, Bash) |
+| Cmdlet | A PowerShell command (`Get-ChildItem`) |
+| Alias | Short name for a command (`ls` -> `Get-ChildItem`) |
+| Pipeline | Passing output to the next command with `\|` |
+| Path | Location of a file or folder (`D:\Projects\app`) |
+| PATH (env var) | List of folders where the shell looks for programs |
+| Working directory | The folder the terminal is currently "in" |
+
+**Where it fits:** the foundation for every other guide. Linux servers use Bash instead: see [03 - Linux](03_linux.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

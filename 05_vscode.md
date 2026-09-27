@@ -2,6 +2,36 @@
 
 Quick reference for Visual Studio Code on Windows (on Mac use `Cmd` instead of `Ctrl`, `Option` instead of `Alt`).
 
+## Introduction
+
+### What is VS Code?
+
+Visual Studio Code is a free code editor from Microsoft. It is lightweight like a text editor but becomes a full development environment through **extensions**: Python support, debugging, Jupyter notebooks, Git, Docker, remote servers and more. It runs on Windows, macOS and Linux and is the most used editor among developers and data scientists.
+
+### Why use it?
+
+- **One tool for everything**: code, terminal, Git, notebooks, debugger and Markdown preview in one window.
+- **Smart editing**: autocomplete, error highlighting, go to definition and rename across files (IntelliSense / Pylance).
+- **Debugger**: pause code, inspect variables, step line by line.
+- **Extensions**: add support for almost any language or tool.
+- **Remote development**: edit code on a VM, in WSL or inside a Docker container as if it were local.
+- **Free and fast**, with a huge community.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Workspace | The folder (project) you have open |
+| Command Palette | `Ctrl+Shift+P`: search box for every command |
+| Extension | Add-on that adds features |
+| Interpreter | The Python executable VS Code uses to run your code (pick your `.venv`) |
+| IntelliSense | Autocomplete and code understanding |
+| Breakpoint | A line where the debugger pauses |
+
+**Where it fits:** the editor for all other guides; pairs with [08 - venv](08_python-virtual-environment.md) / [09 - uv](09_uv.md) and [04 - Git](04_git.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

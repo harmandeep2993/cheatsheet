@@ -2,6 +2,37 @@
 
 Quick reference for SQL queries (standard SQL, notes for PostgreSQL / SQLite / MySQL where they differ) plus using SQL from Python and pandas.
 
+## Introduction
+
+### What is SQL?
+
+SQL (Structured Query Language) is the standard language for working with **relational databases**: systems that store data in tables linked by keys. With SQL you describe **what** data you want ("average salary per department, highest first") and the database works out **how** to get it efficiently. The same core language works in PostgreSQL, MySQL, SQLite, SQL Server, Snowflake, BigQuery and more, with small differences.
+
+### Why use it?
+
+- **Where business data lives**: customers, orders, transactions are almost always in a SQL database.
+- **Handles huge data**: databases filter and aggregate millions of rows before sending you the result.
+- **Declarative and readable**: a query says what you want, not how to loop.
+- **Reliable**: transactions, constraints and permissions keep data correct and safe.
+- **Must-have skill** for data analysts, data scientists and backend developers.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Database | A collection of tables managed by a database system |
+| Table / row / column | Data as a grid: records and fields |
+| Primary key | Unique ID of each row |
+| Foreign key | Column that links to another table's primary key |
+| Query | A `SELECT` statement that reads data |
+| JOIN | Combine rows from tables by a key |
+| Index | Structure that makes lookups on a column faster |
+| DDL / DML | Statements that define structure (CREATE) / change data (INSERT) |
+
+**Where it fits:** load query results into [12 - Pandas](12_pandas.md); run databases with [18 - Docker](18_docker.md).
+
+---
+
 ## Contents
 
 1. [Concepts](#1-concepts)

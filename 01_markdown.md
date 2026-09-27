@@ -2,6 +2,33 @@
 
 Quick reference for writing Markdown (README files, notes, GitHub docs).
 
+## Introduction
+
+### What is Markdown?
+
+Markdown is a simple way to format plain text using a few symbols. You write `# Title`, `**bold**` or `- item` in any text editor, and tools like GitHub, VS Code, Jupyter and many note apps turn it into nicely formatted headings, bold text and lists. The file stays readable even without rendering, which is why it is the standard for documentation.
+
+### Why use it?
+
+- **Readable everywhere**: the raw `.md` file is plain text; no special program needed to open it.
+- **Standard on GitHub**: every `README.md`, issue, pull request and wiki uses it.
+- **Works with Git**: plain text means clean diffs and history (Word files do not).
+- **Fast to write**: no mouse, no menus; formatting while you type.
+- **Used in many tools**: Jupyter Markdown cells, VS Code previews, documentation sites (MkDocs), chat apps.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Render | Turning Markdown symbols into formatted output |
+| GFM | GitHub Flavored Markdown: standard Markdown plus tables, task lists, alerts |
+| Anchor | Link target created from a heading (`#1-headings`) |
+| Code fence | Three backticks that start / end a code block |
+
+**Where it fits:** every guide in this repo is Markdown. Preview it in VS Code with `Ctrl+Shift+V` ([05 - VS Code](05_vscode.md)).
+
+---
+
 ## Contents
 
 1. [Headings](#1-headings)

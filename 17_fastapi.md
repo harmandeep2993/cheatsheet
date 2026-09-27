@@ -2,6 +2,49 @@
 
 Quick reference for building Python web APIs with FastAPI: routes, validation, dependencies, testing and deployment.
 
+## Introduction
+
+### What is FastAPI?
+
+FastAPI is a modern Python framework for building **web APIs**: programs that other programs talk to over HTTP. A client (web page, mobile app, another service, or `curl`) sends a request such as `POST /predict` with JSON data, and your FastAPI code returns a JSON response. FastAPI uses Python **type hints** and **Pydantic** models to validate incoming data automatically and to generate interactive documentation at `/docs`.
+
+### Why use it?
+
+- **Fast to write**: define a function, add a decorator, done.
+- **Automatic validation**: wrong or missing input gets a clear 422 error without extra code.
+- **Automatic docs**: Swagger UI at `/docs` to explore and test every endpoint in the browser.
+- **High performance**: built on Starlette and async I/O; one of the fastest Python frameworks.
+- **Editor support**: type hints give autocomplete and catch mistakes early.
+- **Perfect for ML and data**: wrap a scikit-learn model or an LLM in an API in minutes.
+
+### How a request flows
+
+```text
+Client (browser, app, curl)
+   | HTTP request: POST /predict  {"age": 42, ...}
+   v
+Uvicorn (server) -> FastAPI (routing) -> validation (Pydantic) -> your function
+   ^                                                                  |
+   +--------------- HTTP response: 200 {"churn": false} <-------------+
+```
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| API | Interface that lets programs talk to each other |
+| Endpoint / route | A URL + method your API answers (`GET /items`) |
+| HTTP method | The action: GET read, POST create, PUT/PATCH update, DELETE remove |
+| Status code | Result number: 200 OK, 404 not found, 422 invalid input |
+| JSON | Text format for data sent and received |
+| Pydantic model | Class that defines and validates data shape |
+| ASGI server (Uvicorn) | The program that runs your app and handles connections |
+| Dependency injection | FastAPI passes shared things (DB, settings) into endpoints via `Depends` |
+
+**Where it fits:** serves models from [16 - Scikit-learn](16_scikit-learn.md) or Ollama ([19 - Azure VM](19_azure-vm-ollama.md)); ship it with [18 - Docker](18_docker.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

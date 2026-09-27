@@ -2,6 +2,36 @@
 
 Quick reference for regular expressions (patterns that match text) in Python, pandas, grep, PowerShell, VS Code and SQL.
 
+## Introduction
+
+### What is Regex?
+
+A **regular expression** (regex) is a pattern that describes text. Instead of searching for one exact word, you describe a shape: "four digits, a dash, two digits" (`\d{4}-\d{2}`) or "anything that looks like an email". A regex engine then finds, checks, extracts or replaces every piece of text that matches. The same pattern language works (with small differences) in Python, pandas, SQL, grep, PowerShell, VS Code and most programming languages.
+
+### Why use it?
+
+- **Validate input**: check that an email, postcode or date has the right format.
+- **Extract data**: pull numbers, IDs, dates or URLs out of messy text and logs.
+- **Clean data**: remove extra spaces, strip symbols from phone numbers, normalise formats.
+- **Powerful find-and-replace**: reorder `27/09/2026` into `2026-09-27` across 100 files at once.
+- **Search logs**: find every ERROR or WARNING line with one pattern.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Pattern | The regex itself, e.g. `\d+` |
+| Match | A piece of text the pattern fits |
+| Metacharacter | A symbol with special meaning (`. * + ? ^ $`) |
+| Character class | A set of allowed characters, e.g. `[a-z]` or `\d` |
+| Quantifier | How many times something repeats (`+`, `{3}`) |
+| Group | Part of a pattern in `( )` you can extract separately |
+| Flag | Option that changes matching, e.g. ignore case |
+
+**Where it fits:** used inside [07 - Python](07_python-basics.md), [12 - Pandas](12_pandas.md), [13 - SQL](13_sql.md), [03 - Linux](03_linux.md) (grep) and [05 - VS Code](05_vscode.md) (search).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

@@ -2,6 +2,46 @@
 
 Quick reference for machine learning with scikit-learn: preprocessing, models, evaluation, tuning and saving.
 
+## Introduction
+
+### What is Scikit-learn?
+
+Scikit-learn (`sklearn`) is the standard Python library for **classical machine learning** on tabular data. Machine learning means a program learns patterns from example data instead of following hand-written rules: show it past customers with a "churned yes / no" label, and it learns to predict churn for new customers. Scikit-learn provides ready-made algorithms (models) plus everything around them: data preprocessing, splitting, evaluation, tuning and pipelines, all with the same simple `fit` / `predict` interface.
+
+### Why use it?
+
+- **Consistent API**: every model uses `fit`, `predict`, `score`; switching models is one line.
+- **Complete toolkit**: preprocessing, models, metrics, cross-validation and tuning in one library.
+- **Pipelines** prevent common mistakes like data leakage and make deployment easy.
+- **Well documented and tested**; the reference in industry and teaching.
+- **Right tool for tabular data**: often beats deep learning on spreadsheets and database tables.
+
+### Types of machine learning
+
+| Type | Goal | Example | Models |
+|---|---|---|---|
+| Regression (supervised) | Predict a number | House price | LinearRegression, RandomForestRegressor |
+| Classification (supervised) | Predict a category | Spam or not | LogisticRegression, RandomForestClassifier |
+| Clustering (unsupervised) | Find groups without labels | Customer segments | KMeans, DBSCAN |
+| Dimensionality reduction | Fewer columns, keep information | Visualise 50 features in 2D | PCA |
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Features (`X`) | Input columns the model learns from |
+| Target (`y`) | The column to predict |
+| Training / test set | Data to learn from / data held back to check performance |
+| Model / estimator | An algorithm object with `fit` and `predict` |
+| Hyperparameter | Setting you choose before training (`max_depth`) |
+| Overfitting | Model memorises training data and fails on new data |
+| Data leakage | Information from the test data or the answer sneaks into training |
+| Pipeline | Preprocessing steps + model as one object |
+
+**Where it fits:** uses data prepared with [12 - Pandas](12_pandas.md); serve the trained model with [17 - FastAPI](17_fastapi.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

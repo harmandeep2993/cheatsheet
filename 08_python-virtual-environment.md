@@ -2,6 +2,35 @@
 
 Quick reference for creating and managing Python virtual environments with `venv` and `pip`. For a faster all-in-one tool, see [09 - uv](09_uv.md).
 
+## Introduction
+
+### What is a virtual environment?
+
+A **virtual environment** is a private folder (usually `.venv`) that contains its own Python interpreter and its own set of installed packages. Each project gets its own environment, so installing or upgrading a package for one project never affects another project or the Python installed on your system. `venv` is the tool built into Python that creates these environments, and `pip` is the tool that installs packages into them.
+
+### Why use it?
+
+- **No version conflicts**: project A can use pandas 1.5 while project B uses pandas 2.2.
+- **Clean system**: your global Python stays untouched.
+- **Reproducible**: `requirements.txt` lists exact packages so anyone can rebuild the same environment.
+- **Easy reset**: something broken? delete `.venv` and recreate it in a minute.
+- **Deployment**: the same package list goes to servers and Docker images.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| venv | Built-in Python module that creates environments |
+| `.venv` | The environment folder in your project |
+| Activate | Switch the terminal to use the environment's Python |
+| pip | Package installer for Python |
+| requirements.txt | Text file listing the project's packages and versions |
+| Interpreter | The `python` executable that runs your code |
+
+**Where it fits:** needed before installing any library. A faster modern alternative that does all of this and more: [09 - uv](09_uv.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

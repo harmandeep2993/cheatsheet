@@ -2,6 +2,47 @@
 
 Quick reference for building and running containers with Docker and Docker Compose.
 
+## Introduction
+
+### What is Docker?
+
+Docker packages an application together with everything it needs to run (Python version, libraries, system tools, settings) into an **image**. You then start that image as a **container**: an isolated, lightweight process that runs the same way on your laptop, a colleague's laptop, a test server or the cloud. Unlike a virtual machine, a container shares the host's operating system kernel, so it starts in seconds and uses little memory.
+
+### Why use it?
+
+- **"Works on my machine" solved**: the same image runs identically everywhere.
+- **Easy setup**: run PostgreSQL, Redis or Ollama with one command, no installation.
+- **Isolation**: each app has its own dependencies; no conflicts between projects.
+- **Simple deployment**: build once, push to a registry, run on any server or cloud service.
+- **Multi-service apps**: Docker Compose starts API + database + cache together.
+- **Clean machine**: remove a container and nothing is left behind.
+
+### Container vs virtual machine
+
+| | Container | Virtual machine |
+|---|---|---|
+| Contains | App + libraries | Full operating system + app |
+| Start time | Seconds | Minutes |
+| Size | MBs to a few GB | Many GB |
+| Isolation | Process level (shares host kernel) | Full hardware virtualisation |
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Image | Read-only package / template of an app |
+| Container | Running instance of an image |
+| Dockerfile | Recipe that builds an image |
+| Layer | One cached step of an image build |
+| Registry | Storage for images (Docker Hub, Azure Container Registry) |
+| Volume | Persistent storage that survives container removal |
+| Port mapping | Connect a host port to a container port (`-p 8000:8000`) |
+| Compose | Tool to run several containers from one YAML file |
+
+**Where it fits:** packages apps from [17 - FastAPI](17_fastapi.md); uses [03 - Linux](03_linux.md) inside containers; runs on VMs like [19 - Azure VM](19_azure-vm-ollama.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

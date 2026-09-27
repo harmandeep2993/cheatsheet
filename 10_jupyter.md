@@ -2,6 +2,36 @@
 
 Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebooks in VS Code).
 
+## Introduction
+
+### What is Jupyter?
+
+Jupyter is an interactive environment where you write and run code in small blocks called **cells** inside a **notebook** (`.ipynb` file). The output of each cell (tables, charts, text) appears right below it, and you can mix code with Markdown explanations. **JupyterLab** is the browser-based app; VS Code can open notebooks too. Behind every notebook runs a **kernel**: the Python process that executes your cells and keeps variables in memory between them.
+
+### Why use it?
+
+- **Explore step by step**: run one cell, look at the result, adjust, run again, without re-running everything.
+- **See results immediately**: DataFrames and plots show inline.
+- **Tell a story**: combine code, results and explanations in one document.
+- **Great for data analysis, teaching and prototyping** ML models.
+- **Share and export**: HTML / PDF reports, or share the notebook itself.
+
+Notebooks are less suited for production code: move stable code into `.py` modules and scripts.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Notebook | The `.ipynb` document with cells |
+| Cell | One block of code or Markdown |
+| Kernel | The Python process that runs the cells |
+| Magic command | Jupyter helper starting with `%` or `%%` (`%timeit`) |
+| Execution count | The number `[5]` showing the order cells ran |
+
+**Where it fits:** the usual place to work with [11 - NumPy](11_numpy.md), [12 - Pandas](12_pandas.md), [14 - Matplotlib](14_matplotlib.md) and [16 - Scikit-learn](16_scikit-learn.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

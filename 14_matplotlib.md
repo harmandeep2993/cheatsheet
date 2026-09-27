@@ -2,6 +2,35 @@
 
 Quick reference for plotting with Matplotlib (the base plotting library; seaborn and pandas `.plot()` build on it).
 
+## Introduction
+
+### What is Matplotlib?
+
+Matplotlib is Python's original and most widely used plotting library. It can draw almost any 2D chart: lines, bars, scatter plots, histograms, heatmaps and more, and you control every detail (colours, labels, sizes, layout). A chart is a **Figure** (the whole image) containing one or more **Axes** (individual plots). Seaborn and pandas' `.plot()` are built on top of Matplotlib.
+
+### Why use it?
+
+- **Visualise data** to spot trends, outliers and patterns numbers hide.
+- **Full control** over every element for publication-quality charts.
+- **Many output formats**: PNG, SVG, PDF for reports, slides and papers.
+- **Works everywhere**: scripts, Jupyter, web apps.
+- **Foundation**: knowing Matplotlib lets you customise Seaborn and pandas plots too.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Figure | The whole image / window |
+| Axes | One plot area inside a figure (with its x and y axis) |
+| pyplot (`plt`) | The quick, state-based interface |
+| Artist | Anything drawn: lines, text, patches |
+| Colormap (`cmap`) | Mapping from values to colours |
+| DPI | Resolution of saved images |
+
+**Where it fits:** plots data from [11 - NumPy](11_numpy.md) and [12 - Pandas](12_pandas.md); higher-level statistical plots in [15 - Seaborn](15_seaborn.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

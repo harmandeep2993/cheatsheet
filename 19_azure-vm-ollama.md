@@ -2,6 +2,55 @@
 
 Quick reference for running Ollama on an Azure Ubuntu VM and using it from a local app via SSH tunnel.
 
+## Introduction
+
+### What is this setup?
+
+This guide combines three things:
+
+- **Azure** is Microsoft's cloud platform. A **Virtual Machine (VM)** is a computer in Azure's data centre that you rent by the hour and control remotely.
+- **Linux (Ubuntu)** is the operating system on that VM; you manage it over **SSH** from your laptop.
+- **Ollama** is a tool that downloads and runs open-source large language models (LLMs such as Qwen, Llama, Mistral) locally and serves them through an HTTP API on port 11434.
+
+Together: the heavy AI model runs on a powerful (optionally GPU) cloud machine, and your local app talks to it securely through an **SSH tunnel**, as if the model were running on your laptop.
+
+### Why use it?
+
+- **More power than a laptop**: bigger CPUs, more RAM, or GPUs for larger models.
+- **Private**: the model runs on your own VM; no prompts go to a third-party AI service.
+- **Pay per use**: start the VM when you work, deallocate it afterwards to stop compute costs.
+- **Secure by design**: SSH keys, firewall (NSG) rules limited to your IP, and no public LLM port.
+- **Real-world skills**: cloud CLI, Linux administration, networking and LLM serving.
+
+### Architecture
+
+```text
+Laptop                                         Azure VM (Ubuntu)
++----------------------+   SSH tunnel (22)    +------------------------+
+| app.py               | ===================> | Ollama :11434          |
+| OLLAMA_HOST=         |   localhost:11435    |  - qwen3:4b (chat)     |
+|   localhost:11435    |   -> VM :11434       |  - bge-m3 (embeddings) |
++----------------------+                      +------------------------+
+         NSG firewall: only port 22, only from your IP
+```
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Resource group | Folder in Azure that holds related resources |
+| VM size | CPU / RAM / GPU combination you rent (e.g. Standard_D2s_v5) |
+| Deallocate | Stop the VM and its compute billing (disk still billed) |
+| NSG | Network Security Group: firewall rules for the VM |
+| SSH key | Private / public key pair used instead of a password |
+| SSH tunnel | Forwarding a local port through SSH to a port on the VM |
+| LLM | Large language model that generates text |
+| Embedding model | Model that turns text into vectors for search / RAG |
+
+**Where it fits:** uses [02 - PowerShell](02_terminal-powershell.md), [03 - Linux](03_linux.md), [08 - venv](08_python-virtual-environment.md) and can be wrapped in an API with [17 - FastAPI](17_fastapi.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

@@ -2,6 +2,39 @@
 
 Quick reference for version control with Git and working with GitHub (including the `gh` CLI).
 
+## Introduction
+
+### What is Git?
+
+Git is a **version control system**: it records the history of your project as a series of snapshots called **commits**. Every commit stores what changed, who changed it, when and why (the message). You can go back to any earlier version, compare versions, and see who wrote each line. Git lets developers work on separate **branches** at the same time without disturbing each other and then **merge** their work together. Git runs locally on your machine; **GitHub** is a website that hosts Git repositories online so you can back them up, share them, review code with **pull requests** and run automation.
+
+### Why use it?
+
+- **Full history**: every version of every file is saved; nothing is lost.
+- **Undo safely**: restore a file, revert a bad change, or go back to last week's version.
+- **Experiment freely**: try ideas on a branch; delete it if it fails, merge it if it works.
+- **Teamwork**: many people change the same project; Git merges their changes and flags conflicts.
+- **Code review**: pull requests show exactly what changed before it reaches `main`.
+- **Backup and sync**: push to GitHub and work from any computer.
+- **Industry standard**: required in nearly every software and data job.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Repository (repo) | A project folder tracked by Git (history lives in `.git/`) |
+| Commit | A saved snapshot with a message |
+| Branch | An independent line of development |
+| Merge | Combine the changes of two branches |
+| Remote / origin | The copy of the repo on a server (GitHub) |
+| Push / pull | Upload / download commits |
+| Pull request (PR) | A GitHub request to merge a branch, with review |
+| Conflict | Two branches changed the same lines; you decide the result |
+
+**Where it fits:** use it for every project, including this one. VS Code has Git built in: [05 - VS Code](05_vscode.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)

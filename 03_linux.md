@@ -2,6 +2,36 @@
 
 Quick reference for everyday Linux commands (Ubuntu / Debian focus, works on most distros, WSL and Mac for the basics).
 
+## Introduction
+
+### What is Linux?
+
+Linux is a free, open-source operating system, like Windows or macOS. It comes in **distributions** (Ubuntu, Debian, Fedora, ...) that bundle the Linux kernel with tools and a package manager. Most servers, cloud VMs, Docker containers and supercomputers run Linux, usually without a desktop, so you control them through the **Bash** shell.
+
+### Why learn it?
+
+- **Servers run on it**: Azure / AWS VMs, web servers, databases and ML training machines are mostly Linux.
+- **Docker runs on it**: almost every container image is a small Linux system.
+- **Developer tooling**: many tools and tutorials assume Linux commands (`grep`, `chmod`, `apt`).
+- **WSL**: Windows Subsystem for Linux gives you a real Linux on your Windows laptop.
+- **Stable and free**: no licence costs, runs for months without reboot.
+
+### Key terms
+
+| Term | Meaning |
+|---|---|
+| Distribution (distro) | A packaged Linux version: Ubuntu, Debian, Fedora |
+| Bash | The default shell on most Linux systems |
+| root / sudo | The administrator account / run one command as administrator |
+| Package manager | Installs software from trusted repositories (`apt` on Ubuntu) |
+| systemd / service | Starts and supervises background programs (web server, Ollama) |
+| Permissions | Who may read, write or execute each file |
+| SSH | Secure remote login to another machine |
+
+**Where it fits:** needed for [18 - Docker](18_docker.md) and [19 - Azure VM](19_azure-vm-ollama.md). Windows equivalents: [02 - Terminal and PowerShell](02_terminal-powershell.md).
+
+---
+
 ## Contents
 
 0. [Flags and Parameters](#0-flags-and-parameters)
