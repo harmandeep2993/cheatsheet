@@ -1,0 +1,52 @@
+name: Examples
+
+on:
+  push:
+    branches: [main]
+    paths: ["examples/**", ".github/workflows/examples.yml"]
+  pull_request:
+    paths: ["examples/**", ".github/workflows/examples.yml"]
+  schedule:
+    - cron: "0 5 * * 1"          # weekly: catch breaking changes in new library releases
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: examples
+
+jobs:
+  test:
+    name: Lint, tests and retrieval eval
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run pytest
+      - run: uv run python -m docs_chatbot.evals
+
+  latest-deps:
+    name: Tests with the newest library versions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Upgrade everything (ignores the lock file)
+        run: uv lock --upgrade && uv sync
+      - run: uv run pytest
+
+  docker:
+    name: Chatbot image builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f docs_chatbot/Dockerfile -t docs-chatbot .

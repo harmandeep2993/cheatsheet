@@ -1,0 +1,8 @@
+{"id": "r1", "question": "How many days do I have to return a jacket?", "expected_source": "refund-policy.md"}
+{"id": "r2", "question": "Can I return an opened GPS device?", "expected_source": "refund-policy.md"}
+{"id": "r3", "question": "How long does shipping take to Austria?", "expected_source": "shipping.md"}
+{"id": "r4", "question": "Is shipping free?", "expected_source": "shipping.md"}
+{"id": "r5", "question": "I forgot my password, what should I do?", "expected_source": "account.md"}
+{"id": "r6", "question": "Do you support SMS codes for two-factor authentication?", "expected_source": "account.md"}
+{"id": "r7", "question": "When will I get my money back after a return?", "expected_source": "refund-policy.md"}
+{"id": "r8", "question": "Where can I see the tracking number of my order?", "expected_source": "shipping.md"}
