@@ -162,3 +162,40 @@
     margin-right: var(--pg-content-side-gap-wide);
   }
 }
+
+/* === Vertical dividers between the guide list, the content and the table of contents === */
+
+/* 76.25em is where the theme shows the guide list; 60em is where it shows the table of contents */
+@media screen and (min-width: 76.25em) {
+  /* The inner scroll area fills the column height; the outer sidebar element does not */
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    border-right: var(--pg-divider-width) solid var(--pg-divider-color);
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    border-left: var(--pg-divider-width) solid var(--pg-divider-color);
+  }
+}
+
+/* === Button that hides / shows the guide list (added by javascripts/layout.js) === */
+
+/* Qualified with the theme's classes so it beats the theme's own header-button display rule */
+.md-header .md-header__button.pg-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-header .md-header__button.pg-nav-toggle {
+    display: inline-block;
+  }
+
+  .pg-nav-hidden .md-sidebar--primary {
+    display: none;
+  }
+}

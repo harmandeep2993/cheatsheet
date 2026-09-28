@@ -45,6 +45,7 @@ extra_css:
   - stylesheets/extra.css
 extra_javascript:
   - javascripts/diagrams.js
+  - javascripts/layout.js
 
 markdown_extensions:
   - tables
