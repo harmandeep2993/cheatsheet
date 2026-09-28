@@ -1,7 +1,7 @@
 """Minimal Claude API calls: a single question, a streamed answer and structured output with Pydantic.
 
 Run:  uv run python -m llm_basics.basics      (needs ANTHROPIC_API_KEY)
-Guide: 26_llm-apis.md, 12_pydantic.md
+Guide: 27_llm-apis.md, 13_pydantic.md
 """
 
 import logging

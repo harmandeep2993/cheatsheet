@@ -1,6 +1,6 @@
 """Text embedders. The default works offline with no model download; swap in a real model for quality.
 
-See 29_embeddings-vector-db.md for real embedding models (sentence-transformers, Ollama, OpenAI, Voyage).
+See 30_embeddings-vector-db.md for real embedding models (sentence-transformers, Ollama, OpenAI, Voyage).
 """
 
 from typing import Protocol

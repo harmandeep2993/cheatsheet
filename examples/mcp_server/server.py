@@ -2,7 +2,7 @@
 
 Test:     uv run mcp dev mcp_server/server.py
 Connect:  claude mcp add pocket-docs -- uv --directory <path-to-examples> run python -m mcp_server.server
-Guide:    33_mcp.md
+Guide:    34_mcp.md
 """
 
 import logging

@@ -1,7 +1,7 @@
 # Copier template: generates one new FastAPI service for templates/fullstack-microservices.
 # From the root of the starter:
 #   uvx copier copy ../service-template services/feedback-service --data service_name=feedback
-# Guide: guides/50_project-templates.md
+# Guide: guides/51_project-templates.md
 
 _min_copier_version: "9.0"
 _templates_suffix: .jinja

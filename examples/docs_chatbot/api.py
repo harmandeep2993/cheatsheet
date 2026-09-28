@@ -2,7 +2,7 @@
 
 Run:  uv run uvicorn docs_chatbot.api:app --reload      (needs ANTHROPIC_API_KEY for /ask)
 Docs: http://127.0.0.1:8000/docs
-Guide: 39_fastapi.md, 40_uvicorn.md
+Guide: 40_fastapi.md, 41_uvicorn.md
 """
 
 from contextlib import asynccontextmanager

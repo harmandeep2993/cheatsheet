@@ -1,4 +1,4 @@
-"""Load Markdown / text documents and split them into overlapping chunks (see 30_rag.md sections 2-6)."""
+"""Load Markdown / text documents and split them into overlapping chunks (see 31_rag.md sections 2-6)."""
 
 import re
 from pathlib import Path

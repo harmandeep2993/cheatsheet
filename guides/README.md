@@ -1,20 +1,20 @@
 # Guides
 
-All pocket guide pages, one Markdown file per topic, numbered from basic to advanced. The full index with a one-line description of every guide is the [main README](../README.md); new readers start with [00 - Big Picture](00_big-picture.md).
+All pocket guide pages, one Markdown file per topic, numbered from basic to advanced. The full index with a one-line description of every guide is the [main README](../README.md); new readers start with [00 - Big Picture](00_big-picture.md) and [01 - Core Concepts](01_core-concepts.md).
 
 ## Numbering
 
 | Numbers | Group | Examples |
 |---|---|---|
 | 00 | Start here | Map of the whole stack, learning paths, "I want to..." finder |
-| 01 - 08 | Foundations | Markdown, terminal, Linux, Git, VS Code, regex, YAML / JSON, HTTP |
-| 09 - 15 | Python | Basics, virtual environments, uv, Pydantic, async, pytest, Jupyter |
-| 16 - 24 | Data and ML | NumPy, pandas, Polars / DuckDB, SQL, plotting, scikit-learn, PyTorch, Hugging Face |
-| 25 - 38 | AI engineering | LLMs, LLM APIs, prompting, tool use, embeddings, RAG, agents, MCP, evals, local LLMs, fine-tuning, AI security, AI UIs |
-| 39 - 50 | APIs and deployment | FastAPI, Uvicorn, Redis, Docker, GitHub Actions, Nginx, Kubernetes, Terraform, Azure, project structure, project templates |
+| 01 - 09 | Foundations | Core concepts (packages, APIs, SDKs), Markdown, terminal, Linux, Git, VS Code, regex, YAML / JSON, HTTP |
+| 10 - 16 | Python | Basics, virtual environments, uv, Pydantic, async, pytest, Jupyter |
+| 17 - 25 | Data and ML | NumPy, pandas, Polars / DuckDB, SQL, plotting, scikit-learn, PyTorch, Hugging Face |
+| 26 - 39 | AI engineering | LLMs, LLM APIs, prompting, tool use, embeddings, RAG, agents, MCP, evals, local LLMs, fine-tuning, AI security, AI UIs |
+| 40 - 51 | APIs and deployment | FastAPI, Uvicorn, Redis, Docker, GitHub Actions, Nginx, Kubernetes, Terraform, Azure, project structure, project templates |
 | 97 - 99 | Reference | Capstone project, glossary, quick reference |
 
-File names are `NN_topic.md`: two digits, lowercase, hyphens. Numbers 51 - 96 are free for new guides.
+File names are `NN_topic.md`: two digits, lowercase, hyphens. Numbers 52 - 96 are free for new guides.
 
 ## Inside every guide
 

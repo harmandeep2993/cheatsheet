@@ -1,1 +1,1 @@
-"""Example 1: minimal Claude API usage (see 26_llm-apis.md)."""
+"""Example 1: minimal Claude API usage (see 27_llm-apis.md)."""

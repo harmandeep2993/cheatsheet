@@ -62,6 +62,6 @@ The chatbot reads `CHATBOT_*` environment variables (see `docs_chatbot/config.py
 ## Ideas to extend
 
 - Swap `HashingEmbedder` for `SentenceTransformerEmbedder` (semantic search) and compare the eval score.
-- Store vectors in Chroma or pgvector instead of NumPy ([29](../guides/29_embeddings-vector-db.md)).
-- Add streaming to `/ask` and a Streamlit UI ([38](../guides/38_ai-ui.md)).
-- Add an LLM-as-judge eval for answer faithfulness ([34](../guides/34_evals-observability.md)).
+- Store vectors in Chroma or pgvector instead of NumPy ([30](../guides/30_embeddings-vector-db.md)).
+- Add streaming to `/ask` and a Streamlit UI ([39](../guides/39_ai-ui.md)).
+- Add an LLM-as-judge eval for answer faithfulness ([35](../guides/35_evals-observability.md)).

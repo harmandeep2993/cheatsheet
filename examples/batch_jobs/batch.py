@@ -1,7 +1,7 @@
 """Classify many reviews with the Message Batches API: build requests, submit, wait, collect by custom_id.
 
 Run:  uv run python -m batch_jobs.batch   (needs ANTHROPIC_API_KEY; a real batch at 50% of standard price)
-Guide: guides/26_llm-apis.md sections 13 and 14
+Guide: guides/27_llm-apis.md sections 13 and 14
 """
 
 import logging

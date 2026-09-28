@@ -4,8 +4,8 @@ Starting points you copy into your own projects. Both are tested in CI (`.github
 
 | Folder | What it is | Guide |
 |---|---|---|
-| `fullstack-microservices/` | Runnable monorepo: two FastAPI services (documents and chat) in Docker, shared `libs/common`, React + Vite + TypeScript frontend, Nginx proxy, Postgres, Docker Compose for dev and production-like runs | [49 - Project Structure](../guides/49_project-structure.md) |
-| `service-template/` | Copier template that generates one new service with the same layout into `fullstack-microservices/services/` | [50 - Project Templates](../guides/50_project-templates.md) |
+| `fullstack-microservices/` | Runnable monorepo: two FastAPI services (documents and chat) in Docker, shared `libs/common`, React + Vite + TypeScript frontend, Nginx proxy, Postgres, Docker Compose for dev and production-like runs | [50 - Project Structure](../guides/50_project-structure.md) |
+| `service-template/` | Copier template that generates one new service with the same layout into `fullstack-microservices/services/` | [51 - Project Templates](../guides/51_project-templates.md) |
 
 ## fullstack-microservices at a glance
 

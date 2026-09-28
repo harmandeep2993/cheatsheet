@@ -1,4 +1,4 @@
-"""A small in-memory vector index with save / load (see 29_embeddings-vector-db.md section 4)."""
+"""A small in-memory vector index with save / load (see 30_embeddings-vector-db.md section 4)."""
 
 import json
 from pathlib import Path

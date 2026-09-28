@@ -27,4 +27,4 @@ deploy/
 - Each service keeps its own database. In the cloud use a managed database (Azure Database for PostgreSQL) instead of a database container.
 - The health endpoint `/health` of each service is used for readiness and liveness probes.
 
-See guides 42 (Docker), 43 (GitHub Actions), 45 (Kubernetes), 46 (Terraform) and 47 (Azure) in the pocket guide.
+See guides 43 (Docker), 44 (GitHub Actions), 46 (Kubernetes), 47 (Terraform) and 48 (Azure) in the pocket guide.

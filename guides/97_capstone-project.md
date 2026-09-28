@@ -1,7 +1,7 @@
 # 97 - Capstone Project: Document Chatbot
 
 <!-- nav:start -->
-**Previous:** [50 - Project Templates](50_project-templates.md) | **Index:** [All guides](../README.md) | **Next:** [98 - Glossary](98_glossary.md)
+**Previous:** [51 - Project Templates](51_project-templates.md) | **Index:** [All guides](../README.md) | **Next:** [98 - Glossary](98_glossary.md)
 <!-- nav:end -->
 
 Build a real AI application end to end: a chatbot that answers questions from your documents with citations, served as an API, tested, evaluated, containerised, automated with CI and deployed to Azure. The finished code is in `examples/docs_chatbot/` ([examples overview](../examples/README.md)); this page explains every step and links each one to the guide behind it.
@@ -70,15 +70,15 @@ Around it: tests with a fake LLM [14], retrieval eval [34], Docker [42], CI [43]
 >
 > Use it before Step 1.
 
-- Tools: Git ([04](04_git.md)), uv ([11](11_uv.md)), VS Code ([05](05_vscode.md)), Docker ([42](42_docker.md)); Azure CLI for Step 11 ([47](47_azure.md)).
-- An Anthropic API key for real answers ([26](26_llm-apis.md) section 1). Tests and evals work without one.
-- Background reading: [25 - LLM Fundamentals](25_llm-fundamentals.md), [30 - RAG](30_rag.md).
+- Tools: Git ([05](05_git.md)), uv ([12](12_uv.md)), VS Code ([06](06_vscode.md)), Docker ([43](43_docker.md)); Azure CLI for Step 11 ([48](48_azure.md)).
+- An Anthropic API key for real answers ([27](27_llm-apis.md) section 1). Tests and evals work without one.
+- Background reading: [26 - LLM Fundamentals](26_llm-fundamentals.md), [31 - RAG](31_rag.md).
 
 ## 3. Step 1: Set Up the Project
 
 > A uv project with locked dependencies and a clean folder structure. `uv init`, `uv add` the libraries, add dev tools, create the package folder.
 >
-> Use it for the start of any Python service. Guides: [11 - uv](11_uv.md), [10 - venv](10_python-virtual-environment.md).
+> Use it for the start of any Python service. Guides: [12 - uv](12_uv.md), [11 - venv](11_python-virtual-environment.md).
 
 ```bash
 git clone https://github.com/harmandeep2993/pocket-guide.git
@@ -96,13 +96,13 @@ uv add --dev pytest ruff
 mkdir docs_chatbot docs_chatbot/docs
 ```
 
-Put `ANTHROPIC_API_KEY` in a git-ignored `.env` or your shell, never in code ([07](07_yaml-json.md) section 11).
+Put `ANTHROPIC_API_KEY` in a git-ignored `.env` or your shell, never in code ([08](08_yaml-json.md) section 11).
 
 ## 4. Step 2: Load and Chunk Documents
 
 > Turn documents into retrievable pieces with metadata. Read each file, normalise whitespace, split on paragraph boundaries into ~1,200-character chunks with 200 characters of overlap, keep file name and title for citations.
 >
-> Use it as the first stage of every RAG system. Guide: [30 - RAG](30_rag.md) sections 2-6.
+> Use it as the first stage of every RAG system. Guide: [31 - RAG](31_rag.md) sections 2-6.
 
 `chunking.py` (key part):
 
@@ -128,7 +128,7 @@ Try it: add your own `.md` file to `docs_chatbot/docs/`, then check `load_chunks
 
 > Convert chunks to vectors and search them by similarity. An `Embedder` turns text into unit-length vectors; `VectorIndex` stores them in a NumPy matrix; search is one matrix multiplication (cosine similarity) followed by top-k.
 >
-> Use it in every retrieval step. Guide: [29 - Embeddings and Vector DBs](29_embeddings-vector-db.md) sections 1-4.
+> Use it in every retrieval step. Guide: [30 - Embeddings and Vector DBs](30_embeddings-vector-db.md) sections 1-4.
 
 ```python
 class VectorIndex:
@@ -145,7 +145,7 @@ The default `HashingEmbedder` hashes character 3- to 5-grams: it works offline, 
 
 > Ask Claude to answer only from the retrieved passages and cite them. Numbered `<source>` tags first, question last; a system prompt that forbids outside knowledge and defines the "not found" reply; skip the LLM entirely when nothing relevant was retrieved.
 >
-> Use it in any grounded Q&A. Guides: [27 - Prompt Engineering](27_prompt-engineering.md) sections 4, 9, 10; [26 - LLM APIs](26_llm-apis.md).
+> Use it in any grounded Q&A. Guides: [28 - Prompt Engineering](28_prompt-engineering.md) sections 4, 9, 10; [27 - LLM APIs](27_llm-apis.md).
 
 ```python
 SYSTEM_PROMPT = (
@@ -167,7 +167,7 @@ The response returns both the answer and the list of sources (file, title, score
 
 > Keep business logic out of the web layer and configuration out of the code. `ChatbotService` owns the index, embedder and LLM client and exposes `ask()` and `reindex()`; `Settings` (pydantic-settings) validates every tunable value from `CHATBOT_*` env vars.
 >
-> Use it in any app you want to test, reuse from a CLI / MCP server, or configure per environment. Guide: [12 - Pydantic](12_pydantic.md) section 16.
+> Use it in any app you want to test, reuse from a CLI / MCP server, or configure per environment. Guide: [13 - Pydantic](13_pydantic.md) section 16.
 
 ```python
 class Settings(BaseSettings):
@@ -186,7 +186,7 @@ $env:CHATBOT_TOP_K = "6"          # change behaviour without touching code
 
 > Serve the chatbot over HTTP with validation and docs. FastAPI routes validate input with Pydantic, call the service and return; the service is created once per worker in `lifespan`; Uvicorn runs the app.
 >
-> Use it for making any Python logic available to web apps, other services and UIs. Guides: [39 - FastAPI](39_fastapi.md), [40 - Uvicorn](40_uvicorn.md).
+> Use it for making any Python logic available to web apps, other services and UIs. Guides: [40 - FastAPI](40_fastapi.md), [41 - Uvicorn](41_uvicorn.md).
 
 ```python
 @asynccontextmanager
@@ -210,7 +210,7 @@ Open `http://127.0.0.1:8000/docs` to try `/ask`, `/reindex` and `/health` in the
 
 > Automated tests for each layer, with no real API calls. A fake Claude response (`fake_text_message`), `tmp_path` for the index file, FastAPI's `TestClient` with `dependency_overrides` to inject a service with a fake client.
 >
-> Use it before every commit and in CI. Guide: [14 - pytest](14_pytest.md) sections 5, 11, 14.
+> Use it before every commit and in CI. Guide: [15 - pytest](15_pytest.md) sections 5, 11, 14.
 
 ```python
 def test_service_answers_with_sources(settings):
@@ -231,20 +231,20 @@ What is covered: chunk sizes and overlap, index search and save / load, prompt s
 
 > A small eval set that checks whether the right document is retrieved for each question. `eval_data/retrieval.jsonl` holds questions and the expected source; `evals.py` computes recall@k and fails below 0.85.
 >
-> Use it after every change to chunking, embeddings or `top_k`. Guides: [34 - Evals](34_evals-observability.md), [30 - RAG](30_rag.md) section 17.
+> Use it after every change to chunking, embeddings or `top_k`. Guides: [35 - Evals](35_evals-observability.md), [31 - RAG](31_rag.md) section 17.
 
 ```bash
 uv run python -m docs_chatbot.evals
 # recall@4 = 1.00 over 8 cases
 ```
 
-Add harder questions (paraphrases like "money back" instead of "refund") and watch the score drop with the hashing embedder; that is your signal to upgrade (section 16). Next level: an LLM-as-judge eval of answer faithfulness ([34](34_evals-observability.md) section 4).
+Add harder questions (paraphrases like "money back" instead of "refund") and watch the score drop with the hashing embedder; that is your signal to upgrade (section 16). Next level: an LLM-as-judge eval of answer faithfulness ([35](35_evals-observability.md) section 4).
 
 ## 11. Step 9: Containerise with Docker
 
 > A production image that runs the API with Uvicorn. Slim Python base, uv installs from the lock file (cached layer), non-root user, exec-form `CMD` so Uvicorn receives stop signals.
 >
-> Use it before deploying anywhere. Guides: [42 - Docker](42_docker.md), [40 - Uvicorn](40_uvicorn.md) section 18.
+> Use it before deploying anywhere. Guides: [43 - Docker](43_docker.md), [41 - Uvicorn](41_uvicorn.md) section 18.
 
 ```bash
 cd examples
@@ -259,7 +259,7 @@ curl http://127.0.0.1:8000/health
 
 > CI that lints, tests, evaluates and builds the image on every push. `.github/workflows/examples.yml` runs `uv sync --locked`, Ruff, pytest, the retrieval eval and a Docker build; a second job tests against the newest library versions weekly to catch breaking changes early.
 >
-> Use it in every project in a Git repo. Guide: [43 - GitHub Actions](43_github-actions.md).
+> Use it in every project in a Git repo. Guide: [44 - GitHub Actions](44_github-actions.md).
 
 The weekly "latest dependencies" job is how this repo discovered that the MCP SDK v2 renamed `FastMCP`: automated tests notice API changes before readers do.
 
@@ -267,7 +267,7 @@ The weekly "latest dependencies" job is how this repo discovered that the MCP SD
 
 > Run the container in the cloud with HTTPS and scale to zero. Build the image in Azure Container Registry, create a Container App with the API key as a secret.
 >
-> Use it for sharing the chatbot with real users. Guide: [47 - Azure](47_azure.md) sections 8, 9, 23.
+> Use it for sharing the chatbot with real users. Guide: [48 - Azure](48_azure.md) sections 8, 9, 23.
 
 ```bash
 RG=rg-docs-chatbot; LOC=swedencentral; ACR=acrdocsbot$RANDOM; APP=docs-chatbot
@@ -285,13 +285,13 @@ az containerapp show -n $APP -g $RG --query properties.configuration.ingress.fqd
 az group delete -n $RG --yes --no-wait          # clean up when finished (stops all costs)
 ```
 
-Before sharing publicly, add authentication and rate limiting ([37 - AI Security](37_ai-security.md) section 10, [41 - Redis](41_redis-queues.md) section 7).
+Before sharing publicly, add authentication and rate limiting ([38 - AI Security](38_ai-security.md) section 10, [42 - Redis](42_redis-queues.md) section 7).
 
 ## 14. Step 12: Add a Chat UI
 
 > A web chat that calls your API. A small Streamlit app sends the question to `/ask` and shows the answer with its sources.
 >
-> Use it for demos and internal tools. Guide: [38 - AI UIs](38_ai-ui.md).
+> Use it for demos and internal tools. Guide: [39 - AI UIs](39_ai-ui.md).
 
 ```python
 # ui.py  ->  uv add streamlit httpx ; uv run streamlit run ui.py
@@ -315,7 +315,7 @@ if question := st.chat_input("Ask about refunds, shipping or your account"):
 
 > Let Claude Code, Claude Desktop or VS Code search the same documents. `examples/mcp_server/server.py` wraps the index as MCP tools (`search_docs`, `list_documents`) and a prompt.
 >
-> Use it for giving AI assistants access to your knowledge base. Guide: [33 - MCP](33_mcp.md).
+> Use it for giving AI assistants access to your knowledge base. Guide: [34 - MCP](34_mcp.md).
 
 ```bash
 cd examples
@@ -331,19 +331,19 @@ claude mcp add pocket-docs -- uv --directory "$(pwd)" run python -m mcp_server.s
 
 | Upgrade | How | Guide |
 |---|---|---|
-| Semantic search | `SentenceTransformerEmbedder` (already in `embeddings.py`) or Ollama / Voyage embeddings | [29](29_embeddings-vector-db.md) |
-| Better ranking | Retrieve 20, rerank with a cross-encoder to 5 | [30](30_rag.md) section 9 |
-| Hybrid search | Combine vector scores with BM25 keyword search | [29](29_embeddings-vector-db.md) section 12 |
-| Real vector database | Chroma, pgvector or Qdrant instead of NumPy | [29](29_embeddings-vector-db.md) sections 7-9 |
-| PDFs and Word files | Add loaders (pypdf, docling) to `chunking.py` | [30](30_rag.md) section 2 |
-| Streaming answers | `client.messages.stream` + `StreamingResponse` | [26](26_llm-apis.md) section 7, [38](38_ai-ui.md) section 10 |
-| Lower cost | Prompt caching of the system prompt, cheaper model for simple questions | [26](26_llm-apis.md) section 11 |
-| Answer quality evals | LLM-as-judge for faithfulness and citation accuracy | [34](34_evals-observability.md) |
-| Agentic RAG | Give Claude a `search_docs` tool and let it search several times | [28](28_tool-use.md), [31](31_ai-agents.md) |
-| Security | Auth, rate limits, per-user document permissions, prompt-injection tests | [37](37_ai-security.md) |
-| Observability | Trace every request (Langfuse / OpenTelemetry), cost dashboards | [34](34_evals-observability.md) sections 12-15 |
-| Background indexing | Re-index in a worker queue when documents change | [41](41_redis-queues.md) |
-| Infrastructure as code | Terraform for the Azure resources | [46](46_terraform.md) section 14 |
+| Semantic search | `SentenceTransformerEmbedder` (already in `embeddings.py`) or Ollama / Voyage embeddings | [30](30_embeddings-vector-db.md) |
+| Better ranking | Retrieve 20, rerank with a cross-encoder to 5 | [31](31_rag.md) section 9 |
+| Hybrid search | Combine vector scores with BM25 keyword search | [30](30_embeddings-vector-db.md) section 12 |
+| Real vector database | Chroma, pgvector or Qdrant instead of NumPy | [30](30_embeddings-vector-db.md) sections 7-9 |
+| PDFs and Word files | Add loaders (pypdf, docling) to `chunking.py` | [31](31_rag.md) section 2 |
+| Streaming answers | `client.messages.stream` + `StreamingResponse` | [27](27_llm-apis.md) section 7, [39](39_ai-ui.md) section 10 |
+| Lower cost | Prompt caching of the system prompt, cheaper model for simple questions | [27](27_llm-apis.md) section 11 |
+| Answer quality evals | LLM-as-judge for faithfulness and citation accuracy | [35](35_evals-observability.md) |
+| Agentic RAG | Give Claude a `search_docs` tool and let it search several times | [29](29_tool-use.md), [32](32_ai-agents.md) |
+| Security | Auth, rate limits, per-user document permissions, prompt-injection tests | [38](38_ai-security.md) |
+| Observability | Trace every request (Langfuse / OpenTelemetry), cost dashboards | [35](35_evals-observability.md) sections 12-15 |
+| Background indexing | Re-index in a worker queue when documents change | [42](42_redis-queues.md) |
+| Infrastructure as code | Terraform for the Azure resources | [47](47_terraform.md) section 14 |
 
 ## 17. What You Practised
 
@@ -371,7 +371,7 @@ claude mcp add pocket-docs -- uv --directory "$(pwd)" run python -m mcp_server.s
 | Answer is always "I could not find that..." | No chunk passed `min_score`; lower `CHATBOT_MIN_SCORE`, rephrase, or upgrade to semantic embeddings |
 | Old answers after editing documents | Call `POST /reindex` or delete `docs_chatbot/.index/` |
 | `ModuleNotFoundError: docs_chatbot` | Run commands from the `examples/` folder with `uv run` |
-| Port 8000 in use | `--port 8001` ([40](40_uvicorn.md) section 23) |
+| Port 8000 in use | `--port 8001` ([41](41_uvicorn.md) section 23) |
 | Docker build cannot find `uv.lock` | Build from `examples/` with `-f docs_chatbot/Dockerfile .` |
 | Container app shows 404 / no response | Target port must be 8000; check `az containerapp logs show -n $APP -g $RG` |
 | Eval fails in CI after a change | Read the MISS lines: which questions lost their document? Fix chunking / embeddings, not the test |
@@ -379,5 +379,5 @@ claude mcp add pocket-docs -- uv --directory "$(pwd)" run python -m mcp_server.s
 ---
 
 <!-- nav:start -->
-**Previous:** [50 - Project Templates](50_project-templates.md) | **Index:** [All guides](../README.md) | **Next:** [98 - Glossary](98_glossary.md)
+**Previous:** [51 - Project Templates](51_project-templates.md) | **Index:** [All guides](../README.md) | **Next:** [98 - Glossary](98_glossary.md)
 <!-- nav:end -->

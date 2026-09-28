@@ -30,7 +30,7 @@ class Answer(BaseModel):
 
 
 def build_prompt(question: str, hits: list[Hit]) -> str:
-    """Numbered, tagged sources first and the question last (see 27_prompt-engineering.md section 9)."""
+    """Numbered, tagged sources first and the question last (see 28_prompt-engineering.md section 9)."""
     sources = "\n".join(
         f'<source id="{i}" file="{h.chunk.source}">\n{h.chunk.text}\n</source>'
         for i, h in enumerate(hits, start=1)

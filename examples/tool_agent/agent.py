@@ -1,7 +1,7 @@
 """A minimal agent loop: the model calls tools until it can answer, with a hard step limit.
 
 Run:  uv run python -m tool_agent.agent "Where is order A-1042 and what is 17% of 249?"
-Guide: 28_tool-use.md, 31_ai-agents.md
+Guide: 29_tool-use.md, 32_ai-agents.md
 """
 
 import logging

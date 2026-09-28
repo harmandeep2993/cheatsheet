@@ -1,7 +1,7 @@
 # 00 - Big Picture: How Everything Connects
 
 <!-- nav:start -->
-**Index:** [All guides](../README.md) | **Next:** [01 - Markdown](01_markdown.md)
+**Index:** [All guides](../README.md) | **Next:** [01 - Core Concepts: Code, Packages, APIs and SDKs](01_core-concepts.md)
 <!-- nav:end -->
 
 Start here. This guide is the map of the whole pocket guide: how the tools fit together, how a request travels through a real AI application, how code goes from your laptop to production, and which guide to open for any question.
@@ -266,34 +266,34 @@ flowchart TD
 
 | Job | Default choice | Alternatives | Guide |
 |---|---|---|---|
-| Write code | VS Code | PyCharm, Jupyter | [05](05_vscode.md) |
-| Version control | Git + GitHub | GitLab, Azure DevOps | [04](04_git.md) |
-| Python environments / deps | uv | venv + pip, conda | [11](11_uv.md), [10](10_python-virtual-environment.md) |
-| Data validation / config | Pydantic, pydantic-settings | dataclasses | [12](12_pydantic.md) |
-| Tests | pytest | unittest | [14](14_pytest.md) |
-| Tabular data | pandas | Polars, DuckDB | [17](17_pandas.md), [18](18_polars-duckdb.md) |
-| Relational database | PostgreSQL | SQLite (local), Azure SQL | [19](19_sql.md) |
-| Charts | Matplotlib + Seaborn | Plotly | [20](20_matplotlib.md), [21](21_seaborn.md) |
-| Classic ML | scikit-learn | XGBoost, LightGBM | [22](22_scikit-learn.md) |
-| Deep learning | PyTorch | JAX | [23](23_pytorch.md) |
-| Pretrained open models | Hugging Face | | [24](24_hugging-face.md) |
-| Hosted LLM | Claude API | OpenAI, Azure OpenAI, Gemini | [26](26_llm-apis.md) |
-| Local LLM | Ollama | llama.cpp, LM Studio, vLLM | [35](35_local-llms.md) |
-| Embeddings | sentence-transformers / bge-m3 | OpenAI, Voyage | [29](29_embeddings-vector-db.md) |
-| Vector store | Chroma (prototype), pgvector / Qdrant (prod) | Azure AI Search, Pinecone | [29](29_embeddings-vector-db.md) |
-| Agent framework | Raw SDK / Claude Agent SDK | LangGraph, OpenAI Agents SDK, PydanticAI | [31](31_ai-agents.md), [32](32_agent-frameworks.md) |
-| Tool integration standard | MCP | | [33](33_mcp.md) |
-| Evals / tracing | pytest + scripts, Langfuse | promptfoo, LangSmith, Phoenix | [34](34_evals-observability.md) |
-| Demo UI | Streamlit | Gradio, Chainlit | [38](38_ai-ui.md) |
-| API | FastAPI | Flask, Django | [39](39_fastapi.md) |
-| ASGI server (runs the API) | Uvicorn | Gunicorn + Uvicorn workers, Hypercorn, Granian | [40](40_uvicorn.md) |
-| Cache / queue | Redis + RQ / Celery / arq | RabbitMQ | [41](41_redis-queues.md) |
-| Containers | Docker + Compose | Podman | [42](42_docker.md) |
-| CI/CD | GitHub Actions | Azure DevOps, GitLab CI | [43](43_github-actions.md) |
-| HTTPS / reverse proxy | Nginx + certbot | Caddy, Traefik | [44](44_nginx-https.md) |
-| Orchestration | Azure Container Apps | Kubernetes (AKS) | [47](47_azure.md), [45](45_kubernetes.md) |
-| Infrastructure as code | Terraform | Bicep, Pulumi | [46](46_terraform.md) |
-| Cloud | Azure | AWS, GCP | [47](47_azure.md) |
+| Write code | VS Code | PyCharm, Jupyter | [06](06_vscode.md) |
+| Version control | Git + GitHub | GitLab, Azure DevOps | [05](05_git.md) |
+| Python environments / deps | uv | venv + pip, conda | [12](12_uv.md), [11](11_python-virtual-environment.md) |
+| Data validation / config | Pydantic, pydantic-settings | dataclasses | [13](13_pydantic.md) |
+| Tests | pytest | unittest | [15](15_pytest.md) |
+| Tabular data | pandas | Polars, DuckDB | [18](18_pandas.md), [19](19_polars-duckdb.md) |
+| Relational database | PostgreSQL | SQLite (local), Azure SQL | [20](20_sql.md) |
+| Charts | Matplotlib + Seaborn | Plotly | [21](21_matplotlib.md), [22](22_seaborn.md) |
+| Classic ML | scikit-learn | XGBoost, LightGBM | [23](23_scikit-learn.md) |
+| Deep learning | PyTorch | JAX | [24](24_pytorch.md) |
+| Pretrained open models | Hugging Face | | [25](25_hugging-face.md) |
+| Hosted LLM | Claude API | OpenAI, Azure OpenAI, Gemini | [27](27_llm-apis.md) |
+| Local LLM | Ollama | llama.cpp, LM Studio, vLLM | [36](36_local-llms.md) |
+| Embeddings | sentence-transformers / bge-m3 | OpenAI, Voyage | [30](30_embeddings-vector-db.md) |
+| Vector store | Chroma (prototype), pgvector / Qdrant (prod) | Azure AI Search, Pinecone | [30](30_embeddings-vector-db.md) |
+| Agent framework | Raw SDK / Claude Agent SDK | LangGraph, OpenAI Agents SDK, PydanticAI | [32](32_ai-agents.md), [33](33_agent-frameworks.md) |
+| Tool integration standard | MCP | | [34](34_mcp.md) |
+| Evals / tracing | pytest + scripts, Langfuse | promptfoo, LangSmith, Phoenix | [35](35_evals-observability.md) |
+| Demo UI | Streamlit | Gradio, Chainlit | [39](39_ai-ui.md) |
+| API | FastAPI | Flask, Django | [40](40_fastapi.md) |
+| ASGI server (runs the API) | Uvicorn | Gunicorn + Uvicorn workers, Hypercorn, Granian | [41](41_uvicorn.md) |
+| Cache / queue | Redis + RQ / Celery / arq | RabbitMQ | [42](42_redis-queues.md) |
+| Containers | Docker + Compose | Podman | [43](43_docker.md) |
+| CI/CD | GitHub Actions | Azure DevOps, GitLab CI | [44](44_github-actions.md) |
+| HTTPS / reverse proxy | Nginx + certbot | Caddy, Traefik | [45](45_nginx-https.md) |
+| Orchestration | Azure Container Apps | Kubernetes (AKS) | [48](48_azure.md), [46](46_kubernetes.md) |
+| Infrastructure as code | Terraform | Bicep, Pulumi | [47](47_terraform.md) |
+| Cloud | Azure | AWS, GCP | [48](48_azure.md) |
 
 ## 9. How the Pieces Talk to Each Other
 
@@ -325,38 +325,39 @@ flowchart TD
 ### Path A: Foundations (everyone, first)
 
 ```text
-02 Terminal -> 04 Git -> 05 VS Code -> 09 Python -> 11 uv (or 10 venv) -> 01 Markdown -> 07 YAML/JSON
+01 Core Concepts -> 03 Terminal -> 05 Git -> 06 VS Code -> 10 Python -> 12 uv (or 11 venv) -> 02 Markdown
+       -> 08 YAML/JSON -> 09 HTTP
 Project: a small Python CLI tool in a GitHub repo with a README
 ```
 
 ### Path B: Data Analyst
 
 ```text
-Path A -> 15 Jupyter -> 16 NumPy -> 17 Pandas -> 19 SQL -> 20 Matplotlib -> 21 Seaborn -> 18 Polars/DuckDB
+Path A -> 16 Jupyter -> 17 NumPy -> 18 Pandas -> 20 SQL -> 21 Matplotlib -> 22 Seaborn -> 19 Polars/DuckDB
 Project: analyse a public dataset, publish a notebook + charts
 ```
 
 ### Path C: Machine Learning
 
 ```text
-Path B -> 22 Scikit-learn -> 12 Pydantic -> 14 pytest -> 39 FastAPI -> 40 Uvicorn -> 42 Docker -> 23 PyTorch -> 24 Hugging Face
+Path B -> 23 Scikit-learn -> 13 Pydantic -> 15 pytest -> 40 FastAPI -> 41 Uvicorn -> 43 Docker -> 24 PyTorch -> 25 Hugging Face
 Project: train a model, serve it with FastAPI in Docker
 ```
 
 ### Path D: AI Engineer (LLM apps and agents)
 
 ```text
-Path A -> 08 HTTP -> 12 Pydantic -> 13 Async -> 25 LLM Fundamentals -> 26 LLM APIs -> 27 Prompting
-       -> 28 Tool Use -> 29 Embeddings -> 30 RAG -> 38 AI UIs -> 34 Evals -> 37 Security
-       -> 31 Agents -> 32 Frameworks -> 33 MCP -> 35 Local LLMs -> 36 Fine-tuning (optional)
+Path A -> 09 HTTP -> 13 Pydantic -> 14 Async -> 26 LLM Fundamentals -> 27 LLM APIs -> 28 Prompting
+       -> 29 Tool Use -> 30 Embeddings -> 31 RAG -> 39 AI UIs -> 35 Evals -> 38 Security
+       -> 32 Agents -> 33 Frameworks -> 34 MCP -> 36 Local LLMs -> 37 Fine-tuning (optional)
 Project: RAG chatbot over your own documents with citations, evals and a Streamlit UI
 ```
 
 ### Path E: Deployment and MLOps / LLMOps
 
 ```text
-Path A -> 03 Linux -> 39 FastAPI -> 40 Uvicorn -> 41 Redis/Queues -> 42 Docker -> 43 GitHub Actions
-       -> 47 Azure -> 44 Nginx/HTTPS -> 48 Azure VM + Ollama -> 46 Terraform -> 45 Kubernetes
+Path A -> 04 Linux -> 40 FastAPI -> 41 Uvicorn -> 42 Redis/Queues -> 43 Docker -> 44 GitHub Actions
+       -> 48 Azure -> 45 Nginx/HTTPS -> 49 Azure VM + Ollama -> 47 Terraform -> 46 Kubernetes
 Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraform
 ```
 
@@ -368,37 +369,38 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 
 | I want to ... | Go to |
 |---|---|
-| Undo my last commit / fix a mistake in Git | [04 - Git](04_git.md), section 11 |
-| Find what uses port 8000 | [02 - Terminal](02_terminal-powershell.md), section 13 |
-| Set up a new Python project | [11 - uv](11_uv.md), section 4 |
-| Keep API keys out of my code | [07 - .env](07_yaml-json.md), section 11; [37 - Security](37_ai-security.md), section 11 |
-| Validate JSON input / LLM output | [12 - Pydantic](12_pydantic.md) |
-| Call 100 LLM requests in parallel | [13 - Async](13_async-python.md), section 10 |
-| Test code that calls an LLM | [14 - pytest](14_pytest.md), section 11 |
-| Clean and group a dataset | [17 - Pandas](17_pandas.md) |
-| Query big CSV / Parquet files with SQL | [18 - Polars and DuckDB](18_polars-duckdb.md), section 12 |
-| Train and evaluate a classifier | [22 - Scikit-learn](22_scikit-learn.md) |
-| Understand tokens, context windows, costs | [25 - LLM Fundamentals](25_llm-fundamentals.md) |
-| Call Claude / stream / get JSON back | [26 - LLM APIs](26_llm-apis.md) |
-| Write a better prompt | [27 - Prompt Engineering](27_prompt-engineering.md) |
-| Let the model call my functions | [28 - Tool Use](28_tool-use.md) |
-| Build "chat with my documents" | [30 - RAG](30_rag.md) |
-| Build an agent | [31 - AI Agents](31_ai-agents.md) |
-| Connect my tools to Claude Code / Desktop | [33 - MCP](33_mcp.md) |
-| Measure if my prompt change helped | [34 - Evals](34_evals-observability.md) |
-| Run an LLM on my own machine | [35 - Local LLMs](35_local-llms.md) |
-| Protect my app from prompt injection | [37 - AI Security](37_ai-security.md), sections 2-3 |
-| Make a chat UI quickly | [38 - AI UIs](38_ai-ui.md), section 3 |
-| Build an API for my model | [39 - FastAPI](39_fastapi.md) |
-| Run my API in production (workers, proxy headers, timeouts) | [40 - Uvicorn](40_uvicorn.md) |
-| Run slow jobs in the background | [41 - Redis and Queues](41_redis-queues.md) |
-| Package my app in a container | [42 - Docker](42_docker.md) |
-| Run tests automatically on every push | [43 - GitHub Actions](43_github-actions.md) |
-| Put my app on a domain with HTTPS | [44 - Nginx and HTTPS](44_nginx-https.md) |
-| Deploy a container to Azure | [47 - Azure](47_azure.md), section 23 |
-| Run an LLM on a cloud GPU VM | [48 - Azure VM + Ollama](48_azure-vm-ollama.md) |
-| Organise several Python services and a frontend in one repo | [49 - Project Structure](49_project-structure.md) |
-| Start new projects or services from a reusable template | [50 - Project Templates](50_project-templates.md) |
+| Undo my last commit / fix a mistake in Git | [05 - Git](05_git.md), section 11 |
+| Find what uses port 8000 | [03 - Terminal](03_terminal-powershell.md), section 13 |
+| Set up a new Python project | [12 - uv](12_uv.md), section 4 |
+| Keep API keys out of my code | [08 - .env](08_yaml-json.md), section 11; [38 - Security](38_ai-security.md), section 11 |
+| Validate JSON input / LLM output | [13 - Pydantic](13_pydantic.md) |
+| Call 100 LLM requests in parallel | [14 - Async](14_async-python.md), section 10 |
+| Test code that calls an LLM | [15 - pytest](15_pytest.md), section 11 |
+| Clean and group a dataset | [18 - Pandas](18_pandas.md) |
+| Query big CSV / Parquet files with SQL | [19 - Polars and DuckDB](19_polars-duckdb.md), section 12 |
+| Train and evaluate a classifier | [23 - Scikit-learn](23_scikit-learn.md) |
+| Understand words like package, dependency, API, SDK, environment variable | [01 - Core Concepts](01_core-concepts.md) |
+| Understand tokens, context windows, costs | [26 - LLM Fundamentals](26_llm-fundamentals.md) |
+| Call Claude / stream / get JSON back | [27 - LLM APIs](27_llm-apis.md) |
+| Write a better prompt | [28 - Prompt Engineering](28_prompt-engineering.md) |
+| Let the model call my functions | [29 - Tool Use](29_tool-use.md) |
+| Build "chat with my documents" | [31 - RAG](31_rag.md) |
+| Build an agent | [32 - AI Agents](32_ai-agents.md) |
+| Connect my tools to Claude Code / Desktop | [34 - MCP](34_mcp.md) |
+| Measure if my prompt change helped | [35 - Evals](35_evals-observability.md) |
+| Run an LLM on my own machine | [36 - Local LLMs](36_local-llms.md) |
+| Protect my app from prompt injection | [38 - AI Security](38_ai-security.md), sections 2-3 |
+| Make a chat UI quickly | [39 - AI UIs](39_ai-ui.md), section 3 |
+| Build an API for my model | [40 - FastAPI](40_fastapi.md) |
+| Run my API in production (workers, proxy headers, timeouts) | [41 - Uvicorn](41_uvicorn.md) |
+| Run slow jobs in the background | [42 - Redis and Queues](42_redis-queues.md) |
+| Package my app in a container | [43 - Docker](43_docker.md) |
+| Run tests automatically on every push | [44 - GitHub Actions](44_github-actions.md) |
+| Put my app on a domain with HTTPS | [45 - Nginx and HTTPS](45_nginx-https.md) |
+| Deploy a container to Azure | [48 - Azure](48_azure.md), section 23 |
+| Run an LLM on a cloud GPU VM | [49 - Azure VM + Ollama](49_azure-vm-ollama.md) |
+| Organise several Python services and a frontend in one repo | [50 - Project Structure](50_project-structure.md) |
+| Start new projects or services from a reusable template | [51 - Project Templates](51_project-templates.md) |
 
 ## 12. Core Mental Models in One Page
 
@@ -408,32 +410,32 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 
 | Concept | Mental model | Guide |
 |---|---|---|
-| Shell | You type commands; programs read files and print text; pipes connect them | [02](02_terminal-powershell.md), [03](03_linux.md) |
-| Git | A timeline of snapshots; branches are parallel timelines you can merge | [04](04_git.md) |
-| Virtual environment | A private box of packages per project | [10](10_python-virtual-environment.md), [11](11_uv.md) |
-| HTTP | Method + URL + headers + body -> status + headers + body | [08](08_http-apis.md) |
-| JSON / YAML | Nested dicts and lists written as text | [07](07_yaml-json.md) |
-| Pydantic | Customs checkpoint: validate once at the border, trust inside | [12](12_pydantic.md) |
-| Async | One chef switching dishes while each one waits | [13](13_async-python.md) |
-| DataFrame | A table where you operate on whole columns, not loops | [17](17_pandas.md) |
-| ML model | Learns a function from examples; judged on data it never saw | [22](22_scikit-learn.md) |
-| Neural network training | Guess -> measure error -> nudge weights -> repeat | [23](23_pytorch.md) |
-| LLM | Autocomplete that predicts the next token from everything in its context | [25](25_llm-fundamentals.md) |
-| Prompt | A brief for a brilliant new colleague who knows nothing about your project | [27](27_prompt-engineering.md) |
-| Tool use | The model is the brain, your code is the hands | [28](28_tool-use.md) |
-| Embeddings | A map of meaning: similar texts are close together | [29](29_embeddings-vector-db.md) |
-| RAG | An open-book exam: retrieve the right pages, answer from them | [30](30_rag.md) |
-| Agent | An LLM in a loop: think -> act with tools -> observe -> repeat until done | [31](31_ai-agents.md) |
-| MCP | USB-C for AI: one standard plug between AI apps and tools | [33](33_mcp.md) |
-| Evals | Unit tests for AI behaviour, scored instead of exact | [34](34_evals-observability.md) |
-| Prompt injection | Untrusted text is read like instructions; limit what damage it can do | [37](37_ai-security.md) |
-| ASGI server | The engine that speaks HTTP and hands each request to your async app | [40](40_uvicorn.md) |
-| Container | App + everything it needs, runs the same everywhere | [42](42_docker.md) |
-| CI/CD | Every push triggers automatic checks, builds and deployments | [43](43_github-actions.md) |
-| Reverse proxy | A doorman in front of your apps handling HTTPS and routing | [44](44_nginx-https.md) |
-| Kubernetes | Declare the desired state; controllers keep reality matching it | [45](45_kubernetes.md) |
-| Infrastructure as code | Cloud resources described in files, planned then applied | [46](46_terraform.md) |
-| Cloud | Rent computers and services by the hour; pay for what runs | [47](47_azure.md) |
+| Shell | You type commands; programs read files and print text; pipes connect them | [03](03_terminal-powershell.md), [04](04_linux.md) |
+| Git | A timeline of snapshots; branches are parallel timelines you can merge | [05](05_git.md) |
+| Virtual environment | A private box of packages per project | [11](11_python-virtual-environment.md), [12](12_uv.md) |
+| HTTP | Method + URL + headers + body -> status + headers + body | [09](09_http-apis.md) |
+| JSON / YAML | Nested dicts and lists written as text | [08](08_yaml-json.md) |
+| Pydantic | Customs checkpoint: validate once at the border, trust inside | [13](13_pydantic.md) |
+| Async | One chef switching dishes while each one waits | [14](14_async-python.md) |
+| DataFrame | A table where you operate on whole columns, not loops | [18](18_pandas.md) |
+| ML model | Learns a function from examples; judged on data it never saw | [23](23_scikit-learn.md) |
+| Neural network training | Guess -> measure error -> nudge weights -> repeat | [24](24_pytorch.md) |
+| LLM | Autocomplete that predicts the next token from everything in its context | [26](26_llm-fundamentals.md) |
+| Prompt | A brief for a brilliant new colleague who knows nothing about your project | [28](28_prompt-engineering.md) |
+| Tool use | The model is the brain, your code is the hands | [29](29_tool-use.md) |
+| Embeddings | A map of meaning: similar texts are close together | [30](30_embeddings-vector-db.md) |
+| RAG | An open-book exam: retrieve the right pages, answer from them | [31](31_rag.md) |
+| Agent | An LLM in a loop: think -> act with tools -> observe -> repeat until done | [32](32_ai-agents.md) |
+| MCP | USB-C for AI: one standard plug between AI apps and tools | [34](34_mcp.md) |
+| Evals | Unit tests for AI behaviour, scored instead of exact | [35](35_evals-observability.md) |
+| Prompt injection | Untrusted text is read like instructions; limit what damage it can do | [38](38_ai-security.md) |
+| ASGI server | The engine that speaks HTTP and hands each request to your async app | [41](41_uvicorn.md) |
+| Container | App + everything it needs, runs the same everywhere | [43](43_docker.md) |
+| CI/CD | Every push triggers automatic checks, builds and deployments | [44](44_github-actions.md) |
+| Reverse proxy | A doorman in front of your apps handling HTTPS and routing | [45](45_nginx-https.md) |
+| Kubernetes | Declare the desired state; controllers keep reality matching it | [46](46_kubernetes.md) |
+| Infrastructure as code | Cloud resources described in files, planned then applied | [47](47_terraform.md) |
+| Cloud | Rent computers and services by the hour; pay for what runs | [48](48_azure.md) |
 
 ## 13. Windows, macOS and Linux Differences
 
@@ -462,9 +464,9 @@ Project: deploy your RAG app with CI/CD to Azure Container Apps, infra in Terraf
 
 Tips:
 
-- **WSL** (Windows Subsystem for Linux) gives you a real Ubuntu on Windows; Linux-only tools (Gunicorn, uvloop, vLLM) work there ([03 - Linux](03_linux.md)).
+- **WSL** (Windows Subsystem for Linux) gives you a real Ubuntu on Windows; Linux-only tools (Gunicorn, uvloop, vLLM) work there ([04 - Linux](04_linux.md)).
 - Git on Windows: `git config --global core.autocrlf true` handles line endings; shell scripts for Linux must keep LF endings.
-- Quoting JSON in commands differs: in PowerShell prefer `Invoke-RestMethod` with `ConvertTo-Json` ([08 - HTTP and APIs](08_http-apis.md) section 9).
+- Quoting JSON in commands differs: in PowerShell prefer `Invoke-RestMethod` with `ConvertTo-Json` ([09 - HTTP and APIs](09_http-apis.md) section 9).
 
 ## 14. Practice and Extras
 
@@ -476,8 +478,8 @@ Tips:
 |---|---|
 | "Try It" section at the end of every guide | 3 to 5 exercises with hidden solutions |
 | [examples/](../examples/README.md) | Runnable mini-projects: LLM basics, tool-using agent, RAG API, MCP server |
-| `templates/fullstack-microservices/` | Runnable starter: two FastAPI services, React frontend, Nginx proxy, Compose ([49 - Project Structure](49_project-structure.md)) |
-| `templates/service-template/` | Copier template that adds a new service to the starter ([50 - Project Templates](50_project-templates.md)) |
+| `templates/fullstack-microservices/` | Runnable starter: two FastAPI services, React frontend, Nginx proxy, Compose ([50 - Project Structure](50_project-structure.md)) |
+| `templates/service-template/` | Copier template that adds a new service to the starter ([51 - Project Templates](51_project-templates.md)) |
 | [97 - Capstone Project](97_capstone-project.md) | Build, test, containerise, automate and deploy a document chatbot, step by step |
 | [98 - Glossary](98_glossary.md) | Every key term A to Z, linked to its guide |
 | [99 - Quick Reference](99_quick-reference.md) | The most-used commands of every guide on one page |
@@ -485,5 +487,5 @@ Tips:
 ---
 
 <!-- nav:start -->
-**Index:** [All guides](../README.md) | **Next:** [01 - Markdown](01_markdown.md)
+**Index:** [All guides](../README.md) | **Next:** [01 - Core Concepts: Code, Packages, APIs and SDKs](01_core-concepts.md)
 <!-- nav:end -->

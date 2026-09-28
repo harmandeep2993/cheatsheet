@@ -1,6 +1,6 @@
 """Retrieval eval: is the right document in the top-k results for each question?
 
-Guide: 34_evals-observability.md
+Guide: 35_evals-observability.md
 
 Run:  uv run python -m docs_chatbot.evals
 No API key needed: it measures retrieval only, the part that decides whether the LLM can answer at all.

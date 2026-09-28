@@ -1,7 +1,7 @@
 """Estimate what a workload costs with and without prompt caching and the Batch API.
 
 Run:  uv run python -m batch_jobs.costs      (no API key needed; pure arithmetic)
-Guide: guides/26_llm-apis.md section 14
+Guide: guides/27_llm-apis.md section 14
 
 Prices change: check https://platform.claude.com/docs/en/about-claude/pricing before relying on the numbers.
 """
