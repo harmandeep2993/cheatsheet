@@ -10,6 +10,16 @@ Quick reference for numerical arrays with NumPy (the base library under pandas, 
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python lists, loops and functions ([10 - Python Basics](10_python-basics.md)), and how to add a package to a project ([12 - uv](12_uv.md)). School maths (averages, multiplying tables of numbers) is enough.
+
+**The problem it solves:** Python lists are flexible but slow for numbers: every item is a separate Python object, and every calculation runs through a Python loop, one item at a time. Doubling a million numbers or multiplying two large tables this way takes far too long, and the code is full of loops.
+
+**Before NumPy:** scientists used Fortran, C or MATLAB for number crunching and Python only as "glue". Numeric (1995) and Numarray were early array libraries for Python; NumPy (2006) merged them and became the base that pandas, scikit-learn, Matplotlib and PyTorch are built on.
+
+**Think of it like:** the difference between counting coins one by one and weighing the whole bag. An array stores all numbers side by side in one block of memory, so an operation like `a * 2` runs over the whole block at once in fast compiled code.
+
 ### What is NumPy?
 
 NumPy (Numerical Python) is the core library for numbers in Python. Its main object is the **ndarray**: a grid of values (1D vector, 2D matrix, or more dimensions) that all have the same type. Operations on arrays run in fast compiled C code and apply to all elements at once, so you rarely need Python loops. pandas, matplotlib, scikit-learn and most scientific libraries are built on top of NumPy.

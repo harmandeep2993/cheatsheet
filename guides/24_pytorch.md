@@ -10,6 +10,16 @@ Quick reference for PyTorch: tensors, GPUs, automatic gradients, building and tr
 
 ## Introduction
 
+### Before you start
+
+**You should know:** NumPy arrays and shapes ([17](17_numpy.md)), and the idea of training and testing a model from [23 - Scikit-learn](23_scikit-learn.md). Some comfort with Python classes ([10](10_python-basics.md)) helps, because models are written as classes.
+
+**The problem it solves:** for images, audio, and language, hand-picked features and classical models reach their limits. Neural networks learn the features themselves from raw data, but they have millions or billions of numbers to adjust, need gradients (how to change each number to reduce the error) and need GPUs to train in reasonable time. Doing that maths by hand is impossible.
+
+**Before PyTorch:** early deep learning tools like Theano and the first TensorFlow made you define the whole network as a fixed graph before running it, which was hard to debug. PyTorch (2016) runs like normal Python, line by line, with automatic gradients, so you can use print statements and a debugger. Researchers adopted it quickly, and most modern models, including open LLMs, are built with it.
+
+**Think of it like:** tuning a huge mixing desk by ear. Play an example (forward pass), hear how wrong it sounds (loss), and nudge every one of a million knobs slightly in the direction that sounds better (backward pass and optimiser step). Repeat thousands of times.
+
 ### What is PyTorch?
 
 PyTorch is the most widely used **deep learning** library. Deep learning uses **neural networks**: stacks of simple mathematical layers with millions or billions of adjustable numbers (**weights**). Training shows the network examples, measures how wrong it is (**loss**), and nudges every weight a little in the direction that reduces the error. PyTorch gives you **tensors** (NumPy-like arrays that can run on GPUs) and **autograd** (automatic calculation of those nudges). Almost every modern AI model, including LLMs on Hugging Face, is built with PyTorch.

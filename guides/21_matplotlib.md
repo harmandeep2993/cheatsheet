@@ -10,6 +10,16 @@ Quick reference for plotting with Matplotlib (the base plotting library; seaborn
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python basics ([10](10_python-basics.md)) and, for most real use, NumPy arrays or pandas DataFrames ([17](17_numpy.md), [18](18_pandas.md)) as the data you plot.
+
+**The problem it solves:** a table of 10,000 numbers hides what a chart shows at a glance: trends, outliers, clusters, the shape of a distribution. You also need charts in reports and papers that look exactly the way you want, and you want to recreate them automatically when the data changes.
+
+**Before Matplotlib:** scientists drew plots in MATLAB, gnuplot or spreadsheets. Matplotlib (2003) copied MATLAB's plotting style for Python, which is why its `plt.plot(...)` interface feels the way it does and why it became the base for Seaborn and pandas plotting.
+
+**Think of it like:** a blank canvas with precise drawing tools. You decide every line, label and colour; it takes more instructions than a template, but anything is possible.
+
 ### What is Matplotlib?
 
 Matplotlib is Python's original and most widely used plotting library. It can draw almost any 2D chart: lines, bars, scatter plots, histograms, heatmaps and more, and you control every detail (colours, labels, sizes, layout). A chart is a **Figure** (the whole image) containing one or more **Axes** (individual plots). Seaborn and pandas' `.plot()` are built on top of Matplotlib.

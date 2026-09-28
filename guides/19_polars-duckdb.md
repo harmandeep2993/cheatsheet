@@ -10,6 +10,16 @@ Quick reference for two fast modern tools for data too big or too slow for panda
 
 ## Introduction
 
+### Before you start
+
+**You should know:** pandas DataFrames ([18](18_pandas.md)) and basic SQL `SELECT ... WHERE ... GROUP BY` ([20 - SQL](20_sql.md)). This is an intermediate guide: start here once pandas feels slow or runs out of memory.
+
+**The problem it solves:** pandas was designed when data was smaller and computers had one core. It loads everything into memory and mostly uses one CPU core, so a few gigabytes of data can be slow or crash your laptop. Setting up a database server just to run SQL on some files is a lot of work.
+
+**Before these tools:** the options were "use a bigger machine", sample the data, or move to heavy distributed systems like Spark. Polars (2020) and DuckDB (2019) showed that one laptop can handle tens of gigabytes if the engine uses all cores, reads only the needed columns, and plans the query before running it.
+
+**Think of it like:** a smart shopper. pandas walks every aisle in order and carries everything to the till; Polars' lazy mode and DuckDB first read the whole shopping list, plan the shortest route, send helpers to several aisles at once, and only pick up what is needed.
+
 ### What are Polars and DuckDB?
 
 - **Polars** is a DataFrame library like pandas, written in Rust. It uses all CPU cores, has a clean expression-based API, and a **lazy mode** that plans the whole query before running it. Typically many times faster than pandas and uses less memory.

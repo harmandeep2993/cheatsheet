@@ -10,6 +10,16 @@ Quick reference for machine learning with scikit-learn: preprocessing, models, e
 
 ## Introduction
 
+### Before you start
+
+**You should know:** pandas ([18](18_pandas.md)) and NumPy arrays ([17](17_numpy.md)), since your data goes in as tables and arrays. No advanced maths is needed to use the library; the guide explains the ideas as they come up.
+
+**The problem it solves:** some decisions are hard to write as rules ("which customers will cancel?", "is this transaction fraud?", "what will this house sell for?"), but you have many past examples with known answers. Machine learning finds the patterns in those examples and applies them to new cases.
+
+**Before scikit-learn:** each algorithm came from a different package with a different interface, so trying another model meant rewriting code, and it was easy to make evaluation mistakes (like testing on data the model had already seen). scikit-learn (2007) gave every algorithm the same `fit` / `predict` interface and bundled the preparation and evaluation tools that make results trustworthy.
+
+**Think of it like:** learning from worked examples, like a student who studies 1,000 solved exam questions and then answers new ones. The test set is the real exam: questions the student has never seen, which is the only honest measure of how well they learned.
+
 ### What is Scikit-learn?
 
 Scikit-learn (`sklearn`) is the standard Python library for **classical machine learning** on tabular data. Machine learning means a program learns patterns from example data instead of following hand-written rules: show it past customers with a "churned yes / no" label, and it learns to predict churn for new customers. Scikit-learn provides ready-made algorithms (models) plus everything around them: data preprocessing, splitting, evaluation, tuning and pipelines, all with the same simple `fit` / `predict` interface.

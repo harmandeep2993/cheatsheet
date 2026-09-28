@@ -10,6 +10,16 @@ Quick reference for statistical plots with Seaborn (built on matplotlib, works d
 
 ## Introduction
 
+### Before you start
+
+**You should know:** pandas DataFrames ([18](18_pandas.md)) and the Figure / Axes idea from Matplotlib ([21](21_matplotlib.md)), because Seaborn draws with Matplotlib underneath.
+
+**The problem it solves:** common statistical charts ("distribution of prices per category, split by region, with averages and error bars") take many lines of Matplotlib: grouping the data, choosing colours, adding legends. Most of that is the same every time.
+
+**Before Seaborn:** you wrote that grouping and styling code by hand for every chart, or switched to R's ggplot2 for statistical graphics. Seaborn (2012) brought that "describe the data, get the chart" style to Python, on top of Matplotlib.
+
+**Think of it like:** chart templates with good taste built in. You name the columns and the kind of chart; Seaborn does the grouping, colours and legend, and you can still adjust details with Matplotlib afterwards.
+
 ### What is Seaborn?
 
 Seaborn is a statistical visualisation library built on Matplotlib. You pass a pandas DataFrame and column names, and it creates attractive, informative charts in one line: distributions, comparisons between categories, relationships, regression lines and correlation heatmaps. It automatically handles grouping (`hue`), colours, legends and confidence intervals.

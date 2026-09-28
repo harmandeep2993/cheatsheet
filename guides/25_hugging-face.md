@@ -10,6 +10,16 @@ Quick reference for the Hugging Face ecosystem: the Model Hub, `transformers` pi
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python and packages ([10](10_python-basics.md), [12 - uv](12_uv.md)). PyTorch basics ([24](24_pytorch.md)) help you understand what a model is underneath, and [26 - LLM Fundamentals](26_llm-fundamentals.md) explains tokens and models in plain terms.
+
+**The problem it solves:** training a good language or vision model from scratch costs huge amounts of data, GPUs and time. Thousands of trained models already exist, but each research group once published theirs in its own format, with its own code to load and run it.
+
+**Before Hugging Face:** using someone else's model meant finding the paper, cloning their repository, installing exact old library versions and hoping it ran. Hugging Face's `transformers` library (2018 onwards) gave all these models one consistent interface, and the Hub became the central place to publish and download them.
+
+**Think of it like:** an app store for AI models. You search, pick one that fits your task and size limits, and install it with one line, instead of building each app yourself.
+
 ### What is Hugging Face?
 
 Hugging Face is the **GitHub of AI models**: a platform (huggingface.co) hosting over a million free pretrained models, datasets and demo apps, plus Python libraries to use them. Instead of training a model from scratch (which costs weeks and lots of GPUs), you **download a pretrained model** that already understands language, images or audio and use it directly, or fine-tune it on your data.

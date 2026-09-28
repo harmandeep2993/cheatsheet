@@ -10,6 +10,16 @@ Quick reference for SQL queries (standard SQL, notes for PostgreSQL / SQLite / M
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what a table with rows and columns is (any spreadsheet will do). Knowing pandas ([18](18_pandas.md)) helps you compare, but is not required.
+
+**The problem it solves:** a company's data (customers, orders, payments) must be stored safely, shared by many programs and people at once, kept consistent (no order for a customer who does not exist), and searched quickly even with billions of rows. Files like CSV or Excel cannot do any of that reliably.
+
+**Before SQL:** each database had its own programming interface, and to get data you wrote step-by-step code that walked through records. SQL (1970s, from IBM research on the relational model) lets you describe *what* you want and leaves *how* to the database, which is why the same language still works in PostgreSQL, SQLite, SQL Server and cloud warehouses 50 years later.
+
+**Think of it like:** asking a librarian instead of searching the shelves yourself. You say "all books by this author after 2010, newest first"; the librarian knows the catalogue and fetches them the fastest way.
+
 ### What is SQL?
 
 SQL (Structured Query Language) is the standard language for working with **relational databases**: systems that store data in tables linked by keys. With SQL you describe **what** data you want ("average salary per department, highest first") and the database works out **how** to get it efficiently. The same core language works in PostgreSQL, MySQL, SQLite, SQL Server, Snowflake, BigQuery and more, with small differences.

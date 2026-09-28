@@ -10,6 +10,16 @@ Quick reference for data analysis with pandas.
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python basics ([10](10_python-basics.md)), and ideally NumPy arrays ([17](17_numpy.md)), because each pandas column is built on one. A notebook ([16 - Jupyter](16_jupyter.md)) is the most comfortable place to practise.
+
+**The problem it solves:** real data comes as tables (CSV exports, Excel sheets, database tables) and is messy: missing values, duplicates, wrong types, text where numbers should be. Excel works for small files, but steps are done by clicking, cannot be repeated exactly, and struggle past about a million rows. Plain Python lists of dicts make every filter or summary a hand-written loop.
+
+**Before pandas:** analysts used Excel, SQL databases, or the R language, whose `data.frame` inspired pandas. pandas (2008, created at a hedge fund) brought that table object to Python, which made Python a serious language for data analysis.
+
+**Think of it like:** Excel you control with written instructions. Every cleaning step is a line of code, so you can rerun the whole analysis on next month's file in seconds and show exactly how each number was produced.
+
 ### What is pandas?
 
 pandas is the most popular Python library for working with **tabular data** (rows and columns, like Excel or a SQL table). Its main object is the **DataFrame**: a table with named columns, where each column can have its own type (numbers, text, dates). pandas can read and write CSV, Excel, JSON and SQL, and gives you tools to clean, filter, transform, group, merge and summarise data with a few lines of code.
