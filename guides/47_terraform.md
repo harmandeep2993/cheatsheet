@@ -10,6 +10,16 @@ Quick reference for Terraform: infrastructure as code for Azure and other clouds
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what cloud resources are and how you create them by hand ([48 - Azure](48_azure.md), at least the concepts), Git ([05](05_git.md)), and the idea of configuration files ([08](08_yaml-json.md)).
+
+**The problem it solves:** creating cloud resources by clicking in a portal is quick once, but impossible to repeat exactly for a test environment, hard to review ("who changed that firewall rule?") and easy to forget when cleaning up (paying for resources nobody uses). You want infrastructure described in files, reviewed in pull requests and created identically in dev, test and production.
+
+**Before infrastructure as code:** servers and networks were set up by hand, following documents that were always slightly out of date, and every environment drifted a little. Cloud providers offered their own template formats (AWS CloudFormation, Azure ARM / Bicep); Terraform (2014) offered one language for all clouds and hundreds of other services.
+
+**Think of it like:** an architect's blueprint for your infrastructure. You change the blueprint, review the difference, and the builder (Terraform) makes the building match it, remembering (in its state file) what it built last time.
+
 ### What is Terraform?
 
 **Terraform** (by HashiCorp; **OpenTofu** is the open-source fork with the same language) lets you describe cloud infrastructure (resource groups, storage, databases, container apps, Kubernetes clusters, DNS ...) in **text files** written in **HCL** (HashiCorp Configuration Language). Terraform compares those files with what currently exists and makes the changes needed to match. This is called **Infrastructure as Code (IaC)**: your infrastructure is versioned in Git, reviewed in pull requests and reproducible for dev / test / prod.

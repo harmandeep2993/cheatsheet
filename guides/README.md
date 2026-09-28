@@ -22,6 +22,7 @@ File names are `NN_topic.md`: two digits, lowercase, hyphens. Numbers 52 - 96 ar
 |---|---|
 | Title and navigation | `# NN - Name`, then Previous / Index / Next links (also repeated at the bottom) |
 | Last verified | The date the guide was last checked against the official docs |
+| Before you start | What to know first (with links), the problem the tool solves, how it was done before, an everyday analogy |
 | Introduction | What the tool is, why it exists, a mental model diagram, key terms, where it fits, official docs links |
 | Contents | Numbered list of sections |
 | 0. Flags and Parameters | A sample command taken apart, plus a table of flags (where the topic has commands) |

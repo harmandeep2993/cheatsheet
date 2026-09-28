@@ -126,6 +126,7 @@ pocket-guide/
 ## Conventions
 
 - File names: `guides/NN_topic.md` (two-digit number, lowercase, hyphens), ordered from basic to advanced.
+- Each Introduction starts with **Before you start**: what to read first, the problem the tool solves, how it was done before, and an everyday analogy.
 - Each guide opens with an **Introduction**: what the tool is, why we use it, a **mental model**, key terms and where it fits with the other guides.
 - Each Introduction ends with an **Official docs** table: the tool's home page and key reference pages for the latest information.
 - Then a numbered **Contents** list; sections are numbered to match.

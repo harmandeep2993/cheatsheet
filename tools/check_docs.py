@@ -20,6 +20,8 @@ TOC_RE = re.compile(r"^\d+\. \[[^\]]+\]\(#([^)]+)\)$")
 SECTION_REF_RE = re.compile(r"\]\((\d\d_[a-z0-9-]+\.md)\)(?:[^\n\[]{0,40}?)sections? (\d+)(?:-(\d+))?")
 # Guides that are reference pages rather than tool guides, so they have no Introduction / docs table
 REFERENCE_PAGES = {"00", "97", "98", "99"}
+# 01 is itself the background guide, so it has no "Before you start" block of its own
+NO_BACKGROUND_PAGES = REFERENCE_PAGES | {"01"}
 ASCII_GLOBS = [
     "*.md", "guides/*.md", "tools/*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
     "templates/**/*.py", "templates/**/*.md", "templates/**/*.ts", "templates/**/*.tsx", "templates/**/*.css",
@@ -88,6 +90,8 @@ def check_guide(path: Path, guides: dict[str, Path], errors: list[str]) -> None:
         for required in ("## Introduction", "### Official docs", "Last verified:"):
             if required not in text:
                 errors.append(f"{name}: missing '{required}'")
+    if number not in NO_BACKGROUND_PAGES and "## Introduction\n\n### Before you start" not in text:
+        errors.append(f"{name}: Introduction must start with '### Before you start'")
 
     # Contents entries must match numbered headings, in order
     toc = [m.group(1) for _, line in outside_code(lines) if (m := TOC_RE.match(line))]

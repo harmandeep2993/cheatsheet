@@ -10,6 +10,16 @@ Quick reference for putting apps (FastAPI, Streamlit, Ollama) behind Nginx on a 
 
 ## Introduction
 
+### Before you start
+
+**You should know:** HTTP and status codes ([09](09_http-apis.md)), running a server such as Uvicorn ([41](41_uvicorn.md)), Linux basics and SSH ([04](04_linux.md)), and what ports are ([01 - Core Concepts](01_core-concepts.md) section 13). You need a Linux server and, for HTTPS, a domain name.
+
+**The problem it solves:** your app runs on a port like 8000, but users expect `https://api.example.com` on the standard ports, with encryption. You may run several apps on one server, want to limit abusive traffic, and do not want every app to implement HTTPS, compression and security headers itself.
+
+**Before free HTTPS:** certificates cost money and had to be renewed by hand each year, so many sites used plain HTTP and passwords travelled unencrypted. Let's Encrypt (2015) made certificates free and automatic. Nginx (2004) was built to handle many connections efficiently and became the common front door for web apps.
+
+**Think of it like:** the reception desk and security gate of an office building. Visitors only ever meet reception (the proxy on ports 80 / 443), which checks them, and forwards them to the right office inside (your apps), which never face the street directly.
+
 ### What is a reverse proxy and why HTTPS?
 
 A **reverse proxy** is a web server that sits **in front of your apps** and forwards incoming requests to them. Users talk only to the proxy (on ports 80 / 443); the proxy talks to your app running privately on `localhost:8000`. **Nginx** is the most widely used one (Caddy and Traefik are popular alternatives).

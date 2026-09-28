@@ -10,6 +10,16 @@ How to lay out one repository that holds several Python backend services, each i
 
 ## Introduction
 
+### Before you start
+
+**You should know:** FastAPI ([40](40_fastapi.md)), Docker and Compose ([43](43_docker.md)), uv projects ([12](12_uv.md)), Git ([05](05_git.md)), and what a reverse proxy does ([45 - Nginx](45_nginx-https.md)). This is an intermediate to advanced guide that brings those pieces together.
+
+**The problem it solves:** a single script can live in one folder, but a real system has several services, a frontend, databases, shared code, configuration for different environments, tests and deployment files. Without a clear layout, nobody knows where new code goes, services quietly depend on each other's internals, Docker builds become slow, and changing one part breaks another.
+
+**Before these conventions:** many teams started with everything in one big application ("monolith") that grew tangled over time, or split into many repositories that were hard to keep in sync. The layout in this guide combines lessons from both: one repository, clear boundaries between services, and shared code only for infrastructure.
+
+**Think of it like:** the floor plan of a building. Each shop (service) has its own space, stock room (database) and front door (API); shared utilities (the `libs/` folder) run through the walls; and there is one main entrance (the proxy) for visitors.
+
 ### What is a project structure and why does it matter?
 
 The **project structure** is where each piece of code, configuration and infrastructure lives. For one small script it hardly matters. For a system with several services, a frontend, databases and Docker, a clear structure decides whether a new team member finds things in minutes or days, whether one service can be changed and deployed without touching the others, and whether Docker builds stay fast.

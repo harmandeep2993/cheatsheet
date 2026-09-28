@@ -10,6 +10,16 @@ Quick reference for building and running containers with Docker and Docker Compo
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to run commands ([03](03_terminal-powershell.md)), basic Linux commands ([04](04_linux.md)), because most images are small Linux systems, and why projects need exact dependency versions ([01 - Core Concepts](01_core-concepts.md) section 5). Install Docker Desktop (Windows / macOS) or Docker Engine (Linux).
+
+**The problem it solves:** "it works on my machine". Your app needs a specific Python version, system libraries, packages and settings. A colleague's laptop, the test server and the cloud all differ slightly, and each difference is a chance for the app to break. Setting up every machine by hand is slow and never quite identical.
+
+**Before containers:** teams wrote long setup documents, used configuration tools to prepare servers, or shipped whole virtual machines, which are heavy (a full operating system each, minutes to start, gigabytes in size). Docker (2013) made containers easy: a small image with just the app and what it needs, sharing the host's operating system, starting in seconds.
+
+**Think of it like:** a shipping container. Whatever is inside, the box has a standard shape, so every ship, crane and truck can handle it the same way. Your app goes in the box once and runs identically on any machine that has Docker.
+
 ### What is Docker?
 
 Docker packages an application together with everything it needs to run (Python version, libraries, system tools, settings) into an **image**. You then start that image as a **container**: an isolated, lightweight process that runs the same way on your laptop, a colleague's laptop, a test server or the cloud. Unlike a virtual machine, a container shares the host's operating system kernel, so it starts in seconds and uses little memory.

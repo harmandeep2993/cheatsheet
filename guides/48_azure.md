@@ -10,6 +10,16 @@ Quick reference for Microsoft Azure with the Azure CLI: core concepts, the most 
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what servers, containers and APIs are ([01 - Core Concepts](01_core-concepts.md) sections 7 and 13), terminal use ([03](03_terminal-powershell.md)), and ideally Docker ([43](43_docker.md)), since containers are the easiest way to deploy. You need an Azure account (a free account includes credits).
+
+**The problem it solves:** running your app for real users needs computers that are always on, reachable from the internet, backed up, secure, and able to grow with traffic. Buying and operating your own servers means large upfront costs, a server room, and people to replace broken hardware at night.
+
+**Before the cloud:** companies bought servers, rented space in data centres and planned capacity months ahead, often paying for much more than they used. Cloud platforms (AWS from 2006, Azure from 2010) let you rent exactly what you need by the minute, from raw virtual machines up to fully managed services where the provider runs everything except your code.
+
+**Think of it like:** renting instead of buying. Electricity from the grid instead of your own power station: you pay for what you use, can use a lot more tomorrow, and someone else maintains the plant. The trade-off is that the bill grows with use, so you must watch it.
+
 ### What is Azure?
 
 Microsoft Azure is a **cloud platform**: instead of buying and running your own servers, you rent computing power, storage, databases, networking and AI services from Microsoft's data centres around the world and pay only for what you use. You create and manage everything through the **Azure Portal** (website, portal.azure.com), the **Azure CLI** (`az` commands in a terminal), SDKs (Python libraries) or infrastructure-as-code files (Bicep / Terraform).

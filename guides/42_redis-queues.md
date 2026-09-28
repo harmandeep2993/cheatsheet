@@ -10,6 +10,16 @@ Quick reference for Redis (in-memory data store) and background job queues: cach
 
 ## Introduction
 
+### Before you start
+
+**You should know:** FastAPI ([40](40_fastapi.md)), and what a server and a port are ([01 - Core Concepts](01_core-concepts.md) section 13). Running Redis is easiest with Docker ([43](43_docker.md)).
+
+**The problem it solves:** two common problems in web and AI apps. First, some answers are expensive to compute again and again (the same LLM question, the same database report); keeping recent results in fast memory saves time and money. Second, some work is too slow for a web request (an agent run of several minutes, indexing 1,000 documents); the user should get an immediate reply and the work should continue in the background, even if the web server restarts.
+
+**Before Redis and task queues:** apps cached results in their own memory (lost on restart, not shared between processes) and ran slow jobs inside the request (timeouts, frozen pages) or with scheduled scripts. Redis (2009) became the shared, very fast memory for many processes, and task queues like Celery and RQ use it to hand work to background workers.
+
+**Think of it like:** a restaurant's order ticket rail and pass. The waiter (API) pins an order ticket (job) and goes back to the guests immediately; cooks (workers) take tickets when they are free; finished dishes wait at the pass (result store) until someone collects them.
+
 ### What are Redis and task queues?
 
 - **Redis** is an extremely fast **in-memory key-value store**. Programs save and read small pieces of data in microseconds: cached results, counters, sessions, queues. It runs as a separate server (often in Docker) that many app processes share.

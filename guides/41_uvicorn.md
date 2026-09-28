@@ -10,6 +10,16 @@ Quick reference for Uvicorn, the server that runs FastAPI and other async Python
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how a FastAPI app is defined ([40](40_fastapi.md)), what a process, server and port are ([01 - Core Concepts](01_core-concepts.md) section 13), and the idea of async ([14](14_async-python.md)).
+
+**The problem it solves:** your FastAPI code describes what to do with a request, but something has to open a network port, accept thousands of connections, read raw HTTP bytes and turn them into requests your app understands, then send the answers back. In production that server also needs several worker processes, timeouts and a clean shutdown.
+
+**Before ASGI servers:** Python web apps used WSGI (a standard from 2003) with servers like Gunicorn, which handle one request per worker at a time and do not support async or WebSockets. ASGI (2018) is the async successor, and Uvicorn is the most used ASGI server; it can still run under Gunicorn to manage several workers.
+
+**Think of it like:** the restaurant's front of house (the mental model below). Your app is the kitchen that cooks; Uvicorn is the staff at the door who seat guests, take orders to the kitchen and bring the plates out.
+
 ### What is Uvicorn?
 
 Your FastAPI code defines **what** should happen for each request (`@app.get("/items")`), but it does not listen on a network port or speak HTTP by itself. **Uvicorn** is the **server** that does that: it opens a port, accepts connections, parses raw HTTP bytes into requests, passes each one to your app through a standard interface called **ASGI**, and sends your app's response back to the client. It is built on `asyncio`, so one Uvicorn process can handle many connections at once while your async code waits on databases or LLM APIs.

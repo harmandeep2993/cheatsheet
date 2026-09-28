@@ -10,6 +10,16 @@ Quick reference for Kubernetes (K8s): core concepts, kubectl, Pods, Deployments,
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Docker images and containers well ([43](43_docker.md)), YAML ([08](08_yaml-json.md)), and ideally one deployed app with Compose ([50 - Project Structure](50_project-structure.md)). Kubernetes is an advanced topic: many projects never need it, because managed platforms (Azure Container Apps, [48](48_azure.md)) cover the same needs more simply.
+
+**The problem it solves:** with a few containers on one machine, you start and watch them yourself. With dozens of services and many copies of each, spread over many machines, someone has to decide where each container runs, restart crashed ones, replace machines that fail, add copies when traffic grows and roll out new versions without downtime. Doing that by hand does not scale.
+
+**Before Kubernetes:** companies wrote their own scripts and tools for this or used systems like Docker Swarm or Mesos. Kubernetes (2014) came out of Google's experience running containers at huge scale and became the industry standard, offered as a managed service by every cloud (AKS, EKS, GKE).
+
+**Think of it like:** a thermostat for your application (the mental model below). You set the desired state ("3 copies, always") and it keeps checking and correcting, instead of you adjusting things by hand.
+
 ### What is Kubernetes?
 
 Kubernetes is a system that **runs and manages containers across many machines**. With Docker you start containers yourself on one computer; with Kubernetes you **declare what you want** ("run 3 copies of my API image, reachable at this address, restart them if they crash, add more when CPU is high") and Kubernetes continuously works to make reality match that description, across a **cluster** of machines (**nodes**).

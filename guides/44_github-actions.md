@@ -10,6 +10,16 @@ Quick reference for automating tests, linting, evals, Docker builds and deployme
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Git and GitHub, including branches and pull requests ([05](05_git.md)), YAML syntax ([08](08_yaml-json.md)), and how to run your project's tests from a terminal ([15 - pytest](15_pytest.md)).
+
+**The problem it solves:** people forget to run the tests before pushing, and "works on my machine" code gets merged and breaks for everyone. Building and deploying by hand is slow and error-prone, and only the one person who knows the steps can do it. You want every change checked automatically, in a clean environment, and releases to happen the same way every time.
+
+**Before GitHub Actions:** teams ran their own CI servers (Jenkins, from 2011, is still common) or used separate services like Travis CI and CircleCI connected to GitHub. GitHub Actions (2019) is built into GitHub itself: workflows live in the repository next to the code and run on machines GitHub provides.
+
+**Think of it like:** a robot assistant that watches your repository. Every time someone pushes, it follows your written checklist (the workflow) on a fresh computer and reports a green tick or a red cross before anything is merged or shipped.
+
 ### What is CI/CD and GitHub Actions?
 
 - **CI (Continuous Integration)**: every push / pull request automatically runs checks (lint, tests, evals) so broken code is caught before it is merged.

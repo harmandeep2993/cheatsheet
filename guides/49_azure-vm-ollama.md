@@ -10,6 +10,16 @@ Quick reference for running Ollama on an Azure Ubuntu VM and using it from a loc
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Azure concepts such as resource groups and the `az` CLI ([48](48_azure.md)), Linux commands and SSH ([04](04_linux.md)), and what Ollama does ([36 - Local LLMs](36_local-llms.md)). A GPU VM costs money every hour it runs, so read the cost and shutdown parts before creating one.
+
+**The problem it solves:** you want to run an open LLM that is too large for your laptop, or share one with your team, without sending data to a hosted AI API. A rented GPU machine in the cloud gives you the hardware for as long as you need it.
+
+**Before cloud GPUs:** you had to buy an expensive GPU workstation or get time on a university or company cluster. Renting a GPU VM by the hour makes large models available to anyone with a cloud account, as long as you turn it off when you are done.
+
+**Think of it like:** renting a workshop with heavy machinery by the hour. You get tools you could not afford to buy, you work there remotely (SSH), and you lock up and stop the meter when you leave.
+
 ### What is this setup?
 
 This guide combines three things:

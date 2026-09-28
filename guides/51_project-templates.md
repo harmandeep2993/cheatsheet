@@ -10,6 +10,16 @@ When and how to turn a project layout into a reusable template: GitHub template 
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Git and GitHub ([05](05_git.md)), a project layout you want to reuse ([50 - Project Structure](50_project-structure.md)), and uv ([12](12_uv.md)) to run Copier.
+
+**The problem it solves:** starting a new project or service by copying an old one and renaming things by hand is slow and leaves mistakes behind (old names in imports, Dockerfiles and settings). Every copy also drifts: a fix in one project never reaches the others.
+
+**Before template tools:** people kept a "starter" folder and copied it, or followed long setup checklists. Cookiecutter (2013) added questions and placeholders; Copier added the ability to update projects later when the template improves.
+
+**Think of it like:** a cookie cutter (the mental model below): you make the shape carefully once, then every cookie comes out the same, and with Copier you can even reshape old cookies when the cutter improves.
+
 ### What is a project template?
 
 A **project template** is a ready-made starting point that you copy to begin a new project (or a new part of a project) instead of building the same folders, config files and boilerplate by hand every time. The simplest template is a repository you copy. A smarter one asks a few questions ("service name?", "which database?") and fills the answers into file names and file contents.

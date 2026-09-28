@@ -10,6 +10,16 @@ Quick reference for building Python web APIs with FastAPI: routes, validation, d
 
 ## Introduction
 
+### Before you start
+
+**You should know:** HTTP methods, status codes and JSON ([09 - HTTP and APIs](09_http-apis.md)), Python functions and type hints ([10](10_python-basics.md)), Pydantic models ([13](13_pydantic.md)), and the library vs framework idea ([01 - Core Concepts](01_core-concepts.md) section 6).
+
+**The problem it solves:** your Python code (a model, a RAG pipeline, a calculation) is useful to others only if they can reach it: a web page, a mobile app or another service needs to send it data over HTTP and get answers back. That means handling URLs, parsing and validating JSON, returning errors with the right status codes and documenting how to call it.
+
+**Before FastAPI:** Flask (2010) and Django (2005) were the main Python web frameworks. They work well, but you validated input and wrote API documentation by hand, and async support came later. FastAPI (2018) uses type hints and Pydantic to validate requests and generate interactive docs automatically, and was built for async from the start.
+
+**Think of it like:** a receptionist for your code. It greets every visitor (request), checks their paperwork (validation), sends them to the right office (your function) and hands back the reply in a standard envelope (JSON response).
+
 ### What is FastAPI?
 
 FastAPI is a modern Python framework for building **web APIs**: programs that other programs talk to over HTTP. A client (web page, mobile app, another service, or `curl`) sends a request such as `POST /predict` with JSON data, and your FastAPI code returns a JSON response. FastAPI uses Python **type hints** and **Pydantic** models to validate incoming data automatically and to generate interactive documentation at `/docs`.
