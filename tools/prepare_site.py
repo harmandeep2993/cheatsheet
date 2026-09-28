@@ -14,6 +14,8 @@ README_GUIDE_LINK_RE = re.compile(r"\]\(guides/")
 # Folder READMEs are not website pages, so the home page links to them on GitHub instead
 REPO_TREE_URL = "https://github.com/harmandeep2993/pocket-guide/tree/main/"
 FOLDER_README_RE = re.compile(r"\]\((guides|templates|tools)/README\.md\)")
+# Wrap each diagram in a box the stylesheet can scroll sideways, so phones do not shrink it unreadably small
+MERMAID_BLOCK_RE = re.compile(r"^```mermaid\n.*?^```$", re.S | re.M)
 
 
 def write_page(source: Path, target_name: str, replacements: list[tuple[str, str]]) -> None:
@@ -21,6 +23,7 @@ def write_page(source: Path, target_name: str, replacements: list[tuple[str, str
     text = source.read_text(encoding="utf-8")
     for old, new in replacements:
         text = text.replace(old, new)
+    text = MERMAID_BLOCK_RE.sub(lambda m: f'<div class="pg-diagram" markdown="1">\n\n{m.group(0)}\n\n</div>', text)
     # Wrap Previous / Next links so the stylesheet can make them small and unobtrusive
     text = text.replace(NAV_START, '<div class="pg-nav" markdown="1">').replace(NAV_END, "</div>")
     (SITE_SRC / target_name).write_text(text, encoding="utf-8")

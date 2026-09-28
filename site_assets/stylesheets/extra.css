@@ -17,6 +17,14 @@
   --pg-code-line-height: 1.6;
   --pg-nav-font-size: 0.72rem;
   --pg-nav-opacity: 0.85;
+  --pg-grid-max-width-wide: 76rem;
+  --pg-diagram-min-width-phone: 36rem;
+  --pg-diagram-hint-font-size: 0.65rem;
+  --pg-diagram-hint-color: var(--md-default-fg-color--light);
+  --pg-code-font-size-phone: 0.7rem;
+  --pg-section-gap-phone: 2.2rem;
+  --pg-section-padding-phone: 1rem;
+  --pg-summary-padding-phone: 0.7rem 0.9rem;
 }
 
 /* === Text rhythm === */
@@ -90,4 +98,50 @@
 
 .md-typeset .pg-nav p {
   margin: 0;
+}
+
+/* === Diagrams: scroll sideways instead of shrinking on small screens === */
+
+.md-typeset .pg-diagram {
+  overflow-x: auto;
+}
+
+/* === Phones and small tablets === */
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset .pg-diagram .mermaid {
+    min-width: var(--pg-diagram-min-width-phone);
+  }
+
+  .md-typeset .pg-diagram::before {
+    content: "Swipe sideways to see the whole diagram";
+    display: block;
+    /* Stays in view while the diagram underneath scrolls sideways */
+    position: sticky;
+    left: 0;
+    font-size: var(--pg-diagram-hint-font-size);
+    color: var(--pg-diagram-hint-color);
+  }
+
+  /* Wide text diagrams and code scroll sideways; a slightly smaller font shows more of each line */
+  .md-typeset pre > code {
+    font-size: var(--pg-code-font-size-phone);
+  }
+
+  .md-typeset h2 {
+    margin-top: var(--pg-section-gap-phone);
+    padding-top: var(--pg-section-padding-phone);
+  }
+
+  .md-typeset blockquote {
+    padding: var(--pg-summary-padding-phone);
+  }
+}
+
+/* === Large monitors: use more of the width for content, tables and diagrams === */
+
+@media screen and (min-width: 100em) {
+  .md-grid {
+    max-width: var(--pg-grid-max-width-wide);
+  }
 }

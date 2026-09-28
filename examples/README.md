@@ -4,11 +4,11 @@ Runnable mini-projects that put the guides into practice. Every example has test
 
 | # | Folder | What it shows | Guides |
 |---|---|---|---|
-| 1 | `llm_basics/` | One call, streaming, structured output with Pydantic | 26 LLM APIs, 12 Pydantic |
-| 2 | `tool_agent/` | Tool definitions, a manual agent loop, safe tools, step limit, error results | 28 Tool Use, 31 AI Agents |
-| 3 | `docs_chatbot/` | RAG chatbot: chunking, vector index, citations, FastAPI + Uvicorn, retrieval eval, Docker | 30 RAG, 39 FastAPI, 40 Uvicorn, 42 Docker, 34 Evals |
-| 4 | `mcp_server/` | MCP server exposing document search to Claude Code / Desktop / VS Code | 33 MCP |
-| 5 | `batch_jobs/` | Message Batches API (submit, poll, sort results by `custom_id`, resubmit failures) and a cost calculator comparing caching, batching and model choice | 26 LLM APIs |
+| 1 | `llm_basics/` | One call, streaming, structured output with Pydantic | [27 - LLM APIs](../guides/27_llm-apis.md), [13 - Pydantic](../guides/13_pydantic.md) |
+| 2 | `tool_agent/` | Tool definitions, a manual agent loop, safe tools, step limit, error results | [29 - Tool Use](../guides/29_tool-use.md), [32 - AI Agents](../guides/32_ai-agents.md) |
+| 3 | `docs_chatbot/` | RAG chatbot: chunking, vector index, citations, FastAPI + Uvicorn, retrieval eval, Docker | [31 - RAG](../guides/31_rag.md), [40 - FastAPI](../guides/40_fastapi.md), [41 - Uvicorn](../guides/41_uvicorn.md), [43 - Docker](../guides/43_docker.md), [35 - Evals](../guides/35_evals-observability.md) |
+| 4 | `mcp_server/` | MCP server exposing document search to Claude Code / Desktop / VS Code | [34 - MCP](../guides/34_mcp.md) |
+| 5 | `batch_jobs/` | Message Batches API (submit, poll, sort results by `custom_id`, resubmit failures) and a cost calculator comparing caching, batching and model choice | [27 - LLM APIs](../guides/27_llm-apis.md) |
 
 Example 3 is the code of the step-by-step [capstone project](../guides/97_capstone-project.md).
 

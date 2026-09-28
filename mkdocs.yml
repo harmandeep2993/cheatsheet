@@ -43,6 +43,8 @@ plugins:
 # More line spacing, section dividers and a shaded summary box (site_assets/stylesheets/extra.css)
 extra_css:
   - stylesheets/extra.css
+extra_javascript:
+  - javascripts/diagrams.js
 
 markdown_extensions:
   - tables

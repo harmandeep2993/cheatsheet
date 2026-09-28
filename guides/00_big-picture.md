@@ -56,26 +56,16 @@ Reading strategy:
 >
 > Use it for seeing how a topic relates to the rest.
 
-```text
-+--------------------------------------------------------------------------------------------+
-|  CLOUD & OPERATIONS     47 Azure  48 Azure VM+Ollama  46 Terraform  45 Kubernetes           |
-|                         44 Nginx/HTTPS  43 GitHub Actions (CI/CD)                           |
-+--------------------------------------------------------------------------------------------+
-|  PACKAGING & SERVING    42 Docker  41 Redis/Queues  40 Uvicorn  39 FastAPI  38 AI UIs       |
-+--------------------------------------------------------------------------------------------+
-|  AI ENGINEERING         31 Agents  32 Frameworks  33 MCP  34 Evals/Observability  37 Security|
-|                         30 RAG  29 Embeddings/Vector DBs  28 Tool Use  27 Prompting         |
-|                         26 LLM APIs  25 LLM Fundamentals  35 Local LLMs  36 Fine-tuning     |
-+--------------------------------------------------------------------------------------------+
-|  DATA & ML              22 Scikit-learn  23 PyTorch  24 Hugging Face                        |
-|                         20 Matplotlib  21 Seaborn  19 SQL  18 Polars/DuckDB  17 Pandas  16 NumPy |
-+--------------------------------------------------------------------------------------------+
-|  PYTHON                 09 Basics  10 venv  11 uv  12 Pydantic  13 Async  14 pytest  15 Jupyter|
-+--------------------------------------------------------------------------------------------+
-|  FOUNDATIONS            01 Markdown  02 Terminal/PowerShell  03 Linux  04 Git  05 VS Code    |
-|                         06 Regex  07 YAML/JSON  08 HTTP/APIs                                |
-+--------------------------------------------------------------------------------------------+
-```
+Read from the bottom up: each layer builds on the ones below it.
+
+| Layer (top = closest to users) | Guides |
+|---|---|
+| **Cloud and operations** | [48 Azure](48_azure.md), [49 Azure VM + Ollama](49_azure-vm-ollama.md), [47 Terraform](47_terraform.md), [46 Kubernetes](46_kubernetes.md), [45 Nginx / HTTPS](45_nginx-https.md), [44 GitHub Actions (CI/CD)](44_github-actions.md) |
+| **Packaging and serving** | [43 Docker](43_docker.md), [42 Redis / Queues](42_redis-queues.md), [41 Uvicorn](41_uvicorn.md), [40 FastAPI](40_fastapi.md), [39 AI UIs](39_ai-ui.md), [50 Project Structure](50_project-structure.md), [51 Project Templates](51_project-templates.md) |
+| **AI engineering** | [26 LLM Fundamentals](26_llm-fundamentals.md), [27 LLM APIs](27_llm-apis.md), [28 Prompting](28_prompt-engineering.md), [29 Tool Use](29_tool-use.md), [30 Embeddings / Vector DBs](30_embeddings-vector-db.md), [31 RAG](31_rag.md), [32 Agents](32_ai-agents.md), [33 Frameworks](33_agent-frameworks.md), [34 MCP](34_mcp.md), [35 Evals / Observability](35_evals-observability.md), [36 Local LLMs](36_local-llms.md), [37 Fine-tuning](37_fine-tuning.md), [38 Security](38_ai-security.md) |
+| **Data and ML** | [17 NumPy](17_numpy.md), [18 Pandas](18_pandas.md), [19 Polars / DuckDB](19_polars-duckdb.md), [20 SQL](20_sql.md), [21 Matplotlib](21_matplotlib.md), [22 Seaborn](22_seaborn.md), [23 Scikit-learn](23_scikit-learn.md), [24 PyTorch](24_pytorch.md), [25 Hugging Face](25_hugging-face.md) |
+| **Python** | [10 Basics](10_python-basics.md), [11 venv](11_python-virtual-environment.md), [12 uv](12_uv.md), [13 Pydantic](13_pydantic.md), [14 Async](14_async-python.md), [15 pytest](15_pytest.md), [16 Jupyter](16_jupyter.md) |
+| **Foundations** | [01 Core Concepts](01_core-concepts.md), [02 Markdown](02_markdown.md), [03 Terminal / PowerShell](03_terminal-powershell.md), [04 Linux](04_linux.md), [05 Git](05_git.md), [06 VS Code](06_vscode.md), [07 Regex](07_regex.md), [08 YAML / JSON](08_yaml-json.md), [09 HTTP / APIs](09_http-apis.md) |
 
 ## 3. Journey of One Request Through an AI App
 
@@ -114,14 +104,14 @@ flowchart TD
 
     subgraph BEHIND ["Behind the scenes"]
         direction TB
-        IDX["Background worker indexed the documents<br/>42 Queues, 31 RAG"]
+        IDX["A background worker indexed the documents<br/>used in step 7a earlier<br/>42 Queues, 31 RAG"]
         DOCK["Everything runs in Docker containers<br/>43 Docker"]
         CICD["Built and deployed on every merge<br/>44 GitHub Actions, 05 Git"]
         IAC["Cloud resources defined as code<br/>47 Terraform, 48 Azure"]
-        EVAL["Nightly evals catch regressions<br/>35 Evals, 14 pytest"]
+        EVAL["Nightly evals catch regressions<br/>35 Evals, 15 pytest"]
     end
     IDX ~~~ DOCK ~~~ CICD ~~~ IAC ~~~ EVAL
-    IDX -.-> RAG
+    A ~~~ BEHIND
 ```
 
 ### Step by step (text)
