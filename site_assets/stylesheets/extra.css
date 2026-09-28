@@ -25,6 +25,8 @@
   --pg-section-gap-phone: 2.2rem;
   --pg-section-padding-phone: 1rem;
   --pg-summary-padding-phone: 0.7rem 0.9rem;
+  --pg-content-side-gap: 2.8rem;
+  --pg-content-side-gap-wide: 3.2rem;
 }
 
 /* === Text rhythm === */
@@ -138,10 +140,25 @@
   }
 }
 
+/* === Space between the reading column and the side navigation === */
+
+/* 60em is where the theme starts showing a side column next to the content */
+@media screen and (min-width: 60em) {
+  .md-content__inner {
+    margin-left: var(--pg-content-side-gap);
+    margin-right: var(--pg-content-side-gap);
+  }
+}
+
 /* === Large monitors: use more of the width for content, tables and diagrams === */
 
 @media screen and (min-width: 100em) {
   .md-grid {
     max-width: var(--pg-grid-max-width-wide);
+  }
+
+  .md-content__inner {
+    margin-left: var(--pg-content-side-gap-wide);
+    margin-right: var(--pg-content-side-gap-wide);
   }
 }
