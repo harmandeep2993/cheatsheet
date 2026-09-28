@@ -21,7 +21,7 @@ SECTION_REF_RE = re.compile(r"\]\((\d\d_[a-z0-9-]+\.md)\)(?:[^\n\[]{0,40}?)secti
 # Guides that are reference pages rather than tool guides, so they have no Introduction / docs table
 REFERENCE_PAGES = {"00", "97", "98", "99"}
 ASCII_GLOBS = [
-    "*.md", "guides/*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
+    "*.md", "guides/*.md", "tools/*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
     "templates/**/*.py", "templates/**/*.md", "templates/**/*.ts", "templates/**/*.tsx", "templates/**/*.css",
     "templates/**/*.yaml", "templates/**/*.conf", "templates/**/Dockerfile",
     "templates/**/*.jinja", "templates/**/*.yml",

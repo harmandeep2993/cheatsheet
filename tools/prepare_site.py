@@ -4,13 +4,16 @@ import re
 import shutil
 from pathlib import Path
 
-from build_nav import GUIDES_DIR
+from build_nav import guides
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE_SRC = ROOT / "_site_src"
 NAV_START, NAV_END = "<!-- nav:start -->", "<!-- nav:end -->"
 # On the site every page sits in one folder, so links that step out of or into guides/ lose that step
 README_GUIDE_LINK_RE = re.compile(r"\]\(guides/")
+# Folder READMEs are not website pages, so the home page links to them on GitHub instead
+REPO_TREE_URL = "https://github.com/harmandeep2993/pocket-guide/tree/main/"
+FOLDER_README_RE = re.compile(r"\]\((guides|templates|tools)/README\.md\)")
 
 
 def write_page(source: Path, target_name: str, replacements: list[tuple[str, str]]) -> None:
@@ -29,8 +32,10 @@ def main() -> None:
         shutil.rmtree(SITE_SRC)
     SITE_SRC.mkdir()
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    readme = FOLDER_README_RE.sub(lambda m: f"]({REPO_TREE_URL}{m.group(1)})", readme)
     (SITE_SRC / "index.md").write_text(README_GUIDE_LINK_RE.sub("](", readme), encoding="utf-8")
-    for md in sorted(GUIDES_DIR.glob("*.md")):
+    # Numbered guides only: guides/README.md describes the repo folder and has no place on the site
+    for md in guides():
         write_page(md, md.name, [("](../README.md)", "](index.md)"), ("](../examples/", "](examples/")])
     shutil.copytree(ROOT / "site_assets", SITE_SRC, dirs_exist_ok=True)
     # The examples overview is linked from the guides; the code itself stays on GitHub

@@ -94,13 +94,33 @@ A complete pocket guide for data, AI and deployment work: from the terminal and 
 
 ## What's in This Repository
 
-| Folder | Contents |
+```text
+pocket-guide/
+  README.md                  this page: the index of all guides
+  guides/                    every guide, 00_big-picture.md ... 99_quick-reference.md
+  examples/                  runnable mini-projects with tests (no API key needed)
+    llm_basics/              one call, streaming, structured output
+    tool_agent/              tool definitions and a manual agent loop
+    docs_chatbot/            RAG chatbot: FastAPI, vector index, evals, Docker (the capstone code)
+    mcp_server/              MCP server exposing document search
+  templates/                 starting points to copy into your own projects
+    fullstack-microservices/ Python services in Docker + React frontend + Nginx proxy
+    service-template/        Copier template that adds a new service to the starter
+  tools/                     scripts: doc checks, navigation, glossary, website build
+  site_assets/               website stylesheet (extra.css)
+  mkdocs.yml                 website configuration and page order
+  requirements-docs.txt      packages needed to build the website
+  lychee.toml                link checker settings
+  .markdownlint-cli2.jsonc   Markdown style rules
+  .github/workflows/         CI: doc checks, link check, examples, templates, website deploy
+```
+
+| Folder | Details |
 |---|---|
-| `guides/` | All numbered guides (the pages linked above) |
-| `examples/` | Runnable, tested mini-projects used by the AI guides |
-| `templates/` | Full-stack microservices starter (guide 49) and a Copier service template (guide 50) |
-| `tools/` | Scripts that check the guides and generate navigation, the glossary and the website |
-| `site_assets/`, `mkdocs.yml` | Website theme and configuration |
+| [guides/](guides/README.md) | Numbering groups, the parts every guide has, what is generated, how to add a guide |
+| [examples/](examples/README.md) | What each example shows, setup, running tests and demos |
+| [templates/](templates/README.md) | The microservices starter and the Copier service template, quick start |
+| [tools/](tools/README.md) | What each script checks or generates, building the website locally, CI workflows |
 
 ## Conventions
 
