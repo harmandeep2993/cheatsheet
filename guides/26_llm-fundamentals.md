@@ -389,10 +389,10 @@ Example: 3,000 input + 500 output tokens at $5 / $25 per 1M
 ```text
 effort / cost  ->
 
-1. Prompt engineering     clear instructions, examples, output format     (minutes)      [27]
-2. Context / RAG          give the model the right documents at runtime   (days)         [30]
-3. Tools / agents         let the model fetch data and take actions        (days)         [28] [31]
-4. Fine-tuning            change model weights with your examples          (weeks)        [36]
+1. Prompt engineering     clear instructions, examples, output format     (minutes)      [28]
+2. Context / RAG          give the model the right documents at runtime   (days)         [31]
+3. Tools / agents         let the model fetch data and take actions        (days)         [29] [32]
+4. Fine-tuning            change model weights with your examples          (weeks)        [37]
 5. Train from scratch     almost never for applications                    (months, $$$)
 ```
 

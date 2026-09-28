@@ -38,7 +38,7 @@ Your FastAPI code defines **what** should happen for each request (`@app.get("/i
 
  PRODUCTION SHAPE
  internet -> Nginx / cloud load balancer (HTTPS) -> Uvicorn workers (N processes) -> your app
-            [44 Nginx]                              [40 this guide]                 [39 FastAPI]
+            [45 Nginx]                              [41 this guide]                 [40 FastAPI]
 ```
 
 - **ASGI** (Asynchronous Server Gateway Interface) is the contract between server and app: the server calls `app(scope, receive, send)`. Any ASGI server can run any ASGI app (FastAPI, Starlette, Django async, Quart ...).

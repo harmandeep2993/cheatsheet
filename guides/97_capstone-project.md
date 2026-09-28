@@ -38,17 +38,17 @@ Build a real AI application end to end: a chatbot that answers questions from yo
 ```text
                        INDEXING (startup / POST /reindex)
 docs/*.md --load + chunk--> chunks --embed--> vectors --> VectorIndex (NumPy) --save--> .index/index.npz
-[04 Step 2]                          [05 Step 3]
+[05 Step 2]                          [06 Step 3]
 
                        ASKING (POST /ask)
 client --HTTP--> Uvicorn --> FastAPI route --> ChatbotService.ask()
-                 [40]        [39] + Pydantic      |
-                                                  +--> index.search(question) -> top-k chunks   [29] [30]
-                                                  +--> build_prompt(sources first, question last) [27]
-                                                  +--> Claude messages.create -> answer [n]       [26]
+                 [41]        [40] + Pydantic      |
+                                                  +--> index.search(question) -> top-k chunks   [30] [31]
+                                                  +--> build_prompt(sources first, question last) [28]
+                                                  +--> Claude messages.create -> answer [n]       [27]
                  <-- JSON {answer, sources[]} ----+
 
-Around it: tests with a fake LLM [14], retrieval eval [34], Docker [42], CI [43], Azure [47], MCP [33]
+Around it: tests with a fake LLM [15], retrieval eval [35], Docker [43], CI [44], Azure [48], MCP [34]
 ```
 
 | File | Responsibility |

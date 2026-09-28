@@ -91,19 +91,19 @@ GitHub and the website draw this automatically (the number in each box is the gu
 %%{init: {"flowchart": {"wrappingWidth": 360, "nodeSpacing": 40, "rankSpacing": 45}}}%%
 flowchart TD
     Q("User asks: What is the refund policy for jackets,<br/>and has order A-1042 shipped?")
-    UI["1. Chat UI sends HTTPS POST /chat<br/>38 AI UIs, 08 HTTP"]
-    EDGE["2. Nginx / cloud ingress<br/>TLS, routing, rate limit<br/>44 Nginx, 47 Azure, 45 Kubernetes"]
-    SRV["3. Uvicorn receives the request<br/>40 Uvicorn"]
-    API["4. FastAPI endpoint: auth,<br/>Pydantic validation of the JSON body<br/>39 FastAPI, 12 Pydantic"]
-    CACHE["5. Redis: per-user rate limit,<br/>cache check for identical questions<br/>41 Redis"]
-    ORCH{"6. Orchestration decides<br/>what context is needed<br/>31 Agents, 32 Frameworks"}
-    RAG["7a. RAG: embed question, search vector DB,<br/>rerank, keep top 5 allowed chunks<br/>29 Embeddings, 30 RAG"]
-    TOOL["7b. Tool: get_order_status A-1042<br/>via SQL / internal API<br/>28 Tool Use, 19 SQL, 33 MCP"]
-    PROMPT["8. Build prompt: system + chunks<br/>+ tool result + question<br/>27 Prompting"]
-    LLM["9. Streamed LLM call: Claude API<br/>or self-hosted Ollama / vLLM<br/>26 LLM APIs, 35 Local LLMs"]
-    CHECK["10. Output checks: validation,<br/>guardrails, citations<br/>37 Security, 12 Pydantic"]
-    STREAM["11. Stream tokens back (SSE)<br/>08 HTTP, 39 FastAPI"]
-    LOG["12. Log trace: prompt version, chunks,<br/>tools, tokens, cost, latency, feedback<br/>34 Evals / Observability"]
+    UI["1. Chat UI sends HTTPS POST /chat<br/>39 AI UIs, 09 HTTP"]
+    EDGE["2. Nginx / cloud ingress<br/>TLS, routing, rate limit<br/>45 Nginx, 48 Azure, 46 Kubernetes"]
+    SRV["3. Uvicorn receives the request<br/>41 Uvicorn"]
+    API["4. FastAPI endpoint: auth,<br/>Pydantic validation of the JSON body<br/>40 FastAPI, 13 Pydantic"]
+    CACHE["5. Redis: per-user rate limit,<br/>cache check for identical questions<br/>42 Redis"]
+    ORCH{"6. Orchestration decides<br/>what context is needed<br/>32 Agents, 33 Frameworks"}
+    RAG["7a. RAG: embed question, search vector DB,<br/>rerank, keep top 5 allowed chunks<br/>30 Embeddings, 31 RAG"]
+    TOOL["7b. Tool: get_order_status A-1042<br/>via SQL / internal API<br/>29 Tool Use, 20 SQL, 34 MCP"]
+    PROMPT["8. Build prompt: system + chunks<br/>+ tool result + question<br/>28 Prompting"]
+    LLM["9. Streamed LLM call: Claude API<br/>or self-hosted Ollama / vLLM<br/>27 LLM APIs, 36 Local LLMs"]
+    CHECK["10. Output checks: validation,<br/>guardrails, citations<br/>38 Security, 13 Pydantic"]
+    STREAM["11. Stream tokens back (SSE)<br/>09 HTTP, 40 FastAPI"]
+    LOG["12. Log trace: prompt version, chunks,<br/>tools, tokens, cost, latency, feedback<br/>35 Evals / Observability"]
     A("User sees: Jackets can be returned within 30 days [1].<br/>Order A-1042 shipped, arriving Sept 30.")
 
     Q --> UI --> EDGE --> SRV --> API --> CACHE --> ORCH
@@ -114,11 +114,11 @@ flowchart TD
 
     subgraph BEHIND ["Behind the scenes"]
         direction TB
-        IDX["Background worker indexed the documents<br/>41 Queues, 30 RAG"]
-        DOCK["Everything runs in Docker containers<br/>42 Docker"]
-        CICD["Built and deployed on every merge<br/>43 GitHub Actions, 04 Git"]
-        IAC["Cloud resources defined as code<br/>46 Terraform, 47 Azure"]
-        EVAL["Nightly evals catch regressions<br/>34 Evals, 14 pytest"]
+        IDX["Background worker indexed the documents<br/>42 Queues, 31 RAG"]
+        DOCK["Everything runs in Docker containers<br/>43 Docker"]
+        CICD["Built and deployed on every merge<br/>44 GitHub Actions, 05 Git"]
+        IAC["Cloud resources defined as code<br/>47 Terraform, 48 Azure"]
+        EVAL["Nightly evals catch regressions<br/>35 Evals, 14 pytest"]
     end
     IDX ~~~ DOCK ~~~ CICD ~~~ IAC ~~~ EVAL
     IDX -.-> RAG
@@ -129,45 +129,45 @@ flowchart TD
 ```text
  USER: "What is our refund policy for jackets, and has my order A-1042 shipped?"
    |
-   | 1. Browser / chat UI sends HTTPS POST /chat                      [38 AI UIs] [08 HTTP]
+   | 1. Browser / chat UI sends HTTPS POST /chat                      [39 AI UIs] [09 HTTP]
    v
- 2. Nginx / cloud ingress: TLS, routing, rate limit                   [44 Nginx] [47 Azure] [45 K8s]
+ 2. Nginx / cloud ingress: TLS, routing, rate limit                   [45 Nginx] [48 Azure] [46 K8s]
    v
- 3. Uvicorn (ASGI server) receives the HTTP request, hands it to the app [40 Uvicorn]
+ 3. Uvicorn (ASGI server) receives the HTTP request, hands it to the app [41 Uvicorn]
    v
- 4. FastAPI endpoint: auth, Pydantic validation of the JSON body      [39 FastAPI] [12 Pydantic]
+ 4. FastAPI endpoint: auth, Pydantic validation of the JSON body      [40 FastAPI] [13 Pydantic]
    v
- 5. Redis: rate limit per user, check cache for identical question    [41 Redis]
+ 5. Redis: rate limit per user, check cache for identical question    [42 Redis]
    v
- 6. Agent / orchestration code decides what context is needed          [31 Agents] [32 Frameworks]
+ 6. Agent / orchestration code decides what context is needed          [32 Agents] [33 Frameworks]
    |
    +--> 7a. RAG: embed the question, search the vector DB for policy chunks,
-   |        rerank, keep top 5 (filtered by the user's permissions)   [29 Embeddings] [30 RAG]
+   |        rerank, keep top 5 (filtered by the user's permissions)   [30 Embeddings] [31 RAG]
    |
-   +--> 7b. Tool: get_order_status("A-1042") -> SQL / internal API    [28 Tool Use] [19 SQL] [33 MCP]
+   +--> 7b. Tool: get_order_status("A-1042") -> SQL / internal API    [29 Tool Use] [20 SQL] [34 MCP]
    v
  8. Prompt built: system prompt + policy chunks + tool result + question
-                                                                      [27 Prompting]
+                                                                      [28 Prompting]
    v
- 9. LLM API call (streamed), e.g. Claude via the anthropic SDK        [26 LLM APIs] [25 Fundamentals]
-    (or a self-hosted model on a GPU VM via Ollama / vLLM)            [35 Local LLMs] [48 Azure VM]
+ 9. LLM API call (streamed), e.g. Claude via the anthropic SDK        [27 LLM APIs] [26 Fundamentals]
+    (or a self-hosted model on a GPU VM via Ollama / vLLM)            [36 Local LLMs] [49 Azure VM]
    v
-10. Output checks: structured output validation, guardrails, citations [37 Security] [12 Pydantic]
+10. Output checks: structured output validation, guardrails, citations [38 Security] [13 Pydantic]
    v
-11. Stream tokens back to the browser (SSE)                           [08 HTTP] [39 FastAPI] [38 UIs]
+11. Stream tokens back to the browser (SSE)                           [09 HTTP] [40 FastAPI] [39 UIs]
    v
 12. Log trace: prompt version, chunks, tool calls, tokens, cost, latency; user feedback
-                                                                      [34 Evals/Observability]
+                                                                      [35 Evals/Observability]
    v
  USER sees: "Jackets can be returned within 30 days [1]. Your order A-1042 shipped and
              should arrive on Sept 30."
 
  Behind the scenes:
-  - Documents were indexed earlier by a background worker            [41 Queues] [30 RAG]
-  - Everything runs in Docker containers                              [42 Docker]
-  - Built and deployed automatically on every merge                   [43 GitHub Actions] [04 Git]
-  - Cloud resources defined as code                                   [46 Terraform] [47 Azure]
-  - Nightly evals check quality didn't regress                        [34 Evals] [14 pytest]
+  - Documents were indexed earlier by a background worker            [42 Queues] [31 RAG]
+  - Everything runs in Docker containers                              [43 Docker]
+  - Built and deployed automatically on every merge                   [44 GitHub Actions] [05 Git]
+  - Cloud resources defined as code                                   [47 Terraform] [48 Azure]
+  - Nightly evals check quality didn't regress                        [35 Evals] [15 pytest]
 ```
 
 ## 4. From Idea to Production (Development Lifecycle)
@@ -176,25 +176,46 @@ flowchart TD
 >
 > Use it for planning a project; knowing what to learn next.
 
+### Diagram
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 360, "nodeSpacing": 40, "rankSpacing": 40}}}%%
+flowchart TD
+    E["1. EXPLORE<br/>Jupyter notebook, pandas, quick LLM calls<br/>16 Jupyter, 18 Pandas, 27 LLM APIs"]
+    S["2. SCRIPT<br/>working code moved to .py files, functions, logging<br/>10 Python, 06 VS Code"]
+    P["3. PROJECT<br/>uv, pyproject.toml, Git repo, .gitignore<br/>12 uv, 11 venv, 05 Git, 08 Config files"]
+    Q["4. QUALITY<br/>type hints + Pydantic, pytest, Ruff, evals<br/>13 Pydantic, 15 pytest, 35 Evals"]
+    V["5. SERVICE<br/>FastAPI on Uvicorn, async, settings from env, jobs<br/>40 FastAPI, 41 Uvicorn, 14 Async, 42 Redis"]
+    C["6. CONTAINER<br/>Dockerfile, Compose: app + DB + Redis<br/>43 Docker"]
+    A["7. AUTOMATE<br/>GitHub Actions: test, eval, build image on every push<br/>44 GitHub Actions"]
+    D["8. DEPLOY<br/>Azure Container Apps / App Service / VM + Nginx / AKS,<br/>infrastructure as code<br/>48 Azure, 45 Nginx, 46 Kubernetes, 49 Azure VM, 47 Terraform"]
+    O["9. OPERATE<br/>tracing, cost dashboards, alerts, user feedback<br/>35 Observability, 38 Security"]
+
+    E --> S --> P --> Q --> V --> C --> A --> D --> O
+    O -. "production issues become new tests and eval cases" .-> Q
+```
+
+### Stage by stage (text)
+
 ```text
- 1. EXPLORE        Jupyter notebook, pandas, quick LLM calls             [15] [17] [26]
+ 1. EXPLORE        Jupyter notebook, pandas, quick LLM calls             [16] [18] [27]
       |
- 2. SCRIPT         Move working code to .py files, functions, logging     [09] [05 VS Code]
+ 2. SCRIPT         Move working code to .py files, functions, logging     [10] [06 VS Code]
       |
- 3. PROJECT        uv / venv, pyproject.toml, Git repo, .gitignore       [11] [10] [04] [07]
+ 3. PROJECT        uv / venv, pyproject.toml, Git repo, .gitignore       [12] [11] [05] [08]
       |
- 4. QUALITY        Type hints + Pydantic, pytest, Ruff, evals            [12] [14] [34]
+ 4. QUALITY        Type hints + Pydantic, pytest, Ruff, evals            [13] [15] [35]
       |
- 5. SERVICE        FastAPI API on Uvicorn, async, settings from env, jobs  [39] [40] [13] [41]
+ 5. SERVICE        FastAPI API on Uvicorn, async, settings from env, jobs  [40] [41] [14] [42]
       |
- 6. CONTAINER      Dockerfile, Compose (app + DB + Redis)                [42]
+ 6. CONTAINER      Dockerfile, Compose (app + DB + Redis)                [43]
       |
- 7. AUTOMATE       GitHub Actions: test, eval, build image on every push  [43]
+ 7. AUTOMATE       GitHub Actions: test, eval, build image on every push  [44]
       |
- 8. DEPLOY         Azure Container Apps / App Service / VM + Nginx / AKS  [47] [44] [45] [48]
-      |            Infrastructure as code                                 [46]
+ 8. DEPLOY         Azure Container Apps / App Service / VM + Nginx / AKS  [48] [45] [46] [49]
+      |            Infrastructure as code                                 [47]
       |
- 9. OPERATE        Tracing, cost dashboards, alerts, feedback -> new evals [34] [37]
+ 9. OPERATE        Tracing, cost dashboards, alerts, feedback -> new evals [35] [38]
       |
       +---------- feedback loop: production issues become tests / eval cases ----------+
 ```
@@ -205,22 +226,44 @@ flowchart TD
 >
 > Use it for data analysis and classic ML work.
 
+### Diagram
+
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 360, "nodeSpacing": 40, "rankSpacing": 40}}}%%
+flowchart TD
+    CO["COLLECT<br/>SQL, APIs, files: CSV, Parquet, JSON<br/>20 SQL, 09 HTTP, 08 Formats, 19 Polars / DuckDB"]
+    CL["CLEAN<br/>missing values, types, duplicates<br/>18 Pandas, 19 Polars, 07 Regex"]
+    EX["EXPLORE<br/>statistics, groupby, charts<br/>17 NumPy, 18 Pandas, 21 Matplotlib, 22 Seaborn, 16 Jupyter"]
+    FE["FEATURES<br/>encoding, scaling, text embeddings<br/>23 Scikit-learn, 30 Embeddings"]
+    MO["MODEL<br/>scikit-learn for tables,<br/>PyTorch / Hugging Face for text and images<br/>23 Scikit-learn, 24 PyTorch, 25 Hugging Face"]
+    EV["EVALUATE<br/>cross-validation, metrics, error analysis<br/>23 Scikit-learn, 35 Evals"]
+    SE["SERVE<br/>save model, FastAPI endpoint, Docker, cloud<br/>40 FastAPI, 43 Docker, 48 Azure"]
+    MN["MONITOR<br/>data drift, performance, retraining schedule<br/>35 Observability, 44 GitHub Actions, 42 Queues"]
+
+    CO --> CL --> EX --> FE --> MO --> EV
+    EV -- "good enough" --> SE --> MN
+    EV -. "not good enough: new features or model" .-> FE
+    MN -. "drift detected: collect fresh data and retrain" .-> CO
+```
+
+### Step by step (text)
+
 ```text
- COLLECT    SQL, APIs, files (CSV, Parquet, JSON)             [19] [08] [07] [18]
+ COLLECT    SQL, APIs, files (CSV, Parquet, JSON)             [20] [09] [08] [19]
     v
- CLEAN      pandas / Polars: missing values, types, dedupe     [17] [18] [06 Regex]
+ CLEAN      pandas / Polars: missing values, types, dedupe     [18] [19] [07 Regex]
     v
- EXPLORE    stats, groupby, charts                             [16] [17] [20] [21] [15]
+ EXPLORE    stats, groupby, charts                             [17] [18] [21] [22] [16]
     v
- FEATURES   encoding, scaling, embeddings of text              [22] [29]
+ FEATURES   encoding, scaling, embeddings of text              [23] [30]
     v
- MODEL      scikit-learn (tabular), PyTorch / HF (text, images) [22] [23] [24]
+ MODEL      scikit-learn (tabular), PyTorch / HF (text, images) [23] [24] [25]
     v
- EVALUATE   cross-validation, metrics, error analysis          [22] [34]
+ EVALUATE   cross-validation, metrics, error analysis          [23] [35]
     v
- SERVE      save model -> FastAPI endpoint -> Docker -> cloud   [22] [39] [42] [47]
+ SERVE      save model -> FastAPI endpoint -> Docker -> cloud   [23] [40] [43] [48]
     v
- MONITOR    data drift, performance, retraining schedule        [34] [43] [41]
+ MONITOR    data drift, performance, retraining schedule        [35] [44] [42]
 ```
 
 ## 6. The AI Application Ladder
@@ -230,16 +273,16 @@ flowchart TD
 > Use it for designing an AI feature.
 
 ```text
- Level 6  MULTI-AGENT SYSTEMS    orchestrator + specialised agents          [31] [32]
- Level 5  AGENTS                 model decides steps in a loop with tools   [31] [28] [33]
- Level 4  RAG                    retrieve your documents, answer from them  [30] [29]
- Level 3  TOOLS / WORKFLOWS      fixed chains, routing, function calling    [28] [27]
- Level 2  STRUCTURED OUTPUT      extraction / classification into schemas   [26] [12]
- Level 1  SINGLE PROMPT          one well-written prompt, one call          [27] [26]
- Level 0  UNDERSTAND THE MODEL   tokens, context, cost, limits              [25]
+ Level 6  MULTI-AGENT SYSTEMS    orchestrator + specialised agents          [32] [33]
+ Level 5  AGENTS                 model decides steps in a loop with tools   [32] [29] [34]
+ Level 4  RAG                    retrieve your documents, answer from them  [31] [30]
+ Level 3  TOOLS / WORKFLOWS      fixed chains, routing, function calling    [29] [28]
+ Level 2  STRUCTURED OUTPUT      extraction / classification into schemas   [27] [13]
+ Level 1  SINGLE PROMPT          one well-written prompt, one call          [28] [27]
+ Level 0  UNDERSTAND THE MODEL   tokens, context, cost, limits              [26]
 
- Cross-cutting at every level: evals [34], security [37], cost / latency [25] [26]
- Model choice at every level: hosted API [26] vs local [35] vs fine-tuned [36]
+ Cross-cutting at every level: evals [35], security [38], cost / latency [26] [27]
+ Model choice at every level: hosted API [27] vs local [36] vs fine-tuned [37]
 ```
 
 ## 7. Where Code Runs
@@ -253,7 +296,7 @@ flowchart TD
  python app.py      Azure VM + SSH        Docker on a VM            AKS cluster          Container Apps,
  Jupyter            systemd + Nginx       Compose stacks            pods, services,      App Service,
  Ollama locally     GPU for LLMs          Container Apps            autoscaling          Functions
- [09][15][35]       [03][44][48]          [42][47]                  [45]                 [47]
+ [10][16][36]       [04][45][49]          [43][48]                  [46]                 [48]
  ------------------------------------------------------------------------------------------------>
  full control, you manage everything                               less to manage, less control
 ```
@@ -304,16 +347,16 @@ flowchart TD
 ```text
  WHAT FLOWS BETWEEN COMPONENTS          HOW                          GUIDE
  ----------------------------------     --------------------------   ----------------
- Requests / responses                   HTTP(S) + JSON               [08] [07]
- Streaming tokens                       SSE / WebSockets             [08] [38] [44]
- Data shapes and validation             JSON Schema / Pydantic       [07] [12]
- Configuration                          env vars, .env, YAML, TOML   [07] [11]
- Secrets                                env vars -> Key Vault        [07] [47] [37]
- Tools for AI                           tool schemas / MCP           [28] [33]
- Background work                        Redis queues                 [41]
- Code and infra changes                 Git commits -> CI pipelines  [04] [43]
- Packaged apps                          Docker images in a registry  [42] [47]
- Infrastructure                         Terraform / Bicep files      [46] [47]
+ Requests / responses                   HTTP(S) + JSON               [09] [08]
+ Streaming tokens                       SSE / WebSockets             [09] [39] [45]
+ Data shapes and validation             JSON Schema / Pydantic       [08] [13]
+ Configuration                          env vars, .env, YAML, TOML   [08] [12]
+ Secrets                                env vars -> Key Vault        [08] [48] [38]
+ Tools for AI                           tool schemas / MCP           [29] [34]
+ Background work                        Redis queues                 [42]
+ Code and infra changes                 Git commits -> CI pipelines  [05] [44]
+ Packaged apps                          Docker images in a registry  [43] [48]
+ Infrastructure                         Terraform / Bicep files      [47] [48]
 ```
 
 ## 10. Learning Paths

@@ -435,7 +435,7 @@ with st.chat_message("assistant"):
             st.markdown(f"- **{s['file']}**, page {s['page']}")
     feedback = st.feedback("thumbs", key=f"fb_{len(st.session_state.messages)}")
     if feedback is not None:
-        save_feedback(trace_id, feedback)          # send to your observability tool ([34])
+        save_feedback(trace_id, feedback)          # send to your observability tool ([35])
 ```
 
 ## 12. Authentication

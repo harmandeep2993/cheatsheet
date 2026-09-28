@@ -266,7 +266,7 @@ for chunk in ollama.chat(model="qwen3:4b", messages=msgs, stream=True):    # str
 
 emb = ollama.embed(model="bge-m3", input=["text one", "text two"])["embeddings"]
 
-client = ollama.Client(host="http://localhost:11435")      # e.g. via SSH tunnel to a VM ([48])
+client = ollama.Client(host="http://localhost:11435")      # e.g. via SSH tunnel to a VM ([49])
 ```
 
 Structured output with a schema:
