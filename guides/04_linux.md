@@ -10,6 +10,16 @@ Quick reference for everyday Linux commands (Ubuntu / Debian focus, works on mos
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to run commands in a terminal ([03 - Terminal and PowerShell](03_terminal-powershell.md)); many ideas (paths, pipes, environment variables) are the same, only the command names differ.
+
+**The problem it solves:** the computers that run websites, APIs, databases, Docker containers and AI models are almost all Linux servers without a desktop. To deploy, debug or even look at a log file there, you need to work in a Linux shell over SSH.
+
+**Why Linux won on servers:** it is free (no licence per machine, which matters when you run thousands), open source (anyone can inspect and fix it), stable for months without a reboot, and light enough to fit in a tiny container image.
+
+**Think of it like:** a professional kitchen. It has no decoration for guests (no desktop), but every tool is in a known place and everything is done with precise, repeatable steps. Once you know where things are, it is faster than any home kitchen.
+
 ### What is Linux?
 
 Linux is a free, open-source operating system, like Windows or macOS. It comes in **distributions** (Ubuntu, Debian, Fedora, ...) that bundle the Linux kernel with tools and a package manager. Most servers, cloud VMs, Docker containers and supercomputers run Linux, usually without a desktop, so you control them through the **Bash** shell.

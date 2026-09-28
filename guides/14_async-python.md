@@ -10,6 +10,16 @@ Quick reference for asynchronous programming in Python with `async` / `await` an
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python functions and exceptions ([10 - Python Basics](10_python-basics.md)), and that an API call is a request over the network that takes time to answer ([09 - HTTP and APIs](09_http-apis.md)). Async is an intermediate topic: it is fine to skip it until you need to make many slow calls at once.
+
+**The problem it solves:** you need 100 answers from an LLM, and each takes 5 seconds. Called one after another, that is over 8 minutes, and your program sits idle almost the whole time, just waiting for the network. A web server handling many users has the same problem: one slow request should not block everyone else.
+
+**Before async:** the usual answer was threads (several lines of work running "at once"), which work but are harder to reason about and heavier when you need thousands. Python added `async` / `await` (Python 3.5, 2015) as a lighter way for one program to juggle many waiting operations. FastAPI and the LLM SDKs support it directly.
+
+**Think of it like:** the chef in the mental model below, who puts the pasta on to boil and starts the bread while waiting, instead of staring at the pot.
+
 ### What is async programming?
 
 Most time in web and AI apps is spent **waiting**: for an LLM to answer, a database to return rows, a file to download. Normal (synchronous) Python waits idle for each call to finish before starting the next. **Async** Python lets one program start many operations and switch to other work while each one waits. It is not about using more CPU cores; it is about **not wasting time waiting**.

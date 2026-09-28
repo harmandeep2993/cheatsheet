@@ -10,6 +10,16 @@ Quick reference for regular expressions (patterns that match text) in Python, pa
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what a string (a piece of text) is. Knowing basic Python ([10](10_python-basics.md)) helps for the Python examples, but the patterns themselves are language independent.
+
+**The problem it solves:** finding exact words is easy (`Ctrl+F`), but real tasks are about *shapes* of text: "every date", "anything that looks like an email", "the number after `Order #`". Writing that with normal code means loops, `if` statements and index arithmetic that grow long and fragile.
+
+**Before regex:** you wrote that string-checking code by hand for each case. Regular expressions come from 1950s mathematics and were built into Unix tools (like `grep`) in the 1970s; the same pattern language is now in almost every language and editor.
+
+**Think of it like:** a stencil for text. You describe the outline ("4 digits, a dash, 2 digits") and the engine slides it over the text, marking every place it fits.
+
 ### What is Regex?
 
 A **regular expression** (regex) is a pattern that describes text. Instead of searching for one exact word, you describe a shape: "four digits, a dash, two digits" (`\d{4}-\d{2}`) or "anything that looks like an email". A regex engine then finds, checks, extracts or replaces every piece of text that matches. The same pattern language works (with small differences) in Python, pandas, SQL, grep, PowerShell, VS Code and most programming languages.

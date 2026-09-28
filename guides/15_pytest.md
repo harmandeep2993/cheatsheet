@@ -10,6 +10,16 @@ Quick reference for testing Python code with pytest: writing tests, fixtures, pa
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python functions and `assert` ([10 - Python Basics](10_python-basics.md)), and how to run commands in your project environment ([12 - uv](12_uv.md)).
+
+**The problem it solves:** every change to your code can silently break something that used to work. Checking everything by hand after each change is slow, boring and gets skipped. Automated tests check your code in seconds, every time, and tell you exactly what broke. They also let you change code with confidence, because the tests will catch mistakes.
+
+**Before pytest:** Python's built-in `unittest` module (copied from Java's JUnit) requires test classes and special methods like `self.assertEqual(a, b)`. pytest lets you write plain functions with plain `assert`, finds them automatically, and shows readable explanations when they fail, which is why it became the standard.
+
+**Think of it like:** a checklist a pilot runs before every flight. It is fast, it is the same every time, and it catches the problem on the ground instead of in the air (in production).
+
 ### What is testing and what is pytest?
 
 A **test** is a small piece of code that runs your code and checks the result is what you expect. **pytest** is the most popular Python testing tool: you write plain functions starting with `test_` that use `assert`, and pytest finds them, runs them and reports which passed or failed with a clear explanation.

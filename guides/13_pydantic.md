@@ -10,6 +10,16 @@ Quick reference for Pydantic v2: data validation with Python type hints, used by
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python classes, type hints and dicts ([10 - Python Basics](10_python-basics.md)), and what JSON looks like ([08](08_yaml-json.md)).
+
+**The problem it solves:** data from outside your program cannot be trusted: a form sends `"42"` instead of `42`, an API leaves out a field, an LLM returns JSON with a missing key, a config file has a typo. Without checks, the bad value travels deep into your code and crashes somewhere far from the cause, with a confusing error.
+
+**Before Pydantic:** you wrote checks by hand for every field (`if "age" not in data`, `int(data["age"])`, `if age < 0`), which is long, repetitive and easy to forget. Python type hints alone do not help at runtime: they describe types but never check them. Pydantic uses those same type hints to actually check and convert data.
+
+**Think of it like:** customs at a border (the mental model below): everything entering the country is checked once, and inside you can trust what passed.
+
 ### What is Pydantic?
 
 Pydantic is a Python library that **checks and converts data** using type hints. You describe the shape of your data as a class (a **model**), and Pydantic makes sure any incoming data (JSON from an API, output from an LLM, values from a config file) matches that shape. If it does, you get a clean Python object with the right types. If not, you get a clear error saying exactly which field is wrong and why.

@@ -10,6 +10,16 @@ Quick reference for Visual Studio Code on Windows (on Mac use `Cmd` instead of `
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what source code, packages and virtual environments are ([01 - Core Concepts](01_core-concepts.md) sections 1, 4 and 5). Installing Python first ([10](10_python-basics.md), [12 - uv](12_uv.md)) makes the Python features work.
+
+**The problem it solves:** code in a plain text editor gives no help: typos in names are found only when the program crashes, you jump between a terminal, a file browser and a Git tool, and finding a bug means adding `print()` everywhere. An editor that understands code catches mistakes while you type, shows you where things are defined, and lets you pause a running program to look inside.
+
+**Before VS Code:** developers chose between simple editors (fast, but no understanding of code) and heavy IDEs (integrated development environments like PyCharm or Visual Studio: powerful, but large, slow to start and usually for one language). VS Code (2015) sits in between: a light editor that becomes an IDE for any language through extensions.
+
+**Think of it like:** a workshop bench where every tool (terminal, Git, debugger, notebooks) hangs within reach, instead of walking to a different room for each job.
+
 ### What is VS Code?
 
 Visual Studio Code is a free code editor from Microsoft. It is lightweight like a text editor but becomes a full development environment through **extensions**: Python support, debugging, Jupyter notebooks, Git, Docker, remote servers and more. It runs on Windows, macOS and Linux and is the most used editor among developers and data scientists.

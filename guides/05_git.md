@@ -10,6 +10,16 @@ Quick reference for version control with Git and working with GitHub (including 
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to run commands in a terminal ([03](03_terminal-powershell.md)) and what a project folder is ([01 - Core Concepts](01_core-concepts.md) section 3).
+
+**The problem it solves:** you change code, it breaks, and you cannot remember what it looked like when it worked. You email `final_v2_REALLY_final.py` to a colleague who edits the same file at the same time, and one of you loses work. Nobody knows who changed a line or why.
+
+**Before Git:** people copied folders with dates in their names, emailed zip files, or used older central systems (CVS, Subversion) where you needed a connection to the server for every action and branching was slow and painful. Git (2005) keeps the whole history on every machine, works offline, and makes branches cheap.
+
+**Think of it like:** a save-game system for your project. Every commit is a save point with a note; you can load any old save, start a separate branch of the story to try something risky, and later merge the good parts back. GitHub is the cloud where the save files are shared with your team.
+
 ### What is Git?
 
 Git is a **version control system**: it records the history of your project as a series of snapshots called **commits**. Every commit stores what changed, who changed it, when and why (the message). You can go back to any earlier version, compare versions, and see who wrote each line. Git lets developers work on separate **branches** at the same time without disturbing each other and then **merge** their work together. Git runs locally on your machine; **GitHub** is a website that hosts Git repositories online so you can back them up, share them, review code with **pull requests** and run automation.

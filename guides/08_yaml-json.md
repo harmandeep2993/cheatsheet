@@ -10,6 +10,16 @@ Quick reference for the text formats used for data exchange and configuration: J
 
 ## Introduction
 
+### Before you start
+
+**You should know:** the idea of configuration and environment variables ([01 - Core Concepts](01_core-concepts.md) section 12). Knowing Python dicts and lists ([10](10_python-basics.md)) makes the mental model below click immediately.
+
+**The problem it solves:** programs need to exchange data (your app and the Claude API) and read settings (which port, which model, which API key). Both must be text that any language can read and any human can edit, with a clear structure: names, values, lists, nesting.
+
+**Before these formats:** every program invented its own format (INI files, custom text, binary files), so each needed its own parser and nothing was shared. XML became the common format in the 2000s but is verbose (`<name>Ana</name>`). JSON (from JavaScript) became the standard for APIs because it is short and maps directly onto the data types every language has; YAML and TOML became popular for configuration because people edit those files by hand and want comments.
+
+**Think of it like:** different handwriting for the same form. JSON, YAML and TOML all fill in the same boxes (names, values, lists); only the punctuation differs.
+
 ### What are these formats?
 
 They are ways to write **structured data as plain text**, so both humans and programs can read it.

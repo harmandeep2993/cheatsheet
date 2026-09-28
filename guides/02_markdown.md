@@ -10,6 +10,16 @@ Quick reference for writing Markdown (README files, notes, GitHub docs).
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to create and save a text file. Nothing else; this is a good first guide.
+
+**The problem it solves:** you want documentation (a README, notes, a report) that looks good on GitHub and in your editor, but also stays a plain text file. Word documents look good but cannot be compared line by line in Git, need a special program to open, and break when copied between tools. Plain `.txt` files work everywhere but have no headings, links or tables.
+
+**Before Markdown:** people wrote HTML by hand (`<h1>Title</h1><ul><li>item</li></ul>`), which is precise but slow to type and hard to read as raw text, or they used word processors whose files Git cannot diff.
+
+**Think of it like:** the way people already formatted emails in plain text (`*important*`, lines starting with `-` for lists), turned into a real standard that tools can render.
+
 ### What is Markdown?
 
 Markdown is a simple way to format plain text using a few symbols. You write `# Title`, `**bold**` or `- item` in any text editor, and tools like GitHub, VS Code, Jupyter and many note apps turn it into nicely formatted headings, bold text and lists. The file stays readable even without rendering, which is why it is the standard for documentation.

@@ -10,6 +10,16 @@ Quick reference for everyday terminal work on Windows (PowerShell, CMD) with Bas
 
 ## Introduction
 
+### Before you start
+
+**You should know:** the words *terminal*, *command*, *flag* and *path* from [01 - Core Concepts](01_core-concepts.md) sections 2 and 3.
+
+**The problem it solves:** clicking through windows is fine for one file, but slow and error-prone for 100 files, impossible to repeat exactly tomorrow, and unavailable on servers that have no screen. Almost every developer tool (Git, Python, uv, Docker, cloud CLIs) is also built to be used by typing commands.
+
+**Before the terminal was optional:** it was the only way to use a computer; windows and mice came later. The terminal survived because text commands can be saved, shared, repeated and automated in scripts, which clicks cannot.
+
+**Think of it like:** giving a precise written instruction to an assistant ("move every PDF from Downloads into Reports") instead of doing each step yourself with the mouse. The instruction can be reused and checked; the clicks leave no record.
+
 ### What is a terminal and what is PowerShell?
 
 A **terminal** is a text window where you type commands instead of clicking. The program that reads and runs those commands is the **shell**. Windows has two built-in shells: the old **CMD** (Command Prompt) and **PowerShell**, a modern shell from Microsoft. PowerShell commands are named `Verb-Noun` (`Get-Process`, `Remove-Item`) and pass **objects** (with properties like Name, CPU, Size) between commands instead of plain text, which makes filtering and sorting very powerful.

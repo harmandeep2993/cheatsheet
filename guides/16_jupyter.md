@@ -10,6 +10,16 @@ Quick reference for Jupyter notebooks (JupyterLab, classic Notebook and notebook
 
 ## Introduction
 
+### Before you start
+
+**You should know:** basic Python ([10](10_python-basics.md)) and how to create a project environment ([12 - uv](12_uv.md)), because a notebook runs inside one.
+
+**The problem it solves:** data work is exploration: load data, look at it, try something, look again. With a normal script you rerun everything from the start for every small change, and results (tables, charts) appear in separate windows or not at all. You also want to explain your findings next to the code that produced them.
+
+**Before Jupyter:** people used the Python prompt (results vanish when you close it), scripts (rerun everything each time), or tools like MATLAB and Mathematica notebooks. IPython Notebook (2011) brought that notebook style to Python; it became Jupyter when it grew to support other languages (Julia, Python, R: "Ju-Pyt-R").
+
+**Think of it like:** a lab notebook. Each experiment (cell) is written down with its result right below it, you can redo one experiment without redoing the whole day, and a reader can follow your reasoning. The catch is the same as with a real lab notebook: cells run in the order you choose, so a notebook can end up in a state nobody can reproduce unless you rerun it top to bottom.
+
 ### What is Jupyter?
 
 Jupyter is an interactive environment where you write and run code in small blocks called **cells** inside a **notebook** (`.ipynb` file). The output of each cell (tables, charts, text) appears right below it, and you can mix code with Markdown explanations. **JupyterLab** is the browser-based app; VS Code can open notebooks too. Behind every notebook runs a **kernel**: the Python process that executes your cells and keeps variables in memory between them.

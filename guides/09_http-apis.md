@@ -10,6 +10,16 @@ Quick reference for how the web and APIs work: HTTP requests and responses, REST
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what an API and an SDK are and why they exist ([01 - Core Concepts](01_core-concepts.md) sections 7 to 9), and how JSON looks ([08](08_yaml-json.md)).
+
+**The problem it solves:** two programs on different computers, written in different languages by different companies, need to understand each other: your Python script and Claude's servers, a phone app and a bank. They need one shared set of rules for how to ask, how to answer and how to report problems.
+
+**Before HTTP APIs were everywhere:** systems used many incompatible protocols, and early web services used SOAP, a heavy XML-based standard with long specifications. REST-style APIs over plain HTTP and JSON won because they reuse what the web already had: URLs, methods, status codes and headers that every language, browser and tool understands.
+
+**Think of it like:** ordering in a restaurant (the mental model below): a standard way to place an order and a standard way to hear "here you go", "we are out of that" or "the kitchen is on fire".
+
 ### What is HTTP and what is an API?
 
 **HTTP** (HyperText Transfer Protocol) is the language computers use to talk over the web. A **client** (browser, Python script, mobile app) sends a **request** to a **server**, and the server sends back a **response**. Every web page, every LLM call to Claude or OpenAI, and every FastAPI endpoint uses HTTP.

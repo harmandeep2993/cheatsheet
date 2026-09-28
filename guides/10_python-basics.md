@@ -10,6 +10,16 @@ Quick reference for core Python syntax (Python 3.10+).
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how code is run by an interpreter ([01 - Core Concepts](01_core-concepts.md) section 1) and how to run a command in a terminal ([03](03_terminal-powershell.md)). Install Python with [12 - uv](12_uv.md) (`uv python install`) or from python.org.
+
+**The problem it solves:** you want to tell a computer to do work for you (clean a spreadsheet, call an API, train a model) in a language that is quick to write and easy to read back months later, with ready-made libraries for almost any task.
+
+**Why Python and not another language:** languages like C or Java need more code for the same result and a compile step before running. Python trades some raw speed for readability and speed of writing. The heavy lifting in data and AI libraries (NumPy, PyTorch) is written in fast languages underneath, so you get both: simple Python on top, fast code inside.
+
+**Think of it like:** writing clear step-by-step instructions for a very literal, very fast assistant. It does exactly what you write, in order, and stops to complain (an exception) when an instruction does not make sense.
+
 ### What is Python?
 
 Python is a general-purpose programming language known for readable, almost English-like code. It is **interpreted** (you run the code directly, no compile step) and **dynamically typed** (you do not declare types). A huge ecosystem of free libraries makes it the leading language for data analysis, machine learning, automation, web APIs and scripting.
