@@ -93,16 +93,17 @@ Where to read the latest, authoritative documentation:
 11. [Prompt Caching](#11-prompt-caching)
 12. [Token Counting and Cost](#12-token-counting-and-cost)
 13. [Batch Processing](#13-batch-processing)
-14. [Errors, Retries and Timeouts](#14-errors-retries-and-timeouts)
-15. [Stop Reasons and Refusals](#15-stop-reasons-and-refusals)
-16. [Async Client](#16-async-client)
-17. [Tool Use (Preview)](#17-tool-use-preview)
-18. [OpenAI SDK Equivalents](#18-openai-sdk-equivalents)
-19. [Provider-Agnostic Design](#19-provider-agnostic-design)
-20. [Claude on Cloud Platforms](#20-claude-on-cloud-platforms)
-21. [Production Checklist](#21-production-checklist)
-22. [Troubleshooting](#22-troubleshooting)
-23. [Try It](#23-try-it)
+14. [Reducing Inference Cost](#14-reducing-inference-cost)
+15. [Errors, Retries and Timeouts](#15-errors-retries-and-timeouts)
+16. [Stop Reasons and Refusals](#16-stop-reasons-and-refusals)
+17. [Async Client](#17-async-client)
+18. [Tool Use (Preview)](#18-tool-use-preview)
+19. [OpenAI SDK Equivalents](#19-openai-sdk-equivalents)
+20. [Provider-Agnostic Design](#20-provider-agnostic-design)
+21. [Claude on Cloud Platforms](#21-claude-on-cloud-platforms)
+22. [Production Checklist](#22-production-checklist)
+23. [Troubleshooting](#23-troubleshooting)
+24. [Try It](#24-try-it)
 
 ---
 
@@ -460,35 +461,159 @@ Log `usage` for every call in production; it is your cost dashboard.
 
 ## 13. Batch Processing
 
-> Submitting many requests at once for asynchronous processing at a discount (about 50%). Create a batch of requests with your own `custom_id`s, poll until it has ended, then read the results.
+> The Message Batches API takes many independent requests in one call, processes them in the background and charges **50% of the normal price for every token**, including cache reads and writes. You get the results later (most batches finish within an hour, all within 24 hours) and match them to your items by the `custom_id` you gave each request.
 >
-> Use it for offline jobs: classify 50,000 reviews, nightly summaries, eval runs. Not for real-time users.
+> Use it for work nobody is waiting on: classifying or tagging thousands of items, nightly summaries and reports, evaluation runs, backfills, generating test data. Keep anything a user is waiting for on normal requests.
+
+### Key facts
+
+| Fact | Value |
+|---|---|
+| Discount | 50% on input, output, cache writes and cache reads (stacks with prompt caching) |
+| Size limit | Up to 100,000 requests or 256 MB per batch, whichever comes first |
+| Turnaround | Most batches within 1 hour; anything not done after 24 hours expires |
+| Result retention | Results can be downloaded for 29 days after the batch was created |
+| Features | Everything the Messages API supports: system prompts, tools, images, PDFs, structured output, thinking, caching |
+| Not possible | Streaming, and multi-turn tool loops inside one request (each request is single-shot) |
+| Not available | Fast mode; Claude Managed Agents sessions |
+
+### The lifecycle
+
+```text
+create(requests=[...])  ->  processing_status: "in_progress"   (poll with retrieve())
+                        ->  processing_status: "ended"         (every request finished somehow)
+results(batch_id)       ->  one result per custom_id, in ANY order:
+                              succeeded  the Message, exactly as a normal call would return it
+                              errored    invalid_request_error = fix the request; other errors = resubmit
+                              expired    not processed within 24 hours = resubmit
+                              canceled   you canceled the batch before it ran = resubmit if still needed
+```
+
+### Create, wait, collect
+
+The full, tested version is `examples/batch_jobs/batch.py`:
 
 ```python
 import time
 
-batch = client.messages.batches.create(requests=[
-    {
-        "custom_id": f"review-{i}",
-        "params": {
-            "model": "claude-opus-5",
-            "max_tokens": 256,
-            "messages": [{"role": "user", "content": f"Sentiment (positive/negative/neutral) only:\n{text}"}],
-        },
-    }
-    for i, text in enumerate(reviews)
-])
+import anthropic
+from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
+from anthropic.types.messages.batch_create_params import Request
 
-while client.messages.batches.retrieve(batch.id).processing_status != "ended":
-    time.sleep(60)
+client = anthropic.Anthropic()
 
-for result in client.messages.batches.results(batch.id):
-    if result.result.type == "succeeded":
-        label = result.result.message.content[0].text
-        save(result.custom_id, label)            # results come in ANY order: key by custom_id
+requests = [
+    Request(
+        custom_id=review_id,                       # your own ID: unique, max 64 chars, letters/digits/-/_
+        params=MessageCreateParamsNonStreaming(
+            model="claude-haiku-4-5",              # easy task -> small model (section 14)
+            max_tokens=64,
+            system="Classify the sentiment. Answer with one word: positive, negative or neutral.",
+            messages=[{"role": "user", "content": text}],
+        ),
+    )
+    for review_id, text in reviews.items()
+]
+batch = client.messages.batches.create(requests=requests)
+print(batch.id)                                    # save it: it is all you need to get results later
+
+while (batch := client.messages.batches.retrieve(batch.id)).processing_status != "ended":
+    time.sleep(60)                                 # poll once a minute
+print(batch.request_counts)                        # succeeded / errored / expired / canceled
+
+labels, retry, failed = {}, [], {}
+for item in client.messages.batches.results(batch.id):
+    result = item.result
+    if result.type == "succeeded":
+        labels[item.custom_id] = "".join(b.text for b in result.message.content if b.type == "text").strip()
+    elif result.type == "errored" and result.error.error.type == "invalid_request_error":
+        failed[item.custom_id] = result.error.error.message    # retrying will fail the same way
+    else:
+        retry.append(item.custom_id)                            # server error, expired or canceled
 ```
 
-## 14. Errors, Retries and Timeouts
+Note the nesting in errored results: `result.error` is an error response whose `.error.type` holds the actual kind (`invalid_request_error`, `overloaded_error`, ...).
+
+### Other operations
+
+| Call | Use |
+|---|---|
+| `client.messages.batches.retrieve(batch_id)` | Status and `request_counts` |
+| `client.messages.batches.results(batch_id)` | Iterate over results (streamed, safe for 100,000 items) |
+| `client.messages.batches.cancel(batch_id)` | Stop a batch; already-finished requests keep their results |
+| `client.messages.batches.list(limit=20)` | Your recent batches (iterating pages automatically) |
+| `client.messages.batches.delete(batch_id)` | Remove a finished batch and its stored data (cancel a running one first) |
+
+### Batch + prompt caching
+
+Give every request the same system prompt or document with `cache_control`, exactly as in section 11. Cache reads are then discounted twice (0.1x, then halved). Inside one batch the requests run in parallel and in any order, so cache hits are best-effort. Because a batch can run longer than 5 minutes, use the 1-hour cache duration (`{"type": "ephemeral", "ttl": "1h"}`) for shared context.
+
+### Designing batch jobs
+
+- **Make results idempotent**: store each result under its `custom_id` so re-running the collector or resubmitting a few failed items never duplicates work.
+- **Resubmit, do not retry in place**: put `retry` IDs into a new, smaller batch.
+- **Validate outputs**: batches run unattended, so check each answer (allowed labels, valid JSON) and send bad ones to `failed` instead of trusting them.
+- **Split huge jobs**: several batches of 10,000 give you partial results sooner and smaller retries.
+- **Flatten tool loops**: a batch request cannot call your tools and continue. If the model would need to look things up, fetch that data first and put it in the prompt.
+
+## 14. Reducing Inference Cost
+
+> Most LLM bills can be cut by a large factor without making answers worse: measure where tokens go, cache what repeats, batch what can wait, and only then trade quality for price (smaller models, lower effort). Work through the levers in that order.
+>
+> Use it when a bill is higher than expected, before scaling a feature to many users, and when planning a bulk job.
+
+### How the bill is made
+
+```text
+cost per request = uncached input tokens x input price
+                 + cache writes         x input price x 1.25   (5-minute cache; 1-hour cache: x 2)
+                 + cache reads          x input price x 0.1
+                 + output tokens        x output price          (thinking tokens count as output)
+                 all of it x 0.5 when sent through the Batch API
+```
+
+Output tokens cost several times more than input tokens (5x on current models), and **input usually dominates anyway** because the system prompt, tools, documents and conversation history are resent on every call. That is why caching is the biggest lever for most apps.
+
+### Worked example
+
+From `uv run python -m batch_jobs.costs` in `examples/`: 10,000 requests, each with the same 4,000-token instructions and examples, 500 tokens of unique input and 300 tokens of output. Prices from the pricing page on 2026-09-28 (Opus 5: $5 / $25 per million input / output tokens; Haiku 4.5: $1 / $5).
+
+| Setup | Cost | vs start |
+|---|---|---|
+| Opus 5, one request at a time | $300.00 | 100% |
+| + prompt caching on the shared 4,000 tokens | $120.02 | 40% |
+| + Batch API | $60.01 | 20% |
+| Haiku 4.5 instead of Opus 5 (if its quality passes your eval) | $12.00 | 4% |
+
+### The levers, in the order to try them
+
+| # | Lever | Typical saving | Quality risk | How |
+|---|---|---|---|---|
+| 1 | Measure | Shows where the money goes | None | Log `response.usage` for every call (section 12); group by feature |
+| 2 | Prompt caching | Up to 90% of repeated input | None | Stable content first, `cache_control` (section 11); check `cache_read_input_tokens` |
+| 3 | Trim input | Proportional to tokens removed | Low | Shorter system prompts, fewer RAG chunks ([30](30_rag.md)), summarise or trim old chat history, downscale images, only the tools a call needs |
+| 4 | Batch API | 50% of everything | None (just slower) | Anything not user-facing (section 13) |
+| 5 | Control output | Proportional to tokens removed | Low | Ask for the exact format and length, with an example; structured output (section 8); stop sequences |
+| 6 | Cache whole answers | 100% on repeated questions | Stale answers | Store answers to identical questions in Redis with a TTL ([41](41_redis-queues.md)) |
+| 7 | Lower effort | Often 30-50% on reasoning-heavy work | Measurable | `output_config={"effort": "medium"}` or `"low"` (section 10); compare on an eval |
+| 8 | Smaller model | 5x or more per token | Measurable | Route easy steps (classification, extraction, routing) to Haiku; keep hard reasoning on the larger model |
+| 9 | Fewer calls | Proportional | Low to medium | One call that returns several fields instead of several calls; skip the LLM when rules or a cache can answer |
+
+Levers 1 to 6 are **free wins**: they lower the price without changing what the model can do. Levers 7 and 8 are **trade-offs**: always compare quality on an evaluation set ([34 - Evals](34_evals-observability.md)) before and after, and judge by **cost per successful task**, not cost per token. A cheap model that fails and needs a retry (or a human) is not cheap.
+
+### Common cost traps
+
+| Trap | What happens | Fix |
+|---|---|---|
+| Timestamp or request ID in the system prompt | Every call misses the cache | Move changing values into the user message, after the cached part |
+| Chat history grows forever | Each turn resends every earlier turn | Cache the history, summarise old turns, or start fresh sessions |
+| Whole documents stuffed into the prompt | Pay for pages the answer never uses | Retrieve only relevant chunks (RAG) |
+| Tiny `max_tokens` to "save money" | Answers get cut off and must be redone | `max_tokens` is a safety cap, not a cost control; shorten output through instructions |
+| Sending bulk jobs as live requests | Full price plus rate-limit errors | Batch API |
+| Switching model or effort mid-conversation | Cache is per model and setting, so it starts over | Keep them fixed within a session |
+| No usage logging | You cannot see which feature costs what | Log `usage` with a feature name on every call |
+
+## 15. Errors, Retries and Timeouts
 
 > Handling failures correctly. The SDK retries 408 / 409 / 429 / 5xx and connection errors automatically (default 2 retries); catch specific exception classes for the rest.
 >
@@ -517,7 +642,7 @@ except anthropic.APIConnectionError:            # network problem
 
 Per-request override: `client.with_options(timeout=30, max_retries=5).messages.create(...)`.
 
-## 15. Stop Reasons and Refusals
+## 16. Stop Reasons and Refusals
 
 > Why the model stopped, which decides what your code does next. Check `response.stop_reason` before using the content.
 >
@@ -534,7 +659,7 @@ Per-request override: `client.with_options(timeout=30, max_retries=5).messages.c
 
 The newest Claude models support server-side **fallbacks**: on a refusal, the API retries automatically on another model inside the same call (beta: `client.beta.messages.create(..., betas=["server-side-fallback-2026-07-01"], fallbacks="default")`). Check the docs for current details.
 
-## 16. Async Client
+## 17. Async Client
 
 > The same API for async code. `AsyncAnthropic` + `await`; combine with `asyncio.gather` and a semaphore for concurrency.
 >
@@ -557,7 +682,7 @@ async def ask(q: str) -> str:
 answers = asyncio.run(asyncio.gather(*(ask(q) for q in questions)))   # use a Semaphore for many
 ```
 
-## 17. Tool Use (Preview)
+## 18. Tool Use (Preview)
 
 > Letting the model call your Python functions. Describe functions as tools; the model returns a `tool_use` block; you run the function and send back a `tool_result`; repeat until done.
 >
@@ -587,7 +712,7 @@ for message in runner:          # the SDK runs the tool loop for you
     final = message
 ```
 
-## 18. OpenAI SDK Equivalents
+## 19. OpenAI SDK Equivalents
 
 > The same tasks with the OpenAI Python SDK. OpenAI has the newer **Responses API** and the older, widely copied **Chat Completions API**; both are shown.
 >
@@ -638,7 +763,7 @@ parsed.output_parsed
 | Tokens used | `usage.input_tokens / output_tokens` | `usage.prompt_tokens / completion_tokens` |
 | Local / compatible servers | Anthropic SDK | `OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")` |
 
-## 19. Provider-Agnostic Design
+## 20. Provider-Agnostic Design
 
 > Structuring code so the model provider can change without rewriting the app. Put LLM calls behind one small interface in your code; keep prompts and model names in config.
 >
@@ -666,7 +791,7 @@ class ClaudeLLM:
 
 Libraries like LiteLLM or LangChain offer one interface for many providers ([32](32_agent-frameworks.md)); the trade-off is an extra dependency and hidden details.
 
-## 20. Claude on Cloud Platforms
+## 21. Claude on Cloud Platforms
 
 > Using Claude through AWS, Google Cloud or Microsoft Azure. Dedicated client classes with the same `messages.create` interface; model IDs and auth follow the platform.
 >
@@ -680,7 +805,7 @@ Libraries like LiteLLM or LangChain offer one interface for many providers ([32]
 
 Feature availability can differ per platform; check the platform docs.
 
-## 21. Production Checklist
+## 22. Production Checklist
 
 > What to have in place before real users hit your LLM feature. A list to review.
 >
@@ -698,7 +823,7 @@ Feature availability can differ per platform; check the platform docs.
 - [ ] Evals for quality and regressions ([34](34_evals-observability.md))
 - [ ] Guardrails against prompt injection and data leaks ([37](37_ai-security.md))
 
-## 22. Troubleshooting
+## 23. Troubleshooting
 
 | Problem | Fix |
 |---|---|
@@ -713,9 +838,10 @@ Feature availability can differ per platform; check the platform docs.
 | JSON parse errors | Use structured outputs (`messages.parse` / `output_config.format`) |
 | Cache never hits (`cache_read_input_tokens == 0`) | Prefix changes every call (timestamps, unsorted JSON, different tools); prefix too short |
 | 400 about `temperature` / `budget_tokens` / prefill on new models | Newest models removed these; use effort / adaptive thinking / structured outputs |
-| Costs higher than expected | Log `usage`; history growing each turn; large `max_tokens` on reasoning; use caching and smaller models for easy steps |
+| Costs higher than expected | Log `usage` per feature; then caching, trimming input, Batch API and smaller models for easy steps, in that order (section 14) |
+| Batch results attached to the wrong items | Results come back in any order: match them by `custom_id`, never by position (section 13) |
 
-## 23. Try It
+## 24. Try It
 
 > Short exercises to practise this guide. Try each task yourself first, then open the solution.
 >

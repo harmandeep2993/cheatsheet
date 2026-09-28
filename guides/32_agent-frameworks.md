@@ -459,7 +459,7 @@ Examples: Anthropic's Managed Agents (beta), OpenAI's hosted agent tools, Azure 
 | Many third-party integrations quickly | LangChain |
 | Role-based multi-agent prototype | CrewAI / OpenAI Agents SDK handoffs |
 | Azure / .NET enterprise | Microsoft Agent Framework / Azure AI Foundry |
-| Switching models often | LiteLLM or your own provider interface ([26](26_llm-apis.md) section 19) |
+| Switching models often | LiteLLM or your own provider interface ([26](26_llm-apis.md) section 20) |
 
 ## 14. Framework Hygiene
 

@@ -8,6 +8,7 @@ Runnable mini-projects that put the guides into practice. Every example has test
 | 2 | `tool_agent/` | Tool definitions, a manual agent loop, safe tools, step limit, error results | 28 Tool Use, 31 AI Agents |
 | 3 | `docs_chatbot/` | RAG chatbot: chunking, vector index, citations, FastAPI + Uvicorn, retrieval eval, Docker | 30 RAG, 39 FastAPI, 40 Uvicorn, 42 Docker, 34 Evals |
 | 4 | `mcp_server/` | MCP server exposing document search to Claude Code / Desktop / VS Code | 33 MCP |
+| 5 | `batch_jobs/` | Message Batches API (submit, poll, sort results by `custom_id`, resubmit failures) and a cost calculator comparing caching, batching and model choice | 26 LLM APIs |
 
 Example 3 is the code of the step-by-step [capstone project](../guides/97_capstone-project.md).
 
@@ -36,6 +37,9 @@ uv run uvicorn docs_chatbot.api:app --reload          # then open http://127.0.0
 uv run python -m docs_chatbot.evals                    # retrieval quality (no key needed)
 
 uv run mcp dev mcp_server/server.py                    # MCP Inspector in the browser
+
+uv run python -m batch_jobs.costs                      # cost comparison (no key needed)
+uv run python -m batch_jobs.batch                      # real batch: 3 reviews at half price
 ```
 
 Ask the chatbot from another terminal:
