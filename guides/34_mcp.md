@@ -10,6 +10,16 @@ Quick reference for the Model Context Protocol: what it is, its architecture, bu
 
 ## Introduction
 
+### Before you start
+
+**You should know:** tool use ([29](29_tool-use.md)) and the client / server idea ([01 - Core Concepts](01_core-concepts.md) section 13). Using Claude Code or Claude Desktop makes the examples easy to try.
+
+**The problem it solves:** every AI app (Claude Desktop, Claude Code, VS Code, your own agent) needs access to the same kinds of things: files, databases, GitHub, Slack, internal tools. Without a standard, every app writes its own integration for every service: many apps times many services, each built and maintained separately.
+
+**Before MCP:** each AI app had its own plugin or tool format, so a tool written for one app did not work in another. MCP (released by Anthropic as an open standard in 2024) defines one protocol: write a server once, and every MCP-compatible app can use it.
+
+**Think of it like:** USB-C. Before it, every device had its own charger; with one standard plug, any charger works with any device. An MCP server is the device, an AI app is the laptop, and the protocol is the plug.
+
 ### What is MCP?
 
 The **Model Context Protocol** (MCP) is an open standard for connecting AI applications to **tools and data**. Instead of writing a custom integration for every pair of "AI app x service", a service is wrapped once as an **MCP server**, and any MCP-compatible app (Claude Code, Claude Desktop, VS Code, Cursor, agent frameworks, your own Python app) can use it. It is often described as **"USB-C for AI"**: one standard plug between AI apps and the outside world.

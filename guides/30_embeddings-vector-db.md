@@ -10,6 +10,16 @@ Quick reference for turning text into vectors (embeddings), measuring similarity
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python lists and NumPy arrays ([17](17_numpy.md)), and the idea of a model turning input into output ([26](26_llm-fundamentals.md)). No advanced maths is needed: "vectors that are close together mean similar things" is enough to start.
+
+**The problem it solves:** keyword search fails when the words differ: a user searches "cancel my subscription", the help page says "how to end your membership", and nothing is found. You need search by *meaning*, fast, over thousands or millions of texts.
+
+**Before embeddings:** search engines matched words (with tricks like stemming and synonym lists that people maintained by hand). Word vectors (word2vec, 2013) showed that meaning can be captured as numbers; modern embedding models do this for whole sentences and paragraphs, and vector databases make searching millions of them fast.
+
+**Think of it like:** a map where every text gets coordinates, and texts about similar things are placed near each other (the mental model below). Searching becomes "find the points closest to this one".
+
 ### What are embeddings and vector databases?
 
 An **embedding** is a list of numbers (a **vector**, e.g. 384 or 1024 numbers) that represents the **meaning** of a piece of text (or an image). An **embedding model** is trained so that texts with similar meaning get vectors that are close together, even when they share no words ("car" and "automobile"). A **vector database** stores millions of these vectors and quickly finds the ones closest to a query vector. Together they power **semantic search**, **RAG**, recommendations, clustering and duplicate detection.

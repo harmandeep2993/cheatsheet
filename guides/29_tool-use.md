@@ -10,6 +10,16 @@ Quick reference for letting LLMs call your functions: defining tools, the tool-c
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to call an LLM API and read the response ([27 - LLM APIs](27_llm-apis.md)), JSON and JSON Schema basics ([08](08_yaml-json.md)), and Pydantic models help too ([13](13_pydantic.md)).
+
+**The problem it solves:** an LLM only produces text. On its own it cannot look up today's order status, query your database, check the weather or send an email; its knowledge also stops at its training date. Tool use lets the model ask your program to do those things and use the results.
+
+**Before tool use:** developers asked the model to write something like `ACTION: search("...")` in its answer and parsed that text with regex, which broke whenever the model phrased it differently. Native tool use (from 2023) makes the model return a structured, validated request that matches a schema you define, so your code can act on it reliably.
+
+**Think of it like:** the model is the brain and your code is the hands (the mental model below). The brain decides "I need the order status" and says exactly which tool and which inputs; the hands do the work and report back.
+
 ### What is tool use?
 
 **Tool use** (also called **function calling**) lets an LLM ask your program to run a function, such as looking up an order, querying a database, searching the web or sending an email. The model does **not** run the code itself. It returns a structured request ("call `get_order_status` with `order_id = A-1042`"); **your code** runs the function and sends the result back; the model then continues, possibly calling more tools, until it can answer.

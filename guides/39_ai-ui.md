@@ -10,6 +10,16 @@ Quick reference for building chat apps and AI demos in pure Python: Streamlit, G
 
 ## Introduction
 
+### Before you start
+
+**You should know:** Python basics ([10](10_python-basics.md)) and how to call an LLM ([27](27_llm-apis.md)). No web development knowledge is needed; that is the point of these tools.
+
+**The problem it solves:** your AI feature works in a notebook or a script, but other people (colleagues, testers, customers) need a web page with a chat box, file upload and nice output. Building a proper web frontend normally means learning HTML, CSS, JavaScript and a framework like React, plus an API between them.
+
+**Before these tools:** data scientists either handed their work to a web developer or shared screenshots and notebooks. Streamlit (2019), Gradio (2019) and Chainlit (2023) let you build a working web interface in pure Python, in minutes.
+
+**Think of it like:** a ready-made shop front. You bring the product (your Python function or agent); the tool provides the counter, the display and the till. For a fully custom shop you would still hire an architect (a real frontend, see [50 - Project Structure](50_project-structure.md)).
+
 ### What are these tools?
 
 They let you build a **web interface for your AI app with only Python** (no HTML / JavaScript needed):

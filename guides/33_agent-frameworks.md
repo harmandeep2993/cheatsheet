@@ -10,6 +10,16 @@ Quick reference for the main libraries used to build LLM apps and agents: Claude
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to build an agent loop yourself with the plain SDK ([29 - Tool Use](29_tool-use.md), [32 - AI Agents](32_ai-agents.md)), and the difference between a library and a framework ([01 - Core Concepts](01_core-concepts.md) section 6). Learn the plain version first: frameworks are much easier to use (and debug) when you know what they do underneath.
+
+**The problem it solves:** once agents grow (several tools, memory, multiple agents, retries, tracing, human approval steps), the same plumbing gets rewritten in every project. Frameworks package that plumbing so you can focus on the task.
+
+**Why there are so many:** the field is young and moves fast. LangChain (2022) was first and very broad; later frameworks each focus on something (LangGraph on explicit state graphs, PydanticAI on type safety, provider SDKs like the Claude Agent SDK on a ready-made agent runtime). None has become the single standard, which is why this guide compares them.
+
+**Think of it like:** car bodies on the same engine (the mental model below). Every framework ends up making the same model API calls; they differ in comfort, control and how much they decide for you.
+
 ### What is an agent framework?
 
 An **agent framework** is a library that gives you ready-made building blocks for LLM apps: model wrappers, tool definitions, the agent loop, memory / state, multi-agent coordination, retrieval, tracing and integrations. Under the hood they all make the same API calls you saw in [27 - LLM APIs](27_llm-apis.md) and run the same tool loop from [29 - Tool Use](29_tool-use.md). They save code for complex cases and add conventions, at the cost of an extra dependency and some hidden behaviour.

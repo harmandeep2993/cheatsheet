@@ -10,6 +10,16 @@ Quick reference for measuring and monitoring LLM apps: building eval sets, gradi
 
 ## Introduction
 
+### Before you start
+
+**You should know:** automated testing ([15 - pytest](15_pytest.md)), how to call an LLM ([27](27_llm-apis.md)), and ideally one real LLM feature you want to improve (a RAG bot, a classifier, an agent).
+
+**The problem it solves:** you change a prompt and one answer looks better, but did ten others get worse? Normal tests expect exact outputs, and LLM outputs vary. In production you also cannot see why a user got a bad answer unless you recorded what the model saw and did. Without evals and tracing, improving an AI app is guesswork.
+
+**Before this discipline existed:** teams judged changes by reading a few outputs by eye ("vibe checks") and found problems from user complaints. Evals borrow the idea of test suites and benchmarks from software testing and ML research; observability borrows logging and tracing from web operations.
+
+**Think of it like:** a driving test plus a dashcam. The eval is the test you pass before being allowed on the road; the trace is the recording that shows exactly what happened when something goes wrong on a real trip.
+
 ### What are evals and observability?
 
 - **Evals** (evaluations) are **tests for AI behaviour**: a set of example inputs plus a way to score the outputs, run whenever you change a prompt, model, tool or retrieval setting. Because LLM outputs vary and there is often no single "correct" string, evals use scores and rubrics rather than exact equality.

@@ -10,6 +10,16 @@ Quick reference for fine-tuning language models: when it is worth it, types of f
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how models are trained ([24 - PyTorch](24_pytorch.md)), the Hugging Face libraries ([25](25_hugging-face.md)), and what prompting and RAG can already do ([28](28_prompt-engineering.md), [31](31_rag.md)). Fine-tuning is an advanced, last-resort tool: most problems are solved faster and cheaper with better prompts or RAG.
+
+**The problem it solves:** sometimes prompting cannot get the behaviour you need consistently: a very specific output style, a narrow task a smaller and cheaper model must do well, or a format that must be followed thousands of times without drift. Fine-tuning changes the model itself using your examples.
+
+**Before efficient fine-tuning:** adjusting a large model meant updating all its billions of weights, which needed many expensive GPUs. Methods like LoRA (2021) train only a small set of extra weights, so fine-tuning a useful model became possible on one GPU.
+
+**Think of it like:** on-the-job training for a graduate (the description below). It builds habits and style for one role; it is not a good way to teach facts that change every week (that is what RAG is for).
+
 ### What is fine-tuning?
 
 **Fine-tuning** means continuing to train an already-trained model on **your own examples**, so its weights change and it gets better at a specific task, format or style. A pretrained model is like a university graduate with broad knowledge; fine-tuning is **on-the-job training** for one role. Because you start from a strong model, you need far less data and compute than training from scratch: often a few hundred to a few thousand good examples.

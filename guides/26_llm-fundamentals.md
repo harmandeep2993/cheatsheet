@@ -10,6 +10,16 @@ Quick reference for how large language models work: tokens, next-token predictio
 
 ## Introduction
 
+### Before you start
+
+**You should know:** nothing technical is required. If you have read [24 - PyTorch](24_pytorch.md), the idea of a trained neural network will feel familiar, but this guide explains what you need in plain terms.
+
+**The problem it solves:** LLMs can seem like magic or like a search engine, and both views lead to mistakes: trusting invented facts, being surprised by the bill, or not understanding why an answer changes between runs. A few core ideas (tokens, the context window, next-token prediction, sampling) explain almost every behaviour you will see.
+
+**Before LLMs:** language software was built task by task: one model for translation, another for sentiment, another for spam, each trained on its own labelled data, and chatbots followed hand-written rules. The Transformer architecture (2017) and training ever larger models on huge amounts of text showed that one general model could do all these tasks from instructions alone, which led to ChatGPT (2022) and Claude.
+
+**Think of it like:** an extremely well-read autocomplete. It has read a huge library and learned how text continues; ask it something and it writes the most fitting continuation. That makes it fluent and knowledgeable, and also explains why it can sound confident while being wrong.
+
 ### What is an LLM?
 
 A **large language model** (LLM) is a neural network trained on huge amounts of text to do one thing: **predict the next token** (piece of a word) given all the text before it. Repeating that prediction over and over produces sentences, code, summaries and answers. Models like Claude, GPT, Gemini, Llama, Qwen and Mistral are all LLMs. Because predicting text well requires modelling grammar, facts, reasoning patterns and intent, these models end up able to follow instructions, write code, translate, analyse and use tools.

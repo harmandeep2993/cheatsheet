@@ -10,6 +10,16 @@ Quick reference for running open-weight LLMs on your own hardware or servers: Ol
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what an LLM and tokens are ([26](26_llm-fundamentals.md)), how to call an LLM API ([27](27_llm-apis.md)), and basic terminal use ([03](03_terminal-powershell.md)). Knowing your computer's RAM and GPU memory helps you pick a model that fits.
+
+**The problem it solves:** hosted APIs send your data to another company, cost money per token and need the internet. Sometimes data must stay on your machine (privacy, regulation), you want to experiment without a bill, or you need to work offline.
+
+**Before local tools:** running an open model meant writing PyTorch code, finding the right weights and fighting GPU drivers. Quantization (storing weights with fewer bits) and tools like llama.cpp (2023), Ollama and LM Studio made it possible to download and run good models on a normal laptop with one command.
+
+**Think of it like:** cooking at home instead of ordering from a restaurant. You need your own kitchen (hardware) and the dishes are simpler than a top restaurant's (smaller models), but it is private, there is no bill per meal, and it works when the restaurant is closed.
+
 ### What does "running an LLM locally" mean?
 
 Open-weight models (Llama, Qwen, Mistral, Gemma, Phi, DeepSeek ...) publish their **weights** (the trained numbers), so you can download them and run inference on **your own** laptop, workstation, GPU server or cloud VM. An **inference server** loads the weights into memory and exposes an API (often OpenAI-compatible), so your apps call it just like a hosted API, but nothing leaves your machine and there is no per-token bill.

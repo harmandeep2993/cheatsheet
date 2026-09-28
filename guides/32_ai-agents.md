@@ -10,6 +10,16 @@ Quick reference for AI agents: what they are, the agent loop, workflows vs agent
 
 ## Introduction
 
+### Before you start
+
+**You should know:** tool use and the tool loop ([29](29_tool-use.md)), prompting ([28](28_prompt-engineering.md)), and ideally RAG ([31](31_rag.md)), since agents often retrieve information as one of their tools.
+
+**The problem it solves:** some tasks cannot be done in one step or planned fully in advance: "find out why this test fails and fix it", "research these five companies and compare them". The next step depends on what the last step found. You want the model to decide what to do next, use tools, look at results and keep going until the job is done.
+
+**Before agents:** developers wrote fixed pipelines (step 1, then step 2, then step 3) where the code, not the model, decided the order. That still works best for predictable tasks. As models became better at using tools and correcting themselves, letting the model drive the loop became practical for open-ended tasks, with limits and human approval where the stakes are high.
+
+**Think of it like:** giving a new employee a goal, a set of tools and a notebook instead of a step-by-step checklist (the mental model below). More flexible, but you need to check their work and limit what they are allowed to do.
+
 ### What is an AI agent?
 
 An **AI agent** is an LLM that works in a **loop**: it looks at a goal, decides what to do next, uses **tools** (search, code, APIs, files), looks at the results, and keeps going until the goal is reached. A normal LLM call answers once. An agent **takes several steps on its own**, choosing which tools to use and in what order, based on what it finds along the way.

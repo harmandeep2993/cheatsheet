@@ -10,6 +10,16 @@ Quick reference for writing prompts that get reliable, high-quality results from
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how an LLM call works (system prompt, messages, response) from [27 - LLM APIs](27_llm-apis.md), and why models only know what is in their context ([26](26_llm-fundamentals.md)).
+
+**The problem it solves:** the same model can give a brilliant or a useless answer depending only on what you send it. Vague instructions give vague results; missing context gives guesses; no format instructions give output your code cannot parse. Because the input is the only thing you control at run time, writing it well is a core engineering skill.
+
+**How it evolved:** early models needed tricks and carefully worded phrases. Modern models follow plain instructions well, so good prompting today is mostly clear writing: say what you want, why, for whom and in what format, and give the right context. That is why the field now often calls it context engineering.
+
+**Think of it like:** briefing a brilliant new colleague on their first day (the mental model below). They are capable, but they only know what you tell them.
+
 ### What is prompt engineering?
 
 Prompt engineering is the skill of **writing the instructions and context you give an LLM** so it does exactly what you need, consistently. Because the model predicts output from its input, the input is your main control: what you ask, what background you give, which examples you show and what format you request all change the result. Today this is often called **context engineering**: designing *everything* the model sees (instructions, documents, tool results, history), not just one clever sentence.

@@ -10,6 +10,16 @@ Quick reference for building RAG systems: loading documents, chunking, embedding
 
 ## Introduction
 
+### Before you start
+
+**You should know:** how to call an LLM with a prompt ([27](27_llm-apis.md), [28](28_prompt-engineering.md)) and how embeddings find similar text ([30](30_embeddings-vector-db.md)).
+
+**The problem it solves:** an LLM does not know your company's documents, policies or anything newer than its training data, and when it does not know, it may invent an answer. You want answers grounded in *your* documents, with sources, that update when the documents change.
+
+**Before RAG:** the options were retraining or fine-tuning a model on your documents (expensive, slow to update, and the model still cannot cite where a fact came from) or pasting whole documents into every prompt (too long and too costly). RAG (named in a 2020 research paper) retrieves only the relevant passages at question time and hands them to the model.
+
+**Think of it like:** an open-book exam (the mental model below). The student does not memorise the textbook; a librarian finds the right pages for each question, and the student answers from them and cites them.
+
 ### What is RAG?
 
 **Retrieval-Augmented Generation** means: before the LLM answers, your app **retrieves** the most relevant pieces of your own documents and puts them into the prompt, so the model **generates** its answer from that material. It is how you build "chat with your documents", support bots that know your policies, and assistants over company knowledge, without retraining the model.

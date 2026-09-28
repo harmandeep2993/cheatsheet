@@ -10,6 +10,16 @@ Quick reference for calling hosted LLMs from Python: the Anthropic (Claude) SDK 
 
 ## Introduction
 
+### Before you start
+
+**You should know:** what an API and an SDK are and how to use one ([01 - Core Concepts](01_core-concepts.md) sections 7 to 10), HTTP basics ([09](09_http-apis.md)), and the LLM ideas of tokens and context windows ([26 - LLM Fundamentals](26_llm-fundamentals.md)). You need an API key from the Anthropic Console.
+
+**The problem it solves:** the best models are too large to run on a laptop; they run on the provider's GPU clusters. To use one from your own program you send it requests over the internet, and you need to control everything about those requests: the instructions, the conversation so far, the answer format, the cost and what happens when something fails.
+
+**Before LLM APIs:** using a language model meant training and hosting it yourself, which needed ML expertise, labelled data and expensive hardware. Hosted APIs turned a frontier model into something you can call with a few lines of code and pay for per use.
+
+**Think of it like:** calling an expert consultant by phone. You describe the task and give all the background in each call (the model remembers nothing between calls unless you send the history), you pay for the minutes (tokens), and the SDK is the phone that handles dialling, bad connections and redialling for you.
+
 ### What is an LLM API?
 
 An LLM API is an HTTP endpoint where you send a conversation (messages) and get back the model's reply. Providers like Anthropic (Claude), OpenAI (GPT), Google (Gemini) and Azure OpenAI run the models on their GPUs; you pay per token. The official **SDKs** (`anthropic`, `openai` Python packages) wrap the HTTP details: authentication, retries, streaming, types.
