@@ -12,6 +12,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+# Guides live in their own folder so the repository front page shows the README without scrolling
+GUIDES_DIR = ROOT / "guides"
 GUIDE_RE = re.compile(r"^\d\d_[a-z0-9-]+\.md$")
 START, END = "<!-- nav:start -->", "<!-- nav:end -->"
 NAV_BLOCK_RE = re.compile(rf"\n*{re.escape(START)}.*?{re.escape(END)}\n*", re.S)
@@ -26,7 +28,7 @@ def nav_line(prev: Path | None, nxt: Path | None) -> str:
     parts = []
     if prev:
         parts.append(f"**Previous:** [{title(prev)}]({prev.name})")
-    parts.append("**Index:** [All guides](README.md)")
+    parts.append("**Index:** [All guides](../README.md)")
     if nxt:
         parts.append(f"**Next:** [{title(nxt)}]({nxt.name})")
     return f"{START}\n{' | '.join(parts)}\n{END}"
@@ -44,15 +46,15 @@ def with_nav(text: str, nav: str) -> str:
 
 def guides() -> list[Path]:
     """All numbered guides in reading order."""
-    return sorted(p for p in ROOT.glob("*.md") if GUIDE_RE.match(p.name))
+    return sorted(p for p in GUIDES_DIR.glob("*.md") if GUIDE_RE.match(p.name))
 
 
 def nav_for(path: Path) -> str:
     """Navigation block for one guide, based on its neighbours in file order."""
     ordered = [g.name for g in guides()]
     i = ordered.index(path.name)
-    prev = ROOT / ordered[i - 1] if i > 0 else None
-    nxt = ROOT / ordered[i + 1] if i + 1 < len(ordered) else None
+    prev = GUIDES_DIR / ordered[i - 1] if i > 0 else None
+    nxt = GUIDES_DIR / ordered[i + 1] if i + 1 < len(ordered) else None
     return nav_line(prev, nxt)
 
 

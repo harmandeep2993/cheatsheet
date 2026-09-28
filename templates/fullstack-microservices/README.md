@@ -1,6 +1,6 @@
 # Full-stack Microservices Starter
 
-A small but complete starting point for **several Python services in Docker containers** plus a **separate React frontend**, all in one repository. The guide that explains every folder and decision is `49_project-structure.md` in the root of the pocket guide.
+A small but complete starting point for **several Python services in Docker containers** plus a **separate React frontend**, all in one repository. The guide that explains every folder and decision is `guides/49_project-structure.md` in the pocket guide.
 
 What it does: you add documents in the browser, then ask questions about them. `documents-service` stores and searches the documents; `chat-service` fetches the best matches and asks an LLM (Claude when `ANTHROPIC_API_KEY` is set, otherwise a built-in offline fake) to answer from them.
 

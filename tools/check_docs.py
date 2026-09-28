@@ -8,16 +8,20 @@ import re
 import sys
 from pathlib import Path
 
+from build_nav import GUIDES_DIR
+
 ROOT = Path(__file__).resolve().parent.parent
 GUIDE_RE = re.compile(r"^(\d\d)_[a-z0-9-]+\.md$")
-LINK_RE = re.compile(r"\[([^\]]+)\]\(((?:\.\./)?(?:examples/[^)#\s]+|\d\d_[a-z0-9-]+\.md))(#[^)]*)?\)")
+LINK_RE = re.compile(
+    r"\[([^\]]+)\]\(((?:\.\./)?(?:examples/[^)#\s]+|README\.md|(?:guides/)?\d\d_[a-z0-9-]+\.md))(#[^)]*)?\)"
+)
 HEADING_RE = re.compile(r"^## (\d+)\. (.+)$")
 TOC_RE = re.compile(r"^\d+\. \[[^\]]+\]\(#([^)]+)\)$")
 SECTION_REF_RE = re.compile(r"\]\((\d\d_[a-z0-9-]+\.md)\)(?:[^\n\[]{0,40}?)sections? (\d+)(?:-(\d+))?")
 # Guides that are reference pages rather than tool guides, so they have no Introduction / docs table
 REFERENCE_PAGES = {"00", "97", "98", "99"}
 ASCII_GLOBS = [
-    "*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
+    "*.md", "guides/*.md", "tools/*.py", "examples/**/*.py", "examples/**/*.md", ".github/workflows/*.yml",
     "templates/**/*.py", "templates/**/*.md", "templates/**/*.ts", "templates/**/*.tsx", "templates/**/*.css",
     "templates/**/*.yaml", "templates/**/*.conf", "templates/**/Dockerfile",
     "templates/**/*.jinja", "templates/**/*.yml",
@@ -54,6 +58,22 @@ def check_ascii(errors: list[str]) -> None:
                     errors.append(f"{path.relative_to(ROOT)}:{number}: non-ASCII character")
 
 
+def check_links(path: Path, errors: list[str]) -> None:
+    """Relative links must point to existing files, and "NN - Title" link text must match the file number."""
+    name = path.relative_to(ROOT).as_posix()
+    for line_no, line in outside_code(path.read_text(encoding="utf-8").splitlines()):
+        for m in LINK_RE.finditer(line):
+            text_part, target = m.group(1), m.group(2)
+            target_path = (path.parent / target).resolve()
+            if not target_path.exists():
+                errors.append(f"{name}:{line_no}: broken link to {target}")
+                continue
+            file_num = GUIDE_RE.match(Path(target).name)
+            text_num = re.match(r"(\d\d)(?:\D|$)", text_part)
+            if file_num and text_num and text_num.group(1) != file_num.group(1):
+                errors.append(f"{name}:{line_no}: link text '{text_part}' does not match {target}")
+
+
 def check_guide(path: Path, guides: dict[str, Path], errors: list[str]) -> None:
     name = path.name
     number = name[:2]
@@ -78,17 +98,7 @@ def check_guide(path: Path, guides: dict[str, Path], errors: list[str]) -> None:
         extra = [h for h in headings if h not in toc]
         errors.append(f"{name}: Contents does not match headings (no heading for {missing}, not listed {extra})")
 
-    for line_no, line in outside_code(lines):
-        for m in LINK_RE.finditer(line):
-            text_part, target = m.group(1), m.group(2)
-            target_path = (path.parent / target).resolve()
-            if not target_path.exists():
-                errors.append(f"{name}:{line_no}: broken link to {target}")
-                continue
-            file_num = GUIDE_RE.match(Path(target).name)
-            text_num = re.match(r"(\d\d)(?:\D|$)", text_part)
-            if file_num and text_num and text_num.group(1) != file_num.group(1):
-                errors.append(f"{name}:{line_no}: link text '{text_part}' does not match {target}")
+    check_links(path, errors)
 
     for m in SECTION_REF_RE.finditer(text):
         target = guides.get(m.group(1)[:2])
@@ -102,7 +112,7 @@ def check_guide(path: Path, guides: dict[str, Path], errors: list[str]) -> None:
 
 def main() -> int:
     errors: list[str] = []
-    guides = {p.name[:2]: p for p in ROOT.glob("*.md") if GUIDE_RE.match(p.name)}
+    guides = {p.name[:2]: p for p in GUIDES_DIR.glob("*.md") if GUIDE_RE.match(p.name)}
     numbers = sorted(guides)
     if len(numbers) != len(set(numbers)):
         errors.append("duplicate guide numbers")
@@ -111,8 +121,9 @@ def main() -> int:
     for path in sorted(guides.values()):
         check_guide(path, guides, errors)
     readme = ROOT / "README.md"
+    check_links(readme, errors)
     for number in numbers:
-        if f"({guides[number].name})" not in readme.read_text(encoding="utf-8"):
+        if f"(guides/{guides[number].name})" not in readme.read_text(encoding="utf-8"):
             errors.append(f"README.md: guide {guides[number].name} is not listed")
 
     if errors:

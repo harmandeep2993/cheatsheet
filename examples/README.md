@@ -9,7 +9,7 @@ Runnable mini-projects that put the guides into practice. Every example has test
 | 3 | `docs_chatbot/` | RAG chatbot: chunking, vector index, citations, FastAPI + Uvicorn, retrieval eval, Docker | 30 RAG, 39 FastAPI, 40 Uvicorn, 42 Docker, 34 Evals |
 | 4 | `mcp_server/` | MCP server exposing document search to Claude Code / Desktop / VS Code | 33 MCP |
 
-Example 3 is the code of the step-by-step [capstone project](../97_capstone-project.md).
+Example 3 is the code of the step-by-step [capstone project](../guides/97_capstone-project.md).
 
 ## Setup
 
@@ -58,6 +58,6 @@ The chatbot reads `CHATBOT_*` environment variables (see `docs_chatbot/config.py
 ## Ideas to extend
 
 - Swap `HashingEmbedder` for `SentenceTransformerEmbedder` (semantic search) and compare the eval score.
-- Store vectors in Chroma or pgvector instead of NumPy ([29](../29_embeddings-vector-db.md)).
-- Add streaming to `/ask` and a Streamlit UI ([38](../38_ai-ui.md)).
-- Add an LLM-as-judge eval for answer faithfulness ([34](../34_evals-observability.md)).
+- Store vectors in Chroma or pgvector instead of NumPy ([29](../guides/29_embeddings-vector-db.md)).
+- Add streaming to `/ask` and a Streamlit UI ([38](../guides/38_ai-ui.md)).
+- Add an LLM-as-judge eval for answer faithfulness ([34](../guides/34_evals-observability.md)).

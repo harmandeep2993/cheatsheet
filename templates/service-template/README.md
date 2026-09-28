@@ -1,6 +1,6 @@
 # Service Template (Copier)
 
-Generates a new FastAPI service with the same layout as the services in `templates/fullstack-microservices`: app factory, settings with its own prefix, routes / services layers, health endpoint, shared logging, Dockerfile and tests. The guide is `50_project-templates.md` in the root of the pocket guide.
+Generates a new FastAPI service with the same layout as the services in `templates/fullstack-microservices`: app factory, settings with its own prefix, routes / services layers, health endpoint, shared logging, Dockerfile and tests. The guide is `guides/50_project-templates.md` in the pocket guide.
 
 ## Use it
 

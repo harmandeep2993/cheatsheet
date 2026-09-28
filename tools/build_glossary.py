@@ -10,10 +10,9 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from build_nav import nav_for, with_nav
+from build_nav import GUIDES_DIR, nav_for, with_nav
 
-ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "98_glossary.md"
+OUT = GUIDES_DIR / "98_glossary.md"
 GUIDE_RE = re.compile(r"^(\d\d)_[a-z0-9-]+\.md$")
 ROW_RE = re.compile(r"^\|\s*(.+?)\s*\|\s*(.+?)\s*\|$")
 
@@ -60,7 +59,7 @@ def first_letter(term: str) -> str:
 
 def build() -> str:
     by_letter: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
-    for path in sorted(ROOT.glob("*.md")):
+    for path in sorted(GUIDES_DIR.glob("*.md")):
         if not GUIDE_RE.match(path.name) or path.name == OUT.name:
             continue
         link = f"[{guide_title(path)}]({path.name})"
